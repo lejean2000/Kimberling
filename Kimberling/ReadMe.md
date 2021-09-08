@@ -21,4 +21,4 @@ Graphics[Join[
   ], AspectRatio -> Automatic, Axes -> True
  ]
 ```
-!(https://i.postimg.cc/rFpHKVnf/etc.jpg)
+![](https://i.postimg.cc/rFpHKVnf/etc.jpg)
