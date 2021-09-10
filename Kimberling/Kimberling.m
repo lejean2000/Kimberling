@@ -906,19 +906,28 @@ KimberlingCenter[k_, PA_, PB_, PC_] := Module[{a, b, c, m, wA, wB, wC, w},
       wC = AlgoKimberlingWeights[k, c, a, b]; w = wA + wB + wC; 
       (wA*PA + wB*PB + wC*PC)/w]
  
+PA = {31/3, 7.888106377466154723423104388748822731220668307725787097172959558\
+8570966121408707156876700362441455708`100.89697275878345}
+ 
+PB = {0, 0}
+ 
+PC = {6, 0}
+ 
 AlgoKimberlingWeights[k_, a_, b_, c_] := 
     Module[{w, a2, a3, a4, a5, a6, a7, a8, a9, a10, b2, b3, b4, b5, b6, b7, 
       b8, b9, b10, c2, c3, c4, c5, c6, c7, c8, c9, c10, Q, R, S, T, U, V, 
-      angleA, angleB, angleC}, a2 = a*a; a3 = a*a2; a4 = a*a3; a5 = a*a4; 
-      a6 = a*a5; a7 = a*a6; a8 = a*a7; a9 = a*a8; a10 = a*a9; b2 = b*b; 
-      b3 = b*b2; b4 = b*b3; b5 = b*b4; b6 = b*b5; b7 = b*b6; b8 = b*b7; 
-      b9 = b*b8; b10 = b*b9; c2 = c*c; c3 = c*c2; c4 = c*c3; c5 = c*c4; 
-      c6 = c*c5; c7 = c*c6; c8 = c*c7; c9 = c*c8; c10 = c*c9; R = b2 + c2; 
-      Q = (b2 - c2)*(b2 - c2); angleA = ArcCos[0.5*((b2 + c2 - a2)/b/c)]; 
+      angleA, angleB, angleC, SA, SB, SC}, a2 = a*a; a3 = a*a2; a4 = a*a3; 
+      a5 = a*a4; a6 = a*a5; a7 = a*a6; a8 = a*a7; a9 = a*a8; a10 = a*a9; 
+      b2 = b*b; b3 = b*b2; b4 = b*b3; b5 = b*b4; b6 = b*b5; b7 = b*b6; 
+      b8 = b*b7; b9 = b*b8; b10 = b*b9; c2 = c*c; c3 = c*c2; c4 = c*c3; 
+      c5 = c*c4; c6 = c*c5; c7 = c*c6; c8 = c*c7; c9 = c*c8; c10 = c*c9; 
+      R = b2 + c2; Q = (b2 - c2)*(b2 - c2); 
+      angleA = ArcCos[0.5*((b2 + c2 - a2)/b/c)]; 
       angleB = ArcCos[0.5*((-b2 + c2 + a2)/a/c)]; 
       angleC = ArcCos[0.5*((b2 - c2 + a2)/b/a)]; T = a2 - b2 - c2; 
       U = a2 + b2 - c2; V = a2 - b2 + c2; 
       S = Sqrt[(a + b + c)*(-a + b + c)*(a - b + c)*(a + b - c)]; 
+      SA = (b + c - a)/2; SB = (a + c - b)/2; SC = (b + a - c)/2; 
       Which[k == 1, a, k == 2, 1, k == 3, a2*T, k == 4, -a4 + Q, k == 5, 
        Q - a2*R, k == 6, a2, k == 7, -((a + b - c)*(a - b + c)), k == 8, 
        -a + b + c, k == 9, a*(a - b - c), k == 10, b + c, k == 11, 
@@ -933,15 +942,16 @@ AlgoKimberlingWeights[k_, a_, b_, c_] :=
        a2*U*V*(a4 + b4 + c4 - 2*a2*R), k == 25, a2*U*V, k == 26, 
        a2*(a8 - 2*a6*R - Q*(b4 + c4) + 2*a2*(b6 + c6)), k == 27, 
        (a + b)*(a + c)*U*V, k == 28, a*(a + b)*(a + c)*U*V, k == 29, 
-       (a + b)*(a - b - c)*(a + c)*U*V, k == 30, 2*a4 - Q - a2*R, k == 31, 
-       a3, k == 32, a4, k == 33, a*(a - b - c)*U*V, k == 34, 
-       a*(a + b - c)*(a - b + c)*U*V, k == 35, a2*(a2 - b2 - b*c - c2), 
-       k == 36, a2*(a2 - b2 + b*c - c2), k == 37, a*(b + c), k == 38, a*R, 
-       k == 39, a2*R, k == 40, a*(a3 + a2*(b + c) - (b - c)^2*(b + c) - 
-         a*(b + c)^2), k == 41, a3*(a - b - c), k == 42, a2*(b + c), k == 43, 
-       a*(-(b*c) + a*(b + c)), k == 44, a*(2*a - b - c), k == 45, 
-       a*(a - 2*(b + c)), k == 46, a*(a3 + a2*(b + c) - (b - c)^2*(b + c) - 
-         a*R), k == 47, a3*(a4 + b4 + c4 - 2*a2*R), k == 48, a3*T, k == 49, 
+       (a + b)*(a - b - c)*(a + c)*U*V, k == 30, 2*a4 - (b2 - c2)^2 - 
+        a2*(b2 + c2), k == 31, a3, k == 32, a4, k == 33, a*(a - b - c)*U*V, 
+       k == 34, a*(a + b - c)*(a - b + c)*U*V, k == 35, 
+       a2*(a2 - b2 - b*c - c2), k == 36, a2*(a2 - b2 + b*c - c2), k == 37, 
+       a*(b + c), k == 38, a*R, k == 39, a2*R, k == 40, 
+       a*(a3 + a2*(b + c) - (b - c)^2*(b + c) - a*(b + c)^2), k == 41, 
+       a3*(a - b - c), k == 42, a2*(b + c), k == 43, a*(-(b*c) + a*(b + c)), 
+       k == 44, a*(2*a - b - c), k == 45, a*(a - 2*(b + c)), k == 46, 
+       a*(a3 + a2*(b + c) - (b - c)^2*(b + c) - a*R), k == 47, 
+       a3*(a4 + b4 + c4 - 2*a2*R), k == 48, a3*T, k == 49, 
        a4*T*(a4 + b4 - b2*c2 + c4 - 2*a2*R), k == 50, a4*(a2 - b2 - b*c - c2)*
         (a2 - b2 + b*c - c2), k == 51, a2*(-Q + a2*R), k == 52, 
        a2*(a4 + b4 + c4 - 2*a2*R)*(-Q + a2*R), k == 53, U*V*(-Q + a2*R), 
@@ -963,28 +973,28 @@ AlgoKimberlingWeights[k_, a_, b_, c_] :=
        a2*(a4 - 2*b4 + b2*c2 + c4 + a2*(b2 - 2*c2))*(a4 + b4 + b2*c2 - 2*c4 + 
          a2*(-2*b2 + c2)), k == 75, b*c, k == 76, b2*c2, k == 77, 
        a*(a + b - c)*(a - b + c)*T, k == 78, a*(a - b - c)*T, k == 79, 
-       -((a2 + a*b + b2 - c2)*(a2 - b2 + a*c + c2)), k == 80, 
-       -((a2 - a*b + b2 - c2)*(a2 - b2 - a*c + c2)), k == 81, 
-       a*(a + b)*(a + c), k == 82, a*(a2 + b2)*(a2 + c2), k == 83, 
-       (a2 + b2)*(a2 + c2), k == 84, a*(a3 + a2*(b - c) - a*(b - c)^2 - 
-         (b - c)*(b + c)^2)*(a3 - a*(b - c)^2 + a2*(-b + c) + 
-         (b - c)*(b + c)^2), k == 85, b*(-a + b - c)*(a + b - c)*c, k == 86, 
-       (a + b)*(a + c), k == 87, a*(a*(b - c) - b*c)*(a*(b - c) + b*c), 
-       k == 88, a*(a + b - 2*c)*(a - 2*b + c), k == 89, 
-       a*(2*a + 2*b - c)*(2*a - b + 2*c), k == 90, 
-       a*(a3 + a2*(b - c) - (b - c)*(b + c)^2 - a*R)*(a3 + a2*(-b + c) + 
-         (b - c)*(b + c)^2 - a*R), k == 91, b*c*(a4 - 2*a2*b2 + Q)*
-        (a4 - 2*a2*c2 + Q), k == 92, b*c*(-a4 + Q), k == 93, 
-       b2*c2*(-V)*U*(a4 + Q - a2*(2*b2 + c2))*(a4 + Q - a2*(b2 + 2*c2)), 
-       k == 94, b2*c2*(a2 - a*b + b2 - c2)*(a2 + a*b + b2 - c2)*
-        (-a2 + b2 - a*c - c2)*(-a2 + b2 + a*c - c2), k == 95, 
-       (a4 + b4 - b2*c2 - a2*(2*b2 + c2))*(a4 - b2*c2 + c4 - a2*(b2 + 2*c2)), 
-       k == 96, (a4 - 2*a2*b2 + Q)*(a4 - 2*a2*c2 + Q)*(a4 + b4 - b2*c2 - 
-         a2*(2*b2 + c2))*(a4 - b2*c2 + c4 - a2*(b2 + 2*c2)), k == 97, 
-       a2*T*(a4 + b4 - b2*c2 - a2*(2*b2 + c2))*(a4 - b2*c2 + c4 - 
-         a2*(b2 + 2*c2)), k == 98, (a4 + b4 - a2*c2 - b2*c2)*
-        (a4 - a2*b2 - b2*c2 + c4), k == 99, (a - b)*(a + b)*(a - c)*(a + c), 
-       k == 100, a*(a - b)*(a - c), k == 101, a2*(a - b)*(a - c), k == 102, 
+       1/(b2 + c2 - a2 + b*c), k == 80, -((a2 - a*b + b2 - c2)*
+         (a2 - b2 - a*c + c2)), k == 81, a*(a + b)*(a + c), k == 82, 
+       a*(a2 + b2)*(a2 + c2), k == 83, (a2 + b2)*(a2 + c2), k == 84, 
+       a*(a3 + a2*(b - c) - a*(b - c)^2 - (b - c)*(b + c)^2)*
+        (a3 - a*(b - c)^2 + a2*(-b + c) + (b - c)*(b + c)^2), k == 85, 
+       b*(-a + b - c)*(a + b - c)*c, k == 86, (a + b)*(a + c), k == 87, 
+       a*(a*(b - c) - b*c)*(a*(b - c) + b*c), k == 88, 
+       a*(a + b - 2*c)*(a - 2*b + c), k == 89, a*(2*a + 2*b - c)*
+        (2*a - b + 2*c), k == 90, a*(a3 + a2*(b - c) - (b - c)*(b + c)^2 - 
+         a*R)*(a3 + a2*(-b + c) + (b - c)*(b + c)^2 - a*R), k == 91, 
+       b*c*(a4 - 2*a2*b2 + Q)*(a4 - 2*a2*c2 + Q), k == 92, b*c*(-a4 + Q), 
+       k == 93, b2*c2*(-V)*U*(a4 + Q - a2*(2*b2 + c2))*
+        (a4 + Q - a2*(b2 + 2*c2)), k == 94, b2*c2*(a2 - a*b + b2 - c2)*
+        (a2 + a*b + b2 - c2)*(-a2 + b2 - a*c - c2)*(-a2 + b2 + a*c - c2), 
+       k == 95, (a4 + b4 - b2*c2 - a2*(2*b2 + c2))*(a4 - b2*c2 + c4 - 
+         a2*(b2 + 2*c2)), k == 96, (a4 - 2*a2*b2 + Q)*(a4 - 2*a2*c2 + Q)*
+        (a4 + b4 - b2*c2 - a2*(2*b2 + c2))*(a4 - b2*c2 + c4 - 
+         a2*(b2 + 2*c2)), k == 97, a2*T*(a4 + b4 - b2*c2 - a2*(2*b2 + c2))*
+        (a4 - b2*c2 + c4 - a2*(b2 + 2*c2)), k == 98, 
+       (a4 + b4 - a2*c2 - b2*c2)*(a4 - a2*b2 - b2*c2 + c4), k == 99, 
+       (a - b)*(a + b)*(a - c)*(a + c), k == 100, a*(a - b)*(a - c), 
+       k == 101, a2*(a - b)*(a - c), k == 102, 
        a2*(a4 - a3*b - 2*b4 + a*b*(b - c)^2 + b3*c + b2*c2 - b*c3 + c4 + 
          a2*(b2 + b*c - 2*c2))*(a4 + b4 - a3*c - b3*c + a*(b - c)^2*c + 
          b2*c2 + b*c3 - 2*c4 + a2*(-2*b2 + b*c + c2)), k == 103, 
@@ -1102,10 +1112,9 @@ AlgoKimberlingWeights[k_, a_, b_, c_] :=
        a*(-(b*(b - c)^4*c) + a5*(b + c) + a*(b - c)^2*(b + c)^3 - 
          2*a2*(b - c)^2*(2*b2 + 3*b*c + 2*c2) - a4*(4*b2 + b*c + 4*c2) + 
          a3*(6*b3 - 2*b2*c - 2*b*c2 + 6*c3)), k == 171, a3 + a*b*c, k == 172, 
-       a4 + a2*b*c, k == 173, a*(Sqrt[a*(-a + b + c)] + Sqrt[b*(a - b + c)] + 
-         Sqrt[c*(a + b - c)]), k == 174, a*Sqrt[b*(a - b + c)]*
-        Sqrt[c*(a + b - c)], k == 175, -2*a*(a - b - c)*(a + b - c)*
-         (a - b + c) - (a + b - c)*(a - b + c)*S, k == 176, 
+       a4 + a2*b*c, k == 174, a*Sqrt[b*(a - b + c)]*Sqrt[c*(a + b - c)], 
+       k == 175, -2*a*(a - b - c)*(a + b - c)*(a - b + c) - 
+        (a + b - c)*(a - b + c)*S, k == 176, 
        2*a*(a - b - c)*(a + b - c)*(a - b + c) - (a + b - c)*(a - b + c)*S, 
        k == 177, (a + b - c)*(a - b + c)*Sqrt[a*(-a + b + c)]*
         (Sqrt[b*(a - b + c)] + Sqrt[c*(a + b - c)]), k == 178, 
