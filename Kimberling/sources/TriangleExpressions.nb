@@ -1,0 +1,134 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3893,        126]
+NotebookOptionsPosition[      3536,        112]
+NotebookOutlinePosition[      3940,        128]
+CellTagsIndexPosition[      3897,        125]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", 
+  RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"sp", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b", "+", "c"}], ")"}], "/", "2"}]}], ";", " ", 
+  RowBox[{"sa", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"b", "+", "c", "-", "a"}], ")"}], "/", "2"}]}], ";", " ", 
+  RowBox[{"sb", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "-", "b", "+", "c"}], ")"}], "/", "2"}]}], ";", 
+  RowBox[{"sc", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"a", "+", "b", "-", "c"}], ")"}], "/", "2"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"S", "=", 
+   RowBox[{"2", "*", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"sp", " ", "sa", " ", "sb", " ", "sc"}], "]"}]}]}], ";", 
+  RowBox[{"r", "=", 
+   RowBox[{"S", "/", "sp"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SA", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["b", "2"], "+", 
+      SuperscriptBox["c", "2"], "-", 
+      SuperscriptBox["a", "2"]}], ")"}], "/", "2"}]}], ";", " ", 
+  RowBox[{"SB", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["a", "2"], "-", 
+      SuperscriptBox["b", "2"], "+", 
+      SuperscriptBox["c", "2"]}], ")"}], "/", "2"}]}], ";", 
+  RowBox[{"SC", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["a", "2"], "+", 
+      SuperscriptBox["b", "2"], "-", 
+      SuperscriptBox["c", "2"]}], ")"}], "/", "2"}]}], ";", " ", 
+  RowBox[{"SW", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["a", "2"], "+", 
+      SuperscriptBox["b", "2"], "+", 
+      SuperscriptBox["c", "2"]}], ")"}], "/", "2"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"R", " ", "=", " ", 
+   RowBox[{"a", " ", "b", " ", 
+    RowBox[{"c", "/", "2"}], "S"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"angleA", " ", "=", " ", 
+    RowBox[{"ArcCos", "[", 
+     FractionBox["SA", 
+      RowBox[{"b", " ", "c"}]], "]"}]}], ";", 
+   RowBox[{"angleB", " ", "=", " ", 
+    RowBox[{"ArcCos", "[", 
+     FractionBox["SB", 
+      RowBox[{"a", " ", "c"}]], "]"}]}], ";", 
+   RowBox[{"angleC", " ", "=", " ", 
+    RowBox[{"ArcCos", "[", 
+     FractionBox["SC", 
+      RowBox[{"a", " ", "b"}]], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Save", "[", 
+  RowBox[{"\"\<TriangleExpressions.m\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "sp", ",", " ", "sa", ",", " ", "sb", ",", " ", "sc", ",", " ", "S", ",", 
+     " ", "r", ",", " ", "SA", ",", " ", "SB", ",", " ", "SC", ",", " ", "SW",
+      ",", " ", "R", ",", " ", "angleA", ",", " ", "angleB", ",", " ", 
+     "angleC"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.8416276350164003`*^9, 
+  3.8416277290027027`*^9}},ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-\
+9bd77f1dd136"]
+},
+WindowSize->{1105.2, 604.8},
+WindowMargins->{{12.6, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (June 19, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"aca5b677-55b6-4267-a176-e3559e484e60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2974, 90, 184, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"]
+}
+]
+*)
+
