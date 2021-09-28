@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3893,        126]
-NotebookOptionsPosition[      3536,        112]
-NotebookOutlinePosition[      3940,        128]
-CellTagsIndexPosition[      3897,        125]
+NotebookDataLength[      5056,        154]
+NotebookOptionsPosition[      4514,        138]
+NotebookOutlinePosition[      4915,        154]
+CellTagsIndexPosition[      4872,        151]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -84,20 +84,47 @@ Cell[BoxData[{
    RowBox[{"a", " ", "b", " ", 
     RowBox[{"c", "/", "2"}], "S"}]}], ";"}], "\n", 
  RowBox[{
+  RowBox[{"angleA", " ", "=", " ", 
+   RowBox[{"ArcCos", "[", 
+    FractionBox["SA", 
+     RowBox[{"b", " ", "c"}]], "]"}]}], ";", 
+  RowBox[{"angleB", " ", "=", " ", 
+   RowBox[{"ArcCos", "[", 
+    FractionBox["SB", 
+     RowBox[{"a", " ", "c"}]], "]"}]}], ";", 
+  RowBox[{"angleC", " ", "=", " ", 
+   RowBox[{"ArcCos", "[", 
+    FractionBox["SC", 
+     RowBox[{"a", " ", "b"}]], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"angleW", " ", "=", 
+   RowBox[{"ArcCot", "[", 
+    RowBox[{
+     SuperscriptBox["a", "2"], "+", 
+     SuperscriptBox["b", "2"], "+", 
+     RowBox[{
+      SuperscriptBox["c", "2"], "/", 
+      RowBox[{"(", 
+       RowBox[{"2", "S"}], ")"}]}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.8416276350164003`*^9, 3.8416277290027027`*^9}, {
+  3.841734244354642*^9, 3.84173430979032*^9}, {3.841802334416523*^9, 
+  3.8418023445228405`*^9}},
+ CellLabel->"",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
   RowBox[{
-   RowBox[{"angleA", " ", "=", " ", 
-    RowBox[{"ArcCos", "[", 
-     FractionBox["SA", 
-      RowBox[{"b", " ", "c"}]], "]"}]}], ";", 
-   RowBox[{"angleB", " ", "=", " ", 
-    RowBox[{"ArcCos", "[", 
-     FractionBox["SB", 
-      RowBox[{"a", " ", "c"}]], "]"}]}], ";", 
-   RowBox[{"angleC", " ", "=", " ", 
-    RowBox[{"ArcCos", "[", 
-     FractionBox["SC", 
-      RowBox[{"a", " ", "b"}]], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+   RowBox[{"a", "=", "3"}], ";", 
+   RowBox[{"b", "=", "4"}], ";", 
+   RowBox[{"c", "=", "5"}], ";"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.841708186269831*^9, 3.8417082150528245`*^9}, {
+  3.8417112386537905`*^9, 3.841711244092964*^9}, {3.8417343205360117`*^9, 
+  3.841734344240757*^9}, {3.8418023229704723`*^9, 3.8418023567757444`*^9}, {
+  3.8418026526731997`*^9, 
+  3.8418026551169186`*^9}},ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-\
+970d8b8bfc09"],
+
+Cell[BoxData[
  RowBox[{"Save", "[", 
   RowBox[{"\"\<TriangleExpressions.m\>\"", ",", 
    RowBox[{"{", 
@@ -105,13 +132,12 @@ Cell[BoxData[{
     "sp", ",", " ", "sa", ",", " ", "sb", ",", " ", "sc", ",", " ", "S", ",", 
      " ", "r", ",", " ", "SA", ",", " ", "SB", ",", " ", "SC", ",", " ", "SW",
       ",", " ", "R", ",", " ", "angleA", ",", " ", "angleB", ",", " ", 
-     "angleC"}], "}"}]}], "]"}]}], "Input",
- CellChangeTimes->{{3.8416276350164003`*^9, 
-  3.8416277290027027`*^9}},ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-\
-9bd77f1dd136"]
+     "angleC"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{3.8418023480691648`*^9},
+ CellLabel->"",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 },
-WindowSize->{1105.2, 604.8},
-WindowMargins->{{12.6, Automatic}, {Automatic, 0}},
+WindowSize->{1093.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (June 19, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"aca5b677-55b6-4267-a176-e3559e484e60"
@@ -127,7 +153,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 2974, 90, 184, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"]
+Cell[558, 20, 2949, 91, 167, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+Cell[3510, 113, 494, 11, 28, "Input",ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-970d8b8bfc09"],
+Cell[4007, 126, 503, 10, 28, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)

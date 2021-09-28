@@ -12,8 +12,8 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
      "Yiu" -> {2*S*((SA^2 - R^2*SA - S^2)/R), c*(S^2 + SA*SC), 
        b*(S^2 + SA*SB)}, "Yiu tangents" -> -{(SB + 3*SC)*((SC + 3*SB)/a), 
         (SA + 3*SC)*((SC + 3*SB)/b), (SA + 3*SB)*((SB + 3*SC)/c)}, 
-     "1st Zaniah triangle" -> {2, (a + b - c)/b, (a - b + c)/c}, 
-     "2nd Zaniah triangle" -> {2, (a - b + c)/b, (a + b - c)/c}, 
+     "1st Zaniah" -> {2, (a + b - c)/b, (a - b + c)/c}, 
+     "2nd Zaniah" -> {2, (a - b + c)/b, (a + b - c)/c}, 
      "Walsmith" -> {-(2*a^6 - (3*b^4 - 4*b^2*c^2 + 3*c^4)*a^2 + 
            (b^4 - c^4)*(b^2 - c^2))/(2*a^4 - (b^2 + c^2)*a^2 - (b^2 - c^2)^2)/
         a, b, c}, "Wasat" -> {(b + c)/a, (c - a)/b, (b - a)/c}, 
@@ -385,10 +385,10 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
        Cos[angleC] + 2*Cos[2*(angleB/3) + angleC/3]}, 
      "Steiner" -> {0, (-c)*(a^2 - b^2), b*(a^2 - c^2)}, 
      "submedial" -> {2*a*b*c, (3*a^2 + b^2 - c^2)*c, (3*a^2 + c^2 - b^2)*b}, 
-     "symmedial" -> {0, 1/c, 1/b}, "1st Altintas-isodynamic triangle" -> 
-      {(-((S^2 + SB*SC)*Sqrt[3]*S + (SA + 3*SW)*S^2 - 2*(S^2 - SA*SW + SW^2)*
-           SA))*(a*(S^2 - Sqrt[3]*SA*S - 2*SA*SW)), SC/b, SB/c}, 
-     "2nd Altintas-isodynamic triangle" -> 
+     "symmedial" -> {0, 1/c, 1/b}, "1st Altintas-isodynamic" -> 
+      {-((S^2 + SB*SC)*Sqrt[3]*S + (SA + 3*SW)*S^2 - 2*(S^2 - SA*SW + SW^2)*
+           SA)/(a*(S^2 - Sqrt[3]*SA*S - 2*SA*SW)), SC/b, SB/c}, 
+     "2nd Altintas-isodynamic" -> 
       {-((-(S^2 + SB*SC))*Sqrt[3]*S + (SA + 3*SW)*S^2 - 
           2*(S^2 - SA*SW + SW^2)*SA)/(a*(S^2 + Sqrt[3]*SA*S - 2*SA*SW)), 
        SC/b, SB/c}, "anti-1st Auriga" -> 
@@ -415,67 +415,63 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
      "2nd Auriga" -> {(a^4 - (b + c)^2*a^2 + 4*(b + c)*S*Sqrt[r*R + 4*R^2])/
         a, (b^4 - b^2*(a + c)^2 - 4*b*S*Sqrt[r*R + 4*R^2])/b, 
        (c^4 - c^2*(a + b)^2 - 4*c*S*Sqrt[r*R + 4*R^2])/c}, 
-     "1st Ehrmann circumscribing triangle" -> 
-      {-(S^2 - Sqrt[3]*(SB - SC)*S - 3*SB*SC)/a, (S + Sqrt[3]*SA)*
-        ((S + Sqrt[3]*SC)/b), (S - Sqrt[3]*SA)*((S - Sqrt[3]*SB)/c)}, 
-     "2nd Ehrmann circumscribing triangle" -> 
+     "1st Ehrmann circumscribing" -> {-(S^2 - Sqrt[3]*(SB - SC)*S - 3*SB*SC)/
+        a, (S + Sqrt[3]*SA)*((S + Sqrt[3]*SC)/b), (S - Sqrt[3]*SA)*
+        ((S - Sqrt[3]*SB)/c)}, "2nd Ehrmann circumscribing" -> 
       {-(S^2 + Sqrt[3]*(SB - SC)*S - 3*SB*SC)/a, (S - Sqrt[3]*SA)*
         ((S - Sqrt[3]*SC)/b), (S + Sqrt[3]*SA)*((S + Sqrt[3]*SB)/c)}, 
-     "1st Ehrmann inscribed triangle" -> {0, (S - Sqrt[3]*SA)*c, 
-       (S + Sqrt[3]*SA)*b}, "2nd Ehrmann inscribed triangle" -> 
-      {0, (S + Sqrt[3]*SA)*c, (S - Sqrt[3]*SA)*b}, "1st excosine triangle" -> 
-      {(-S^2)*a, (S^2 - 2*SA*SB)*b, (S^2 - 2*SA*SC)*c}, 
-     "2nd excosine triangle" -> {(-S^2)*SB*(SC/(SA*a)), (S^2 - 2*SA*SB)*b, 
-       (S^2 - 2*SA*SC)*c}, "1st Fermat-Dao equilateral triangle" -> 
+     "1st Ehrmann inscribed" -> {0, (S - Sqrt[3]*SA)*c, (S + Sqrt[3]*SA)*b}, 
+     "2nd Ehrmann inscribed" -> {0, (S + Sqrt[3]*SA)*c, (S - Sqrt[3]*SA)*b}, 
+     "1st excosine" -> {(-S^2)*a, (S^2 - 2*SA*SB)*b, (S^2 - 2*SA*SC)*c}, 
+     "2nd excosine" -> {(-S^2)*SB*(SC/(SA*a)), (S^2 - 2*SA*SB)*b, 
+       (S^2 - 2*SA*SC)*c}, "1st Fermat-Dao equilateral" -> 
       {(-a)*((Sqrt[3]*S*((-6*R^2 + 3*SA + 12*SW)*S^2 + 
             (7*SA^2 + SB*SC + SW^2)*SW + 18*R^2*SB*SC) + 
           (20*S^2 - 6*R^2*(3*SA - SW) + 19*SA^2 - SB*SC + 11*SW^2)*S^2 + 
           3*(2*SA - SW)*SA*SW^2)/(Sqrt[3]*a^2 + 2*S)), 
        (S + Sqrt[3]*SB)*(S^2 + Sqrt[3]*(6*R^2 - SW + SC)*S + SW*SC)*b, 
        (S + Sqrt[3]*SC)*(S^2 + Sqrt[3]*(6*R^2 - SW + SB)*S + SB*SW)*c}, 
-     "2nd Fermat-Dao equilateral triangle" -> 
+     "2nd Fermat-Dao equilateral" -> 
       {(-a)*(((-Sqrt[3])*S*((-6*R^2 + 3*SA + 12*SW)*S^2 + 
             (7*SA^2 + SB*SC + SW^2)*SW + 18*R^2*SB*SC) + 
           (20*S^2 - 6*R^2*(3*SA - SW) + 19*SA^2 - SB*SC + 11*SW^2)*S^2 + 
           3*(2*SA - SW)*SA*SW^2)/(Sqrt[3]*a^2 - 2*S)), 
        (-S + Sqrt[3]*SB)*(S^2 - Sqrt[3]*(6*R^2 - SW + SC)*S + SW*SC)*b, 
        (-S + Sqrt[3]*SC)*(S^2 - Sqrt[3]*(6*R^2 - SW + SB)*S + SB*SW)*c}, 
-     "3rd Fermat-Dao equilateral triangle" -> 
+     "3rd Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(3*S^2 + SB*SC) + 5*(SB + SC)*S)/(a*(Sqrt[3]*SA + S)), 
        (SC + Sqrt[3]*S)/b, (SB + Sqrt[3]*S)/c}, 
-     "4th Fermat-Dao equilateral triangle" -> 
+     "4th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(3*S^2 + SB*SC) - 5*(SB + SC)*S)/(a*(Sqrt[3]*SA - S)), 
        (SC - Sqrt[3]*S)/b, (SB - Sqrt[3]*S)/c}, 
-     "5th Fermat-Dao equilateral triangle" -> 
+     "5th Fermat-Dao equilateral" -> 
       {((7*SA + 4*SW)*S^2 + 3*SA^3 + 5*Sqrt[3]*(S^2 + SA^2)*S)/
         (a*(Sqrt[3]*SA + S)^2), b*((Sqrt[3]*c^2 + 2*S)/(Sqrt[3]*SB + S)), 
        c*((Sqrt[3]*b^2 + 2*S)/(Sqrt[3]*SC + S))}, 
-     "6th Fermat-Dao equilateral triangle" -> 
+     "6th Fermat-Dao equilateral" -> 
       {((7*SA + 4*SW)*S^2 + 3*SA^3 - 5*Sqrt[3]*(S^2 + SA^2)*S)/
         (a*(Sqrt[3]*SA - S)^2), b*((Sqrt[3]*c^2 - 2*S)/(Sqrt[3]*SB - S)), 
        c*((Sqrt[3]*b^2 - 2*S)/(Sqrt[3]*SC - S))}, 
-     "7th Fermat-Dao equilateral triangle" -> 
+     "7th Fermat-Dao equilateral" -> 
       {2*((Sqrt[3]*(SB + SC) + 2*S)/(a*(Sqrt[3]*SA + S))), 1/b, 1/c}, 
-     "8th Fermat-Dao equilateral triangle" -> 
+     "8th Fermat-Dao equilateral" -> 
       {2*((Sqrt[3]*(SB + SC) - 2*S)/(a*(Sqrt[3]*SA - S))), 1/b, 1/c}, 
-     "9th Fermat-Dao equilateral triangle" -> 
+     "9th Fermat-Dao equilateral" -> 
       {2*S*(((2*S^2 + SA^2 + SB*SC)*Sqrt[3] + (6*R^2 + SA + SW)*S)/
-         (a*(Sqrt[3]*SA + S)^2)), b, c}, 
-     "10th Fermat-Dao equilateral triangle" -> 
+         (a*(Sqrt[3]*SA + S)^2)), b, c}, "10th Fermat-Dao equilateral" -> 
       {-2*S*(((2*S^2 + SA^2 + SB*SC)*Sqrt[3] - (6*R^2 + SA + SW)*S)/
-         (a*(Sqrt[3]*SA - S)^2)), b, c}, 
-     "11th Fermat-Dao equilateral triangle" -> 
+         (a*(Sqrt[3]*SA - S)^2)), b, c}, "11th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(S^2 + SB*SC) + (SB + SC)*S)/(a*(Sqrt[3]*SA - S)), SC/b, 
-       SB/c}, "12th Fermat-Dao equilateral triangle" -> 
+       SB/c}, "12th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(S^2 + SB*SC) - (SB + SC)*S)/(a*(Sqrt[3]*SA + S)), SC/b, 
-       SB/c}, "13th Fermat-Dao equilateral triangle" -> 
+       SB/c}, "13th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(2*S^2 + SA^2 + SB*SC) + (SA + SW)*S)/(a*(Sqrt[3]*SA - S)), 
-       b, c}, "14th Fermat-Dao equilateral triangle" -> 
+       b, c}, "14th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(2*S^2 + SA^2 + SB*SC) - (SA + SW)*S)/(a*(Sqrt[3]*SA + S)), 
-       b, c}, "15th Fermat-Dao equilateral triangle" -> 
+       b, c}, "15th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(3*S^2 + SB*SC) + 5*(SB + SC)*S)/(a*(SA - Sqrt[3]*S)), 
        (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}, 
-     "16th Fermat-Dao equilateral triangle" -> 
+     "16th Fermat-Dao equilateral" -> 
       {(Sqrt[3]*(3*S^2 + SB*SC) - 5*(SB + SC)*S)/(a*(SA + Sqrt[3]*S)), 
        (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
      "VPH1" -> {((-b)*c + 4*R^2)/a, 2*R + c, 2*R + b}, 
@@ -520,4 +516,152 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
           3*(b^2 - c^2)^2)/b, -(8*(a + b)*S*c - 3*a^4 + 6*(b^2 + c^2)*a^2 + 
           4*b*c^2*a - 3*(b^2 - c^2)^2)/c}, 
      "VPH30" -> {-(a + R)^(-1), 1/b, 1/c}, 
-     "VPH31" -> {(2*(2*c + 3*R)*b + 6*R*c + 8*R^2)/a, -2*R - c, -b - 2*R}]
+     "VPH31" -> {(2*(2*c + 3*R)*b + 6*R*c + 8*R^2)/a, -2*R - c, -b - 2*R}, 
+     "1st half-diamonds" -> {-(Sqrt[3]*a^2 - 2*S)/a, (Sqrt[3]*SC + S)/b, 
+       (Sqrt[3]*SB + S)/c}, "2nd half-diamonds" -> {-(Sqrt[3]*a^2 + 2*S)/a, 
+       (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
+     "1st half-diamonds-central equilateral" -> {-(a^2 + 2*Sqrt[3]*S)/a, 
+       (SC - Sqrt[3]*S)/b, (SB - Sqrt[3]*S)/c}, 
+     "2nd half-diamonds-central equilateral" -> {-(a^2 - 2*Sqrt[3]*S)/a, 
+       (SC + Sqrt[3]*S)/b, (SB + Sqrt[3]*S)/c}, "1st half-squares" -> 
+      {-(a^2 + S)/a, SC/b, SB/c}, "2nd half-squares" -> 
+      {-(a^2 - S)/a, SC/b, SB/c}, "1st inner-Fermat-Dao-Nhi" -> 
+      {(7*S - 3*Sqrt[3]*a^2)/a, (-2*S + 3*Sqrt[3]*SC)/b, 
+       (-2*S + 3*Sqrt[3]*SB)/c}, "2nd inner-Fermat-Dao-Nhi" -> 
+      {(5*S - 3*Sqrt[3]*a^2)/a, (-4*S + 3*Sqrt[3]*SC)/b, 
+       (-4*S + 3*Sqrt[3]*SB)/c}, "3rd inner-Fermat-Dao-Nhi" -> 
+      {(-4*S - 3*Sqrt[3]*a^2)/a, (5*S + 3*Sqrt[3]*SC)/b, 
+       (5*S + 3*Sqrt[3]*SB)/c}, "4th inner-Fermat-Dao-Nhi" -> 
+      {(-8*S - 3*Sqrt[3]*a^2)/a, (S + 3*Sqrt[3]*SC)/b, (S + 3*Sqrt[3]*SB)/c}, 
+     "1st outer-Fermat-Dao-Nhi" -> {(-7*S - 3*Sqrt[3]*a^2)/a, 
+       (2*S + 3*Sqrt[3]*SC)/b, (2*S + 3*Sqrt[3]*SB)/c}, 
+     "2nd outer-Fermat-Dao-Nhi" -> {(-5*S - 3*Sqrt[3]*a^2)/a, 
+       (4*S + 3*Sqrt[3]*SC)/b, (4*S + 3*Sqrt[3]*SB)/c}, 
+     "3rd outer-Fermat-Dao-Nhi" -> {(4*S - 3*Sqrt[3]*a^2)/a, 
+       (-5*S + 3*Sqrt[3]*SC)/b, (-5*S + 3*Sqrt[3]*SB)/c}, 
+     "4th outer-Fermat-Dao-Nhi" -> {(8*S - 3*Sqrt[3]*a^2)/a, 
+       (-S + 3*Sqrt[3]*SC)/b, (-S + 3*Sqrt[3]*SB)/c}, 
+     "1st isodynamic-Dao equilateral" -> {(-(SB + SC))*((Sqrt[3]*SA + S)/a), 
+       (Sqrt[3]*(S^2 + SA*SC) + (SA + 3*SC)*S)/b, 
+       (Sqrt[3]*(S^2 + SA*SB) + (SA + 3*SB)*S)/c}, 
+     "2nd isodynamic-Dao equilateral" -> {(-(SB + SC))*((Sqrt[3]*SA - S)/a), 
+       (Sqrt[3]*(S^2 + SA*SC) - (SA + 3*SC)*S)/b, 
+       (Sqrt[3]*(S^2 + SA*SB) - (SA + 3*SB)*S)/c}, 
+     "3rd isodynamic-Dao equilateral" -> 
+      {(Sqrt[3]*(S^2 + SB*SC) + 2*(SB + SC)*S)/(a*SA), (Sqrt[3]*SC + S)/b, 
+       (Sqrt[3]*SB + S)/c}, "4th isodynamic-Dao equilateral" -> 
+      {(Sqrt[3]*(S^2 + SB*SC) - 2*(SB + SC)*S)/(a*SA), (Sqrt[3]*SC - S)/b, 
+       (Sqrt[3]*SB - S)/c}, "1st Jenkins" -> 
+      {-(2*(b + c)*a^4 + (3*b^2 + 4*b*c + 3*c^2)*a^3 - (b + c)*(b^2 + c^2)*
+           a^2 - (b^2 - c^2)^2*a + (b^2 - c^2)^2*(b + c))/a, 
+       ((2*b^2 + 2*b*c + c^2)*a^3 + (b + c)*(2*b^2 + c^2)*a^2 + 
+         (b^2 - c^2)*(2*b + c)*c*a + (b^2 - c^2)*(b + c)*c^2)/b, 
+       ((2*c^2 + 2*c*b + b^2)*a^3 + (c + b)*(2*c^2 + b^2)*a^2 + 
+         (c^2 - b^2)*(2*c + b)*b*a + (c^2 - b^2)*(c + b)*b^2)/c}, 
+     "2nd Jenkins" -> {(-(a + b + c))*(((b + c)*a + b^2 + c^2)/
+         (a*(a - b + c)*(a + b - c))), (a + c)/b, (a + b)/c}, 
+     "3rd Jenkins" -> {(a + b + c)*((2*(b + c)*a^4 + (3*b^2 + 4*b*c + 3*c^2)*
+           a^3 + (b + c)*(b^2 + 5*b*c + c^2)*a^2 + 3*(b^2 + b*c + c^2)*b*c*
+           a + (b + c)*b^2*c^2)/a), ((b + c)*a^3 + (2*b^2 + b*c + c^2)*a^2 + 
+         (b^2 + b*c + 3*c^2)*b*a + b^2*c*(b + c))*(a - b + c)*((a + c)/b), 
+       ((c + b)*a^3 + (2*c^2 + c*b + b^2)*a^2 + (c^2 + c*b + 3*b^2)*c*a + 
+         c^2*b*(c + b))*(a - c + b)*((a + b)/c)}, 
+     "K798e" -> {(-a)*b*c, (b*c*SC + 2*S^2)/b, (b*c*SB + 2*S^2)/c}, 
+     "K798i" -> {(-a)*b*c, (b*c*SC - 2*S^2)/b, (b*c*SB - 2*S^2)/c}, 
+     "1st Kenmotu free vertices" -> {-(4*S^2 - (SB + SC)*(SA - S))/a, 
+       (SB - S)*b, (SC - S)*c}, "2nd Kenmotu free vertices" -> 
+      {-(4*S^2 - (SB + SC)*(SA + S))/a, (SB + S)*b, (SC + S)*c}, 
+     "largest-circumscribed-equilateral" -> 
+      {(-6*Sqrt[3]*S*a^2 - 3*(a^2 + b^2 + c^2)*a^2 + 2*(b^2 - c^2)^2)/a, 
+       ((7*b^2 + 2*c^2)*a^2 - 3*b^4 + 5*b^2*c^2 - 2*c^4 + 
+         2*Sqrt[3]*S*(2*a^2 + b^2))/b, ((2*b^2 + 7*c^2)*a^2 - 3*c^4 + 
+         5*b^2*c^2 - 2*b^4 + 2*Sqrt[3]*S*(2*a^2 + c^2))/c}, 
+     "inner-Le Viet An" -> {(SW - Sqrt[3]*S)*a, (SB - SC)*b, (SC - SB)*c}, 
+     "outer-Le Viet An" -> {(SW + Sqrt[3]*S)*a, (SB - SC)*b, (SC - SB)*c}, 
+     "1st Lemoine-Dao equilateral" -> {(-(Sqrt[3]*SA + 2*S))*
+        ((SB + SC)/(a*SA)), (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
+     "2nd Lemoine-Dao equilateral" -> {(-(Sqrt[3]*SA - 2*S))*
+        ((SB + SC)/(a*SA)), (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}, 
+     "Lucas antipodal" -> {Cos[angleB]*Cos[angleC] - Sin[angleA], 
+       -Cos[angleB], -Cos[angleC]}, "Lucas(-1) antipodal" -> 
+      {Cos[angleB]*Cos[angleC] + Sin[angleA], -Cos[angleB], -Cos[angleC]}, 
+     "Lucas antipodal tangents" -> {(2*SA + SB + SC + S)*SA*a, 
+       (S^2 + SB*SC + (2*SB + SA)*S)*b, (S^2 + SB*SC + (2*SC + SA)*S)*c}, 
+     "Lucas(-1) antipodal tangents" -> {(2*SA + SB + SC - S)*SA*a, 
+       (S^2 + SB*SC - (2*SB + SA)*S)*b, (S^2 + SB*SC - (2*SC + SA)*S)*c}, 
+     "Lucas Brocard" -> {(-a)*(a^2 - 2*S), b*(a^2 + c^2 - S), 
+       c*(a^2 + b^2 - S)}, "Lucas(-1) Brocard" -> {(-a)*(a^2 + 2*S), 
+       b*(a^2 + c^2 + S), c*(a^2 + b^2 + S)}, "Lucas central" -> 
+      {Cos[angleA] + 2*Sin[angleA], Cos[angleB], Cos[angleC]}, 
+     "Lucas(-1) central" -> {Cos[angleA] - 2*Sin[angleA], Cos[angleB], 
+       Cos[angleC]}, "Lucas homothetic" -> {-(b^2 + c^2 - a^2)^2/(4*a), 
+       b*(c^2 + S), c*(b^2 + S)}, "Lucas(-1) homothetic" -> 
+      {-(b^2 + c^2 - a^2)^2/(4*a), b*(c^2 - S), c*(b^2 - S)}, 
+     "Lucas inner" -> {2*Cos[angleA] + 3*(Sin[angleA]/2), 
+       2*Cos[angleB] + Sin[angleB], 2*Cos[angleC] + Sin[angleC]}, 
+     "Lucas(-1) inner" -> {2*Cos[angleA] - 3*(Sin[angleA]/2), 
+       2*Cos[angleB] - Sin[angleB], 2*Cos[angleC] - Sin[angleC]}, 
+     "Lucas inner tangential" -> {4*Cos[angleA] + Sin[angleA], 
+       4*Cos[angleB] + 3*Sin[angleB], 4*Cos[angleC] + 3*Sin[angleC]}, 
+     "Lucas(-1) inner tangential" -> {4*Cos[angleA] - Sin[angleA], 
+       4*Cos[angleB] - 3*Sin[angleB], 4*Cos[angleC] - 3*Sin[angleC]}, 
+     "Lucas reflection" -> {(-Cos[angleB])*Cos[angleC]*Sin[angleA]^2 + 
+        (Cos[angleB] + (1 + Sin[2*angleB])*Cos[angleA - angleC] + 
+          Sin[angleB])*(Cos[angleC] + (1 + Sin[2*angleC])*
+           Cos[angleA - angleB] + Sin[angleC]), Cos[angleB]*
+        (Cos[angleC]*Sin[angleA]*Sin[angleB] - 
+         (Cos[angleC] + (1 + Sin[2*angleC])*Cos[angleA - angleB] + 
+           Sin[angleC])*Sin[angleC]), Cos[angleC]*
+        (Cos[angleB]*Sin[angleA]*Sin[angleC] - 
+         (Cos[angleB] + (1 + Sin[2*angleB])*Cos[angleA - angleC] + 
+           Sin[angleB])*Sin[angleB])}, "Lucas(-1) reflection" -> 
+      {(-Cos[angleB])*Cos[angleC]*Sin[angleA]^2 + 
+        (Cos[angleB] + (1 - Sin[2*angleB])*Cos[angleA - angleC] - 
+          Sin[angleB])*(Cos[angleC] + (1 - Sin[2*angleC])*
+           Cos[angleA - angleB] - Sin[angleC]), Cos[angleB]*
+        (Cos[angleC]*Sin[angleA]*Sin[angleB] + 
+         (Cos[angleC] + (1 - Sin[2*angleC])*Cos[angleA - angleB] - 
+           Sin[angleC])*Sin[angleC]), Cos[angleC]*
+        (Cos[angleB]*Sin[angleA]*Sin[angleC] + 
+         (Cos[angleB] + (1 - Sin[2*angleB])*Cos[angleA - angleC] - 
+           Sin[angleB])*Sin[angleB])}, "Lucas secondary central" -> 
+      {Cos[angleA] - 2*Sin[angleA], Cos[angleB] + 4*Sin[angleB], 
+       Cos[angleC] + 4*Sin[angleC]}, "Lucas(-1) secondary central" -> 
+      {Cos[angleA] + 2*Sin[angleA], Cos[angleB] - 4*Sin[angleB], 
+       Cos[angleC] - 4*Sin[angleC]}, "Lucas 1st secondary tangents" -> 
+      {Cos[angleA] - 2*Sin[angleA], Cos[angleB] + 3*Sin[angleB], 
+       Cos[angleC] + 3*Sin[angleC]}, "Lucas(-1) 1st secondary tangents" -> 
+      {Cos[angleA] + 2*Sin[angleA], Cos[angleB] - 3*Sin[angleB], 
+       Cos[angleC] - 3*Sin[angleC]}, "Lucas 2nd secondary tangents" -> 
+      {Cos[angleA] + 6*Sin[angleA], Cos[angleB] - Sin[angleB], 
+       Cos[angleC] - Sin[angleC]}, "Lucas(-1) 2nd secondary tangents" -> 
+      {Cos[angleA] - 6*Sin[angleA], Cos[angleB] + Sin[angleB], 
+       Cos[angleC] + Sin[angleC]}, "Lucas tangents" -> 
+      {Cos[angleA], Cos[angleB] + Sin[angleB], Cos[angleC] + Sin[angleC]}, 
+     "Lucas(-1) tangents" -> {Cos[angleA], Cos[angleB] - Sin[angleB], 
+       Cos[angleC] - Sin[angleC]}, "1st Savin" -> {2/(-a + b + c), 1/b, 1/c}, 
+     "2nd Savin" -> {2/(3*a + b + c), 1/b, 1/c}, "2nd inner-Soddy" -> 
+      {((-a + b + c)*a + 2*S)/(a*(-a + b + c)), 1, 1}, 
+     "2nd outer-Soddy" -> {((-a + b + c)*a - 2*S)/(a*(-a + b + c)), 1, 1}, 
+     "1st tri-square" -> {2*(S/a), (a^2 + 3*b^2 - c^2 + 2*S)/b, 
+       (a^2 - b^2 + 3*c^2 + 2*S)/c}, "2nd tri-square" -> 
+      {-2*(S/a), (a^2 + 3*b^2 - c^2 - 2*S)/b, (a^2 - b^2 + 3*c^2 - 2*S)/c}, 
+     "3rd tri-square" -> {4*((a^2 + S)/(a*(b^2 + c^2 - a^2 + 2*S))), 1/b, 
+       1/c}, "4th tri-square" -> {4*((a^2 - S)/(a*(b^2 + c^2 - a^2 - 2*S))), 
+       1/b, 1/c}, "1st tri-square-central" -> {2*((3*a^2 + 4*S)/a), 
+       (3*b^2 + c^2 - a^2 + 2*S)/b, (b^2 + 3*c^2 - a^2 + 2*S)/c}, 
+     "2nd tri-square-central" -> {2*((3*a^2 - 4*S)/a), 
+       (3*b^2 + c^2 - a^2 - 2*S)/b, (b^2 + 3*c^2 - a^2 - 2*S)/c}, 
+     "3rd tri-square-central" -> {(a^2 + 2*S)/a, (b^2 + S)/b, (c^2 + S)/c}, 
+     "4th tri-square-central" -> {(a^2 - 2*S)/a, (b^2 - S)/b, (c^2 - S)/c}, 
+     "2nd inner-Vecten" -> {1/(a*SA), 1/(b*(SB - S)), 1/(c*(SC - S))}, 
+     "3rd inner-Vecten" -> {(3*S^2 + SB*SC - 2*S*SW)/(a*SA), (SC - S)/b, 
+       (SB - S)/c}, "2nd outer-Vecten triangle" -> {1/(a*SA), 1/(b*(SB + S)), 
+       1/(c*(SC + S))}, "3rd outer-Vecten" -> 
+      {(3*S^2 + SB*SC + 2*S*SW)/(a*SA), (SC + S)/b, (SB + S)/c}, 
+     "Vu-Dao-X(15)-isodynamic equilateral" -> 
+      {((S^2 + 3*SB*SC)*a^2 - 4*Sqrt[3]*S*SB*SC)/
+        (4*a*SA*(Sqrt[3]*a^2 - 2*S)), (Sqrt[3]*SC - S)/b, 
+       (Sqrt[3]*SB - S)/c}, "Vu-Dao-X(16)-isodynamic equilateral" -> 
+      {((S^2 + 3*SB*SC)*a^2 + 4*Sqrt[3]*S*SB*SC)/
+        (4*a*SA*(Sqrt[3]*a^2 + 2*S)), (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}]

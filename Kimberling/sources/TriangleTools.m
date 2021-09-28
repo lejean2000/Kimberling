@@ -26,7 +26,7 @@ bReverseCoordChange[p_, d_, e_, f_] :=
  
 bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
-bToCartesian[p_] := N[(p/Total[p]) . {PA, PB, PC}]
+bToCartesian[p_] := N[(p/Total[p]) . {PA, PB, PC}, 50]
  
 bPerpendicular[po_, l_] := Module[{sa, sb, sc, f, g, h, pp, u, v, w, p, q, r, 
       ff, gg, hh, m}, pp = po/Total[po]; p = pp[[1]]; q = pp[[2]]; 
@@ -36,3 +36,7 @@ bPerpendicular[po_, l_] := Module[{sa, sb, sc, f, g, h, pp, u, v, w, p, q, r,
       ff = sb*g - sc*h; gg = sc*h - sa*f; hh = sa*f - sb*g; 
       m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
       {Coefficient[m, x], Coefficient[m, y], Coefficient[m, z]}]
+ 
+cToBary[v1_, v2_, v3_, xy_] := 
+    With[{mat = {{v1[[1]], v2[[1]], v3[[1]]}, {v1[[2]], v2[[2]], v3[[2]]}, 
+        {1, 1, 1}}}, LinearSolve[mat, Append[xy, 1]]]
