@@ -99,8 +99,8 @@ KimberlingTrilinears1000 := Association["X1" -> {1}, "X2" -> {b*c},
         ((3*a^4 - 2*a^2*(b^2 + c^2) - (b^2 - c^2)^2)/a)}, 
      "X123" -> {((a - b - c)*(b - c)^2*(a^2 - b^2 - c^2)*
          (a^4 - b^4 - c^4 + 2*a^2*b*c - 2*a*b^2*c - 2*a*b*c^2 + 2*b^2*c^2))/
-        a}, "X124" -> {b*c*(b + c - a)*(b - c)*
-        2[(b + c)*(b^2 + c^2 - a^3 - b*c) + a*b*c]}, 
+        a}, "X124" -> {b*c*(b + c - a)*(b - c)*2*
+        ((b + c)*(b^2 + c^2 - a^3 - b*c) + a*b*c)}, 
      "X125" -> {b*c*(b^2 + c^2 - a^2)*(b^2 - c^2)^2}, 
      "X126" -> {b*c*(2*a^2 - b^2 - c^2)[b^4 + c^4 + a^2*(b^2 + c^2) - 
           4*b^2*c^2]}, "X127" -> {b*c*(Sin[2*angleB] - Sin[2*angleC])*
@@ -200,12 +200,12 @@ KimberlingTrilinears1000 := Association["X1" -> {1}, "X2" -> {b*c},
            3*c^4) - a^2*(b^6 + c^6) + b^2*c^2*(b^2 - c^2)^2)}, 
      "X157" -> {a*(a^6 - b^6 - c^6 - a^4*(b^2 + c^2) + b^4*(c^2 + a^2) + 
          c^4*(a^2 + b^2))}, "X158" -> {Sec[angleA]^2}, 
-     "X159" -> {a[(a^2 + b^2 + c^2)*Sin[2*angleA] + (-a^2 - b^2 + c^2)*
-          Sin[2*angleB] + (-a^2 + b^2 - c^2)*Sin[2*angleC]]}, 
-     "X160" -> {a[(b^2 + c^2)*Sin[2*angleA] + (-a^2 + c^2)*Sin[2*angleB] + 
-         (-a^2 + b^2)*Sin[2*angleC]]}, 
-     "X161" -> {a[(a^2 + b^2 + c^2)*Sin[2*angleA]^2 + (-a^2 - b^2 + c^2)*
-          Sin[2*angleB]^2 + (-a^2 + b^2 - c^2)*Sin[2*angleC]^2]}, 
+     "X159" -> {a*((a^2 + b^2 + c^2)*Sin[2*angleA] + (-a^2 - b^2 + c^2)*
+          Sin[2*angleB] + (-a^2 + b^2 - c^2)*Sin[2*angleC])}, 
+     "X160" -> {a*((b^2 + c^2)*Sin[2*angleA] + (-a^2 + c^2)*Sin[2*angleB] + 
+         (-a^2 + b^2)*Sin[2*angleC])}, 
+     "X161" -> {a*((a^2 + b^2 + c^2)*Sin[2*angleA]^2 + (-a^2 - b^2 + c^2)*
+          Sin[2*angleB]^2 + (-a^2 + b^2 - c^2)*Sin[2*angleC]^2)}, 
      "X162" -> {Sec[angleA]*Csc[angleB - angleC]}, 
      "X163" -> {a^2/(b^2 - c^2)}, "X164" -> 
       {Sin[angleB/2] + Sin[angleC/2] - Sin[angleA/2]}, 
@@ -330,4 +330,171 @@ KimberlingTrilinears1000 := Association["X1" -> {1}, "X2" -> {b*c},
      "X249" -> {a/(b^2 - c^2)^2}, "X250" -> 
       {a^2*(Sec[angleA]/(b^2 - c^2)^2)}, "X251" -> {a/(b^2 + c^2)}, 
      "X252" -> {Sec[angleB - angleC]/(1 - 2*Cos[2*angleA])}, 
-     "X253" -> {1/(a*(3*a^4 - 2*a^2*(b^2 + c^2) - (b^2 - c^2)^2))}]
+     "X253" -> {1/(a*(3*a^4 - 2*a^2*(b^2 + c^2) - (b^2 - c^2)^2))}, 
+     "X254" -> {(1/a)*((a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*
+         (a^6 - (b^2 - c^2)^3 - a^4*(3*b^2 + c^2) + 
+          a^2*(3*b^4 + 2*b^2*c^2 - c^4))*(a^6 + (b^2 - c^2)^3 - 
+          a^4*(b^2 + 3*c^2) + a^2*(-b^4 + 2*b^2*c^2 + 3*c^4)))}, 
+     "X255" -> {Cos[angleA]^2}, "X256" -> {(b^2 + a*c)*(a*b + c^2)}, 
+     "X257" -> {(b^2 + a*c)*((a*b + c^2)/a)}, 
+     "X258" -> {-a^2 + (b - c)^2 + 2*Sqrt[b*(a - b + c)]*
+         Sqrt[c*(a + b - c)]}, "X259" -> {Sqrt[a*(-a + b + c)]}, 
+     "X260" -> {Cos[angleA/2]/(Cos[angleB/2] + Cos[angleC/2])}, 
+     "X261" -> {(a + b)^2*(a - b - c)*((a + c)^2/a)}, 
+     "X262" -> {(a^2*b^2 - b^4 + 2*a^2*c^2 + b^2*c^2)*
+        ((2*a^2*b^2 + a^2*c^2 + b^2*c^2 - c^4)/a)}, 
+     "X263" -> {a*(c^2*(b^2 - c^2) + a^2*(2*b^2 + c^2))*
+        (-b^4 + b^2*c^2 + a^2*(b^2 + 2*c^2))}, 
+     "X264" -> {Csc[angleA]*Csc[2*angleA]}, 
+     "X265" -> {Sin[2*angleA]*Csc[3*angleA]}, 
+     "X266" -> {a*Sqrt[(a + b - c)*c]*Sqrt[b*(a - b + c)]}, 
+     "X267" -> {1/(b^3 + c^3 - a^3 + (b + c - a)*(b*c + c*a + a*b))}, 
+     "X268" -> {a*(a - b - c)*(a^2 - b^2 - c^2)*(a^3 + a^2*(b - c) - 
+         a*(b - c)^2 - (b - c)*(b + c)^2)*(a^3 - a*(b - c)^2 + a^2*(-b + c) + 
+         (b - c)*(b + c)^2)}, "X269" -> {(a^2 - (b - c)^2)^2}, 
+     "X270" -> {(a + b)^2*(a - b - c)*(a + c)^2*(a^2 + b^2 - c^2)*
+        (a^2 - b^2 + c^2)}, "X271" -> {(a - b - c)*(a^2 - b^2 - c^2)*
+        (a^3 + a^2*(b - c) - a*(b - c)^2 - (b - c)*(b + c)^2)*
+        (a^3 - a*(b - c)^2 + a^2*(-b + c) + (b - c)*(b + c)^2)}, 
+     "X272" -> {((a + b)*(a + c)*(a^3 - b^2*c + c^3 - a*b*(b + c))*
+         (a^3 + b^3 - b*c^2 - a*c*(b + c)))/a}, 
+     "X273" -> {(b*(a + b - c)*c*(a - b + c)*(a^2 + b^2 - c^2)*
+         (a^2 - b^2 + c^2))/a}, "X274" -> {b^2*(c^2/(b + c))}, 
+     "X275" -> {((a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(a^4 + b^4 - b^2*c^2 - 
+          a^2*(2*b^2 + c^2))*(a^4 - b^2*c^2 + c^4 - a^2*(b^2 + 2*c^2)))/a}, 
+     "X276" -> {(b^2*c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*
+         (a^4 + b^4 - b^2*c^2 - a^2*(2*b^2 + c^2))*(a^4 - b^2*c^2 + c^4 - 
+          a^2*(b^2 + 2*c^2)))/a}, "X277" -> 
+      {((a^2 - 2*a*b + (b - c)^2)*(a^2 + (b - c)^2 - 2*a*c))/a}, 
+     "X278" -> {Sec[angleA]*Tan[angleA/2]}, 
+     "X279" -> {(a + b - c)^2*((a - b + c)^2/a)}, 
+     "X280" -> {Csc[angleA/2]^2/(-1 - Cos[angleA] + Cos[angleB] + 
+         Cos[angleC])}, "X281" -> {Sec[angleA]*Cot[angleA/2]}, 
+     "X282" -> {Cot[angleA/2]/(-1 - Cos[angleA] + Cos[angleB] + 
+         Cos[angleC])}, "X283" -> {Cos[angleA]/(Cos[angleB] + Cos[angleC])}, 
+     "X284" -> {a*((b + c - a)/(b + c))}, 
+     "X285" -> {1/((Cos[angleB] + Cos[angleC])*(-1 - Cos[angleA] + 
+          Cos[angleB] + Cos[angleC]))}, 
+     "X286" -> {-((b*(a + b)*c*(a + c)*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2))/
+         a)}, "X287" -> {((a^2 - b^2 - c^2)*(a^4 + b^4 - a^2*c^2 - b^2*c^2)*
+         (a^4 - a^2*b^2 - b^2*c^2 + c^4))/a}, 
+     "X288" -> {a*(a^4 + b^4 - b^2*c^2 - a^2*(2*b^2 + c^2))*
+        (a^4 - b^2*c^2 + c^4 - a^2*(b^2 + 2*c^2))*(a^4 + 2*b^4 - 3*b^2*c^2 + 
+         c^4 - a^2*(3*b^2 + 2*c^2))*(a^4 + b^4 - 3*b^2*c^2 + 2*c^4 - 
+         a^2*(2*b^2 + 3*c^2))}, "X289" -> {a*(a + b - c)*(a - b + c)*
+        (2*b*c - Sqrt[(a + b - c)*c]*Sqrt[b*(a - b + c)])}, 
+     "X290" -> {b^2*(c^2/(a*(b^4 + c^4 - a^2*b^2 - a^2*c^2)))}, 
+     "X291" -> {1/(a^2 - b*c)}, "X292" -> {a/(a^2 - b*c)}, 
+     "X293" -> {(a^2 - b^2 - c^2)*(a^4 + b^4 - a^2*c^2 - b^2*c^2)*
+        (a^4 - a^2*b^2 - b^2*c^2 + c^4)}, 
+     "X294" -> {(a - b - c)*(a^2 + b*(b - c) - a*c)*
+        (a^2 - a*b + c*(-b + c))}, "X295" -> 
+      {a*(-b^2 + a*c)*(a*b - c^2)*(a^2 - b^2 - c^2)}, 
+     "X296" -> {a*(a + b - c)*(a - b + c)*(a^2 - b^2 - c^2)*
+        (a^3*b + c^2*(b^2 - c^2) + a^2*(-2*b^2 + c^2) + a*(b^3 - b*c^2))*
+        (-b^4 + a^3*c + b^2*c^2 + a^2*(b^2 - 2*c^2) + a*((-b^2)*c + c^3))}, 
+     "X297" -> {((a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(-b^4 - c^4 + 
+          a^2*(b^2 + c^2)))/a}, "X298" -> {(S + Sqrt[3]*SA)/a}, 
+     "X299" -> {(S - Sqrt[3]*SA)/a}, "X300" -> 
+      {Csc[angleA]^2*Csc[angleA + Pi/3]}, 
+     "X301" -> {Csc[angleA]^2*Csc[angleA - Pi/3]}, 
+     "X302" -> {Csc[angleA]^2*Sin[angleA + Pi/6]}, 
+     "X303" -> {Csc[angleA]^2*Sin[angleA - Pi/6]}, 
+     "X304" -> {(b*c*(-a^2 + b^2 + c^2))/a}, 
+     "X305" -> {(b^2*c^2*(-a^2 + b^2 + c^2))/a}, 
+     "X306" -> {(b^2*c^2)*(b + c)*Cos[angleA]}, 
+     "X307" -> {b^2*c^2*(b + c)*(Cos[angleA]/(b + c - a))}, 
+     "X308" -> {b^3*(c^3/(b^2 + c^2))}, 
+     "X309" -> {b^2*c^2*(a^2*(a^2 - (b - c)^2)^2 - 
+         (b - c)^2*(a^2 - (b + c)^2)^2)}, 
+     "X310" -> {(b^2*(a + b)*c^2*(a + c))/a}, 
+     "X311" -> {Csc[angleA]^2*Cos[angleB - angleC]}, 
+     "X312" -> {(b + c - a)*b^2*c^2}, "X313" -> {(b + c)*b^3*c^3}, 
+     "X314" -> {b^2*c^2*((b + c - a)/(b + c))}, 
+     "X315" -> {b*c*(b^4 + c^4 - a^4)}, 
+     "X316" -> {b*c*(b^4 + c^4 - a^4 - b^2*c^2)}, 
+     "X317" -> {b*c*Cot[2*angleA]}, "X318" -> 
+      {(b*(a - b - c)*c*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2))/a}, 
+     "X319" -> {(1 + 2*Cos[angleA])/a^2}, 
+     "X320" -> {(1 - 2*Cos[angleA])/a^2}, "X321" -> {(b + c)*b^2*c^2}, 
+     "X322" -> {(b*c*(-a^3 - a^2*(b + c) + (b - c)^2*(b + c) + a*(b + c)^2))/
+        a}, "X323" -> {a*((a^2 - b^2 - c^2)^2 - b^2*c^2)}, 
+     "X324" -> {b*c*Sec[angleA]*Cos[angleB - angleC]}, 
+     "X325" -> {b*c*(b^4 + c^4 - a^2*b^2 - a^2*c^2)}, 
+     "X326" -> {Cot[angleA]^2}, "X327" -> 
+      {(b^2*c^2*(c^2*(b^2 - c^2) + a^2*(2*b^2 + c^2))*(b^4 - b^2*c^2 - 
+          a^2*(b^2 + 2*c^2)))/a}, "X328" -> {Cot[angleA]*Csc[3*angleA]}, 
+     "X329" -> {(-1 - Cos[angleA] + Cos[angleB] + Cos[angleC])*Csc[angleA]}, 
+     "X330" -> {(a^2*(b - c)^2 - b^2*c^2)/a}, 
+     "X331" -> {(b^2*(a + b - c)*c^2*(a - b + c)*(a^2 + b^2 - c^2)*
+         (a^2 - b^2 + c^2))/a}, "X332" -> 
+      {((a + b)*(a - b - c)*(a + c)*(a^2 - b^2 - c^2))/a}, 
+     "X333" -> {(a + b)*(a - b - c)*((a + c)/a)}, 
+     "X334" -> {(b*c*(b^2 - a*c)*(a*b - c^2))/a}, 
+     "X335" -> {((b^2 - a*c)*(a*b - c^2))/a}, 
+     "X336" -> {(b*c*(-a^2 + b^2 + c^2)*(a^4 + b^4 - a^2*c^2 - b^2*c^2)*
+         (-a^4 + a^2*b^2 + b^2*c^2 - c^4))/a}, 
+     "X337" -> {((b^2 - a*c)*(a*b - c^2)*(-a^2 + b^2 + c^2))/a}, 
+     "X338" -> {(b^2 - c^2)^2/a^3}, "X339" -> 
+      {b^2*c^2*(b^2 - c^2)^2*((b^2 + c^2 - a^2)/a)}, 
+     "X340" -> {-(((a^2 + b^2 - c^2)*(a^2 - b^2 - b*c - c^2)*
+          (a^2 - b^2 + b*c - c^2)*(a^2 - b^2 + c^2))/a)}, 
+     "X341" -> {b^2*c^2*(-a + b + c)^2}, 
+     "X342" -> {-((b*(a + b - c)*c*(a - b + c)*(a^2 + b^2 - c^2)*
+          (a^2 - b^2 + c^2)*(a^3 + a^2*(b + c) - (b - c)^2*(b + c) - 
+           a*(b + c)^2))/a)}, "X343" -> {Cot[angleA]*Cos[angleB - angleC]}, 
+     "X344" -> {(a^2 + b^2 + c^2 - 2*a*(b + c))/a}, 
+     "X345" -> {b*c*(b + c - a)*(b^2 + c^2 - a^2)}, 
+     "X346" -> {b*c*(b + c - a)^2}, "X347" -> 
+      {((a + b - c)*(a - b + c)*(a^3 + a^2*(b + c) - (b - c)^2*(b + c) - 
+          a*(b + c)^2))/a}, "X348" -> 
+      {((a + b - c)*(a - b + c)*(a^2 - b^2 - c^2))/a}, 
+     "X349" -> {-((b^2*(a + b - c)*c^2*(a - b + c)*(b + c))/a)}, 
+     "X350" -> {(b*c*(-a^2 + b*c))/a}, 
+     "X351" -> {a*(2*a^2 - b^2 - c^2)*(b^2 - c^2)}, 
+     "X352" -> {a*(a^4 + b^4 + 5*b^2*c^2 + c^4 - 4*a^2*(b^2 + c^2))}, 
+     "X353" -> {a*(4*a^4 - 2*b^4 - b^2*c^2 - 2*c^4 - 4*a^2*(b^2 + c^2))}, 
+     "X354" -> {(b - c)^2 - a*b - a*c}, 
+     "X355" -> {b*c*(b + c)*(a^2*(b^2 + c^2) - (b^2 - c^2)^2) - 
+        a^3*b*c*(b^2 + c^2 - a^2)}, "X356" -> 
+      {Cos[angleA/3] + 2*Cos[angleB/3]*Cos[angleC/3]}, 
+     "X357" -> {Sec[angleA/3]}, "X358" -> {Cos[angleA/3]}, 
+     "X359" -> {a/angleA}, "X360" -> {angleA/a}, 
+     "X361" -> {Csc[angleB/2] + Csc[angleC/2] - Csc[angleA/2]}, 
+     "X362" -> {b*Cos[angleB/2] + c*Cos[angleC/2] - a*Cos[angleA/2]}, 
+     "X363" -> {b/(1 + Sin[angleB/2]) + c/(1 + Sin[angleC/2]) - 
+        a/(1 + Sin[angleA/2])}, "X364" -> {Sqrt[b] + Sqrt[c] - Sqrt[a]}, 
+     "X365" -> {Sqrt[a]}, "X366" -> {Sqrt[a]/a}, 
+     "X367" -> {Sqrt[b] + Sqrt[c]}, "X371" -> {Cos[angleA - Pi/4]}, 
+     "X372" -> {Cos[angleA + Pi/4]}, "X373" -> 
+      {a*(-b^4 + 6*b^2*c^2 - c^4 + a^2*(b^2 + c^2))}, 
+     "X374" -> {2*b + 2*c - 3*a + (c + a)*Cos[angleC] + (b + a)*Cos[angleB]}, 
+     "X375" -> {a*((-a)*b*c*(b + c) + a^2*(b^2 + c^2) - 
+         (b + c)^2*(b^2 - 3*b*c + c^2))}, 
+     "X376" -> {5*Cos[angleA] - Cos[angleB - angleC]}, 
+     "X377" -> {-a^3 - 2*a*b*c - 2*b*c*(b + c) + (b^2 - c^2)^2/a}, 
+     "X378" -> {Sec[angleA] + 2*Cos[angleA]}, 
+     "X379" -> {a^4 + a*b*c*(b + c) - (b*(b - c)^2*c*(b + c))/a - 
+        (b^2 - c^2)^2}, "X380" -> {(a - b - c)*(3*a^3 + 3*a^2*(b + c) + 
+         (b - c)^2*(b + c) + a*(b + c)^2)}, 
+     "X381" -> {2*Cos[angleB - angleC] - Cos[angleA]}, 
+     "X382" -> {Cos[angleA] - 4*Cos[angleB]*Cos[angleC]}, 
+     "X383" -> {((-((a - b - c)*(a + b - c)*(a - b + c)*(a + b + c)))^(3/2) - 
+         Sqrt[3]*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(a^2 + b^2 + c^2))/a}, 
+     "X384" -> {b*c*(a^4 + b^2*c^2)}, "X385" -> {b*c*(a^4 - b^2*c^2)}, 
+     "X386" -> {a*(b^2 + c^2 + b*c + c*a + a*b)}, 
+     "X387" -> {b*c*(-a^4 + 2*a^2*(a + b + c)^2 + (b^2 - c^2)^2)}, 
+     "X388" -> {1 + Cos[angleB]*Cos[angleC]}, 
+     "X389" -> {Cos[angleA] - Cos[2*angleA]*Cos[angleB - angleC]}, 
+     "X390" -> {b*c*(b + c - a)*(3*a^2 + (b - c)^2)}, 
+     "X391" -> {b*c*(3*a + b + c)*(b + c - a)}, 
+     "X392" -> {(b + c)*(b^2 + c^2 - a^2) + 4*a*b*c}, 
+     "X393" -> {b*c*Tan[angleA]^2}, "X394" -> {a*Cot[angleA]^2}, 
+     "X395" -> {Cos[angleB - angleC] + 2*Cos[angleA + Pi/3]}, 
+     "X396" -> {Cos[angleB - angleC] + 2*Cos[angleA - Pi/3]}, 
+     "X397" -> {Cos[angleB - angleC] - 2*Cos[angleA + Pi/3]}, 
+     "X398" -> {Cos[angleB - angleC] - 2*Cos[angleA - Pi/3]}, 
+     "X399" -> {a^9 - 4*a^7*(b^2 + c^2) + a*(b^2 - c^2)^2*
+         (b^4 + 4*b^2*c^2 + c^4) + a^5*(6*b^4 + b^2*c^2 + 6*c^4) + 
+        a^3*(-4*b^6 + b^4*c^2 + b^2*c^4 - 4*c^6)}, 
+     "X400" -> {Csc[angleA/4]^4}]
