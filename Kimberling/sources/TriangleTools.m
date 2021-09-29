@@ -1,3 +1,25 @@
+bIsogonalConjugate[po_] := Simplify[{a^2*po[[2]]*po[[3]], 
+       b^2*po[[1]]*po[[3]], c^2*po[[1]]*po[[2]]} /. setupParamTriangle, 
+     c > 0 && a + b > c && a + c > b && b + c > a]
+ 
+setupParamTriangle := setupBaseTriangle[{0, 0}, {c, 0}, 
+     {(-a^2 + b^2 + c^2)/(2*c), Sqrt[-a^4 - (b^2 - c^2)^2 + 
+         2*a^2*(b^2 + c^2)]/(2*c)}]
+ 
+setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z], 
+     b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
+ 
+bDistanceF[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
+      Simplify[Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
+          b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - 
+          c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])] /. setupParamTriangle, 
+       c > 0 && a + b > c && a + c > b && b + c > a]]
+ 
+bCoordChangeK[k_, d_, e_, f_] := Module[{p}, 
+     p = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
+         b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
+      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . Transpose[p/Total[p]]]
+ 
 bDistance[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
         b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - c^2*(sp[[1]] - sq[[1]])*
@@ -26,7 +48,7 @@ bReverseCoordChange[p_, d_, e_, f_] :=
  
 bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
-bToCartesian[p_] := N[(p/Total[p]) . {PA, PB, PC}, 50]
+bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
 bPerpendicular[po_, l_] := Module[{sa, sb, sc, f, g, h, pp, u, v, w, p, q, r, 
       ff, gg, hh, m}, pp = po/Total[po]; p = pp[[1]]; q = pp[[2]]; 
