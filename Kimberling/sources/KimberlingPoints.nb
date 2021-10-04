@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      9171,        218]
-NotebookOptionsPosition[      8509,        198]
-NotebookOutlinePosition[      8977,        216]
-CellTagsIndexPosition[      8934,        213]
+NotebookDataLength[      9582,        226]
+NotebookOptionsPosition[      8983,        208]
+NotebookOutlinePosition[      9414,        225]
+CellTagsIndexPosition[      9371,        222]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -23,7 +23,6 @@ Cell[BoxData[
   RowBox[{"SetDirectory", "[", 
    RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", 
   RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}]], "Input",
- InitializationCell->True,
  CellChangeTimes->{{3.8399130150855227`*^9, 3.8399130150855227`*^9}, 
    3.839919710866042*^9, 3.8399199407660537`*^9, {3.8399201289222293`*^9, 
    3.839920152741045*^9}, {3.8399205883358803`*^9, 3.839920595085084*^9}, {
@@ -31,7 +30,7 @@ Cell[BoxData[
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
  CellLabel->
-  "In[287]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+  "In[270]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -71,8 +70,9 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"Clear", "[", 
         RowBox[{"a", ",", "b", ",", "c"}], "]"}], ";", " ", 
-       RowBox[{"AlgoKimberlingWeights", " ", "=", " ", 
-        RowBox[{"Association", "[", "]"}]}], ";", "\n", 
+       RowBox[{
+       "AlgoKimberlingWeights", " ", "=", " ", "KimberlingTrilinears1000"}], 
+       ";", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{"k", "<=", "1000"}], ",", " ", 
@@ -146,7 +146,13 @@ Cell[BoxData[{
           RowBox[{"c", "->", 
            RowBox[{"EuclideanDistance", "[", 
             RowBox[{"XPA", ",", "XPB"}], "]"}]}]}], "}"}]}]}]}], "\n", 
-     "]"}]}], ";"}], "\n"}], "\n"}], "Code",
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"getTriangleCurve", "[", "name_", "]"}], ":=", 
+   RowBox[{"symmetrizeEq", "[", 
+    RowBox[{"TriangleCurves", "[", "name", "]"}], "]"}]}], ";"}]}], "Code",
+ InitializationCell->False,
  CellChangeTimes->{{3.839921381837328*^9, 3.839921481875537*^9}, {
    3.8399215850421853`*^9, 3.839921590734864*^9}, {3.839921719960106*^9, 
    3.8399217214916306`*^9}, {3.83992191721216*^9, 3.8399220814506025`*^9}, {
@@ -177,28 +183,31 @@ Cell[BoxData[{
    3.8418052885217733`*^9}, {3.8418053480788345`*^9, 
    3.8418053503163934`*^9}, {3.8418054145260477`*^9, 
    3.8418054218961053`*^9}, {3.8418946130265336`*^9, 3.841894613585767*^9}, {
-   3.841898996439632*^9, 
-   3.84189899785963*^9}},ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-\
+   3.841898996439632*^9, 3.84189899785963*^9}, 3.84192253832601*^9, {
+   3.842056282509132*^9, 3.842056297124096*^9}, {3.8420563368455396`*^9, 
+   3.842056360905652*^9}},ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-\
 55ec1009fe52"],
 
 Cell[BoxData[
- RowBox[{"Save", "[", 
-  RowBox[{"\"\<KimberlingPoints.m\>\"", ",", 
-   RowBox[{"{", 
-    RowBox[{"KimberlingCenter", ",", " ", "KimberlingCenterB"}], "}"}]}], 
-  "]"}]], "Input",
- InitializationCell->True,
+ RowBox[{
+  RowBox[{"DeleteFile", "[", "\"\<KimberlingPoints.m\>\"", "]"}], ";", 
+  RowBox[{"Save", "[", 
+   RowBox[{"\"\<KimberlingPoints.m\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "KimberlingCenter", ",", " ", "KimberlingCenterB", ",", 
+      "getTriangleCurve"}], "}"}]}], "]"}]}]], "Input",
  CellChangeTimes->{{3.839920731475067*^9, 3.8399207380489435`*^9}, {
   3.8399209095637517`*^9, 3.839920929892164*^9}, {3.8400856157681627`*^9, 
   3.8400856175744915`*^9}, {3.8400857472955127`*^9, 3.8400857795241475`*^9}, {
   3.841625062759861*^9, 3.8416250659755015`*^9}, {3.841626128111167*^9, 
-  3.841626128863483*^9}, {3.841803439373165*^9, 3.8418034395152197`*^9}},
- CellLabel->
-  "In[291]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+  3.841626128863483*^9}, {3.841803439373165*^9, 3.8418034395152197`*^9}, {
+  3.8420563689039583`*^9, 3.842056369057808*^9}, {3.8420567902777777`*^9, 
+  3.8420567987655287`*^9}},ExpressionUUID->"58364175-8417-42fc-be84-\
+aa24791f6f0c"]
 },
-WindowSize->{1105.2, 615.6},
-WindowMargins->{{
-  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+WindowSize->{1093.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 Magnification:>0.9 Inherited,
 FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (June 19, 2021)",
 StyleDefinitions->"Default.nb",
@@ -215,11 +224,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 692, 13, 40, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6",
- InitializationCell->True],
-Cell[1253, 35, 6576, 146, 416, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
-Cell[7832, 183, 673, 13, 40, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c",
- InitializationCell->True]
+Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1226, 34, 6903, 154, 402, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+ InitializationCell->False],
+Cell[8132, 190, 847, 16, 26, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

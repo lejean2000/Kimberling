@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      5056,        154]
-NotebookOptionsPosition[      4514,        138]
-NotebookOutlinePosition[      4915,        154]
-CellTagsIndexPosition[      4872,        151]
+NotebookDataLength[      7796,        218]
+NotebookOptionsPosition[      7121,        200]
+NotebookOutlinePosition[      7559,        217]
+CellTagsIndexPosition[      7516,        214]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -109,7 +109,63 @@ Cell[BoxData[{
  CellChangeTimes->{{3.8416276350164003`*^9, 3.8416277290027027`*^9}, {
   3.841734244354642*^9, 3.84173430979032*^9}, {3.841802334416523*^9, 
   3.8418023445228405`*^9}},
- CellLabel->"",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+ CellLabel->"In[33]:=",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"symmetrizeEq", "[", "eq_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", " ", 
+      RowBox[{"partB", ",", " ", "partC"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+       RowBox[{"Cyclic", " ", "sum", " ", "for", " ", "bernard"}], "-", 
+       RowBox[{"gibert", ".", "pagesperso"}], "-", 
+       RowBox[{"orange", ".", "fr"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"partB", " ", "=", " ", 
+       RowBox[{"eq", "/.", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", "->", "b"}], ",", " ", 
+          RowBox[{"b", "->", "c"}], ",", " ", 
+          RowBox[{"c", "->", "a"}], ",", " ", 
+          RowBox[{"x", "->", "y"}], ",", " ", 
+          RowBox[{"y", "->", "z"}], ",", " ", 
+          RowBox[{"z", "->", "x"}]}], "}"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"partC", " ", "=", " ", 
+       RowBox[{"partB", "/.", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", "->", "b"}], ",", " ", 
+          RowBox[{"b", "->", "c"}], ",", " ", 
+          RowBox[{"c", "->", "a"}], ",", " ", 
+          RowBox[{"x", "->", "y"}], ",", " ", 
+          RowBox[{"y", "->", "z"}], ",", " ", 
+          RowBox[{"z", "->", "x"}]}], "}"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"eq", "+", "partB", "+", "partC"}], ")"}], "//", 
+       "Simplify"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"symmetrizeEqGeogebra", "[", "eq_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"symmetrizeEq", "[", "eq", "]"}], ")"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"x", "->", "A"}], ",", " ", 
+      RowBox[{"y", "->", "B"}], ",", " ", 
+      RowBox[{"z", "->", "C"}]}], "}"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.84205539309252*^9, 3.8420554216421833`*^9}, {
+  3.842055530366268*^9, 3.8420555972276335`*^9}, {3.842055649256649*^9, 
+  3.8420557017017207`*^9}, {3.8420559798411775`*^9, 3.8420559882557697`*^9}, {
+  3.8420560267317495`*^9, 3.8420561054123874`*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
 
 Cell[BoxData[
  RowBox[{"(*", 
@@ -120,24 +176,31 @@ Cell[BoxData[
  CellChangeTimes->{{3.841708186269831*^9, 3.8417082150528245`*^9}, {
   3.8417112386537905`*^9, 3.841711244092964*^9}, {3.8417343205360117`*^9, 
   3.841734344240757*^9}, {3.8418023229704723`*^9, 3.8418023567757444`*^9}, {
-  3.8418026526731997`*^9, 
-  3.8418026551169186`*^9}},ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-\
-970d8b8bfc09"],
+  3.8418026526731997`*^9, 3.8418026551169186`*^9}, {3.842338574526355*^9, 
+  3.842338579256648*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-970d8b8bfc09"],
 
 Cell[BoxData[
- RowBox[{"Save", "[", 
-  RowBox[{"\"\<TriangleExpressions.m\>\"", ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "sp", ",", " ", "sa", ",", " ", "sb", ",", " ", "sc", ",", " ", "S", ",", 
-     " ", "r", ",", " ", "SA", ",", " ", "SB", ",", " ", "SC", ",", " ", "SW",
-      ",", " ", "R", ",", " ", "angleA", ",", " ", "angleB", ",", " ", 
-     "angleC"}], "}"}]}], "]"}]], "Input",
- CellChangeTimes->{3.8418023480691648`*^9},
- CellLabel->"",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+ RowBox[{
+  RowBox[{"DeleteFile", "[", "\"\<TriangleExpressions.m\>\"", "]"}], ";", 
+  RowBox[{"Save", "[", 
+   RowBox[{"\"\<TriangleExpressions.m\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "sp", ",", " ", "sa", ",", " ", "sb", ",", " ", "sc", ",", " ", "S", ",",
+       " ", "r", ",", " ", "SA", ",", " ", "SB", ",", " ", "SC", ",", " ", 
+      "SW", ",", " ", "R", ",", " ", "angleA", ",", " ", "angleB", ",", " ", 
+      "angleC", ",", "symmetrizeEq", ",", " ", "symmetrizeEqGeogebra"}], 
+     "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{
+  3.8418023480691648`*^9, {3.842055629196406*^9, 3.842055629533888*^9}, {
+   3.8420557214118996`*^9, 3.8420557299404755`*^9}, {3.8420561455626955`*^9, 
+   3.8420561458919697`*^9}},ExpressionUUID->"b746881b-4178-4fc6-bde6-\
+a3152c58c10a"]
 },
-WindowSize->{1093.8, 604.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1105.2, 615.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (June 19, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"aca5b677-55b6-4267-a176-e3559e484e60"
@@ -153,9 +216,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 2949, 91, 167, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
-Cell[3510, 113, 494, 11, 28, "Input",ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-970d8b8bfc09"],
-Cell[4007, 126, 503, 10, 28, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+Cell[558, 20, 2957, 91, 167, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+Cell[3518, 113, 2229, 54, 143, "Input",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
+Cell[5750, 169, 562, 11, 28, "Input",ExpressionUUID->"a9c595bb-4b5a-4002-a1b6-970d8b8bfc09"],
+Cell[6315, 182, 802, 16, 48, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)

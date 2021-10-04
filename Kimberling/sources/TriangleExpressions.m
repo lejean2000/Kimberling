@@ -25,3 +25,10 @@ angleA = ArcCos[(-a^2 + b^2 + c^2)/(2*b*c)]
 angleB = ArcCos[(a^2 - b^2 + c^2)/(2*a*c)]
  
 angleC = ArcCos[(a^2 + b^2 - c^2)/(2*a*b)]
+ 
+symmetrizeEq[eq_] := Module[{partB, partC}, 
+     partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
+      partC = partB /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
+      Simplify[eq + partB + partC]]
+ 
+symmetrizeEqGeogebra[eq_] := symmetrizeEq[eq] /. {x -> A, y -> B, z -> C}
