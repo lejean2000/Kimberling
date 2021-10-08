@@ -31,8 +31,8 @@ orth[p_, q_, r_] := Simplify[{1/(y^2 + z^2 - x^2), 1/(-y^2 + z^2 + x^2),
  
 bLine[u_, v_] := Module[{m}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
-         {x, y, z}}]; {Coefficient[m, x], Coefficient[m, y], 
-       Coefficient[m, z]}]
+         {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
+       Coefficient[m, zz]}]
  
 bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
      l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
@@ -62,3 +62,19 @@ bPerpendicular[po_, l_] := Module[{sa, sb, sc, f, g, h, pp, u, v, w, p, q, r,
 cToBary[v1_, v2_, v3_, xy_] := 
     With[{mat = {{v1[[1]], v2[[1]], v3[[1]]}, {v1[[2]], v2[[2]], v3[[2]]}, 
         {1, 1, 1}}}, LinearSolve[mat, Append[xy, 1]]]
+ 
+bCollinearityMatrix[u_, v_, w_] := Det[{{u[[1]], u[[2]], u[[3]]}, 
+      {v[[1]], v[[2]], v[[3]]}, {w[[1]], w[[2]], w[[3]]}}]
+ 
+multiCollect[expr_, vars_] := Activate[Expand[Collect[expr, vars, 
+       Inactive[Simplify]]]]
+ 
+bAubertLine[a_, b_, c_, d_] := Module[{z}, z = bIntersection[a, b, c, d]; 
+      bLine[bCoordChange[orth[z, b, c], z, b, c], bCoordChange[orth[z, a, d], 
+        z, a, d]]]
+ 
+bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
+     Clear[a, b, c]; A1 = KimberlingTrianglesTrilinear[name]; 
+      B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
+      C1 = Permute[B1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
+      bFromTrilinear /@ {A1, B1, C1}]

@@ -65,7 +65,7 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
        (c^6 - (a^2 + b^2)*c^4 - (a^2 - b^2)*b^2*c^2 + a^2*b^4)/c}, 
      "1st anti-circumperp" -> {-a, (b^2 - c^2)/b, (c^2 - b^2)/c}, 
      "2nd anti-circumperp-tangential" -> {(b + c)^2/(a*(-a + b + c)), 
-       b/(a - b + c), c/(a + b - c)}, "(1st) anti-Conway" -> 
+       b/(a - b + c), c/(a + b - c)}, "1st anti-Conway" -> 
       {a^3*((-a^2 + b^2 + c^2)/((b^2 + c^2)*a^2 - (b^2 - c^2)^2)), b, c}, 
      "2nd anti-Conway" -> {((b^2 + c^2)*a^2 - (b^2 - c^2)^2)/a/
         (-a^2 + b^2 + c^2), b, c}, "anti-Ehrmann-mid" -> 
@@ -140,7 +140,7 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
       {(-((Sqrt[3] - 2)*SA + S))*a, (2*S^2 + S*SC + (Sqrt[3] - 2)*SA*SC)/b, 
        (2*S^2 + S*SB + (Sqrt[3] - 2)*SA*SB)/c}, 
      "BCI" -> {1, 1 + 2*Cos[angleC/2], 1 + 2*Cos[angleB/2]}, 
-     "Bevan-antipodal" -> {-(-a + b + c)^(-1), 1/(a - b + c), 1/(a + b - c)}, 
+     "Bevan antipodal" -> {-(-a + b + c)^(-1), 1/(a - b + c), 1/(a + b - c)}, 
      "1st Brocard" -> {a*b*c, c^3, b^3}, "1st Brocard-reflected" -> 
       {-a, (a^2 + b^2)/b, (a^2 + c^2)/c}, "2nd Brocard" -> 
       {b^2 + c^2 - a^2, a*b, a*c}, "3rd Brocard" -> {b^2*c^2, a*b^3, a*c^3}, 
