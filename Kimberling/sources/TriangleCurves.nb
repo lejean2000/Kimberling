@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      4946,        147]
-NotebookOptionsPosition[      4371,        130]
-NotebookOutlinePosition[      4809,        147]
-CellTagsIndexPosition[      4766,        144]
+NotebookDataLength[      7850,        228]
+NotebookOptionsPosition[      7274,        211]
+NotebookOutlinePosition[      7712,        228]
+CellTagsIndexPosition[      7669,        225]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -24,14 +24,92 @@ Cell[BoxData[
    RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", 
   RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}]], "Input",
  CellChangeTimes->{3.8420566197592506`*^9},
- CellLabel->
-  "In[154]:=",ExpressionUUID->"ec1bc704-00d6-4851-8cf1-c2d11ab054d5"],
+ CellLabel->"In[1]:=",ExpressionUUID->"ec1bc704-00d6-4851-8cf1-c2d11ab054d5"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"TriangleCurves", ":=", 
    RowBox[{"Association", "[", "\[IndentingNewLine]", 
     RowBox[{
+     RowBox[{"\"\<KiepertHyperbola\>\"", "->", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["b", "2"], "-", 
+         SuperscriptBox["c", "2"]}], ")"}], "y", " ", "z"}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"\"\<KiepertParabola\>\"", "->", 
+      RowBox[{
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"b", "-", "c"}], ")"}], "2"], " ", 
+        SuperscriptBox["x", "2"]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"(", 
+         RowBox[{"a", "-", "b"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{"a", "-", "c"}], ")"}], " ", "y", " ", "z"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"\"\<K001\>\"", "->", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["a", "2"], 
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox["b", "2"], "+", 
+            SuperscriptBox["c", "2"]}], ")"}]}], "+", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox["b", "2"], "-", 
+            SuperscriptBox["c", "2"]}], ")"}], "2"], "-", 
+         RowBox[{"2", 
+          SuperscriptBox["a", "4"]}]}], ")"}], "x", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", "2"], 
+          SuperscriptBox["y", "2"]}], "-", 
+         RowBox[{
+          SuperscriptBox["b", "2"], 
+          SuperscriptBox["z", "2"]}]}], ")"}]}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"\"\<K002\>\"", "->", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", "2"], 
+          SuperscriptBox["y", "2"]}], "-", 
+         RowBox[{
+          SuperscriptBox["b", "2"], 
+          SuperscriptBox["z", "2"]}]}], ")"}], "x", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", "2"], 
+          SuperscriptBox["y", "2"]}], "-", 
+         RowBox[{
+          SuperscriptBox["b", "2"], 
+          SuperscriptBox["z", "2"]}]}], ")"}]}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"\"\<K003\>\"", "->", 
+      RowBox[{
+       SuperscriptBox["a", "2"], 
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["b", "2"], "+", 
+         SuperscriptBox["c", "2"], "-", 
+         SuperscriptBox["a", "2"]}], ")"}], "x", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          SuperscriptBox["c", "2"], 
+          SuperscriptBox["y", "2"]}], "-", 
+         RowBox[{
+          SuperscriptBox["b", "2"], 
+          SuperscriptBox["z", "2"]}]}], ")"}]}]}], ",", "\[IndentingNewLine]", 
      RowBox[{"\"\<K017\>\"", "->", 
       RowBox[{
        RowBox[{"(", 
@@ -61,7 +139,8 @@ Cell[BoxData[
           SuperscriptBox["y", "2"]}], "+", 
          RowBox[{
           SuperscriptBox["b", "2"], 
-          SuperscriptBox["z", "2"]}]}], ")"}]}]}], ",", "\[IndentingNewLine]", 
+          SuperscriptBox["z", "2"]}]}], ")"}]}]}], ",", "\[IndentingNewLine]",
+      
      RowBox[{"\"\<K019\>\"", "->", 
       RowBox[{
        SuperscriptBox["a", "2"], 
@@ -114,9 +193,12 @@ Cell[BoxData[
    3.8420561919134245`*^9, 3.842056194384223*^9}, {3.8420565785295887`*^9, 
    3.842056624182642*^9}, {3.8420568630691843`*^9, 3.8420568633340173`*^9}, {
    3.8420569763607235`*^9, 3.8420570084648933`*^9}, {3.8420571885149117`*^9, 
-   3.8420572042656684`*^9}},
- CellLabel->
-  "In[155]:=",ExpressionUUID->"f89169e5-5d6c-4980-bf9c-61b9602de58b"],
+   3.8420572042656684`*^9}, {3.8428436958031816`*^9, 
+   3.8428437264596176`*^9}, {3.8428445548272605`*^9, 3.8428445708424425`*^9}, 
+   3.8428461701256075`*^9, {3.8429232516278424`*^9, 3.842923256956961*^9}, {
+   3.842923298992729*^9, 3.8429233426679697`*^9}, {3.842923618800589*^9, 
+   3.8429236381764164`*^9}, {3.842925465590515*^9, 3.84292553012454*^9}, 
+   3.8429255996692*^9},ExpressionUUID->"f89169e5-5d6c-4980-bf9c-61b9602de58b"],
 
 Cell[BoxData[
  RowBox[{
@@ -125,8 +207,7 @@ Cell[BoxData[
    RowBox[{"\"\<TriangleCurves.m\>\"", ",", 
     RowBox[{"{", "TriangleCurves", "}"}]}], "]"}]}]], "Input",
  CellChangeTimes->{{3.8420561613523483`*^9, 3.842056189803173*^9}},
- CellLabel->
-  "In[156]:=",ExpressionUUID->"d61a5245-50a8-4e9f-963a-bcedde111b2f"]
+ CellLabel->"In[3]:=",ExpressionUUID->"d61a5245-50a8-4e9f-963a-bcedde111b2f"]
 },
 WindowSize->{1105.2, 615.6},
 WindowMargins->{{
@@ -146,9 +227,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 310, 7, 28, "Input",ExpressionUUID->"ec1bc704-00d6-4851-8cf1-c2d11ab054d5"],
-Cell[871, 29, 3117, 89, 161, "Input",ExpressionUUID->"f89169e5-5d6c-4980-bf9c-61b9602de58b"],
-Cell[3991, 120, 376, 8, 28, "Input",ExpressionUUID->"d61a5245-50a8-4e9f-963a-bcedde111b2f"]
+Cell[558, 20, 305, 6, 28, "Input",ExpressionUUID->"ec1bc704-00d6-4851-8cf1-c2d11ab054d5"],
+Cell[866, 28, 6030, 172, 266, "Input",ExpressionUUID->"f89169e5-5d6c-4980-bf9c-61b9602de58b"],
+Cell[6899, 202, 371, 7, 28, "Input",ExpressionUUID->"d61a5245-50a8-4e9f-963a-bcedde111b2f"]
 }
 ]
 *)
