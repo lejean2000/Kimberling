@@ -50,10 +50,9 @@ bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
-bPerpendicular[po_, l_] := Module[{sa, sb, sc, f, g, h, pp, u, v, w, p, q, r, 
-      ff, gg, hh, m}, pp = po/Total[po]; p = pp[[1]]; q = pp[[2]]; 
-      r = pp[[3]]; u = l[[1]]; v = l[[2]]; w = pp[[3]]; 
-      sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
+bPerpendicular[po_, {u_, v_, w_}] := Module[{sa, sb, sc, f, g, h, pp, p, q, 
+      r, ff, gg, hh, m}, pp = po/Total[po]; p = pp[[1]]; q = pp[[2]]; 
+      r = pp[[3]]; sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
       sc = (b^2 - c^2 + a^2)/2; f = q - r; g = r - p; h = p - q; 
       ff = sb*g - sc*h; gg = sc*h - sa*f; hh = sa*f - sb*g; 
       m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
@@ -78,3 +77,33 @@ bKimberlingTriangle[name_] := Module[{A1, B1, C1},
       B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
       C1 = Permute[B1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
       bFromTrilinear /@ {A1, B1, C1}]
+ 
+bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
+    b1*c2 - c1*b2 + c1*a2 - a1*c2 + a1*b2 - b1*a2 == 0
+ 
+bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
+ 
+bParallelLine[p, {l1_, l2_, l3_}] := Module[{m, p1, p2, p3}, 
+     p = p/Total[p]; {p1, p2, p3} = p; 
+      m = Det[{{l2 - l3, l3 - l1, l1 - l2}, {p1, p2, p3}, {xx, yy, zz}}]; 
+      {Coefficient[m, xx], Coefficient[m, yy], Coefficient[m, zz]}]
+ 
+bDistancePointLine[p_, l_] := Module[{p1, p2, p3, sa, sb, sc, l1, l2, l3}, 
+     sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
+      sc = (b^2 - c^2 + a^2)/2; {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l; 
+      Sqrt[((sa*sb + sa*sc + sb*sc)*(p . l)^2)/(sa*(l3 - l2)^2 + 
+         sb*(l1 - l2)^2 + sc*(l2 - l1)^2)]]
+ 
+bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_}, 
+     {p41_, p42_, p43_}] := Module[{ss}, 
+     ss[{x1_, x2_, x3_}] := (x2*x3*a^2 + x1*x3*b^2 + x1*x2*c^2)/
+        (x1 + x2 + x3); Det[{{ss[{p11, p12, p13}], ss[{p21, p22, p23}], 
+         ss[{p31, p32, p33}], ss[{p41, p42, p43}]}, {p11, p21, p31, p41}, 
+        {p12, p22, p32, p42}, {p13, p23, p33, p43}}]]
+ 
+bCevianQuotient[{u1_, v1_, w1_}, {u2_, v2_, w2_}] := 
+    {u2*(-(u2/u1) + v2/v1 + w2/w1), v2*(u2/u1 - v2/v1 + w2/w1), 
+     w2*(u2/u1 + v2/v1 - w2/w1)}
+ 
+bCevianProduct[{u1_, v1_, w1_}, {u2_, v2_, w2_}] := 
+    {1/(v1*w2 + v2*w1), 1/(u1*w2 + u2*w1), 1/(v1*u2 + v2*u1)}
