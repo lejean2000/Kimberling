@@ -107,3 +107,29 @@ bCevianQuotient[{u1_, v1_, w1_}, {u2_, v2_, w2_}] :=
  
 bCevianProduct[{u1_, v1_, w1_}, {u2_, v2_, w2_}] := 
     {1/(v1*w2 + v2*w1), 1/(u1*w2 + u2*w1), 1/(v1*u2 + v2*u1)}
+ 
+bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
+     conic[x_, y_, z_] := ({{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
+           {m13, m23, 1}} . {{x}, {y}, {z}})[[1]][[1]]; 
+      First[Solve[{multiCollect[Numerator[Simplify[conic @@ P13]], 
+           {m11, m12, m13, m22, m23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ P23]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ P12]], 
+           {m11, m12, m13, m22, m23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ P32]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ P21]], 
+           {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
+ 
+bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
+    First[Flatten[{{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
+         {m13, m23, 1}} . {{x}, {y}, {z}} /. bFivePointConicCoef[PA, PB, PC, 
+        PD, PE]]]
+ 
+checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] := 
+    Simplify[bFivePointConicEq[PA, PB, PC, PD, PE] /. 
+      First[(Thread[{x, y, z} -> #1] & ) /@ {XX}]]
+ 
+bConicCenter[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
+    Module[{p}, p = {-m23^2 + (m13 + m12)*m23 + m22*m33 - m13*m22 - m12*m33, 
+        -m13^2 + (m12 + m23)*m13 + m11*m33 - m12*m33 - m23*m11, 
+        -m12^2 + (m23 + m13)*m12 + m11*m22 - m23*m11 - m13*m22}; p/Total[p]]
