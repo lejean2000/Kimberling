@@ -65,6 +65,14 @@ cToBary[v1_, v2_, v3_, xy_] :=
 bCollinearityMatrix[u_, v_, w_] := Det[{{u[[1]], u[[2]], u[[3]]}, 
       {v[[1]], v[[2]], v[[3]]}, {w[[1]], w[[2]], w[[3]]}}]
  
+cCollinearityMatrix[u_, v_, w_] := Det[{{u[[1]], u[[2]], 1}, 
+      {v[[1]], v[[2]], 1}, {w[[1]], w[[2]], 1}}]
+ 
+cConcurrencyMatrix[l1_, l2_, l3_] := 
+    Det[{{Coefficient[l1, x], Coefficient[l1, y], l1 /. {x -> 0, y -> 0}}, 
+      {Coefficient[l2, x], Coefficient[l2, y], l2 /. {x -> 0, y -> 0}}, 
+      {Coefficient[l3, x], Coefficient[l3, y], l3 /. {x -> 0, y -> 0}}}]
+ 
 multiCollect[expr_, vars_] := Activate[Expand[Collect[expr, vars, 
        Inactive[Simplify]]]]
  
@@ -152,3 +160,8 @@ bSaragossa3[{x1_, y1_, z1_}] := Module[{u, v, w, x, y, z, pt},
          a*y*z*(b*z + c*y)); v = b*y*((c^2*x^2 + a^2*z^2)*y + 
          b*z*x*(c*x + a*z)); w = c*z*((a^2*y^2 + b^2*x^2)*z + 
          c*x*y*(a*y + b*x)); pt = {a*u, b*v, c*w}; pt/Total[pt]]
+ 
+bDistanceMod[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
+      Sqrt[Abs[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
+         b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - 
+         c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])]]]
