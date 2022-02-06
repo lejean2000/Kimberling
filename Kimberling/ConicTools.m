@@ -92,3 +92,7 @@ cConcurrencyMatrix[l1_, l2_, l3_] :=
     Det[{{Coefficient[l1, x], Coefficient[l1, y], l1 /. {x -> 0, y -> 0}}, 
       {Coefficient[l2, x], Coefficient[l2, y], l2 /. {x -> 0, y -> 0}}, 
       {Coefficient[l3, x], Coefficient[l3, y], l3 /. {x -> 0, y -> 0}}}]
+ 
+findIntersections[l1_, l2_] := Module[{eqns, b, m}, 
+     eqns = {l1 == 0, l2 == 0}; {b, m} = CoefficientArrays[eqns, {x, y}]; 
+      LinearSolve[m, -b]]

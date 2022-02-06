@@ -80,6 +80,9 @@ bAubertLine[a_, b_, c_, d_] := Module[{z}, z = bIntersection[a, b, c, d];
       bLine[bCoordChange[orth[z, b, c], z, b, c], bCoordChange[orth[z, a, d], 
         z, a, d]]]
  
+bAubertCenter[a_, b_, c_, d_] := Module[{z}, l1 = bAubertLine[a, b, c, d]; 
+      l2 = bAubertLine[a, b, d, c]; bLineIntersection[l1, l2]]
+ 
 bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
      Clear[a, b, c]; A1 = KimberlingTrianglesTrilinear[name]; 
       B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
