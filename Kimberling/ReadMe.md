@@ -2,7 +2,7 @@
 
 This repo provides you the `KimberlingCenter[k, A, B, C]` function which given an integer k and three points A, B and C, calculates the k-th triangle center according to Kimberling's [encyclopedia of triangle centers](https://faculty.evansville.edu/ck6/encyclopedia/etc.html).
 
-Note that currrently k<=400 and it is TESTED! 
+Note that currrently k<=2299 and it is TESTED! 
 
 Here is a simple example which plots a few random triangle centers:
 ```
@@ -26,4 +26,4 @@ Graphics[Join[
 ```
 ![](https://i.postimg.cc/rFpHKVnf/etc.jpg)
 
-There are some other helpful tools as well, but they are not stable enough to be documented yet.
+There are some other helpful tools as well, but they are not documented yet.

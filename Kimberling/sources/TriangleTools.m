@@ -34,6 +34,11 @@ bLine[u_, v_] := Module[{m},
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
  
+bLineL[{u_, v_}] := Module[{m}, 
+     m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
+         {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
+       Coefficient[m, zz]}]
+ 
 bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
      l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
  
@@ -82,6 +87,12 @@ bAubertLine[a_, b_, c_, d_] := Module[{z}, z = bIntersection[a, b, c, d];
  
 bAubertCenter[a_, b_, c_, d_] := Module[{z}, l1 = bAubertLine[a, b, c, d]; 
       l2 = bAubertLine[a, b, d, c]; bLineIntersection[l1, l2]]
+ 
+bAubertCenter2[a_, b_, c_, d_] := Module[{z}, l1 = bAubertLine[a, b, c, d]; 
+      l3 = bAubertLine[a, d, b, c]; bLineIntersection[l1, l3]]
+ 
+bAubertCenter3[a_, b_, c_, d_] := Module[{z}, l2 = bAubertLine[a, b, d, c]; 
+      l3 = bAubertLine[a, d, b, c]; bLineIntersection[l2, l3]]
  
 bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
      Clear[a, b, c]; A1 = KimberlingTrianglesTrilinear[name]; 
@@ -168,3 +179,37 @@ bDistanceMod[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q];
       Sqrt[Abs[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
          b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - 
          c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])]]]
+ 
+bCircleEq[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] := 
+    Module[{d1, d2, d3, d, p, q, r, s1, s2, s3}, s1 = u1 + v1 + w1; 
+      s2 = u2 + v2 + w2; s3 = u3 + v3 + w3; 
+      d1 = Det[{{a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1, s1*v1, s1*w1}, 
+         {a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2, s2*v2, s2*w2}, 
+         {a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3, s3*v3, s3*w3}}]; 
+      d2 = Det[{{s1*u1, a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1, s1*w1}, 
+         {s2*u2, a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2, s2*w2}, 
+         {s3*u3, a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3, s3*w3}}]; 
+      d3 = Det[{{s1*u1, s1*v1, a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1}, 
+         {s2*u2, s2*v2, a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2}, 
+         {s3*u3, s3*v3, a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3}}]; 
+      d = Det[{{u1, v1, w1}, {u2, v2, w2}, {u3, v3, w3}}]; 
+      p = d1/(s1*s2*s3*d); q = d2/(s1*s2*s3*d); r = d3/(s1*s2*s3*d); 
+      a^2*y*z + b^2*z*x + c^2*x*y - (x + y + z)*(p*x + q*y + r*z)]
+ 
+bCircleCenter[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] := 
+    Module[{d1, d2, d3, d, p, q, r, s1, s2, s3}, s1 = u1 + v1 + w1; 
+      s2 = u2 + v2 + w2; s3 = u3 + v3 + w3; 
+      d1 = Det[{{a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1, s1*v1, s1*w1}, 
+         {a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2, s2*v2, s2*w2}, 
+         {a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3, s3*v3, s3*w3}}]; 
+      d2 = Det[{{s1*u1, a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1, s1*w1}, 
+         {s2*u2, a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2, s2*w2}, 
+         {s3*u3, a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3, s3*w3}}]; 
+      d3 = Det[{{s1*u1, s1*v1, a^2*v1*w1 + b^2*w1*u1 + c^2*u1*v1}, 
+         {s2*u2, s2*v2, a^2*v2*w2 + b^2*w2*u2 + c^2*u2*v2}, 
+         {s3*u3, s3*v3, a^2*v3*w3 + b^2*w3*u3 + c^2*u3*v3}}]; 
+      d = Det[{{u1, v1, w1}, {u2, v2, w2}, {u3, v3, w3}}]; 
+      p = d1/(s1*s2*s3*d); q = d2/(s1*s2*s3*d); r = d3/(s1*s2*s3*d); 
+      bConicCenter[{{-p, (c^2 - p - q)/2, (b^2 - p - r)/2}, 
+        {(c^2 - p - q)/2, -q, (a^2 - q - r)/2}, {(b^2 - p - r)/2, 
+         (a^2 - q - r)/2, -r}}]]
