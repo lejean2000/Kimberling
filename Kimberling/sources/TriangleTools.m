@@ -213,3 +213,10 @@ bCircleCenter[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] :=
       bConicCenter[{{-p, (c^2 - p - q)/2, (b^2 - p - r)/2}, 
         {(c^2 - p - q)/2, -q, (a^2 - q - r)/2}, {(b^2 - p - r)/2, 
          (a^2 - q - r)/2, -r}}]]
+ 
+bCircumcevianTriangle[{u1_, v1_, w1_}] := Module[{u, v, w}, 
+     Clear[a, b, c]; {u, v, w} = {u1/a, v1/b, w1/c}; 
+      A1 = {(-a)*v*w, (b*w + c*v)*v, (b*w + c*v)*w}; 
+      B1 = {(c*u + a*w)*u, (-b)*u*w, (c*u + a*w)*w}; 
+      C1 = {(a*v + b*u)*u, (a*v + b*u)*v, (-c)*u*v}; 
+      bFromTrilinear /@ {A1, B1, C1}]
