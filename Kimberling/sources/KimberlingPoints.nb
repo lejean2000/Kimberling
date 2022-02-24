@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      8377,        223]
-NotebookOptionsPosition[      7778,        205]
-NotebookOutlinePosition[      8209,        222]
-CellTagsIndexPosition[      8166,        219]
+NotebookDataLength[      9330,        248]
+NotebookOptionsPosition[      8691,        229]
+NotebookOutlinePosition[      9162,        247]
+CellTagsIndexPosition[      9119,        244]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -29,7 +29,8 @@ Cell[BoxData[
    3.83992070302919*^9, 3.8399207092031746`*^9}, {3.8416249776934814`*^9, 
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
- CellLabel->"In[42]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+ CellLabel->
+  "In[161]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -59,72 +60,88 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{
+    RowBox[{"getvalue", "[", 
+     RowBox[{"ass_", ",", "key_"}], "]"}], ":=", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"KeyExistsQ", "[", 
+       RowBox[{"ass", ",", "key"}], "]"}], ",", 
+      RowBox[{"ass", "[", "key", "]"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{
+       "Indeterminate", ",", " ", "Indeterminate", ",", " ", 
+        "Indeterminate"}], "}"}]}], "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
     RowBox[{"KimberlingCenterB", "[", "k_", "]"}], ":=", 
     RowBox[{"Module", "[", 
      RowBox[{
       RowBox[{"{", 
        RowBox[{
-       "wA", ",", " ", "wB", ",", " ", "wC", ",", " ", "w", ",", " ", 
-        "AlgoKimberlingWeights"}], "}"}], ",", "\n", 
+       "wA", ",", " ", "wB", ",", " ", "wC", ",", " ", "w", ",", "name"}], 
+       "}"}], ",", "\n", 
       RowBox[{
        RowBox[{"Clear", "[", 
-        RowBox[{"a", ",", "b", ",", "c"}], "]"}], ";", " ", "\n", 
-       RowBox[{
-       "AlgoKimberlingWeights", " ", "=", " ", "KimberlingTrilinears1000"}], 
-       ";", "\n", 
+        RowBox[{"a", ",", "b", ",", "c"}], "]"}], ";", "\n", 
+       RowBox[{"name", "=", 
+        RowBox[{"\"\<X\>\"", "<>", 
+         RowBox[{"ToString", "[", "k", "]"}]}]}], ";", " ", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{"k", "<=", "1000"}], ",", " ", 
-         RowBox[{"AlgoKimberlingWeights", "=", "KimberlingTrilinears1000"}]}],
-         "]"}], ";", "\n", 
+         RowBox[{"wA", " ", "=", 
+          RowBox[{"getvalue", "[", 
+           RowBox[{"KimberlingTrilinears1000", ",", "name"}], "]"}]}]}], 
+        "]"}], ";", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{
           RowBox[{"k", ">", "1000"}], " ", "&&", " ", 
           RowBox[{"k", "<", "3000"}]}], ",", " ", 
-         RowBox[{"AlgoKimberlingWeights", "=", "KimberlingTrilinears3000"}]}],
-         "]"}], ";", "\n", 
-       RowBox[{"If", "[", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"k", ">", "42000"}], " ", "&&", " ", 
-          RowBox[{"k", "<=", "44000"}]}], ",", " ", 
-         RowBox[{
-         "AlgoKimberlingWeights", "=", "KimberlingTrilinears44000"}]}], "]"}],
-        ";", "\n", 
+         RowBox[{"wA", " ", "=", 
+          RowBox[{"getvalue", "[", 
+           RowBox[{"KimberlingTrilinears3000", ",", "name"}], "]"}]}]}], 
+        "]"}], ";", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{
           RowBox[{"k", ">", "40001"}], " ", "&&", " ", 
           RowBox[{"k", "<=", "42000"}]}], ",", " ", 
-         RowBox[{
-         "AlgoKimberlingWeights", "=", "KimberlingTrilinears42000"}]}], "]"}],
-        ";", "\n", 
+         RowBox[{"wA", " ", "=", 
+          RowBox[{"getvalue", "[", 
+           RowBox[{"KimberlingTrilinears42000", ",", "name"}], "]"}]}]}], 
+        "]"}], ";", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{
           RowBox[{"k", ">", "42000"}], " ", "&&", " ", 
-          RowBox[{"k", "<=", "46000"}]}], ",", " ", 
-         RowBox[{
-         "AlgoKimberlingWeights", "=", "KimberlingTrilinears46000"}]}], "]"}],
-        ";", "\n", 
+          RowBox[{"k", "<=", "44000"}]}], ",", " ", 
+         RowBox[{"wA", " ", "=", 
+          RowBox[{"getvalue", "[", 
+           RowBox[{"KimberlingTrilinears44000", ",", "name"}], "]"}]}]}], 
+        "]"}], ";", "\n", 
        RowBox[{"If", "[", 
         RowBox[{
-         RowBox[{"!", 
-          RowBox[{"KeyExistsQ", "[", 
-           RowBox[{"AlgoKimberlingWeights", ",", 
-            RowBox[{"\"\<X\>\"", "<>", 
-             RowBox[{"ToString", "[", "k", "]"}]}]}], "]"}]}], ",", " ", 
+         RowBox[{
+          RowBox[{"k", ">", "44000"}], " ", "&&", " ", 
+          RowBox[{"k", "<=", "46000"}]}], ",", " ", 
+         RowBox[{"wA", " ", "=", 
+          RowBox[{"getvalue", "[", 
+           RowBox[{"KimberlingTrilinears46000", ",", "name"}], "]"}]}]}], 
+        "]"}], ";", "\n", "\n", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"wA", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "===", "Indeterminate"}], ",", " ", 
          RowBox[{"Return", " ", "[", 
           RowBox[{"{", 
            RowBox[{
            "Indeterminate", ",", " ", "Indeterminate", ",", " ", 
-            "Indeterminate"}], "}"}], "]"}]}], "]"}], ";", "\n", 
+            "Indeterminate"}], "}"}], "]"}]}], "]"}], ";", "\n", "\n", 
        RowBox[{"wA", " ", "=", " ", 
-        RowBox[{
-         RowBox[{"AlgoKimberlingWeights", "[", 
-          RowBox[{"\"\<X\>\"", "<>", 
-           RowBox[{"ToString", "[", "k", "]"}]}], "]"}], "[", 
+        RowBox[{"wA", "[", 
          RowBox[{"[", "1", "]"}], "]"}]}], ";", "\n", 
        RowBox[{"wB", " ", "=", " ", 
         RowBox[{"wA", "/.", 
@@ -182,8 +199,13 @@ Cell[BoxData[{
    RowBox[{"getTriangleCurve", "[", "name_", "]"}], ":=", 
    RowBox[{"symmetrizeEq", "[", 
     RowBox[{"TriangleCurves", "[", "name", "]"}], "]"}]}], ";"}]}], "Code",
- InitializationCell->
-  False,ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+ InitializationCell->False,
+ CellChangeTimes->{{3.854357504781231*^9, 3.8543575362929363`*^9}, {
+   3.854357635899296*^9, 3.854357636234169*^9}, {3.8543577067642393`*^9, 
+   3.8543580411107225`*^9}, 3.8543580813509665`*^9, {3.854358124557372*^9, 
+   3.8543581902543573`*^9}, 3.854358273245316*^9},
+ CellLabel->
+  "In[162]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -193,20 +215,23 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{
      "KimberlingCenter", ",", " ", "KimberlingCenterB", ",", 
-      "getTriangleCurve"}], "}"}]}], "]"}]}]], "Input",
+      "getTriangleCurve", ",", "getvalue"}], "}"}]}], "]"}]}]], "Input",
  CellChangeTimes->{{3.839920731475067*^9, 3.8399207380489435`*^9}, {
-  3.8399209095637517`*^9, 3.839920929892164*^9}, {3.8400856157681627`*^9, 
-  3.8400856175744915`*^9}, {3.8400857472955127`*^9, 3.8400857795241475`*^9}, {
-  3.841625062759861*^9, 3.8416250659755015`*^9}, {3.841626128111167*^9, 
-  3.841626128863483*^9}, {3.841803439373165*^9, 3.8418034395152197`*^9}, {
-  3.8420563689039583`*^9, 3.842056369057808*^9}, {3.8420567902777777`*^9, 
-  3.8420567987655287`*^9}},
- CellLabel->"In[47]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+   3.8399209095637517`*^9, 3.839920929892164*^9}, {3.8400856157681627`*^9, 
+   3.8400856175744915`*^9}, {3.8400857472955127`*^9, 
+   3.8400857795241475`*^9}, {3.841625062759861*^9, 3.8416250659755015`*^9}, {
+   3.841626128111167*^9, 3.841626128863483*^9}, {3.841803439373165*^9, 
+   3.8418034395152197`*^9}, {3.8420563689039583`*^9, 3.842056369057808*^9}, {
+   3.8420567902777777`*^9, 3.8420567987655287`*^9}, {3.8543581574134016`*^9, 
+   3.8543581575743275`*^9}, 3.854358193007846*^9},
+ CellLabel->
+  "In[167]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
-WindowSize->{1093.8, 604.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1105.2, 615.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 Magnification:>0.9 Inherited,
-FrontEndVersion->"12.3 for Microsoft Windows (64-bit) (June 19, 2021)",
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"d28a54b2-181c-47cf-a4e8-d4f2c6cc05a1"
 ]
@@ -221,10 +246,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 661, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1222, 33, 5680, 152, 483, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1226, 34, 6486, 173, 545, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[6905, 187, 869, 16, 26, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[7715, 209, 972, 18, 56, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)
