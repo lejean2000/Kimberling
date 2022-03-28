@@ -235,13 +235,13 @@ bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2},
 bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
      conic[x_, y_, z_] := ({{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
            {m13, m23, 1}} . {{x}, {y}, {z}})[[1]][[1]]; 
-      First[Solve[{multiCollect[Numerator[Simplify[conic @@ P13]], 
+      First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
            {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ P23]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ P12]], 
+         multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
            {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ P32]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ P21]], 
+         multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
            {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
  
 bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
