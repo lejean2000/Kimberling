@@ -108,3 +108,8 @@ cAubertLine[a_, b_, c_, d_] := Module[{z, ab, cd}, ab = lineEqPt[a, b];
  
 cConicCenter[{{a_, h_, g_}, {h_, b_, f_}, {g_, f_, c_}}] = 
     {(-(b*g) + f*h)/(a*b - h^2), (-(a*f) + g*h)/(a*b - h^2)}
+ 
+implicitTangent[func_, {x0_, y0_}] := Module[{f, k}, 
+     f[x_, y_] := Evaluate[Simplify[First[Dt[y, x] /. Solve[Dt[func == 0, x], 
+            Dt[y, x]]]]]; k = Evaluate[f[x0, y0]]; 
+      Collect[y - y0 - k*(x - x0), {x, y}]]
