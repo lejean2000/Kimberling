@@ -9,20 +9,21 @@ setupParamTriangle := setupBaseTriangle[{0, 0}, {c, 0},
 setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z], 
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
-bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/p]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}]]
+bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
  
 symmetrizeInternal[eq_] := Module[{partB, partC}, 
-     partB = eq /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
-      partB = partB /. {a -> b, b -> c, c -> a}; 
-      partC = partB /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
-      partC = partC /. {a -> b, b -> c, c -> a}; {eq, partB, partC}]
+     partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a}; 
+      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a}; 
+      {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = q*r*v*w /. {p -> p/a, q -> q/b, r -> r/c, u -> u/a, v -> v/b, 
-         w -> w/c}; eq2 = symmetrizeInternal[eq]; 
+     eq = qq*rr*vv*ww /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
+         vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
       (b^2*c^2*a^2)*bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , 
-           {{p, q, r}, P1}] /. MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+           {{pp, qq, rr}, P1}] /. MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
@@ -144,97 +145,102 @@ bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_},
          ss[{p31, p32, p33}], ss[{p41, p42, p43}]}, {p11, p21, p31, p41}, 
         {p12, p22, p32, p42}, {p13, p23, p33, p43}}]]
  
-bCevianQuotient[P1, P2] := Module[{eq}, 
-     eq = symmetrizeInternal[u*(-(u/p) + v/q + w/r)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, P2}]]
+bCevianQuotient[P1_, U1_] := Module[{eq}, 
+     eq = symmetrizeInternal[uu*(-(uu/pp) + vv/qq + ww/rr)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bCevianProduct[P1_, U1_] := Module[{eq}, 
-     eq = symmetrizeInternal[1/(r*v + q*w)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+     eq = symmetrizeInternal[1/(rr*vv + qq*ww)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bCrosspoint[P1_, U1_] := Module[{eq}, 
-     eq = symmetrizeInternal[1/(r*v) + 1/(q*w)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+     eq = symmetrizeInternal[1/(rr*vv) + 1/(qq*ww)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
-bTripole[P1_, U1_] := Module[{eq}, eq = symmetrizeInternal[1/(r*v - q*w)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+bTripole[P1_, U1_] := Module[{eq}, 
+     eq = symmetrizeInternal[1/(rr*vv - qq*ww)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bCrossConjugate[P1_, U1_] := Module[{eq}, 
-     eq = symmetrizeInternal[u/(-(p/u) + q/v + r/w)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+     eq = symmetrizeInternal[uu/(-(pp/uu) + qq/vv + rr/ww)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
-bComplement[P1_, U1_] := Module[{eq}, eq = symmetrizeInternal[p*(v/q + w/r)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+bComplement[P1_, U1_] := Module[{eq}, 
+     eq = symmetrizeInternal[pp*(vv/qq + ww/rr)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bAntiComplement[P1_, U1_] := Module[{eq}, 
-     eq = symmetrizeInternal[p*(-(u/p) + v/q + w/r)]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+     eq = symmetrizeInternal[pp*(-(uu/pp) + vv/qq + ww/rr)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bAlephConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = (-q^2)*r^2*u^2 + r^2*p^2*v^2 + p^2*q^2*w^2 + (v*w + w*u + u*v)*
-          ((-q^2)*r^2 + r^2*p^2 + p^2*q^2) /. {p -> p/a, q -> q/b, r -> r/c, 
-         u -> u/a, v -> v/b, w -> w/c}; eq2 = symmetrizeInternal[eq]; 
+     eq = (-qq^2)*rr^2*uu^2 + rr^2*pp^2*vv^2 + pp^2*qq^2*ww^2 + 
+         (vv*ww + ww*uu + uu*vv)*((-qq^2)*rr^2 + rr^2*pp^2 + pp^2*qq^2) /. 
+        {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, vv -> vv/b, 
+         ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
       (a^2*b^2*c^2)*bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , 
-           {{p, q, r}, P1}] /. MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+           {{pp, qq, rr}, P1}] /. MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bCrossDiff[P1_, U1_] := Module[{eq, eq2}, 
-     eq = q*w - r*v /. {p -> p/a, q -> q/b, r -> r/c, u -> u/a, v -> v/b, 
-         w -> w/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+     eq = qq*ww - rr*vv /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
+         vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bCrossSum[P1_, U1_] := Module[{eq, eq2}, 
-     eq = q*w + r*v /. {p -> p/a, q -> q/b, r -> r/c, u -> u/a, v -> v/b, 
-         w -> w/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+     eq = qq*ww + rr*vv /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
+         vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bHirstInverse[P1_, U1_] := Module[{eq}, 
-     eq = symmetrizeInternal[q*r*u^2 - v*w*p^2]; 
-      eq /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-       MapThread[#1 -> #2 & , {{u, v, w}, U1}]]
+     eq = symmetrizeInternal[qq*rr*uu^2 - vv*ww*pp^2]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
 bAnticomplementaryConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = (1/a)*(b^2/(q*(a*u + c*w)) + c^2/(r*(a*u + b*v)) - 
-          a^2/(p*(b*v + c*w))) /. {p -> p/a, q -> q/b, r -> r/c, u -> u/a, 
-         v -> v/b, w -> w/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+     eq = (1/a)*(b^2/(qq*(a*uu + c*ww)) + c^2/(rr*(a*uu + b*vv)) - 
+          a^2/(pp*(b*vv + c*ww))) /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, 
+         uu -> uu/a, vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bLineConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = p*(v^2 + w^2) - u*(q*v + r*w) /. {p -> p/a, q -> q/b, r -> r/c, 
-         u -> u/a, v -> v/b, w -> w/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+     eq = pp*(vv^2 + ww^2) - uu*(qq*vv + rr*ww) /. {pp -> pp/a, qq -> qq/b, 
+         rr -> rr/c, uu -> uu/a, vv -> vv/b, ww -> ww/c}; 
+      eq2 = symmetrizeInternal[eq]; bFromTrilinear[
+       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bAntigonalImage[P1_] := Module[{eq, eq2}, 
-     eq = p/((b^2 + c^2 - a^2)*p^2 - a^2*q*r + (b^2 - a^2)*p*q + 
-          (c^2 - a^2)*p*r) /. {p -> p/a, q -> q/b, r -> r/c}; 
+     eq = pp/((b^2 + c^2 - a^2)*pp^2 - a^2*qq*rr + (b^2 - a^2)*pp*qq + 
+          (c^2 - a^2)*pp*rr) /. {pp -> pp/a, qq -> qq/b, rr -> rr/c}; 
       eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}]]]
+       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]]
  
 bBethConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = 2*a*b*c*p*((a^2 - b^2 + c^2)/(2*a*c) + (a^2 + b^2 - c^2)/(2*a*b))*
-          (u*((b + c - a)/p) + v*((a + c - b)/q) + w*((a + b - c)/r)) - 
-         u*(a + b + c)*(b + c - a)*(a + c - b)*(a + b - c) /. 
-        {p -> p/a, q -> q/b, r -> r/c, u -> u/a, v -> v/b, w -> w/c}; 
-      eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+     eq = 2*a*b*c*pp*((a^2 - b^2 + c^2)/(2*a*c) + (a^2 + b^2 - c^2)/(2*a*b))*
+          (uu*((b + c - a)/pp) + vv*((a + c - b)/qq) + ww*((a + b - c)/rr)) - 
+         uu*(a + b + c)*(b + c - a)*(a + c - b)*(a + b - c) /. 
+        {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, vv -> vv/b, 
+         ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = (1/a)*(b^2/(q*(a*u - b*v + c*w)) + c^2/(r*(a*u + b*v - c*w))) /. 
-        {p -> p/a, q -> q/b, r -> r/c, u -> u/a, v -> v/b, w -> w/c}; 
+     eq = (1/a)*(b^2/(qq*(a*uu - b*vv + c*ww)) + 
+          c^2/(rr*(a*uu + b*vv - c*ww))) /. {pp -> pp/a, qq -> qq/b, 
+         rr -> rr/c, uu -> uu/a, vv -> vv/b, ww -> ww/c}; 
       eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{p, q, r}, P1}] /. 
-        MapThread[#1 -> #2 & , {{u, v, w}, U1}]]]
+       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
      conic[x_, y_, z_] := ({{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
