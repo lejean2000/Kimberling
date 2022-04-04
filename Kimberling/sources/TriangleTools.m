@@ -87,6 +87,9 @@ cToBary[v1_, v2_, v3_, xy_] :=
 bCollinearityMatrix[u_, v_, w_] := Det[{{u[[1]], u[[2]], u[[3]]}, 
       {v[[1]], v[[2]], v[[3]]}, {w[[1]], w[[2]], w[[3]]}}]
  
+bConcurrencyMatrix[u_, v_, w_] := Det[{{u[[1]], v[[1]], w[[1]]}, 
+      {u[[2]], v[[2]], w[[2]]}, {u[[3]], v[[3]], w[[3]]}}]
+ 
 cCollinearityMatrix[u_, v_, w_] := Det[{{u[[1]], u[[2]], 1}, 
       {v[[1]], v[[2]], 1}, {w[[1]], w[[2]], 1}}]
  
@@ -122,10 +125,11 @@ bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] :=
  
 bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
  
-bParallelLine[p, {l1_, l2_, l3_}] := Module[{m, p1, p2, p3}, 
-     p = p/Total[p]; {p1, p2, p3} = p; 
-      m = Det[{{l2 - l3, l3 - l1, l1 - l2}, {p1, p2, p3}, {xx, yy, zz}}]; 
-      {Coefficient[m, xx], Coefficient[m, yy], Coefficient[m, zz]}]
+bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] := 
+    Module[{m, tot}, tot = p1 + p2 + p3; 
+      m = Det[{{l2 - l3, l3 - l1, l1 - l2}, {p1/tot, p2/tot, p3/tot}, 
+         {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
+       Coefficient[m, zz]}]
  
 bDistancePointLine[p_, l_] := Module[{p1, p2, p3, sa, sb, sc, l1, l2, l3}, 
      sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
