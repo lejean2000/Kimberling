@@ -34,6 +34,9 @@ angleB = ArcCos[(a^2 - b^2 + c^2)/(2*a*c)]
  
 angleC = ArcCos[(a^2 + b^2 - c^2)/(2*a*b)]
  
+angleW = ArcCot[(a^2 + b^2 + c^2)/Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*
+        (a + b + c)]]
+ 
 symmetrizeEq[eq_] := Module[{partB, partC}, 
      partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
       partC = partB /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
