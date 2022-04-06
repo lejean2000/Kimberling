@@ -22,8 +22,8 @@ symmetrizeInternal[eq_] := Module[{partB, partC},
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
      eq = qq*rr*vv*ww /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
          vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
-      (b^2*c^2*a^2)*bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , 
-           {{pp, qq, rr}, P1}] /. MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
@@ -255,13 +255,14 @@ bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic},
            {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
  
 bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
-    First[Flatten[{{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
-         {m13, m23, 1}} . {{x}, {y}, {z}} /. bFivePointConicCoef[PA, PB, PC, 
-        PD, PE]]]
+    multiCollect[First[Flatten[{{x, y, z}} . {{m11, m12, m13}, 
+          {m12, m22, m23}, {m13, m23, 1}} . {{x}, {y}, {z}} /. 
+        bFivePointConicCoef[PA, PB, PC, PD, PE]]], {x, y, z}]
  
 checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] := 
     Simplify[bFivePointConicEq[PA, PB, PC, PD, PE] /. 
-      First[(Thread[{x, y, z} -> #1] & ) /@ {XX}]]
+      First[(Union[{x:Blank[Subscript] :> x}, Thread[{x, y, z} -> #1]] & ) /@ 
+        {XX}]]
  
 bConicCenter[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
     Module[{p}, p = {-m23^2 + (m13 + m12)*m23 + m22*m33 - m13*m22 - m12*m33, 
@@ -342,3 +343,21 @@ bCircumconicEq[{p_, q_, r_}, {u_, v_, w_}] := p*u*(r*v - q*w)*y*z +
 bTripolarEq[{p_, q_, r_}] := {1/p, 1/q, 1/r}
  
 bCircumconicPEq[{p_, q_, r_}] = r*x*y + q*x*z + p*y*z
+ 
+bReciprocalConjugate[P1_, U1_] := Module[{eq}, 
+     eq = symmetrizeInternal[uu/pp]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+ 
+bToSearchNumbers[pt_] := S*(pt/(Total[pt]*{a, b, c})) /. 
+     {a -> 6, b -> 9, c -> 13}
+ 
+bPerspector[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
+    Module[{p}, p = {1/(m12*m13 - m11*m23), 1/((-m13)*m22 + m12*m23), 
+        1/(m13*m23 - m12*m33)}; p/Total[p]]
+ 
+conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y], 
+      (1/2)*Coefficient[eq, x*z]}, {(1/2)*Coefficient[eq, x*y], 
+      Coefficient[eq, y^2], (1/2)*Coefficient[eq, y*z]}, 
+     {(1/2)*Coefficient[eq, x*z], (1/2)*Coefficient[eq, y*z], 
+      Coefficient[eq, z^2]}}
