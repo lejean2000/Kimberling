@@ -113,3 +113,7 @@ implicitTangent[func_, {x0_, y0_}] := Module[{f, k},
      f[x_, y_] := Evaluate[Simplify[First[Dt[y, x] /. Solve[Dt[func == 0, x], 
             Dt[y, x]]]]]; k = Evaluate[f[x0, y0]]; 
       Collect[y - y0 - k*(x - x0), {x, y}]]
+ 
+cCircleEq[{u1_, v1_}, {u2_, v2_}, {u3_, v3_}] := 
+    Det[{{x^2 + y^2, x, y, 1}, {u1^2 + v1^2, u1, v1, 1}, 
+      {u2^2 + v2^2, u2, v2, 1}, {u3^2 + v3^2, u3, v3, 1}}]
