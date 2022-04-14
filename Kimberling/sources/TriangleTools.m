@@ -73,8 +73,8 @@ tToBary[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
  
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
-bPerpendicular[po_, {u_, v_, w_}] := Module[{sa, sb, sc, f, g, h, pp, p, q, 
-      r, ff, gg, hh, m}, pp = po/Total[po]; p = pp[[1]]; q = pp[[2]]; 
+bPerpendicular[line_, {u_, v_, w_}] := Module[{sa, sb, sc, f, g, h, pp, p, q, 
+      r, ff, gg, hh, m}, pp = line/Total[line]; p = pp[[1]]; q = pp[[2]]; 
       r = pp[[3]]; sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
       sc = (b^2 - c^2 + a^2)/2; f = q - r; g = r - p; h = p - q; 
       ff = sb*g - sc*h; gg = sc*h - sa*f; hh = sa*f - sb*g; 
@@ -132,11 +132,11 @@ bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] :=
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
  
-bDistancePointLine[p_, l_] := Module[{p1, p2, p3, sa, sb, sc, l1, l2, l3}, 
-     sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
-      sc = (b^2 - c^2 + a^2)/2; {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l; 
-      Sqrt[((sa*sb + sa*sc + sb*sc)*(p . l)^2)/(sa*(l3 - l2)^2 + 
-         sb*(l1 - l2)^2 + sc*(l2 - l1)^2)]]
+bDistancePointLine[p_, l_] := Module[{p1, p2, p3, l1, l2, l3}, 
+     {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l/Total[l]; 
+      (1/2)*Sqrt[-(((a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))*(p . l)^2)/
+          (a^2*(l1 - l2)*(l1 - l3) + b^2*(-l1 + l2)*(l2 - l3) + 
+           c^2*(l1 - l3)*(l2 - l3)))]]
  
 bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_}, 
      {p41_, p42_, p43_}] := Module[{ss}, 
