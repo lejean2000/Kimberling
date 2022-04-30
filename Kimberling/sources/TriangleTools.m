@@ -14,9 +14,11 @@ bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp];
  
 symmetrizeInternal[eq_] := Module[{partB, partC}, 
      partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
-         ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a}; 
+         ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA}; 
       partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
-         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a}; 
+         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA}; 
       {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
@@ -33,10 +35,11 @@ bDistanceF[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q];
           c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])] /. setupParamTriangle, 
        c > 0 && a + b > c && a + c > b && b + c > a]]
  
-bCoordChangeK[k_, d_, e_, f_] := Module[{p}, 
-     p = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
+bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
+     pp = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
          b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
-      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . Transpose[p/Total[p]]]
+      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
+       Transpose[pp/Total[pp]]]
  
 bDistance[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
@@ -102,18 +105,21 @@ cConcurrencyMatrix[l1_, l2_, l3_] :=
 multiCollect[expr_, vars_] := Activate[Expand[Collect[expr, vars, 
        Inactive[Simplify]]]]
  
-bAubertLine[a_, b_, c_, d_] := Module[{z}, z = bIntersection[a, b, c, d]; 
-      bLine[bCoordChange[orth[z, b, c], z, b, c], bCoordChange[orth[z, a, d], 
-        z, a, d]]]
+bAubertLine[aa_, bb_, cc_, dd_] := Module[{z}, 
+     z = bIntersection[aa, bb, cc, dd]; bLine[bCoordChange[orth[z, bb, cc], 
+        z, bb, cc], bCoordChange[orth[z, aa, dd], z, aa, dd]]]
  
-bAubertCenter[a_, b_, c_, d_] := Module[{z}, l1 = bAubertLine[a, b, c, d]; 
-      l2 = bAubertLine[a, b, d, c]; bLineIntersection[l1, l2]]
+bAubertCenter[aa_, bb_, cc_, dd_] := Module[{z}, 
+     l1 = bAubertLine[aa, bb, cc, dd]; l2 = bAubertLine[aa, bb, dd, cc]; 
+      bLineIntersection[l1, l2]]
  
-bAubertCenter2[a_, b_, c_, d_] := Module[{z}, l1 = bAubertLine[a, b, c, d]; 
-      l3 = bAubertLine[a, d, b, c]; bLineIntersection[l1, l3]]
+bAubertCenter2[aa_, bb_, cc_, dd_] := Module[{z}, 
+     l1 = bAubertLine[aa, bb, cc, dd]; l3 = bAubertLine[aa, dd, bb, cc]; 
+      bLineIntersection[l1, l3]]
  
-bAubertCenter3[a_, b_, c_, d_] := Module[{z}, l2 = bAubertLine[a, b, d, c]; 
-      l3 = bAubertLine[a, d, b, c]; bLineIntersection[l2, l3]]
+bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{z}, 
+     l2 = bAubertLine[aa, bb, dd, cc]; l3 = bAubertLine[aa, dd, bb, cc]; 
+      bLineIntersection[l2, l3]]
  
 bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
      Clear[a, b, c]; A1 = KimberlingTrianglesTrilinear[name]; 
@@ -361,3 +367,12 @@ conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y],
       Coefficient[eq, y^2], (1/2)*Coefficient[eq, y*z]}, 
      {(1/2)*Coefficient[eq, x*z], (1/2)*Coefficient[eq, y*z], 
       Coefficient[eq, z^2]}}
+ 
+bVertexConjugate[P1_, U1_] := Module[{eq, eq2}, 
+     eq = a/(c^4*pp*qq*uu*vv + rr*(b^4*pp*uu - a^4*qq*vv)*ww + 
+         b^2*c^2*pp*uu*(rr*vv + qq*ww)); eq2 = symmetrizeInternal[eq]; 
+      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
+        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+ 
+bTrilinearProduct[P1_, U1_] := (symmetrizeInternal[P1[[1]]/a]*
+      symmetrizeInternal[U1[[1]]/a])*{a, b, c}

@@ -4,7 +4,7 @@ KimberlingTrilinears1000 := Association["X44881" ->
         (a^2 - b^2 + c^2)*(a + b - c)*(a^2 + b^2 - c^2)}, "X1" -> {1}, 
      "X2" -> {b*c}, "X3" -> {a*(b^2 + c^2 - a^2)}, "X4" -> {Sec[angleA]}, 
      "X5" -> {b*c*(a^2*(b^2 + c^2) - (b^2 - c^2)^2)}, "X6" -> {a}, 
-     "X7" -> {b*(c/(b + c - a))}, "X8" -> {(b + c - a)/a}, 
+     "X7" -> {1/(a*(b + c - a))}, "X8" -> {(b + c - a)/a}, 
      "X9" -> {b + c - a}, "X10" -> {b*c*(b + c)}, 
      "X11" -> {b*c*(b + c - a)*(b - c)^2}, 
      "X12" -> {b*c*((b + c)^2/(b + c - a))}, "X13" -> {Csc[angleA + Pi/3]}, 

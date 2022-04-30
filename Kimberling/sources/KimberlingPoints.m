@@ -13,8 +13,8 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
          name]]; If[k > 44000 && k <= 46000, 
        wA = getvalue[KimberlingTrilinears46000, name]]; 
       If[wA[[1]] === Indeterminate, Return[{Indeterminate, Indeterminate, 
-         Indeterminate}]]; wA = wA[[1]]; wB = wA /. {a -> b, b -> c, c -> a}; 
-      wC = wB /. {a -> b, b -> c, c -> a}; {a*wA, b*wB, c*wC}]
+         Indeterminate}]]; {wA, wB, wC} = symmetrizeInternal[wA[[1]]]; 
+      {a*wA, b*wB, c*wC}]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
