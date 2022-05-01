@@ -52,11 +52,12 @@ tangentEqMpt[m_, {px_, py_}] :=
  
 tangencyPoints[{{a_, h_, g_}, {h_, b_, f_}, {g_, f_, c_}}, {x0_, y0_}] := 
     DeleteDuplicates[
-     Solve[{(g*(u - x0)^2 + f*(u - x0)*(v - y0) + (h*u + b*v - h*x0 - b*y0)*
-            ((-v)*x0 + u*y0))^2 - (a*(u - x0)^2 + (2*h*(u - x0) + b*(v - y0))*
-            (v - y0))*(c*(u - x0)^2 + (v*x0 - u*y0)*(-2*f*u + 2*f*x0 + 
-             b*v*x0 - b*u*y0)) == 0, a*u^2 + 2*h*u*v + b*v^2 + 2*g*u + 
-         2*f*v + c == 0}, {u, v}, Reals]]
+     Solve[{(g*(uu - x0)^2 + f*(uu - x0)*(vv - y0) + 
+           (h*uu + b*vv - h*x0 - b*y0)*((-vv)*x0 + uu*y0))^2 - 
+         (a*(uu - x0)^2 + (2*h*(uu - x0) + b*(vv - y0))*(vv - y0))*
+          (c*(uu - x0)^2 + (vv*x0 - uu*y0)*(-2*f*uu + 2*f*x0 + b*vv*x0 - 
+             b*uu*y0)) == 0, a*uu^2 + 2*h*uu*vv + b*vv^2 + 2*g*uu + 2*f*vv + 
+         c == 0}, {uu, vv}, Reals]]
  
 tangencyPointsNum[{{a_, h_, g_}, {h_, b_, f_}, {g_, f_, c_}}, {x0_, y0_}] := 
     Module[{res}, res = DeleteDuplicates[
