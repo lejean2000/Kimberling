@@ -109,15 +109,15 @@ bAubertLine[aa_, bb_, cc_, dd_] := Module[{z},
      z = bIntersection[aa, bb, cc, dd]; bLine[bCoordChange[orth[z, bb, cc], 
         z, bb, cc], bCoordChange[orth[z, aa, dd], z, aa, dd]]]
  
-bAubertCenter[aa_, bb_, cc_, dd_] := Module[{z}, 
+bAubertCenter[aa_, bb_, cc_, dd_] := Module[{l1, l2}, 
      l1 = bAubertLine[aa, bb, cc, dd]; l2 = bAubertLine[aa, bb, dd, cc]; 
       bLineIntersection[l1, l2]]
  
-bAubertCenter2[aa_, bb_, cc_, dd_] := Module[{z}, 
+bAubertCenter2[aa_, bb_, cc_, dd_] := Module[{l1, l3}, 
      l1 = bAubertLine[aa, bb, cc, dd]; l3 = bAubertLine[aa, dd, bb, cc]; 
       bLineIntersection[l1, l3]]
  
-bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{z}, 
+bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{l2, l3}, 
      l2 = bAubertLine[aa, bb, dd, cc]; l3 = bAubertLine[aa, dd, bb, cc]; 
       bLineIntersection[l2, l3]]
  
@@ -376,3 +376,14 @@ bVertexConjugate[P1_, U1_] := Module[{eq, eq2},
  
 bTrilinearProduct[P1_, U1_] := (symmetrizeInternal[P1[[1]]/a]*
       symmetrizeInternal[U1[[1]]/a])*{a, b, c}
+ 
+bCirclecevianPerspector[{p_, q_, r_}] := symmetrizeInternal[
+     a^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
+      (c^2*p^2*q + c^2*p*q^2 + 2*c^2*p*q*r + b^2*p*r^2 + a^2*q*r^2)]
+ 
+bTCCPerspector[P1_] := Module[{eq, eq2}, 
+     eq = a^2*(b^4/qq^2 + c^4/rr^2 - a^4/pp^2); eq2 = symmetrizeInternal[eq]; 
+      eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
+ 
+bEigentransform[P1_] := Module[{eq, eq2}, bCevianQuotient[P1, 
+      bIsogonalConjugate[P1]]]
