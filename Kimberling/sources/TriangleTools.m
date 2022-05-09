@@ -122,10 +122,11 @@ bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{l2, l3},
       bLineIntersection[l2, l3]]
  
 bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
-     Clear[a, b, c]; A1 = KimberlingTrianglesTrilinear[name]; 
-      B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
-      C1 = Permute[B1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
-      bFromTrilinear /@ {A1, B1, C1}]
+     Clear[a, b, c]; If[KeyExistsQ[KimberlingTrianglesTrilinear, name], 
+       A1 = KimberlingTrianglesTrilinear[name]; 
+        B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
+        C1 = Permute[B1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
+        bFromTrilinear /@ {A1, B1, C1}]]
  
 bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
     b1*c2 - c1*b2 + c1*a2 - a1*c2 + a1*b2 - b1*a2 == 0
@@ -387,3 +388,14 @@ bTCCPerspector[P1_] := Module[{eq, eq2},
  
 bEigentransform[P1_] := Module[{eq, eq2}, bCevianQuotient[P1, 
       bIsogonalConjugate[P1]]]
+ 
+bAntitomicConjugate[P1_] := Module[{eq}, 
+     eq = symmetrizeInternal[pp*(qq^2 - pp*rr)*(rr^2 - pp*qq)]; 
+      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
+ 
+bReflectionPL[ptU_, lnL_] := Module[{tot, pp, qq, rr, uu, vv, ww, mtxv, ssa, 
+      ssb, ssc}, {uu, vv, ww} = ptU/Total[ptU]; {pp, qq, rr} = 
+       lnL/Total[lnL]; ssa = (b^2 + c^2 - a^2)/2; ssb = (-b^2 + c^2 + a^2)/2; 
+      ssc = (b^2 - c^2 + a^2)/2; mtxv = {ssb*(pp - rr) - ssc*(qq - pp), 
+        ssc*(qq - pp) - ssa*(rr - qq), ssa*(rr - qq) - ssb*(pp - rr)}; 
+      {uu, vv, ww} - 2*({pp, qq, rr} . {uu, vv, ww}/{pp, qq, rr} . mtxv)*mtxv]

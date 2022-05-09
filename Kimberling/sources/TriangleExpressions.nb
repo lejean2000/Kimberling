@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      8298,        246]
-NotebookOptionsPosition[      7750,        230]
-NotebookOutlinePosition[      8154,        246]
-CellTagsIndexPosition[      8111,        243]
+NotebookDataLength[      9094,        266]
+NotebookOptionsPosition[      8452,        249]
+NotebookOutlinePosition[      8856,        265]
+CellTagsIndexPosition[      8813,        262]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -152,9 +152,9 @@ Cell[BoxData[{
  CellChangeTimes->{
   3.858229176389264*^9, 3.858229446693867*^9, 3.8602953602247972`*^9, 
    3.860302009654538*^9, {3.860485791732256*^9, 3.860485794873648*^9}, {
-   3.860485932054061*^9, 
-   3.860485933925563*^9}},ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-\
-9bd77f1dd136"],
+   3.860485932054061*^9, 3.860485933925563*^9}},
+ CellLabel->
+  "In[808]:=",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
 
 Cell[BoxData[{
  RowBox[{
@@ -210,7 +210,24 @@ Cell[BoxData[{
    3.8420559882557697`*^9}, {3.8420560267317495`*^9, 3.8420561054123874`*^9}, 
    3.842844687719762*^9},
  CellLabel->
-  "In[373]:=",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
+  "In[817]:=",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"conwaySimplify", "[", "poly_", "]"}], ":=", 
+   RowBox[{"PolynomialReduce", "[", 
+    RowBox[{"poly", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "SW", ",", "SA", ",", "SB", ",", "SC", ",", "sp", ",", "sa", ",", "sb", 
+       ",", "sc"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", "b", ",", "c"}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8609891991646347`*^9, 3.8609892527144737`*^9}, {
+  3.860989668387579*^9, 3.8609896718538404`*^9}},
+ CellLabel->
+  "In[861]:=",ExpressionUUID->"6a851369-77c2-486b-bf89-957dbe820a7c"],
 
 Cell[BoxData[
  RowBox[{
@@ -223,10 +240,12 @@ Cell[BoxData[
        " ", "r", ",", " ", "SA", ",", " ", "SB", ",", " ", "SC", ",", " ", 
       "SW", ",", " ", "R", ",", " ", "jJ", ",", "dD", ",", "angleA", ",", " ",
        "angleB", ",", " ", "angleC", ",", "angleW", ",", "symmetrizeEq", ",", 
-      " ", "symmetrizeEqGeogebra"}], "}"}]}], "]"}]}]], "Input",
- CellChangeTimes->{{3.858229161298311*^9, 3.8582291632430873`*^9}},
+      " ", "symmetrizeEqGeogebra", ",", "conwaySimplify"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.858229161298311*^9, 3.8582291632430873`*^9}, {
+  3.8609892584103584`*^9, 3.860989258842313*^9}},
  CellLabel->
-  "In[375]:=",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+  "In[820]:=",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 },
 WindowSize->{1093.8, 604.8},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
@@ -245,9 +264,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 4230, 136, 222, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
-Cell[4791, 158, 2219, 54, 143, "Input",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
-Cell[7013, 214, 733, 14, 67, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+Cell[558, 20, 4252, 136, 222, "Input",ExpressionUUID->"e02bd4d1-2377-49e9-b4fb-9bd77f1dd136"],
+Cell[4813, 158, 2219, 54, 143, "Input",ExpressionUUID->"4c3e296e-741c-4616-a2af-bb5ca6c06ef1"],
+Cell[7035, 214, 599, 15, 58, "Input",ExpressionUUID->"6a851369-77c2-486b-bf89-957dbe820a7c"],
+Cell[7637, 231, 811, 16, 67, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)

@@ -664,4 +664,7 @@ KimberlingTrianglesTrilinear := Association["Yff central" ->
         (4*a*SA*(Sqrt[3]*a^2 - 2*S)), (Sqrt[3]*SC - S)/b, 
        (Sqrt[3]*SB - S)/c}, "Vu-Dao-X(16)-isodynamic equilateral" -> 
       {((S^2 + 3*SB*SC)*a^2 + 4*Sqrt[3]*S*SB*SC)/
-        (4*a*SA*(Sqrt[3]*a^2 + 2*S)), (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}]
+        (4*a*SA*(Sqrt[3]*a^2 + 2*S)), (Sqrt[3]*SC + S)/b, 
+       (Sqrt[3]*SB + S)/c}, "Maia" -> {0, (a^2 + 2*b^2 - c^2)*
+        (a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2), (a^2 - b^2 + 2*c^2)*
+        (a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4)}]

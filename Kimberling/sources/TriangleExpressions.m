@@ -46,3 +46,6 @@ symmetrizeEq[eq_] := Module[{partB, partC},
       eq + partB + partC]
  
 symmetrizeEqGeogebra[eq_] := symmetrizeEq[eq] /. {x -> A, y -> B, z -> C}
+ 
+conwaySimplify[poly_] := PolynomialReduce[poly, {SW, SA, SB, SC, sp, sa, sb, 
+      sc}, {a, b, c}]
