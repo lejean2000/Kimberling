@@ -341,15 +341,15 @@ bCircumcevianTriangle[{u1_, v1_, w1_}] := Module[{u, v, w},
       C1 = {(a*v + b*u)*u, (a*v + b*u)*v, (-c)*u*v}; 
       bFromTrilinear /@ {A1, B1, C1}]
  
-bInconicEq[{p_, q_, r_}] := (x/p)^2 - 2*(y/q)*(z/r) + (y/q)^2 - 
-     2*(x/p)*(z/r) + (z/r)^2 - 2*(y/q)*(x/p)
+bInconicEq[{pp_, qq_, rr_}] := (x/pp)^2 - 2*(y/qq)*(z/rr) + (y/qq)^2 - 
+     2*(x/pp)*(z/rr) + (z/rr)^2 - 2*(y/qq)*(x/pp)
  
-bCircumconicEq[{p_, q_, r_}, {u_, v_, w_}] := p*u*(r*v - q*w)*y*z + 
-     q*v*(p*w - r*u)*z*x + r*w*(q*u - p*v)*x*y
+bCircumconicEq[{pp_, qq_, rr_}, {u_, v_, w_}] := pp*u*(rr*v - qq*w)*y*z + 
+     qq*v*(pp*w - rr*u)*z*x + rr*w*(qq*u - pp*v)*x*y
  
-bTripolarEq[{p_, q_, r_}] := {1/p, 1/q, 1/r}
+bTripolarEq[{pp_, qq_, rr_}] := {1/pp, 1/qq, 1/rr}
  
-bCircumconicPEq[{p_, q_, r_}] = r*x*y + q*x*z + p*y*z
+bCircumconicPEq[{pp_, qq_, rr_}] := pp*y*z + qq*x*z + rr*x*y
  
 bReciprocalConjugate[P1_, U1_] := Module[{eq}, 
      eq = symmetrizeInternal[uu/pp]; 
