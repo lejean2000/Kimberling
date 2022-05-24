@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   2786966,      76808]
-NotebookOptionsPosition[   2786354,      76790]
-NotebookOutlinePosition[   2786815,      76808]
-CellTagsIndexPosition[   2786772,      76805]
+NotebookDataLength[   2785078,      76752]
+NotebookOptionsPosition[   2784466,      76734]
+NotebookOutlinePosition[   2784927,      76752]
+CellTagsIndexPosition[   2784884,      76749]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2557,9 +2557,9 @@ Cell[BoxData[
      RowBox[{"\"\<X1151\>\"", "\[Rule]", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"2", " ", 
-         RowBox[{"cos", "[", "angleA", "]"}]}], "+", 
-        RowBox[{"sin", "[", "angleA", "]"}]}], "}"}]}], ",", 
+        RowBox[{"2", 
+         RowBox[{"Cos", "[", "angleA", "]"}]}], "+", 
+        RowBox[{"Sin", "[", "angleA", "]"}]}], "}"}]}], ",", 
      RowBox[{"\"\<X1152\>\"", "\[Rule]", 
       RowBox[{"{", 
        RowBox[{
@@ -4553,7 +4553,8 @@ Cell[BoxData[
              RowBox[{"b", "+", "c"}], ")"}]}]}], ")"}]}], "a"], "}"}]}], ",", 
      RowBox[{"\"\<X1223\>\"", "\[Rule]", 
       RowBox[{"{", 
-       FractionBox[
+       RowBox[{
+        FractionBox["1", "a"], 
         RowBox[{
          RowBox[{"(", 
           RowBox[{
@@ -4612,8 +4613,8 @@ Cell[BoxData[
                SuperscriptBox["b", "2"]}], "+", 
               RowBox[{"3", " ", "b", " ", "c"}], "+", 
               RowBox[{"3", " ", 
-               SuperscriptBox["c", "2"]}]}], ")"}]}]}], ")"}]}], "a"], 
-       "}"}]}], ",", 
+               SuperscriptBox["c", "2"]}]}], ")"}]}]}], ")"}]}]}], "}"}]}], 
+     ",", 
      RowBox[{"\"\<X1224\>\"", "\[Rule]", 
       RowBox[{"{", 
        FractionBox[
@@ -6441,7 +6442,8 @@ Cell[BoxData[
              SuperscriptBox["c", "4"]}], ")"}]}]}], ")"}]}], "}"}]}], ",", 
      RowBox[{"\"\<X1287\>\"", "\[Rule]", 
       RowBox[{"{", 
-       FractionBox[
+       RowBox[{
+        FractionBox["1", "a"], 
         RowBox[{
          RowBox[{"(", 
           RowBox[{"a", "-", "b"}], ")"}], " ", 
@@ -6507,8 +6509,7 @@ Cell[BoxData[
               RowBox[{
                SuperscriptBox["b", "2"], " ", 
                SuperscriptBox["c", "2"]}], "-", 
-              SuperscriptBox["c", "4"]}], ")"}]}]}], ")"}]}], "a"], "}"}]}], 
-     ",", 
+              SuperscriptBox["c", "4"]}], ")"}]}]}], ")"}]}]}], "}"}]}], ",", 
      RowBox[{"\"\<X1288\>\"", "\[Rule]", 
       RowBox[{"{", 
        RowBox[{
@@ -12882,83 +12883,25 @@ Cell[BoxData[
      RowBox[{"\"\<X1507\>\"", "\[Rule]", 
       RowBox[{"{", 
        RowBox[{"1", "+", 
-        RowBox[{
-         FractionBox["2", "3"], " ", 
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              SuperscriptBox["a", "2"], "+", 
-              SuperscriptBox["b", "2"], "-", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"a", " ", "b"}]], "]"}], " ", 
-         RowBox[{"Math", ".", "cos"}]}], "+", 
-        RowBox[{
-         FractionBox["2", "3"], " ", 
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              SuperscriptBox["a", "2"], "-", 
-              SuperscriptBox["b", "2"], "+", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"a", " ", "c"}]], "]"}], " ", 
-         RowBox[{"Math", ".", "cos"}]}], "-", 
-        RowBox[{
-         FractionBox["2", "3"], " ", 
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{"-", 
-               SuperscriptBox["a", "2"]}], "+", 
-              SuperscriptBox["b", "2"], "+", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"b", " ", "c"}]], "]"}], " ", 
-         RowBox[{"Math", ".", "cos"}]}]}], "}"}]}], ",", 
+        RowBox[{"2", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Cos", " ", "[", 
+            RowBox[{"angleB", "/", "3"}], "]"}], "+", 
+           RowBox[{"Cos", " ", "[", 
+            RowBox[{"angleC", "/", "3"}], "]"}], "-", 
+           RowBox[{"Cos", " ", "[", 
+            RowBox[{"angleA", "/", "3"}], "]"}]}], ")"}]}]}], "}"}]}], ",", 
+     "\[IndentingNewLine]", 
      RowBox[{"\"\<X1508\>\"", "\[Rule]", 
       RowBox[{"{", 
-       RowBox[{"2", "+", 
-        FractionBox[
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              SuperscriptBox["a", "2"], "+", 
-              SuperscriptBox["b", "2"], "-", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"a", " ", "b"}]], "]"}], 
-         RowBox[{"3", " ", 
-          RowBox[{"Math", ".", "cos"}]}]], "+", 
-        FractionBox[
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              SuperscriptBox["a", "2"], "-", 
-              SuperscriptBox["b", "2"], "+", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"a", " ", "c"}]], "]"}], 
-         RowBox[{"3", " ", 
-          RowBox[{"Math", ".", "cos"}]}]], "-", 
-        FractionBox[
-         RowBox[{"ArcCos", "[", 
-          FractionBox[
-           RowBox[{"0.5`", " ", 
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{"-", 
-               SuperscriptBox["a", "2"]}], "+", 
-              SuperscriptBox["b", "2"], "+", 
-              SuperscriptBox["c", "2"]}], ")"}]}], 
-           RowBox[{"b", " ", "c"}]], "]"}], 
-         RowBox[{"3", " ", 
-          RowBox[{"Math", ".", "cos"}]}]]}], "}"}]}], ",", 
+       RowBox[{"2", "-", 
+        RowBox[{"Sec", "[", 
+         RowBox[{"angleA", "/", "3"}], "]"}], "+", 
+        RowBox[{"Sec", " ", "[", 
+         RowBox[{"angleB", "/", "3"}], "]"}], "+", 
+        RowBox[{"Sec", " ", "[", 
+         RowBox[{"angleC", "/", "3"}], "]"}]}], "}"}]}], ",", 
      RowBox[{"\"\<X1509\>\"", "\[Rule]", 
       RowBox[{"{", 
        FractionBox[
@@ -76770,9 +76713,10 @@ Cell[BoxData[
    3.8575505333193674`*^9}, 3.85755058505956*^9, 3.8575506216819954`*^9, 
    3.85755081976003*^9, 3.8575508625162287`*^9, 3.857550947392245*^9, {
    3.8575510557832603`*^9, 3.85755108347143*^9}, {3.8603857165474243`*^9, 
-   3.860385756534832*^9}},
- CellLabel->
-  "In[341]:=",ExpressionUUID->"d765a681-8340-401f-91a9-da502e86ec20"],
+   3.860385756534832*^9}, {3.862384652950491*^9, 3.86238465512244*^9}, {
+   3.8623847186699376`*^9, 
+   3.8623848917462177`*^9}},ExpressionUUID->"d765a681-8340-401f-91a9-\
+da502e86ec20"],
 
 Cell[BoxData[{
  RowBox[{
@@ -76808,8 +76752,8 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[558, 20, 310, 7, 28, "Input",ExpressionUUID->"d7677fd5-5ac9-4596-933c-349ab49f597f"],
-Cell[871, 29, 2784927, 76745, 62500, "Input",ExpressionUUID->"d765a681-8340-401f-91a9-da502e86ec20"],
-Cell[2785801, 76776, 549, 12, 78, "Input",ExpressionUUID->"025a399b-881a-487f-8a72-174204be24ed"]
+Cell[871, 29, 2783039, 76689, 62437, "Input",ExpressionUUID->"d765a681-8340-401f-91a9-da502e86ec20"],
+Cell[2783913, 76720, 549, 12, 48, "Input",ExpressionUUID->"025a399b-881a-487f-8a72-174204be24ed"]
 }
 ]
 *)

@@ -50,12 +50,12 @@ orth[p_, q_, r_] := Simplify[{1/(y^2 + z^2 - x^2), 1/(-y^2 + z^2 + x^2),
        1/(y^2 - z^2 + x^2)} /. {x -> bDistance[q, r], y -> bDistance[p, r], 
        z -> bDistance[p, q]}]
  
-bLine[u_, v_] := Module[{m}, 
+bLine[u_, v_] := Module[{m, xx, yy, zz}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
  
-bLineL[{u_, v_}] := Module[{m}, 
+bLineL[{u_, v_}] := Module[{m, xx, yy, zz}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
@@ -134,16 +134,16 @@ bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] :=
 bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
  
 bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] := 
-    Module[{m, tot}, tot = p1 + p2 + p3; 
+    Module[{m, tot, xx, yy, zz}, tot = p1 + p2 + p3; 
       m = Det[{{l2 - l3, l3 - l1, l1 - l2}, {p1/tot, p2/tot, p3/tot}, 
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
  
-bDistancePointLine[p_, l_] := Module[{p1, p2, p3, l1, l2, l3}, 
-     {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l/Total[l]; 
-      (1/2)*Sqrt[-(((a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))*(p . l)^2)/
-          (a^2*(l1 - l2)*(l1 - l3) + b^2*(-l1 + l2)*(l2 - l3) + 
-           c^2*(l1 - l3)*(l2 - l3)))]]
+bDistancePointLine[p_, l_] := Module[{p1, p2, p3, l1, l2, l3, tp}, 
+     tp = Total[p]; If[tp != 0, {p1, p2, p3} = p/tp]; {l1, l2, l3} = l; 
+      (1/2)*Sqrt[-(((a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))*
+           ({p1, p2, p3} . l)^2)/(a^2*(l1 - l2)*(l1 - l3) + 
+           b^2*(-l1 + l2)*(l2 - l3) + c^2*(l1 - l3)*(l2 - l3)))]]
  
 bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_}, 
      {p41_, p42_, p43_}] := Module[{ss}, 
@@ -334,7 +334,7 @@ bCircleCenter[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] :=
         {(c^2 - p - q)/2, -q, (a^2 - q - r)/2}, {(b^2 - p - r)/2, 
          (a^2 - q - r)/2, -r}}]]
  
-bCircumcevianTriangle[{u1_, v1_, w1_}] := Module[{u, v, w}, 
+bCircumcevianTriangle[{u1_, v1_, w1_}] := Module[{u, v, w, A1, B1, C1}, 
      Clear[a, b, c]; {u, v, w} = {u1/a, v1/b, w1/c}; 
       A1 = {(-a)*v*w, (b*w + c*v)*v, (b*w + c*v)*w}; 
       B1 = {(c*u + a*w)*u, (-b)*u*w, (c*u + a*w)*w}; 
