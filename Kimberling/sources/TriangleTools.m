@@ -375,8 +375,7 @@ bVertexConjugate[P1_, U1_] := Module[{eq, eq2},
       bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
-bTrilinearProduct[P1_, U1_] := (symmetrizeInternal[P1[[1]]/a]*
-      symmetrizeInternal[U1[[1]]/a])*{a, b, c}
+bTrilinearProduct[{p_, q_, r_}, {u_, v_, w_}] := {b*c*p*u, c*a*q*v, a*b*r*w}
  
 bCirclecevianPerspector[{p_, q_, r_}] := symmetrizeInternal[
      a^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
@@ -399,3 +398,37 @@ bReflectionPL[ptU_, lnL_] := Module[{tot, pp, qq, rr, uu, vv, ww, mtxv, ssa,
       ssc = (b^2 - c^2 + a^2)/2; mtxv = {ssb*(pp - rr) - ssc*(qq - pp), 
         ssc*(qq - pp) - ssa*(rr - qq), ssa*(rr - qq) - ssb*(pp - rr)}; 
       {uu, vv, ww} - 2*({pp, qq, rr} . {uu, vv, ww}/{pp, qq, rr} . mtxv)*mtxv]
+ 
+bTripolarEqGeneral[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}, 
+     {u_, v_, w_}] := 
+    {-((u3*v1*(v2*w - v*w2) + v3*(-2*u2*v1*w + u1*v2*w + u2*v*w1 - u*v2*w1 - 
+           u1*v*w2 + 2*u*v1*w2) + v1*(u2*v - u*v2)*w3)*
+        ((u3*v1*w - u1*v3*w - u3*v*w1 + u*v3*w1)*w2 + 
+         (u2*v1*w - u1*v2*w - u2*v*w1 + u*v2*w1 + 2*u1*v*w2 - 2*u*v1*w2)*
+          w3)) + (u3*v2*(v1*w - v*w1) + v3*(u2*v1*w - 2*u1*v2*w - u2*v*w1 + 
+          2*u*v2*w1 + u1*v*w2 - u*v1*w2) + (u1*v - u*v1)*v2*w3)*
+       (w1*(u3*v2*w - u2*v3*w - u3*v*w2 + u*v3*w2) + 
+        ((-u2)*v1*w + u1*v2*w + 2*u2*v*w1 - 2*u*v2*w1 - u1*v*w2 + u*v1*w2)*
+         w3), -((w1*(u3*v2*w - u2*v3*w - u3*v*w2 + u*v3*w2) + 
+         ((-u2)*v1*w + u1*v2*w + 2*u2*v*w1 - 2*u*v2*w1 - u1*v*w2 + u*v1*w2)*
+          w3)*(u3*((-u1)*v2*w + u*v2*w1 + u1*v*w2 - u*v1*w2) + 
+         u2*(2*u3*v1*w - u1*v3*w - 2*u3*v*w1 + u*v3*w1 + u1*v*w3 - 
+           u*v1*w3))) - ((u3*v1*w - u1*v3*w - u3*v*w1 + u*v3*w1)*w2 + 
+        (u2*v1*w - u1*v2*w - u2*v*w1 + u*v2*w1 + 2*u1*v*w2 - 2*u*v1*w2)*w3)*
+       (u*u3*(v2*w1 - v1*w2) + u2*(u3*v1*w + u1*v3*w - u3*v*w1 - u1*v*w3) + 
+        u1*(-2*u3*v2*w + 2*u3*v*w2 - u*v3*w2 + u*v2*w3)), 
+     (u3*v1*(v2*w - v*w2) + v3*(-2*u2*v1*w + u1*v2*w + u2*v*w1 - u*v2*w1 - 
+          u1*v*w2 + 2*u*v1*w2) + v1*(u2*v - u*v2)*w3)*
+       (u3*((-u1)*v2*w + u*v2*w1 + u1*v*w2 - u*v1*w2) + 
+        u2*(2*u3*v1*w - u1*v3*w - 2*u3*v*w1 + u*v3*w1 + u1*v*w3 - u*v1*w3)) + 
+      (u3*v2*(v1*w - v*w1) + v3*(u2*v1*w - 2*u1*v2*w - u2*v*w1 + 2*u*v2*w1 + 
+          u1*v*w2 - u*v1*w2) + (u1*v - u*v1)*v2*w3)*(u*u3*(v2*w1 - v1*w2) + 
+        u2*(u3*v1*w + u1*v3*w - u3*v*w1 - u1*v*w3) + 
+        u1*(-2*u3*v2*w + 2*u3*v*w2 - u*v3*w2 + u*v2*w3))}
+ 
+bInversePoint[ptP_, ptO_, rad_] := Module[{coef, ptP2, ptO2}, 
+     ptP2 = ptP/Total[ptP]; ptO2 = ptO/Total[ptO]; 
+      coef = Simplify[rad^2/bDistance[ptP, ptO]^2]; 
+      {ptO2[[1]] + coef*(ptP2[[1]] - ptO2[[1]]), 
+       ptO2[[2]] + coef*(ptP2[[2]] - ptO2[[2]]), 
+       ptO2[[3]] + coef*(ptP2[[3]] - ptO2[[3]])}]
