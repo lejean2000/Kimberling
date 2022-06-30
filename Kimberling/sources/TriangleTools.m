@@ -12,7 +12,7 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
 bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp]; 
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
  
-symmetrizeInternal[eq_] := Module[{partB, partC}, 
+symmetrizeInternal[eq_] := Module[{partB, partC, angleA, angleB, angleC}, 
      partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, 
          angleA -> angleB, angleB -> angleC, angleC -> angleA}; 
@@ -432,3 +432,16 @@ bInversePoint[ptP_, ptO_, rad_] := Module[{coef, ptP2, ptO2},
       {ptO2[[1]] + coef*(ptP2[[1]] - ptO2[[1]]), 
        ptO2[[2]] + coef*(ptP2[[2]] - ptO2[[2]]), 
        ptO2[[3]] + coef*(ptP2[[3]] - ptO2[[3]])}]
+ 
+ExpressionToTrad[expr_, lClearSpaces_:True] := Module[{res, sub}, 
+     res = ToString[expr, InputForm]; sub = {"Abs", "Sqrt", "Sign", "Log", 
+        "Log10", "Exp", "Sin", "Cos", "Tan", "Cot", "Sec", "Csc", "ArcSin", 
+        "ArcCos", "ArcTan", "ArcCot", "ArcSec", "ArcCsc", "Sinh", "Cosh", 
+        "Tanh", "Coth", "Sech", "Csch", "ArcSinh", "ArcCosh", "ArcTanh", 
+        "ArcCoth", "ArcSech", "ArcCsch"}; 
+      sub = SortBy[sub, StringLength[#1] & , Greater]; 
+      sub = (StringJoin[#1, "["].. -> StringJoin[ToLowerCase[#1], "["] & ) /@ 
+        sub; res = StringReplace[res, sub]; 
+      res = StringReplace[res, {"[".. -> "(", "]".. -> ")", "  ".. -> " "}]; 
+      If[lClearSpaces, res = StringReplace[res, {" ".. -> ""}]]; 
+      Return[res]; ]

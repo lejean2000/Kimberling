@@ -91,13 +91,12 @@ KimberlingTrilinears1000 := Association["X44881" ->
            a*(Sec[angleC] - Sec[angleA])))}, 
      "X118" -> {b^3*(c/((b - c)*Cot[angleA] + (b - a)*Cot[angleC])) + 
         b*(c^3/((c - b)*Cot[angleA] + (c - a)*Cot[angleB]))}, 
-     "X119" -> {Csc[angleA]*(-1 + Cos[angleB] + Cos[angleC])*
-        (Sin[2*angleB] + Sin[2*angleC] + 2*(-1 + Cos[angleA])*
-          (Sin[angleB] + Sin[angleC]))}, 
-     "X120" -> {b*c*(2*a*b*c - (b + c)*(a^2 + (b - c)^2))*
-        (b^2 + c^2 - a*b - a*c)}, "X121" -> 
-      {b*c*(b + c - 2*a)*(b^3 + c^3 + a*(b^2 + c^2) - 2*b*c*(b + c))}, 
-     "X122" -> {(b^2 - c^2)^2*(a^2 - b^2 - c^2)^2*
+     "X119" -> {b*c*(2*a*b*c - a^2*(b + c) + (b - c)^2*(b + c))*
+        (a^3*(b + c) + (b^2 - c^2)^2 - a*((b - c)^2*(b + c) + 
+           a*(b^2 + c^2)))}, "X120" -> 
+      {b*c*(2*a*b*c - (b + c)*(a^2 + (b - c)^2))*(b^2 + c^2 - a*b - a*c)}, 
+     "X121" -> {b*c*(b + c - 2*a)*(b^3 + c^3 + a*(b^2 + c^2) - 
+         2*b*c*(b + c))}, "X122" -> {(b^2 - c^2)^2*(a^2 - b^2 - c^2)^2*
         ((3*a^4 - 2*a^2*(b^2 + c^2) - (b^2 - c^2)^2)/a)}, 
      "X123" -> {((a - b - c)*(b - c)^2*(a^2 - b^2 - c^2)*
          (a^4 - b^4 - c^4 + 2*a^2*b*c - 2*a*b^2*c - 2*a*b*c^2 + 2*b^2*c^2))/
