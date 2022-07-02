@@ -445,3 +445,9 @@ ExpressionToTrad[expr_, lClearSpaces_:True] := Module[{res, sub},
       res = StringReplace[res, {"[".. -> "(", "]".. -> ")", "  ".. -> " "}]; 
       If[lClearSpaces, res = StringReplace[res, {" ".. -> ""}]]; 
       Return[res]; ]
+ 
+bZosmaTransform[P1_] := Module[{eq}, 
+     eq = symmetrizeInternal[(qq/b + rr/c)*Sec[angleA]]; 
+      (eq /. Thread[{pp, qq, rr} -> P1])*{a, b, c}]
+ 
+GetKey[assoc_, index_] := First[Keys[Take[assoc, {index}]]]
