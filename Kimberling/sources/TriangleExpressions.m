@@ -41,8 +41,9 @@ angleW = ArcCot[(a^2 + b^2 - c^2)/
       (-a^2 + b^2 + c^2)/(2*b*c*Sqrt[1 - (-a^2 + b^2 + c^2)^2/(4*b^2*c^2)])]
  
 symmetrizeEq[eq_] := Module[{partB, partC}, 
-     partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
-      partC = partB /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x}; 
+     partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x, pp -> qq, 
+         qq -> rr, rr -> pp}; partC = partB /. {a -> b, b -> c, c -> a, 
+         x -> y, y -> z, z -> x, pp -> qq, qq -> rr, rr -> pp}; 
       eq + partB + partC]
  
 symmetrizeEqGeogebra[eq_] := symmetrizeEq[eq] /. {x -> A, y -> B, z -> C}

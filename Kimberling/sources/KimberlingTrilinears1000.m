@@ -471,7 +471,7 @@ KimberlingTrilinears1000 := Association["X44881" ->
      "X374" -> {2*b + 2*c - 3*a + (c + a)*Cos[angleC] + (b + a)*Cos[angleB]}, 
      "X375" -> {a*((-a)*b*c*(b + c) + a^2*(b^2 + c^2) - 
          (b + c)^2*(b^2 - 3*b*c + c^2))}, 
-     "X376" -> {5*Cos[angleA] - Cos[angleB - angleC]}, 
+     "X376" -> {(5*a^4 - 4*a^2*(b^2 + c^2) - (b^2 - c^2)^2)/a}, 
      "X377" -> {-a^3 - 2*a*b*c - 2*b*c*(b + c) + (b^2 - c^2)^2/a}, 
      "X378" -> {Sec[angleA] + 2*Cos[angleA]}, 
      "X379" -> {a^4 + a*b*c*(b + c) - (b*(b - c)^2*c*(b + c))/a - 

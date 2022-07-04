@@ -20,4 +20,8 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
  
-getTriangleCurve[name_] := symmetrizeEq[TriangleCurves[name]]
+getTriangleCurve[name_] := TriangleCurves[name]
+ 
+ruleAbsSquare = {Abs[x___]^2 :> x^2}
+ 
+rule69 = {a -> 6, b -> 9, c -> 13}

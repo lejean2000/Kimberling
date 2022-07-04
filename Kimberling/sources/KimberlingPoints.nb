@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      9374,        247]
-NotebookOptionsPosition[      8772,        229]
-NotebookOutlinePosition[      9206,        246]
-CellTagsIndexPosition[      9163,        243]
+NotebookDataLength[     10542,        277]
+NotebookOptionsPosition[      9751,        257]
+NotebookOutlinePosition[     10185,        274]
+CellTagsIndexPosition[     10142,        271]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -30,7 +30,7 @@ Cell[BoxData[
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
  CellLabel->
-  "In[161]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+  "In[1091]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -195,17 +195,43 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"getTriangleCurve", "[", "name_", "]"}], ":=", 
-   RowBox[{"symmetrizeEq", "[", 
-    RowBox[{"TriangleCurves", "[", "name", "]"}], "]"}]}], ";"}]}], "Code",
+   RowBox[{"TriangleCurves", "[", "name", "]"}]}], ";"}]}], "Code",
  InitializationCell->False,
  CellChangeTimes->{{3.854357504781231*^9, 3.8543575362929363`*^9}, {
    3.854357635899296*^9, 3.854357636234169*^9}, {3.8543577067642393`*^9, 
    3.8543580411107225`*^9}, 3.8543580813509665`*^9, {3.854358124557372*^9, 
    3.8543581902543573`*^9}, 3.854358273245316*^9, {3.855978280215998*^9, 
    3.855978280778244*^9}, {3.860296169452752*^9, 3.860296200350801*^9}, 
-   3.860386921213872*^9, {3.8604121583280196`*^9, 
-   3.860412164843548*^9}},ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-\
-55ec1009fe52"],
+   3.860386921213872*^9, {3.8604121583280196`*^9, 3.860412164843548*^9}, {
+   3.8659274328788424`*^9, 3.8659274352855854`*^9}},
+ CellLabel->
+  "In[1092]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ruleAbsSquare", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Abs", "[", 
+      RowBox[{
+       RowBox[{"(", "x___", ")"}], "^", "2"}], "]"}], ":>", 
+     SuperscriptBox["x", "2"]}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{3.8658221987301817`*^9},
+ CellLabel->
+  "In[1097]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"rule69", "=", 
+   RowBox[{"Thread", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "b", ",", "c"}], "}"}], "->", 
+     RowBox[{"{", 
+      RowBox[{"6", ",", "9", ",", "13"}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8659359365025496`*^9, 3.8659359467166414`*^9}},
+ CellLabel->
+  "In[1098]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[
  RowBox[{
@@ -215,7 +241,8 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{
      "KimberlingCenter", ",", " ", "KimberlingCenterB", ",", 
-      "getTriangleCurve", ",", "getvalue"}], "}"}]}], "]"}]}]], "Input",
+      "getTriangleCurve", ",", "getvalue", ",", "ruleAbsSquare", ",", " ", 
+      "rule69"}], "}"}]}], "]"}]}]], "Input",
  CellChangeTimes->{{3.839920731475067*^9, 3.8399207380489435`*^9}, {
    3.8399209095637517`*^9, 3.839920929892164*^9}, {3.8400856157681627`*^9, 
    3.8400856175744915`*^9}, {3.8400857472955127`*^9, 
@@ -223,9 +250,10 @@ Cell[BoxData[
    3.841626128111167*^9, 3.841626128863483*^9}, {3.841803439373165*^9, 
    3.8418034395152197`*^9}, {3.8420563689039583`*^9, 3.842056369057808*^9}, {
    3.8420567902777777`*^9, 3.8420567987655287`*^9}, {3.8543581574134016`*^9, 
-   3.8543581575743275`*^9}, 3.854358193007846*^9},
+   3.8543581575743275`*^9}, 3.854358193007846*^9, {3.865822204783577*^9, 
+   3.865822205439887*^9}, {3.8659359513067503`*^9, 3.865935951645666*^9}},
  CellLabel->
-  "In[167]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+  "In[1099]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
 WindowSize->{1093.8, 604.8},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
@@ -245,10 +273,12 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1226, 34, 6567, 173, 530, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 666, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1227, 34, 6603, 173, 530, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[7796, 209, 972, 18, 26, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[7833, 209, 375, 11, 29, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+Cell[8211, 222, 413, 11, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+Cell[8627, 235, 1120, 20, 26, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)
