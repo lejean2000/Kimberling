@@ -33,7 +33,7 @@ bDistanceF[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q];
       Simplify[Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
           b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - 
           c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])] /. setupParamTriangle, 
-       c > 0 && a + b > c && a + c > b && b + c > a]]
+       a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a]]
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
      pp = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
@@ -451,3 +451,8 @@ bZosmaTransform[P1_] := Module[{eq},
       (eq /. Thread[{pp, qq, rr} -> P1])*{a, b, c}]
  
 GetKey[assoc_, index_] := First[Keys[Take[assoc, {index}]]]
+ 
+bCoordChangeParam[p_, d_, e_, f_] := Module[{pp}, 
+     pp = p /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
+         c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
+         f/Total[f]}] . Transpose[pp/Total[pp]]]
