@@ -456,3 +456,11 @@ bCoordChangeParam[p_, d_, e_, f_] := Module[{pp},
      pp = p /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
          c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
          f/Total[f]}] . Transpose[pp/Total[pp]]]
+ 
+bKirikamiCenter[pA_, pB_, pC_, pD_] := Module[{lAC, lBD, la, lb, lc, ld, pAB, 
+      pBC, pCD, pDA}, lAC = bLine[pA, pC]; lBD = bLine[pB, pD]; 
+      la = bParallelLine[pA, lBD]; lb = bParallelLine[pB, lAC]; 
+      lc = bParallelLine[pC, lBD]; ld = bParallelLine[pD, lAC]; 
+      pAB = bLineIntersection[la, lb]; pBC = bLineIntersection[lb, lc]; 
+      pCD = bLineIntersection[lc, ld]; pDA = bLineIntersection[ld, la]; 
+      bLineIntersection[bLine[pAB, pCD], bLine[pBC, pDA]]]

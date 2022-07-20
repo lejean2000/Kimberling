@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    175682,       4635]
-NotebookOptionsPosition[    174015,       4607]
-NotebookOutlinePosition[    174449,       4624]
-CellTagsIndexPosition[    174406,       4621]
+NotebookDataLength[    177909,       4686]
+NotebookOptionsPosition[    176205,       4657]
+NotebookOutlinePosition[    176676,       4675]
+CellTagsIndexPosition[    176633,       4672]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -4415,6 +4415,56 @@ Cell[BoxData[
               RowBox[{"u", " ", "v3", " ", "w2"}], "+", 
               RowBox[{"u", " ", "v2", " ", "w3"}]}], ")"}]}]}], ")"}]}]}]}], 
       "}"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"bKirikamiCenter", "[", 
+      RowBox[{"pA_", ",", "pB_", ",", "pC_", ",", "pD_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "lAC", ",", "lBD", ",", "la", ",", "lb", ",", "lc", ",", "ld", ",", 
+         "pAB", ",", "pBC", ",", "pCD", ",", "pDA"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"lAC", " ", "=", " ", 
+         RowBox[{"bLine", "[", 
+          RowBox[{"pA", ",", "pC"}], "]"}]}], ";", " ", 
+        RowBox[{"lBD", "=", 
+         RowBox[{"bLine", "[", 
+          RowBox[{"pB", ",", "pD"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"la", "=", 
+         RowBox[{"bParallelLine", "[", 
+          RowBox[{"pA", ",", "lBD"}], "]"}]}], ";", 
+        RowBox[{"lb", "=", 
+         RowBox[{"bParallelLine", "[", 
+          RowBox[{"pB", ",", "lAC"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"lc", "=", 
+         RowBox[{"bParallelLine", "[", 
+          RowBox[{"pC", ",", "lBD"}], "]"}]}], ";", 
+        RowBox[{"ld", "=", 
+         RowBox[{"bParallelLine", "[", 
+          RowBox[{"pD", ",", "lAC"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"pAB", "=", 
+         RowBox[{"bLineIntersection", "[", 
+          RowBox[{"la", ",", "lb"}], "]"}]}], ";", 
+        RowBox[{"pBC", "=", 
+         RowBox[{"bLineIntersection", "[", 
+          RowBox[{"lb", ",", "lc"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"pCD", "=", 
+         RowBox[{"bLineIntersection", "[", 
+          RowBox[{"lc", ",", "ld"}], "]"}]}], ";", 
+        RowBox[{"pDA", "=", 
+         RowBox[{"bLineIntersection", "[", 
+          RowBox[{"ld", ",", "la"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"bLineIntersection", "[", 
+         RowBox[{
+          RowBox[{"bLine", "[", 
+           RowBox[{"pAB", ",", "pCD"}], "]"}], ",", 
+          RowBox[{"bLine", "[", 
+           RowBox[{"pBC", ",", "pDA"}], "]"}]}], "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{
     "the", " ", "circumconic", " ", "with", " ", "perspector", " ", "P"}], 
@@ -4527,10 +4577,9 @@ Cell[BoxData[
    3.862303063525766*^9}, {3.862540892784504*^9, 3.8625409541998053`*^9}, {
    3.8625478221550846`*^9, 3.862547833690508*^9}, 3.864870680438281*^9, {
    3.865575788898628*^9, 3.8655757984610343`*^9}, {3.8657415708362656`*^9, 
-   3.865741571055148*^9}},
- Background->RGBColor[0.94, 0.88, 0.94],
- CellLabel->
-  "In[126]:=",ExpressionUUID->"ab7891ab-2c51-4a5c-ac53-2f1fcf968492"],
+   3.865741571055148*^9}, {3.8672410696414022`*^9, 3.867241071932709*^9}},
+ Background->RGBColor[
+  0.94, 0.88, 0.94],ExpressionUUID->"ab7891ab-2c51-4a5c-ac53-2f1fcf968492"],
 
 Cell[BoxData[
  RowBox[{
@@ -4571,8 +4620,8 @@ Cell[BoxData[
       "bTCCPerspector", ",", "bEigentransform", ",", "bAntitomicConjugate", 
       ",", "bReflectionPL", ",", "bTripolarEqGeneral", ",", "bInversePoint", 
       ",", "ExpressionToTrad", ",", " ", "bZosmaTransform", ",", " ", 
-      "GetKey", ",", " ", "bCoordChangeParam"}], "}"}]}], "]"}], 
-  ";"}]], "Input",
+      "GetKey", ",", " ", "bCoordChangeParam", ",", "bKirikamiCenter"}], 
+     "}"}]}], "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.853127076169791*^9, 3.853127077285585*^9}, {
    3.853323282645218*^9, 3.85332328523652*^9}, {3.85340425413789*^9, 
    3.8534042543548403`*^9}, {3.8534064226635275`*^9, 
@@ -4602,11 +4651,13 @@ Cell[BoxData[
    3.8628162908557806`*^9, 3.8628162910589404`*^9}, {3.8655780832661567`*^9, 
    3.8655780837993298`*^9}, {3.865661239392685*^9, 3.8656612397096043`*^9}, {
    3.865741580561945*^9, 3.865741580890195*^9}, {3.8670278502652903`*^9, 
-   3.8670278506946564`*^9}},ExpressionUUID->"b5089856-9927-46b1-8f0f-\
+   3.8670278506946564`*^9}, {3.8672410807913437`*^9, 
+   3.8672410810928087`*^9}},ExpressionUUID->"b5089856-9927-46b1-8f0f-\
 a5898cfb660f"]
 },
-WindowSize->{1093.8, 604.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1105.2, 615.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 Magnification:>0.8 Inherited,
 FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
@@ -4635,8 +4686,8 @@ Cell[99879, 2749, 14984, 382, 898, "Input",ExpressionUUID->"7db9c1d5-51bd-4160-b
 Cell[114866, 3133, 6466, 171, 328, "Input",ExpressionUUID->"7b75e626-99ae-4d70-9a85-249c52780e5a"],
 Cell[121335, 3306, 685, 18, 52, "Input",ExpressionUUID->"99de6d6b-676e-475c-a9af-2ce02421e251"],
 Cell[122023, 3326, 27108, 710, 1465, "Input",ExpressionUUID->"e86d7a40-128f-4f2b-87f8-bf1d22559338"],
-Cell[149134, 4038, 20027, 494, 618, "Input",ExpressionUUID->"ab7891ab-2c51-4a5c-ac53-2f1fcf968492"],
-Cell[169164, 4534, 4847, 71, 160, "Input",ExpressionUUID->"b5089856-9927-46b1-8f0f-a5898cfb660f"]
+Cell[149134, 4038, 22136, 543, 755, "Input",ExpressionUUID->"ab7891ab-2c51-4a5c-ac53-2f1fcf968492"],
+Cell[171273, 4583, 4928, 72, 160, "Input",ExpressionUUID->"b5089856-9927-46b1-8f0f-a5898cfb660f"]
 }
 ]
 *)
