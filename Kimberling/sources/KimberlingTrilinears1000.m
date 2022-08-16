@@ -2,7 +2,7 @@ KimberlingTrilinears1000 := Association["X44881" ->
       {((b + c)*a - b^2 - c^2)*(a^4 - (b + c)*a^3 - (b^2 + b*c + c^2)*a^2 + 
          (b + c)*(b^2 + c^2)*a + (b - c)^2*b*c)*(b + c)*(a - b + c)*
         (a^2 - b^2 + c^2)*(a + b - c)*(a^2 + b^2 - c^2)}, "X1" -> {1}, 
-     "X2" -> {b*c}, "X3" -> {a*(b^2 + c^2 - a^2)}, 
+     "X2" -> {1/a}, "X3" -> {a*(b^2 + c^2 - a^2)}, 
      "X4" -> {b*(c/(b^2 + c^2 - a^2))}, 
      "X5" -> {b*c*(a^2*(b^2 + c^2) - (b^2 - c^2)^2)}, "X6" -> {a}, 
      "X7" -> {1/(a*(b + c - a))}, "X8" -> {(b + c - a)/a}, 
@@ -74,10 +74,10 @@ KimberlingTrilinears1000 := Association["X44881" ->
      "X104" -> {1/(b^3 + c^3 - (a^2 + b*c)*(b + c) + 2*a*b*c)}, 
      "X105" -> {1/(b^2 + c^2 - a*(b + c))}, "X106" -> {a/(2*a - b - c)}, 
      "X107" -> {b*(c/((b^2 - c^2)*(b^2 + c^2 - a^2)^2))}, 
-     "X108" -> {a/(Sec[angleB] - Sec[angleC])}, 
+     "X108" -> {1/((b - c)*(b + c - a)*(b^2 + c^2 - a^2))}, 
      "X109" -> {a/((b - c)*(b + c - a))}, "X110" -> {a/(b^2 - c^2)}, 
      "X111" -> {a/(2*a^2 - b^2 - c^2)}, 
-     "X112" -> {Tan[angleA]*Csc[angleB - angleC]}, 
+     "X112" -> {a/((b^2 - c^2)*(b^2 + c^2 - a^2))}, 
      "X113" -> {-((2*a^4 - (b^2 - c^2)^2 - a^2*(b^2 + c^2))*
           (a^4*(b^2 + c^2) + (b^2 - c^2)^2*(b^2 + c^2) - 
            2*a^2*(b^4 - b^2*c^2 + c^4)))/a}, 
@@ -465,7 +465,7 @@ KimberlingTrilinears1000 := Association["X44881" ->
      "X363" -> {b/(1 + Sin[angleB/2]) + c/(1 + Sin[angleC/2]) - 
         a/(1 + Sin[angleA/2])}, "X364" -> {Sqrt[b] + Sqrt[c] - Sqrt[a]}, 
      "X365" -> {Sqrt[a]}, "X366" -> {Sqrt[a]/a}, 
-     "X367" -> {Sqrt[b] + Sqrt[c]}, "X371" -> {Cos[angleA - Pi/4]}, 
+     "X367" -> {Sqrt[b] + Sqrt[c]}, "X371" -> {a*(b^2 + c^2 - a^2 + 2*S)}, 
      "X372" -> {Cos[angleA + Pi/4]}, "X373" -> 
       {a*(-b^4 + 6*b^2*c^2 - c^4 + a^2*(b^2 + c^2))}, 
      "X374" -> {2*b + 2*c - 3*a + (c + a)*Cos[angleC] + (b + a)*Cos[angleB]}, 

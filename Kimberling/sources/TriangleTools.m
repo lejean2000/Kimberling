@@ -1,13 +1,5 @@
-bIsogonalConjugate[po_] := Simplify[{a^2*po[[2]]*po[[3]], 
-       b^2*po[[1]]*po[[3]], c^2*po[[1]]*po[[2]]} /. setupParamTriangle, 
-     c > 0 && a + b > c && a + c > b && b + c > a]
- 
-setupParamTriangle := setupBaseTriangle[{0, 0}, {c, 0}, 
-     {(-a^2 + b^2 + c^2)/(2*c), Sqrt[-a^4 - (b^2 - c^2)^2 + 
-         2*a^2*(b^2 + c^2)]/(2*c)}]
- 
-setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z], 
-     b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
+bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]], 
+     c^2*po[[1]]*po[[2]]}
  
 bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp]; 
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
@@ -34,6 +26,13 @@ bDistanceF[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q];
           b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - 
           c^2*(sp[[1]] - sq[[1]])*(sp[[2]] - sq[[2]])] /. setupParamTriangle, 
        a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a]]
+ 
+setupParamTriangle := setupBaseTriangle[{0, 0}, {c, 0}, 
+     {(-a^2 + b^2 + c^2)/(2*c), Sqrt[-a^4 - (b^2 - c^2)^2 + 
+         2*a^2*(b^2 + c^2)]/(2*c)}]
+ 
+setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z], 
+     b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
      pp = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
@@ -250,16 +249,14 @@ bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2},
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
-     conic[x_, y_, z_] := ({{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
-           {m13, m23, 1}} . {{x}, {y}, {z}})[[1]][[1]]; 
-      First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
-           {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
-           {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
-           {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
+     First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
+          {m11, m12, m13, m22, m23}] == 0, 
+        multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
+           m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
+          {m11, m12, m13, m22, m23}] == 0, 
+        multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
+           m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
+          {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
  
 bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
     multiCollect[First[Flatten[{{x, y, z}} . {{m11, m12, m13}, 
@@ -464,3 +461,10 @@ bKirikamiCenter[pA_, pB_, pC_, pD_] := Module[{lAC, lBD, la, lb, lc, ld, pAB,
       pAB = bLineIntersection[la, lb]; pBC = bLineIntersection[lb, lc]; 
       pCD = bLineIntersection[lc, ld]; pDA = bLineIntersection[ld, la]; 
       bLineIntersection[bLine[pAB, pCD], bLine[pBC, pDA]]]
+ 
+symmetrizeABC[expr_] := Module[{coordx, coordy, coordz}, 
+     coordx[a_, b_, c_] := Evaluate[expr[[1]]]; coordy[a_, b_, c_] := 
+       Evaluate[expr[[2]]]; coordz[a_, b_, c_] := Evaluate[expr[[3]]]; 
+      tst3 = Simplify[{coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
+         coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
+         coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]]

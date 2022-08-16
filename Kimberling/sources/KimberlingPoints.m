@@ -25,3 +25,9 @@ getTriangleCurve[name_] := TriangleCurves[name]
 ruleAbsSquare = {Abs[x___]^2 :> x^2}
  
 rule69 = {a -> 6, b -> 9, c -> 13}
+ 
+checkLines[lineslist_, pt_] := Module[{}, 
+     Do[Print[lines]; checkcol = Simplify[bCollinearityMatrix[
+          KimberlingCenterB[lines[[1]]], KimberlingCenterB[lines[[2]]], 
+          pt3]]; Print[TrueQ[checkcol == 0]]; If[ !TrueQ[checkcol == 0], 
+        Print[TrueQ[N[checkcol /. rule69] == 0]]]; , {lines, lineslist}]]
