@@ -468,3 +468,7 @@ symmetrizeABC[expr_] := Module[{coordx, coordy, coordz},
       tst3 = Simplify[{coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
          coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
          coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]]
+ 
+bOrthopole[l_] := Module[{eq, eq2}, 
+     eq = ((-a^2)*uu + SC*vv + SB*ww)*(SB*SC*uu - SB*b^2*vv - SC*c^2*ww); 
+      eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{uu, vv, ww} -> l]]
