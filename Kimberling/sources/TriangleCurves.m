@@ -167,7 +167,45 @@ TriangleCurves := Association["KiepertHyperbola" ->
         ((2*a^2 + b^2 - c^2)*y*z^2 - (2*a^2 - b^2 + c^2)*y^2*z) + 
        2*(a^2 - b^2)*(a^2 - c^2)*(b^2 - c^2)*x*y*z, 
      "K055" -> symmetrizeEq[a^4*((a^2 - b^2 + 3*c^2)*y - (a^2 + 3*b^2 - c^2)*
-           z)*y*z] + 2*(b^2 - c^2)*(c^2 - a^2)*(a^2 - b^2)*x*y*z]
+           z)*y*z] + 2*(b^2 - c^2)*(c^2 - a^2)*(a^2 - b^2)*x*y*z, 
+     "K056" -> a^4*b^2*(a^2*b^2 - b^4 - b^2*c^2 - 2*c^4)*x^2*y + 
+       a^2*b^4*(a^4 + 2*c^4 + a^2*(-b^2 + c^2))*x*y^2 + 
+       a^4*c^2*(2*b^4 - a^2*c^2 + b^2*c^2 + c^4)*x^2*z + 
+       b^4*c^2*(-2*a^4 - a^2*c^2 + b^2*c^2 - c^4)*y^2*z - 
+       a^2*c^4*(a^4 + 2*b^4 + a^2*(b^2 - c^2))*x*z^2 + 
+       b^2*c^4*(2*a^4 + a^2*b^2 + b^4 - b^2*c^2)*y*z^2, 
+     "K058" -> cubicO[KimberlingCenterB[1]], 
+     "K059" -> cubicO[KimberlingCenterB[4]], 
+     "K060" -> cubicO[KimberlingCenterB[5]], 
+     "K061a" -> cubicO[KimberlingCenterB[13]], 
+     "K061b" -> cubicO[KimberlingCenterB[14]], 
+     "K062" -> cubicO[KimberlingCenterB[51]], 
+     "K063" -> cubicO[KimberlingCenterB[111]], 
+     "K064" -> cubicO[KimberlingCenterB[523]], 
+     "K102" -> symmetrizeEq[a^2*x*(c^2*y^2 - b^2*z^2)], 
+     "K401" -> (a^2 - b^2 - c^2)*(b^2 - c^2)*(a^4 - (b^2 - c^2)^2)^2*x^3 + 
+       (a^2 + b^2 - c^2)^2*(a^8 - (b^2 - c^2)^3*(2*b^2 + c^2) - 
+         a^6*(b^2 + 4*c^2) + a^4*(-3*b^4 + 13*b^2*c^2 - 2*c^4) + 
+         a^2*(5*b^6 - 14*b^4*c^2 + 5*b^2*c^4 + 4*c^6))*x^2*y + 
+       (a^2 + b^2 - c^2)^2*(2*a^8 - b^8 + 4*b^6*c^2 + 2*b^4*c^4 - 4*b^2*c^6 - 
+         c^8 - 5*a^6*(b^2 + c^2) + a^4*(3*b^4 + 14*b^2*c^2 + 3*c^4) + 
+         a^2*(b^6 - 13*b^4*c^2 - 5*b^2*c^4 + c^6))*x*y^2 + 
+       (a^2 - c^2)*(a^2 - b^2 + c^2)*(a^4 - b^4 - 2*a^2*c^2 + c^4)^2*y^3 - 
+       (a^2 - b^2 + c^2)^2*(a^8 - a^6*(4*b^2 + c^2) + (b^2 - c^2)^3*
+          (b^2 + 2*c^2) + a^4*(-2*b^4 + 13*b^2*c^2 - 3*c^4) + 
+         a^2*(4*b^6 + 5*b^4*c^2 - 14*b^2*c^4 + 5*c^6))*x^2*z + 
+       8*(a^2 - b^2)*(a^2 - c^2)*(b^2 - c^2)*(a^6 - a^2*(b^2 - c^2)^2 - 
+         a^4*(b^2 + c^2) + (b^2 - c^2)^2*(b^2 + c^2))*x*y*z + 
+       (-a^2 + b^2 + c^2)^2*(a^8 - a^2*(4*b^2 - 5*c^2)*(b^2 - c^2)^2 + 
+         a^6*(4*b^2 - c^2) + (b^2 - c^2)^3*(b^2 + 2*c^2) + 
+         a^4*(-2*b^4 + 5*b^2*c^2 - 3*c^4))*y^2*z - (a^2 - b^2 + c^2)^2*
+        (2*a^8 - b^8 - 4*b^6*c^2 + 2*b^4*c^4 + 4*b^2*c^6 - c^8 - 
+         5*a^6*(b^2 + c^2) + a^4*(3*b^4 + 14*b^2*c^2 + 3*c^4) + 
+         a^2*(b^6 - 5*b^4*c^2 - 13*b^2*c^4 + c^6))*x*z^2 - 
+       (-a^2 + b^2 + c^2)^2*(a^8 - a^6*(b^2 - 4*c^2) + a^2*(5*b^2 - 4*c^2)*
+          (b^2 - c^2)^2 - (b^2 - c^2)^3*(2*b^2 + c^2) + 
+         a^4*(-3*b^4 + 5*b^2*c^2 - 2*c^4))*y*z^2 - 
+       (a^2 - b^2)*(a^2 + b^2 - c^2)*(a^4 - 2*a^2*b^2 + b^4 - c^4)^2*z^3]
  
 cubicA1K[{pp_, qq_, rr_}] := -((pp^2 + qq^2 + rr^2)*x*y*z) + 
      pp*qq*z*(x^2 + y^2 - z^2) + pp*rr*y*(x^2 - y^2 + z^2) + 
@@ -176,6 +214,10 @@ cubicA1K[{pp_, qq_, rr_}] := -((pp^2 + qq^2 + rr^2)*x*y*z) +
 cubicA2K[{pp_, qq_, rr_}] := (pp + qq - rr)^2*x*(x - y)*y + 
      2*(pp^2 + qq^2 + rr^2 - 2*(pp*qq + pp*rr + qq*rr))*x*y*z + 
      (-pp + qq + rr)^2*y*(y - z)*z + (pp - qq + rr)^2*x*z*(-x + z)
+ 
+cubicO[{u_, v_, w_}] := x*((c^2*u - 2*SB*w)*y^2 - (b^2*u - 2*SC*v)*z^2) + 
+     y*((a^2*v - 2*SC*u)*z^2 - (c^2*v - 2*SA*w)*x^2) + 
+     z*((b^2*w - 2*SA*v)*x^2 - (a^2*w - 2*SB*u)*y^2)
  
 cubicspK[{p_, q_, r_}, {u_, v_, w_}] := 
     (u + v + w)*(r*((-b^2)*x^2 + a^2*y^2)*z + q*y*(c^2*x^2 - a^2*z^2) + 
