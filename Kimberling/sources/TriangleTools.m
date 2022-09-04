@@ -249,14 +249,16 @@ bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2},
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
-     First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
-          {m11, m12, m13, m22, m23}] == 0, 
-        multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
-           m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
-          {m11, m12, m13, m22, m23}] == 0, 
-        multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
-           m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
-          {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
+     conic[x_, y_, z_] := {{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
+         {m13, m23, 1}} . {{x}, {y}, {z}}; 
+      First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
+           {m11, m12, m13, m22, m23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
+           {m11, m12, m13, m22, m23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
+            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
+           {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
  
 bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
     multiCollect[First[Flatten[{{x, y, z}} . {{m11, m12, m13}, 
@@ -472,3 +474,7 @@ symmetrizeABC[expr_] := Module[{coordx, coordy, coordz},
 bOrthopole[l_] := Module[{eq, eq2}, 
      eq = ((-a^2)*uu + SC*vv + SB*ww)*(SB*SC*uu - SB*b^2*vv - SC*c^2*ww); 
       eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{uu, vv, ww} -> l]]
+ 
+bSyngonal[pt_] := Module[{eq, eq2}, 
+     eq = (qq + rr - pp)/(2*a^2*qq*rr - (qq + rr - pp)*(b^2*rr + c^2*qq)); 
+      eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{pp, qq, rr} -> pt]]

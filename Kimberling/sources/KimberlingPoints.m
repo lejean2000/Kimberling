@@ -9,13 +9,15 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
       If[k > 1000 && k <= 3000, wA = getvalue[KimberlingTrilinears3000, 
          name]]; If[k > 3000 && k <= 5000, 
        wA = getvalue[KimberlingTrilinears5000, name]]; 
-      If[k > 40001 && k <= 42000, wA = getvalue[KimberlingTrilinears42000, 
-         name]]; If[k > 42000 && k <= 44000, 
-       wA = getvalue[KimberlingTrilinears44000, name]]; 
-      If[k > 44000 && k <= 46000, wA = getvalue[KimberlingTrilinears46000, 
-         name]]; If[wA[[1]] === Indeterminate, 
-       Return[{Indeterminate, Indeterminate, Indeterminate}]]; 
-      {wA, wB, wC} = symmetrizeInternal[wA[[1]]]; {a*wA, b*wB, c*wC}]
+      If[k > 5000 && k <= 7000, wA = getvalue[KimberlingTrilinears7000, 
+         name]]; If[k > 40001 && k <= 42000, 
+       wA = getvalue[KimberlingTrilinears42000, name]]; 
+      If[k > 42000 && k <= 44000, wA = getvalue[KimberlingTrilinears44000, 
+         name]]; If[k > 44000 && k <= 46000, 
+       wA = getvalue[KimberlingTrilinears46000, name]]; 
+      If[wA[[1]] === Indeterminate, Return[{Indeterminate, Indeterminate, 
+         Indeterminate}]]; {wA, wB, wC} = symmetrizeInternal[wA[[1]]]; 
+      {a*wA, b*wB, c*wC}]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
@@ -31,3 +33,7 @@ checkLines[lineslist_, pt_] := Module[{},
           KimberlingCenterB[lines[[1]]], KimberlingCenterB[lines[[2]]], 
           pt3]]; Print[TrueQ[checkcol == 0]]; If[ !TrueQ[checkcol == 0], 
         Print[TrueQ[N[checkcol /. rule69] == 0]]]; , {lines, lineslist}]]
+ 
+checkCurves[pt_] := Do[d = TriangleCurves[name] /. Thread[{x, y, z} -> pt] /. 
+        rule69; If[Abs[d] < 10^(-30), Print[name]; Print[d]]; , 
+     {name, Keys[TriangleCurves]}]
