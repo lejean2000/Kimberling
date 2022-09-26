@@ -71,7 +71,7 @@ bCoordChange[p_, d_, e_, f_] :=
 bReverseCoordChange[p_, d_, e_, f_] := 
     Inverse[Transpose[{d/Total[d], e/Total[e], f/Total[f]}]] . (p/Total[p])
  
-tToBary[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
+bToTril[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
  
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
@@ -139,7 +139,7 @@ bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] :=
        Coefficient[m, zz]}]
  
 bDistancePointLine[p_, l_] := Module[{p1, p2, p3, l1, l2, l3, tp}, 
-     tp = Total[p]; If[tp != 0, {p1, p2, p3} = p/tp]; {l1, l2, l3} = l; 
+     {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l; 
       (1/2)*Sqrt[-(((a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))*
            ({p1, p2, p3} . l)^2)/(a^2*(l1 - l2)*(l1 - l3) + 
            b^2*(-l1 + l2)*(l2 - l3) + c^2*(l1 - l3)*(l2 - l3)))]]
@@ -467,9 +467,9 @@ bKirikamiCenter[pA_, pB_, pC_, pD_] := Module[{lAC, lBD, la, lb, lc, ld, pAB,
 symmetrizeABC[expr_] := Module[{coordx, coordy, coordz}, 
      coordx[a_, b_, c_] := Evaluate[expr[[1]]]; coordy[a_, b_, c_] := 
        Evaluate[expr[[2]]]; coordz[a_, b_, c_] := Evaluate[expr[[3]]]; 
-      tst3 = Simplify[{coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
-         coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
-         coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]]
+      {coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
+       coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
+       coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]
  
 bOrthopole[l_] := Module[{eq, eq2}, 
      eq = ((-a^2)*uu + SC*vv + SB*ww)*(SB*SC*uu - SB*b^2*vv - SC*c^2*ww); 
@@ -478,3 +478,42 @@ bOrthopole[l_] := Module[{eq, eq2},
 bSyngonal[pt_] := Module[{eq, eq2}, 
      eq = (qq + rr - pp)/(2*a^2*qq*rr - (qq + rr - pp)*(b^2*rr + c^2*qq)); 
       eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{pp, qq, rr} -> pt]]
+ 
+bFivePointConicCoefABC[PA_, PB_] := Module[{sol, conic}, 
+     conic[x_, y_, z_] := {{x, y, z}} . {{0, 1, m13}, {1, 0, m23}, 
+         {m13, m23, 0}} . {{x}, {y}, {z}}; 
+      First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
+           {m13, m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PB]], 
+           {m13, m23}] == 0}, {m13, m23}]]]
+ 
+bFivePointConicEqABC[PA_, PB_] := multiCollect[
+     First[Flatten[{{x, y, z}} . {{0, 1, m13}, {1, 0, m23}, {m13, m23, 0}} . 
+         {{x}, {y}, {z}} /. bFivePointConicCoefABC[PA, PB]]], {x, y, z}]
+ 
+bCircleEqRad[cent_, rad_] := Module[{u1, v1, w1}, 
+     {u1, v1, w1} = cent/Total[cent]; SA*(x - u1)^2 + SB*(y - v1)^2 + 
+       SC*(z - w1)^2 - rad^2]
+ 
+circleBaryCoords[cent_, rad_] := Module[{u1, v1, w1, m1, m2, m3}, 
+     {u1, v1, w1} = cent/Total[cent]; m1 = SA*(1 - u1)^2 + SB*v1^2 + 
+        SC*w1^2 - rad^2; m2 = SA*u1^2 + SB*(1 - v1)^2 + SC*w1^2 - rad^2; 
+      m3 = SA*u1^2 + SB*v1^2 + SC*(1 - w1)^2 - rad^2; {m1, m2, m3}]
+ 
+radicalCenter[c1_, r1_, c2_, r2_, c3_, r3_] := Module[{bc1, bc2, bc3}, 
+     bc1 = circleBaryCoords[c1, r1]; bc2 = circleBaryCoords[c2, r2]; 
+      bc3 = circleBaryCoords[c3, r3]; 
+      {Det[{{1, 1, 1}, {bc1[[2]], bc2[[2]], bc3[[2]]}, {bc1[[3]], bc2[[3]], 
+          bc3[[3]]}}], Det[{{1, 1, 1}, {bc1[[3]], bc2[[3]], bc3[[3]]}, 
+         {bc1[[1]], bc2[[1]], bc3[[1]]}}], 
+       Det[{{1, 1, 1}, {bc1[[1]], bc2[[1]], bc3[[1]]}, {bc1[[2]], bc2[[2]], 
+          bc3[[2]]}}]}]
+ 
+symmetrizeABCUVW[expr_] := Module[{coordx, coordy, coordz}, 
+     coordx[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[1]]]; 
+      coordy[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[2]]]; 
+      coordz[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[3]]]; 
+      {coordx[a, b, c, u, v, w] + coordy[c, a, b, w, u, v] + 
+        coordz[b, c, a, v, w, u], coordx[b, c, a, v, w, u] + 
+        coordy[a, b, c, u, v, w] + coordz[c, a, b, w, u, v], 
+       coordx[c, a, b, w, u, v] + coordy[b, c, a, v, w, u] + 
+        coordz[a, b, c, u, v, w]}]
