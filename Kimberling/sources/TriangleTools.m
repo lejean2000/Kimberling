@@ -517,3 +517,5 @@ symmetrizeABCUVW[expr_] := Module[{coordx, coordy, coordz},
         coordy[a, b, c, u, v, w] + coordz[c, a, b, w, u, v], 
        coordx[c, a, b, w, u, v] + coordy[b, c, a, v, w, u] + 
         coordz[a, b, c, u, v, w]}]
+ 
+bCevianTriangle[{u_, v_, w_}] := {{0, v, w}, {u, 0, w}, {u, v, 0}}
