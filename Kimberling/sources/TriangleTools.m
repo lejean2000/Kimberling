@@ -519,3 +519,13 @@ symmetrizeABCUVW[expr_] := Module[{coordx, coordy, coordz},
         coordz[a, b, c, u, v, w]}]
  
 bCevianTriangle[{u_, v_, w_}] := {{0, v, w}, {u, 0, w}, {u, v, 0}}
+ 
+cLineFromBary[{xa_, ya_}, {xb_, yb_}, {xc_, yc_}, {u_, v_, w_}] := 
+    {(w*(ya - yb) + u*(yb - yc) + v*(-ya + yc))/(w*(xb*ya - xa*yb) + 
+       v*((-xc)*ya + xa*yc) + u*(xc*yb - xb*yc)), 
+     (w*(-xa + xb) + v*(xa - xc) + u*(-xb + xc))/(w*xb*ya - v*xc*ya - 
+       w*xa*yb + u*xc*yb + v*xa*yc - u*xb*yc)}
+ 
+bReflectionPP[{uu_, vv_, ww_}, {oa_, ob_, oc_}] := 
+    {-((ob + oc)*uu) + oa*(uu + 2*(vv + ww)), -((oa + oc)*vv) + 
+      ob*(2*uu + vv + 2*ww), -((oa + ob)*ww) + oc*(2*uu + 2*vv + ww)}
