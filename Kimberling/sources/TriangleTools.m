@@ -249,20 +249,21 @@ bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2},
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
 bFivePointConicCoef[PA_, PB_, PC_, PD_, PE_] := Module[{sol, conic}, 
-     conic[x_, y_, z_] := {{x, y, z}} . {{m11, m12, m13}, {m12, m22, m23}, 
-         {m13, m23, 1}} . {{x}, {y}, {z}}; 
+     conic[x_, y_, z_] := {{x, y, z}} . {{xm11, xm12, xm13}, 
+         {xm12, xm22, xm23}, {xm13, xm23, 1}} . {{x}, {y}, {z}}; 
       First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
-           {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ PB]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
-           {m11, m12, m13, m22, m23}] == 0, 
-         multiCollect[Numerator[Simplify[conic @@ PD]], {m11, m12, m13, m22, 
-            m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
-           {m11, m12, m13, m22, m23}] == 0}, {m11, m12, m13, m22, m23}]]]
+           {xm11, xm12, xm13, xm22, xm23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ PB]], {xm11, xm12, xm13, 
+            xm22, xm23}] == 0, multiCollect[Numerator[Simplify[conic @@ PC]], 
+           {xm11, xm12, xm13, xm22, xm23}] == 0, 
+         multiCollect[Numerator[Simplify[conic @@ PD]], {xm11, xm12, xm13, 
+            xm22, xm23}] == 0, multiCollect[Numerator[Simplify[conic @@ PE]], 
+           {xm11, xm12, xm13, xm22, xm23}] == 0}, {xm11, xm12, xm13, xm22, 
+         xm23}]]]
  
 bFivePointConicEq[PA_, PB_, PC_, PD_, PE_] := 
-    multiCollect[First[Flatten[{{x, y, z}} . {{m11, m12, m13}, 
-          {m12, m22, m23}, {m13, m23, 1}} . {{x}, {y}, {z}} /. 
+    multiCollect[First[Flatten[{{x, y, z}} . {{xm11, xm12, xm13}, 
+          {xm12, xm22, xm23}, {xm13, xm23, 1}} . {{x}, {y}, {z}} /. 
         bFivePointConicCoef[PA, PB, PC, PD, PE]]], {x, y, z}]
  
 checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] := 
@@ -480,15 +481,16 @@ bSyngonal[pt_] := Module[{eq, eq2},
       eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{pp, qq, rr} -> pt]]
  
 bFivePointConicCoefABC[PA_, PB_] := Module[{sol, conic}, 
-     conic[x_, y_, z_] := {{x, y, z}} . {{0, 1, m13}, {1, 0, m23}, 
-         {m13, m23, 0}} . {{x}, {y}, {z}}; 
+     conic[x_, y_, z_] := {{x, y, z}} . {{0, 1, xm13}, {1, 0, xm23}, 
+         {xm13, xm23, 0}} . {{x}, {y}, {z}}; 
       First[Solve[{multiCollect[Numerator[Simplify[conic @@ PA]], 
-           {m13, m23}] == 0, multiCollect[Numerator[Simplify[conic @@ PB]], 
-           {m13, m23}] == 0}, {m13, m23}]]]
+           {xm13, xm23}] == 0, multiCollect[Numerator[Simplify[conic @@ PB]], 
+           {xm13, xm23}] == 0}, {xm13, xm23}]]]
  
 bFivePointConicEqABC[PA_, PB_] := multiCollect[
-     First[Flatten[{{x, y, z}} . {{0, 1, m13}, {1, 0, m23}, {m13, m23, 0}} . 
-         {{x}, {y}, {z}} /. bFivePointConicCoefABC[PA, PB]]], {x, y, z}]
+     First[Flatten[{{x, y, z}} . {{0, 1, xm13}, {1, 0, xm23}, 
+          {xm13, xm23, 0}} . {{x}, {y}, {z}} /. bFivePointConicCoefABC[PA, 
+         PB]]], {x, y, z}]
  
 bCircleEqRad[cent_, rad_] := Module[{u1, v1, w1}, 
      {u1, v1, w1} = cent/Total[cent]; SA*(x - u1)^2 + SB*(y - v1)^2 + 
@@ -529,3 +531,24 @@ cLineFromBary[{xa_, ya_}, {xb_, yb_}, {xc_, yc_}, {u_, v_, w_}] :=
 bReflectionPP[{uu_, vv_, ww_}, {oa_, ob_, oc_}] := 
     {-((ob + oc)*uu) + oa*(uu + 2*(vv + ww)), -((oa + oc)*vv) + 
       ob*(2*uu + vv + 2*ww), -((oa + ob)*ww) + oc*(2*uu + 2*vv + ww)}
+ 
+bHomotethy[ptP_, ptO_, k_] := Module[{u, v, w, oa, ob, oc}, 
+     {u, v, w} = ptP/Total[ptP]; {oa, ob, oc} = ptO/Total[ptO]; 
+      {(k*oa + ob*u + oc*u - oa*v - oa*w)/k, 
+       (k*ob + (oa + oc)*v - ob*(u + w))/k, (k*oc - oc*(u + v) + (oa + ob)*w)/
+        k}]
+ 
+bMixtilinearIncircleA[a_, b_, c_] := Module[{s}, s = (a + b + c)/2; 
+      multiCollect[Simplify[4*(a^2*y*z + b^2*z*x + c^2*x*y)*s^2 - 
+         4*b^2*c^2*(x + y + z)*(x + (s/b - 1)^2*y + (s/c - 1)^2*z)], 
+       {x, y, z}]]
+ 
+bMixtilinearIncircleB[a_, b_, c_] := Module[{s}, s = (a + b + c)/2; 
+      multiCollect[Simplify[4*(a^2*y*z + b^2*z*x + c^2*x*y)*s^2 - 
+         4*a^2*c^2*(x + y + z)*((s/a - 1)^2*x + y + (s/c - 1)^2*z)], 
+       {x, y, z}]]
+ 
+bMixtilinearIncircleC[a_, b_, c_] := Module[{s}, s = (a + b + c)/2; 
+      multiCollect[Simplify[4*(a^2*y*z + b^2*z*x + c^2*x*y)*s^2 - 
+         4*a^2*b^2*(x + y + z)*((s/a - 1)^2*x + (s/b - 1)^2*y + z)], 
+       {x, y, z}]]
