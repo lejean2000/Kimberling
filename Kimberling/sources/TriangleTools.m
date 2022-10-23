@@ -552,3 +552,7 @@ bMixtilinearIncircleC[a_, b_, c_] := Module[{s}, s = (a + b + c)/2;
       multiCollect[Simplify[4*(a^2*y*z + b^2*z*x + c^2*x*y)*s^2 - 
          4*a^2*b^2*(x + y + z)*((s/a - 1)^2*x + (s/b - 1)^2*y + z)], 
        {x, y, z}]]
+ 
+bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}, 
+     {u_, v_, w_}] := First /@ ({{m11, m12, m13}, {m12, m22, m23}, 
+       {m13, m23, m33}} . {{u}, {v}, {w}})

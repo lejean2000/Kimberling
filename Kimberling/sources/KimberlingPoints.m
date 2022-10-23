@@ -34,6 +34,7 @@ checkLines[lineslist_, pt_] := Module[{},
           pt3]]; Print[TrueQ[checkcol == 0]]; If[ !TrueQ[checkcol == 0], 
         Print[TrueQ[N[checkcol /. rule69] == 0]]]; , {lines, lineslist}]]
  
-checkCurves[pt_] := Do[d = TriangleCurves[name] /. Thread[{x, y, z} -> pt] /. 
-        rule69; If[Abs[d] < 10^(-30), Print[name]; Print[d]]; , 
+checkCurves[pt_] := Do[ptest = pt /. rule69; ptest = ptest/Total[ptest]; 
+      d = TriangleCurves[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+      If[Abs[d] < 10^(-10), Print[name]; Print[N[d]]]; , 
      {name, Keys[TriangleCurves]}]
