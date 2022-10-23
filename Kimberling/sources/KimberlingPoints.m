@@ -30,8 +30,8 @@ rule69 = {a -> 6, b -> 9, c -> 13}
  
 checkLines[lineslist_, pt_] := Module[{}, 
      Do[Print[lines]; checkcol = Simplify[bCollinearityMatrix[
-          KimberlingCenterB[lines[[1]]], KimberlingCenterB[lines[[2]]], 
-          pt3]]; Print[TrueQ[checkcol == 0]]; If[ !TrueQ[checkcol == 0], 
+          KimberlingCenterB[lines[[1]]], KimberlingCenterB[lines[[2]]], pt]]; 
+       Print[TrueQ[checkcol == 0]]; If[ !TrueQ[checkcol == 0], 
         Print[TrueQ[N[checkcol /. rule69] == 0]]]; , {lines, lineslist}]]
  
 checkCurves[pt_] := Do[ptest = pt /. rule69; ptest = ptest/Total[ptest]; 
