@@ -466,8 +466,9 @@ bKirikamiCenter[pA_, pB_, pC_, pD_] := Module[{lAC, lBD, la, lb, lc, ld, pAB,
       bLineIntersection[bLine[pAB, pCD], bLine[pBC, pDA]]]
  
 symmetrizeABC[expr_] := Module[{coordx, coordy, coordz}, 
-     coordx[a_, b_, c_] := Evaluate[expr[[1]]]; coordy[a_, b_, c_] := 
-       Evaluate[expr[[2]]]; coordz[a_, b_, c_] := Evaluate[expr[[3]]]; 
+     SetDelayed @@ {coordx[a_, b_, c_], expr[[1]]}; 
+      SetDelayed @@ {coordy[a_, b_, c_], expr[[2]]}; 
+      SetDelayed @@ {coordz[a_, b_, c_], expr[[3]]}; 
       {coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
        coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
        coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]
@@ -511,9 +512,9 @@ radicalCenter[c1_, r1_, c2_, r2_, c3_, r3_] := Module[{bc1, bc2, bc3},
           bc3[[2]]}}]}]
  
 symmetrizeABCUVW[expr_] := Module[{coordx, coordy, coordz}, 
-     coordx[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[1]]]; 
-      coordy[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[2]]]; 
-      coordz[a_, b_, c_, u_, v_, w_] := Evaluate[expr[[3]]]; 
+     SetDelayed @@ {coordx[a_, b_, c_, u_, v_, w_], expr[[1]]}; 
+      SetDelayed @@ {coordy[a_, b_, c_, u_, v_, w_], expr[[2]]}; 
+      SetDelayed @@ {coordz[a_, b_, c_, u_, v_, w_], expr[[3]]}; 
       {coordx[a, b, c, u, v, w] + coordy[c, a, b, w, u, v] + 
         coordz[b, c, a, v, w, u], coordx[b, c, a, v, w, u] + 
         coordy[a, b, c, u, v, w] + coordz[c, a, b, w, u, v], 
