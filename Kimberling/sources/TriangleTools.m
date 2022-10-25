@@ -7,10 +7,11 @@ bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp];
 symmetrizeInternal[eq_] := Module[{partB, partC, angleA, angleB, angleC}, 
      partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, 
-         angleA -> angleB, angleB -> angleC, angleC -> angleA}; 
-      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
-         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
-         angleA -> angleB, angleB -> angleC, angleC -> angleA}; 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, 
+         uu -> vv, vv -> ww, ww -> uu}; 
+      partC = partC /. {a -> b, b -> c, c -> a, angleA -> angleB, 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A}; 
       {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
@@ -557,3 +558,10 @@ bMixtilinearIncircleC[a_, b_, c_] := Module[{s}, s = (a + b + c)/2;
 bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}, 
      {u_, v_, w_}] := First /@ ({{m11, m12, m13}, {m12, m22, m23}, 
        {m13, m23, m33}} . {{u}, {v}, {w}})
+ 
+symmetrizeInternalAngle[eq_] := Module[{partB, partC}, 
+     partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, A -> B, B -> C, 
+         C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, 
+         vv -> ww, ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
+         A -> B, B -> C, C -> A}; {eq, partB, partC}]

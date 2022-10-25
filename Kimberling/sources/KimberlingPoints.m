@@ -16,11 +16,16 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
          name]]; If[k > 44000 && k <= 46000, 
        wA = getvalue[KimberlingTrilinears46000, name]]; 
       If[wA[[1]] === Indeterminate, Return[{Indeterminate, Indeterminate, 
-         Indeterminate}]]; {wA, wB, wC} = symmetrizeInternal[wA[[1]]]; 
-      {a*wA, b*wB, c*wC}]
+         Indeterminate}]]; {wA, wB, wC} = symmetrizeInternal[wA[[1]]] /. 
+        Thread[{A -> angleA, B -> angleB, C -> angleC}]; {a*wA, b*wB, c*wC}]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
+ 
+KimberlingCenterC[k_] := symmetrizeInternalAngle[ETCBarysCezar[k]]
+ 
+KimberlingCenterCN[k_] := symmetrizeInternalAngle[ETCBarysCezar[k]] /. 
+     Thread[{A -> angleA, B -> angleB, C -> angleC}]
  
 getTriangleCurve[name_] := TriangleCurves[name]
  

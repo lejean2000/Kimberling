@@ -10,6 +10,8 @@ S = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/2
  
 r = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/(2*(a + b + c))
  
+\[CapitalDelta] = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/4
+ 
 SA = (-a^2 + b^2 + c^2)/2
  
 SB = (a^2 - b^2 + c^2)/2
@@ -45,8 +47,6 @@ symmetrizeEq[eq_] := Module[{partB, partC},
          qq -> rr, rr -> pp}; partC = partB /. {a -> b, b -> c, c -> a, 
          x -> y, y -> z, z -> x, pp -> qq, qq -> rr, rr -> pp}; 
       eq + partB + partC]
- 
-symmetrizeEqGeogebra[eq_] := symmetrizeEq[eq] /. {x -> A, y -> B, z -> C}
  
 conwaySimplify[poly_] := PolynomialReduce[poly, {SW, SA, SB, SC, sp, sa, sb, 
       sc}, {a, b, c}]
