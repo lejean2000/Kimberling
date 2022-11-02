@@ -22,9 +22,11 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
  
-KimberlingCenterC[k_] := symmetrizeInternalAngle[ETCBarysCezar[k]]
+KimberlingCenterC[k_] := symmetrizeInternalAngle[
+     ETC[StringJoin["X", ToString[k]]]]
  
-KimberlingCenterCN[k_] := symmetrizeInternalAngle[ETCBarysCezar[k]] /. 
+KimberlingCenterCN[k_] := symmetrizeInternalAngle[
+      ETC[StringJoin["X", ToString[k]]]] /. 
      Thread[{A -> angleA, B -> angleB, C -> angleC}]
  
 getTriangleCurve[name_] := TriangleCurves[name]

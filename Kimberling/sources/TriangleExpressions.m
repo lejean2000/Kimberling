@@ -8,6 +8,18 @@ sc = (a + b - c)/2
  
 S = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/2
  
+s = (a + b + c)/2
+ 
+e = Sqrt[(a^4 - a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2 + c^4)/
+      (a^2*b^2 + a^2*c^2 + b^2*c^2)]
+ 
+\[Omega] = ArcCot[(a^2 + b^2 - c^2)/
+       (2*a*b*Sqrt[1 - (a^2 + b^2 - c^2)^2/(4*a^2*b^2)]) + 
+      (a^2 - b^2 + c^2)/(2*a*c*Sqrt[1 - (a^2 - b^2 + c^2)^2/(4*a^2*c^2)]) + 
+      (-a^2 + b^2 + c^2)/(2*b*c*Sqrt[1 - (-a^2 + b^2 + c^2)^2/(4*b^2*c^2)])]
+ 
+\[Tau] = Sqrt[(3 + Sqrt[5])/2]
+ 
 r = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/(2*(a + b + c))
  
 \[CapitalDelta] = Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]/4
@@ -21,6 +33,9 @@ SC = (a^2 + b^2 - c^2)/2
 SW = (a^2 + b^2 + c^2)/2
  
 R = (a*b*c)/Sqrt[(a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c)]
+ 
+J = Sqrt[a^6 - a^4*b^2 - a^2*b^4 + b^6 - a^4*c^2 + 3*a^2*b^2*c^2 - b^4*c^2 - 
+       a^2*c^4 - b^2*c^4 + c^6]/(a*b*c)
  
 jJ = Sqrt[a^6 - a^4*b^2 - a^2*b^4 + b^6 - a^4*c^2 + 3*a^2*b^2*c^2 - b^4*c^2 - 
        a^2*c^4 - b^2*c^4 + c^6]/(a*b*c)

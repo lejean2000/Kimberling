@@ -1,9 +1,5 @@
-KimberlingTrilinears1000 := Association["X44881" -> 
-      {((b + c)*a - b^2 - c^2)*(a^4 - (b + c)*a^3 - (b^2 + b*c + c^2)*a^2 + 
-         (b + c)*(b^2 + c^2)*a + (b - c)^2*b*c)*(b + c)*(a - b + c)*
-        (a^2 - b^2 + c^2)*(a + b - c)*(a^2 + b^2 - c^2)}, "X1" -> {1}, 
-     "X2" -> {1/a}, "X3" -> {a*(b^2 + c^2 - a^2)}, 
-     "X4" -> {1/(a*(b^2 + c^2 - a^2))}, 
+KimberlingTrilinears1000 := Association["X1" -> {1}, "X2" -> {1/a}, 
+     "X3" -> {a*(b^2 + c^2 - a^2)}, "X4" -> {1/(a*(b^2 + c^2 - a^2))}, 
      "X5" -> {(a^2*(b^2 + c^2) - (b^2 - c^2)^2)/a}, "X6" -> {a}, 
      "X7" -> {1/(a*(b + c - a))}, "X8" -> {(b + c - a)/a}, 
      "X9" -> {b + c - a}, "X10" -> {b*c*(b + c)}, 
