@@ -20,13 +20,13 @@ TriangleCurves := Association["KiepertHyperbola" ->
          1/(a^2 + b^2 - c^2)}], 
      "K012" -> pp*qq*rr*symmetrizeEq[x*(y^2 + z^2)] - 
         x*y*z*symmetrizeEq[pp*(qq^2 + rr^2)] /. 
-      Thread[{pp, qq, rr} -> KimberlingCenterB[6]], 
+      Thread[{pp, qq, rr} -> KimberlingCenterC[6]], 
      "K013" -> pp*qq*rr*symmetrizeEq[x*(y^2 + z^2)] - 
         x*y*z*symmetrizeEq[pp*(qq^2 + rr^2)] /. 
-      Thread[{pp, qq, rr} -> KimberlingCenterB[7]], 
+      Thread[{pp, qq, rr} -> KimberlingCenterC[7]], 
      "K014" -> pp*qq*rr*symmetrizeEq[x*(y^2 + z^2)] - 
         x*y*z*symmetrizeEq[pp*(qq^2 + rr^2)] /. 
-      Thread[{pp, qq, rr} -> KimberlingCenterB[1]], 
+      Thread[{pp, qq, rr} -> KimberlingCenterC[1]], 
      "K015" -> symmetrizeEq[x*(y - z)^2], 
      "K016" -> symmetrizeEq[x*(y^2 + z^2)], 
      "K017" -> symmetrizeEq[(a^4 - b^2*c^2)*x*(c^2*y^2 + b^2*z^2)], 
@@ -154,8 +154,8 @@ TriangleCurves := Association["KiepertHyperbola" ->
        ((b^2 - c^2)^2 - a^2*(b^2 + c^2))*(SB*y - SC*z)*y*z], 
      "K050" -> symmetrizeEq[a^2*(4*SA^2 - b^2*c^2)*((b^2 - c^2)^2 - 
          a^2*(b^2 + c^2))*(SB*y - SC*z)*y*z], 
-     "K051" -> cubicA1K[KimberlingCenterB[4]], 
-     "K052" -> cubicA2K[KimberlingCenterB[115]], 
+     "K051" -> cubicA1K[KimberlingCenterC[4]], 
+     "K052" -> cubicA2K[KimberlingCenterC[115]], 
      "K053a" -> x*(c^2*y^2 - b^2*z^2) + 2*y*z*(SB*y - SC*z), 
      "K053b" -> y*(a^2*z^2 - c^2*x^2) + 2*z*x*(SC*z - SA*x), 
      "K053c" -> z*(b^2*x^2 - a^2*z^2) + 2*x*y*(SA*x - SB*y), 
@@ -174,14 +174,14 @@ TriangleCurves := Association["KiepertHyperbola" ->
        b^4*c^2*(-2*a^4 - a^2*c^2 + b^2*c^2 - c^4)*y^2*z - 
        a^2*c^4*(a^4 + 2*b^4 + a^2*(b^2 - c^2))*x*z^2 + 
        b^2*c^4*(2*a^4 + a^2*b^2 + b^4 - b^2*c^2)*y*z^2, 
-     "K058" -> cubicO[KimberlingCenterB[1]], 
-     "K059" -> cubicO[KimberlingCenterB[4]], 
-     "K060" -> cubicO[KimberlingCenterB[5]], 
-     "K061a" -> cubicO[KimberlingCenterB[13]], 
-     "K061b" -> cubicO[KimberlingCenterB[14]], 
-     "K062" -> cubicO[KimberlingCenterB[51]], 
-     "K063" -> cubicO[KimberlingCenterB[111]], 
-     "K064" -> cubicO[KimberlingCenterB[523]], 
+     "K058" -> cubicO[KimberlingCenterC[1]], 
+     "K059" -> cubicO[KimberlingCenterC[4]], 
+     "K060" -> cubicO[KimberlingCenterC[5]], 
+     "K061a" -> cubicO[KimberlingCenterC[13]], 
+     "K061b" -> cubicO[KimberlingCenterC[14]], 
+     "K062" -> cubicO[KimberlingCenterC[51]], 
+     "K063" -> cubicO[KimberlingCenterC[111]], 
+     "K064" -> cubicO[KimberlingCenterC[523]], 
      "K102" -> symmetrizeEq[a^2*x*(c^2*y^2 - b^2*z^2)], 
      "K401" -> (a^2 - b^2 - c^2)*(b^2 - c^2)*(a^4 - (b^2 - c^2)^2)^2*x^3 + 
        (a^2 + b^2 - c^2)^2*(a^8 - (b^2 - c^2)^3*(2*b^2 + c^2) - 

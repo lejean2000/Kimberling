@@ -36,7 +36,7 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
-     pp = KimberlingCenterB[k] /. {a -> bDistanceF[e, f], 
+     pp = KimberlingCenterC[k] /. {a -> bDistanceF[e, f], 
          b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
       Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
        Transpose[pp/Total[pp]]]
@@ -565,3 +565,17 @@ symmetrizeInternalAngle[eq_] := Module[{partB, partC},
          C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, 
          vv -> ww, ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
          A -> B, B -> C, C -> A}; {eq, partB, partC}]
+ 
+bCyclocevianConjugate[P1_] := symmetrizeInternal[
+      1/(c^2*pp*qq*(pp + rr)*(qq + rr) - (pp + qq)*rr*(a^2*qq*(pp + rr) - 
+          b^2*pp*(qq + rr)))] /. Thread[{pp, qq, rr} -> P1]
+ 
+bExsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2}, 
+     O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
+      rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, Q2]; 
+      rad1*(O2/Total[O2]) - rad2*(O1/Total[O1])]
+ 
+bInsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2}, 
+     O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
+      rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, Q2]; 
+      rad1*(O2/Total[O2]) + rad2*(O1/Total[O1])]
