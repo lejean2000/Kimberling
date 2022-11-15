@@ -8,11 +8,11 @@ symmetrizeInternal[eq_] := Module[{partB, partC, angleA, angleB, angleC},
      partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, 
          angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, 
-         uu -> vv, vv -> ww, ww -> uu}; 
-      partC = partC /. {a -> b, b -> c, c -> a, angleA -> angleB, 
-         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A}; 
-      {eq, partB, partC}]
+         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa}; 
+      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa}; {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
      eq = qq*rr*vv*ww /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
@@ -562,9 +562,10 @@ bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}},
 symmetrizeInternalAngle[eq_] := Module[{partB, partC}, 
      partB = eq /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partB = partB /. {a -> b, b -> c, c -> a, A -> B, B -> C, 
-         C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, 
-         vv -> ww, ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
-         A -> B, B -> C, C -> A}; {eq, partB, partC}]
+         C -> A, sa -> sb, sb -> sc, sc -> sa}; 
+      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, A -> B, B -> C, 
+         C -> A, sa -> sb, sb -> sc, sc -> sa}; {eq, partB, partC}]
  
 bCyclocevianConjugate[P1_] := symmetrizeInternal[
       1/(c^2*pp*qq*(pp + rr)*(qq + rr) - (pp + qq)*rr*(a^2*qq*(pp + rr) - 
@@ -579,3 +580,13 @@ bInsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2},
      O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
       rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, Q2]; 
       rad1*(O2/Total[O2]) + rad2*(O1/Total[O1])]
+ 
+bInsimilicenter2[O1_, O2_, rad1_, rad2_] := rad1*(O2/Total[O2]) + 
+     rad2*(O1/Total[O1])
+ 
+bPedalTriangle[{u_, v_, w_}] := {{0, a^2*v + SC*u, a^2*w + SB*u}, 
+     {b^2*u + SC*v, 0, b^2*w + SA*v}, {c^2*u + SB*w, c^2*v + SA*w, 0}}
+ 
+bBicevianConic[{u1_, v1_, w1_}, {u2_, v2_, w2_}] := 
+    (-v1)*v2*w1*w2*x^2 + (u2*v1 + u1*v2)*w1*w2*x*y - u1*u2*w1*w2*y^2 + 
+     v1*v2*(u2*w1 + u1*w2)*x*z + u1*u2*(v2*w1 + v1*w2)*y*z - u1*u2*v1*v2*z^2
