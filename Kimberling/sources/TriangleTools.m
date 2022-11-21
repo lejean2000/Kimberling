@@ -592,10 +592,9 @@ bBicevianConic[{u1_, v1_, w1_}, {u2_, v2_, w2_}] :=
      v1*v2*(u2*w1 + u1*w2)*x*z + u1*u2*(v2*w1 + v1*w2)*y*z - u1*u2*v1*v2*z^2
  
 symmetrizeTriangle[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3, sa, sb, sc, SA, SB, SC}, 
-     {v1, v2, v3} = KimberlingTrianglesTrilinear[name]; 
-      partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, sa -> sc, 
-         SB -> SA, SC -> SB, SA -> SC}; 
+      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesTrilinear[
+        name]; partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, 
+         sa -> sc, SB -> SA, SC -> SB, SA -> SC}; 
       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
          SA -> SB, SB -> SC, SC -> SA}; partB3 = v3; partC1 = partB1; 
       partC2 = v2; partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, 
@@ -617,3 +616,5 @@ bOrthoassociate[P1_] := Module[{eq, g}, g[a_, b_, c_, p_, q_, r_] :=
          a^2*(q^2 + r^2 + p*(q + r))); {g[a, b, c, pp, qq, rr], 
         g[b, c, a, qq, rr, pp], g[c, a, b, rr, pp, qq]} /. 
        Thread[{pp, qq, rr} -> P1]]
+ 
+bTripoleL[L1_] := Module[{eq}, 1/L1]
