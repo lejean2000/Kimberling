@@ -592,15 +592,15 @@ bBicevianConic[{u1_, v1_, w1_}, {u2_, v2_, w2_}] :=
      v1*v2*(u2*w1 + u1*w2)*x*z + u1*u2*(v2*w1 + v1*w2)*y*z - u1*u2*v1*v2*z^2
  
 symmetrizeTriangle[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesTrilinear[
-        name]; partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, 
-         sa -> sc, SB -> SA, SC -> SB, SA -> SC}; 
+      partC1, partC2, partC3}, 
+     {v1, v2, v3} = KimberlingTrianglesTrilinear[name]*{a, b, c}; 
+      partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, sa -> sc, 
+         SB -> SA, SC -> SB, SA -> SC}; 
       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
          SA -> SB, SB -> SC, SC -> SA}; partB3 = v3; partC1 = partB1; 
       partC2 = v2; partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, 
          sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
-      {{v1, v2, v3}*{a, b, c}, {partB1, partB2, partB3}*{a, b, c}, 
-       {partC1, partC2, partC3}*{a, b, c}}]
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bCircumcircleInverse[{u_, v_, w_}] := 
     {a^2*((-b^4)*u*w + (a^2 - c^2)*v*(c^2*u + a^2*w) + 
@@ -618,3 +618,31 @@ bOrthoassociate[P1_] := Module[{eq, g}, g[a_, b_, c_, p_, q_, r_] :=
        Thread[{pp, qq, rr} -> P1]]
  
 bTripoleL[L1_] := Module[{eq}, 1/L1]
+ 
+symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
+      partC1, partC2, partC3}, 
+     ({v1, v2, v3} = KimberlingTrianglesTrilinear[name]*{a, b, c}; 
+       partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
+        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
+        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
+        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; ); 
+      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
+ 
+bDaoConjugate[pt1_, pt2_] := Module[{w}, 
+     w = {a^3*(x - y + z)*(x + y - z)*y*z, b^3*(-x + y + z)*(x + y - z)*x*z, 
+        c^3*(x - y + z)*(-x + y + z)*x*y}; w = w /. Thread[{x, y, z} -> pt1]; 
+      bPIsogonalConjugate[w, pt2]]
+ 
+bHarmonicConjugate[{a1_, a2_, a3_}, {b1_, b2_, b3_}, {c1_, c2_, c3_}] := 
+    {a3*b1*c1 + a1*b3*c1 - 2*a1*b1*c3, a3*b2*c1 + a2*b3*c1 - a2*b1*c3 - 
+      a1*b2*c3, 2*a3*b3*c1 - a3*b1*c3 - a1*b3*c3}
+ 
+NormalizeBary[v_] := Normalize[v]*Sign[v[[1]]]

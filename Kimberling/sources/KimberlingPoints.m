@@ -45,3 +45,6 @@ checkCurves[pt_] := Do[ptest = pt /. rule69; ptest = ptest/Total[ptest];
       d = TriangleCurves[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
       If[Abs[d] < 10^(-10), Print[name]; Print[N[d]]]; , 
      {name, Keys[TriangleCurves]}]
+ 
+checkPointinETC[pt_] := MinimalBy[Value][
+     (Total[Abs[#1 - Normalize[pt]]] & ) /@ ETCBaryNorm]
