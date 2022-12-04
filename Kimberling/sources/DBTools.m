@@ -23,11 +23,20 @@ singlePointProcesses = <|"complement" ->
       Hold[bComplement[KimberlingCenterC[2], #1]], 
      "anticomplement" -> Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
      "cyclocevian_conjugate" -> Hold[bCyclocevianConjugate[#1]], 
-     "tcc_perspector" -> Hold[bTCCPerspector[#1]], "circumcircle_inverse" -> 
-      Hold[bCircumcircleInverse[#1]], "circlecevian_perspector" -> 
-      Hold[bCirclecevianPerspector[#1]], "zosma_transform" -> 
-      Hold[bZosmaTransform[#1]], "antitomic_conjugate" -> 
-      Hold[bAntitomicConjugate[#1]], "barycentric_square" -> Hold[#1^2], 
+     "circumcircle_inverse" -> Hold[bCircumcircleInverse[#1]], 
+     "circlecevian_perspector" -> Hold[bCirclecevianPerspector[#1]], 
+     "zosma_transform" -> Hold[bZosmaTransform[#1]], 
+     "antitomic_conjugate" -> Hold[bAntitomicConjugate[#1]], 
+     "barycentric_square" -> Hold[#1^2], 
+     "anticomplement of isogonal conjugate" -> 
+      Hold[bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
+     "anticomplement of isotomic conjugate" -> 
+      Hold[bAntiComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
+     "complement of isogonal conjugate" -> 
+      Hold[bComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
+     "complement of isotomic conjugate" -> 
+      Hold[bComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
+     "tcc_perspector" -> Hold[bTCCPerspector[#1]], 
      "eigentransform" -> Hold[bEigentransform[#1]], 
      "ortoassociate" -> Hold[bOrthoassociate[#1]], "syngonal_conjugate" -> 
       Hold[bSyngonal[#1]], "1st_saragossa_point" -> Hold[bSaragossa1[#1]], 
@@ -38,10 +47,11 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
       dump}, hgroups = {}; 
       Do[fgr1 = SortBy[set, ToExpression[StringTake[#1, {2, -1}]] & ]; 
-        If[Length[fgr1] > 1000, Print[Length[fgr1]]; 
-          fgr1 = Take[fgr1, 1000]; ]; flatfg2 = Subsets[fgr1, {2}]; 
-        checks = AssociationMap[NormalizeBary[bHarmonicConjugate[
-             ETCBaryNorm[#1[[1]]], ETCBaryNorm[#1[[2]]], pt]] & , flatfg2]; 
+        If[Length[fgr1] > 2000, Print[StringJoin["Found lines with ", 
+            ToString[Length[fgr1]], " points"]]; fgr1 = Take[fgr1, 2000]; ]; 
+        flatfg2 = Subsets[fgr1, {2}]; checks = AssociationMap[
+          NormalizeBary[bHarmonicConjugate[ETCBaryNorm[#1[[1]]], 
+             ETCBaryNorm[#1[[2]]], pt]] & , flatfg2]; 
         ingroupnbary = KeySelect[ETCBaryNorm, MemberQ[fgr1, #1] & ]; 
         un = SortBy[Union[checks, ingroupnbary], #1[[1]] & ]; hgroup = {}; 
         prev = Association["X0" -> {0, 0, 0}]; dump = 0; 
@@ -100,7 +110,7 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
       Return[Normalize[local]*Sign[local[[1]]]]; ]
  
 linesProcessAlg[ptcoord_, prec_:20] := Module[{res, gr, hg, out, head, test, 
-      hgroups, ptc, unproven}, ptc = N[Normalize[ptcoord /. rule69], 35]; 
+      hgroups, ptc, unproven}, ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
       res = intLinesProcessFullGroups[ptc, prec]; 
       gr = (StringJoin["{", StringTake[#1[[1]][[1]], {2, -1}], ",", 
           StringTake[#1[[2]][[1]], {2, -1}], "}"] & ) /@ res[[1]]; out = {}; 
@@ -115,6 +125,14 @@ linesProcessAlg[ptcoord_, prec_:20] := Module[{res, gr, hg, out, head, test,
            (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]], 
          {el, igroup}], {igroup, intHarmonicProcess[res[[2]], ptc, prec]}]; 
       Print["Harmonic groups"]; Print[ToString[SortBy[hg, 
+         ToExpression[#1[[1]]] & ]]]; hg = {}; 
+      Do[AppendTo[hg, (StringTake[#1, {2, -1}] & ) /@ igroup]; , 
+       {igroup, intMidpointProcess[res[[2]], ptc, prec]}]; 
+      Print["Midpoints"]; Print[ToString[SortBy[hg, 
+         ToExpression[#1[[1]]] & ]]]; hg = {}; 
+      Do[AppendTo[hg, (StringTake[#1, {2, -1}] & ) /@ igroup]; , 
+       {igroup, intReflectionProcess[res[[2]], ptc, prec]}]; 
+      Print["Reflections"]; Print[ToString[SortBy[hg, 
          ToExpression[#1[[1]]] & ]]]; ]
  
 intLinesProcessFullGroups[pt_, prec_] := 
@@ -135,6 +153,37 @@ intLinesProcessFullGroups[pt_, prec_] :=
         ToExpression[StringTake[#1[[1]][[1]], {2, -1}]] & ]; 
       fullgroups = ((#1[[1]] & ) /@ #1 & ) /@ fullgroups; 
       Return[{outgroups, fullgroups}]; ]
+ 
+intMidpointProcess[fullgroups_, pt_, prec_] := 
+    Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
+      dump}, hgroups = {}; 
+      Do[fgr1 = SortBy[set, ToExpression[StringTake[#1, {2, -1}]] & ]; 
+        If[Length[fgr1] > 2000, Print[Length[fgr1]]; 
+          fgr1 = Take[fgr1, 2000]; ]; flatfg2 = Subsets[fgr1, {2}]; 
+        ingroupnbary = AssociationMap[
+          Abs[NormalizeBary[bMidpoint[ETCBaryNorm[#1[[1]]], ETCBaryNorm[
+                #1[[2]]]]] - pt] & , flatfg2]; 
+        hgroup = Select[ingroupnbary, #1[[1]] < 10^(-prec) && 
+            #1[[2]] < 10^(-prec) && #1[[3]] < 10^(-prec) & ]; 
+        If[Length[hgroup] > 0, hgroups = Union[hgroups, Keys[hgroup]]]; , 
+       {set, fullgroups}]; Return[hgroups]; ]
+ 
+intReflectionProcess[fullgroups_, pt_, prec_] := 
+    Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
+      dump}, hgroups = {}; Do[fgr1 = SortBy[set, xnum[#1] & ]; 
+        If[Length[fgr1] > 2000, Print[StringJoin["Found lines with ", 
+            ToString[Length[fgr1]], " points"]]; fgr1 = Take[fgr1, 2000]; ]; 
+        checks = AssociationMap[NormalizeBary[bMidpoint[ETCBaryNorm[#1], 
+             pt]] & , fgr1]; 
+        Do[refl = Select[fgr1, coincide[ETCBaryNorm[#1], checks[el]] & ]; 
+          If[Length[refl] > 0, AppendTo[hgroups, {el, First[refl]}]], 
+         {el, Keys[checks]}]; , {set, fullgroups}]; Return[hgroups]; ]
+ 
+xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
+ 
+coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) && 
+     Abs[pt1[[2]] - pt2[[2]]] < 10^(-prec) && Abs[pt1[[3]] - pt2[[3]]] < 
+      10^(-prec)
  
 ffbarycentricproduct[pt1_, pt2_] := Module[{local}, 
      local = (pt1 /. rule69)*(pt2 /. rule69); 
