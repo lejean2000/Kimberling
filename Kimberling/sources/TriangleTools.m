@@ -258,7 +258,7 @@ bFivePointConicEq[{p1_, q1_, r1_}, {p2_, q2_, r2_}, {p3_, q3_, r3_},
     Det[{{x^2, y^2, z^2, y*z, z*x, x*y}, {p1^2, q1^2, r1^2, q1*r1, r1*p1, 
        p1*q1}, {p2^2, q2^2, r2^2, q2*r2, r2*p2, p2*q2}, 
       {p3^2, q3^2, r3^2, q3*r3, r3*p3, p3*q3}, {p4^2, q4^2, r4^2, q4*r4, 
-       r4*p4, p4*q4}, {p5^2, q4^2, r5^2, q5*r5, r5*p5, p5*q5}}]
+       r4*p4, p4*q4}, {p5^2, q5^2, r5^2, q5*r5, r5*p5, p5*q5}}]
  
 checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] := 
     Simplify[bFivePointConicEq[PA, PB, PC, PD, PE] /. 
@@ -624,6 +624,11 @@ bDaoConjugate[pt1_, pt2_] := Module[{w},
         c^3*(x - y + z)*(-x + y + z)*x*y}; w = w /. Thread[{x, y, z} -> pt1]; 
       bPIsogonalConjugate[w, pt2]]
  
+cundyParryPhi[{x_, y_, z_}] := {(SB*y - SC*z)/(c^2*SC*y - b^2*SB*z), 
+     (SC*z - SA*x)/(a^2*SA*z - c^2*SC*x), (SA*x - SB*y)/(b^2*SB*x - a^2*SA*y)}
+ 
+cundyParryPsi[{x_, y_, z_}] := {a^2, b^2, c^2}/cundyParryPhi[{x, y, z}]
+ 
 bHarmonicConjugate[{a1_, a2_, a3_}, {b1_, b2_, b3_}, {c1_, c2_, c3_}] := 
     {a3*b1*c1 + a1*b3*c1 - 2*a1*b1*c3, a3*b2*c1 + a2*b3*c1 - a2*b1*c3 - 
       a1*b2*c3, 2*a3*b3*c1 - a3*b1*c3 - a1*b3*c3}
@@ -635,3 +640,21 @@ bAnticevianTriangle[{u_, v_, w_}] := {{-u, v, w}, {u, -v, w}, {u, v, -w}}
 bDualConic[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
     ({{x, y, z}} . adjugate[{{m11, m12, m13}, {m12, m22, m23}, 
          {m13, m23, m33}}] . {{x}, {y}, {z}})[[1]][[1]]
+ 
+bDrozFarnyPole[{p_, q_, r_}] := {2*SA*p*(p + q + r) - 
+      (a^2*q*r + b^2*r*p + c^2*p*q), 2*SB*q*(p + q + r) - 
+      (a^2*q*r + b^2*r*p + c^2*p*q), 2*SC*r*(p + q + r) - 
+      (a^2*q*r + b^2*r*p + c^2*p*q)}
+ 
+bOrthocorrespondent[{p_, q_, r_}] := 
+    {SA*p*(p + q + r) - (a^2*q*r + b^2*r*p + c^2*p*q), 
+     SB*q*(p + q + r) - (a^2*q*r + b^2*r*p + c^2*p*q), 
+     SC*r*(p + q + r) - (a^2*q*r + b^2*r*p + c^2*p*q)}
+ 
+bVuPole[{p_, q_, r_}, {u_, v_, w_}] := 
+    {q*r*(a^2*(q*r*u*(u + v + w) - p*v*w*(p + q + r)) - 
+       b^2*p*u*(w*(p + q) - r*(u + v)) - c^2*p*u*(v*(p + r) - q*(u + w))), 
+     r*p*(b^2*(r*p*v*(u + v + w) - q*w*u*(p + q + r)) - 
+       c^2*q*v*(u*(q + r) - p*(v + w)) - a^2*q*v*(w*(q + p) - r*(v + u))), 
+     p*q*(c^2*(p*q*w*(u + v + w) - r*u*v*(p + q + r)) - 
+       a^2*r*w*(v*(r + p) - q*(w + u)) - b^2*r*w*(u*(r + q) - p*(w + v)))}
