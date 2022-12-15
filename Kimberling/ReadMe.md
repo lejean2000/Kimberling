@@ -2,18 +2,21 @@
 
 This repo provides you the `KimberlingCenter[k, A, B, C]` function which given an integer k and three points A, B and C, calculates the k-th triangle center according to Kimberling's [encyclopedia of triangle centers](https://faculty.evansville.edu/ck6/encyclopedia/etc.html).
 
-Note that currrently k<5000 and it is TESTED! Some missing points are - points at infinity, points where I notice discrepancy between trilinears and 6-9-13 search numbers and a few points where trilinears are not listed well.
+Note that currrently k<=52633.
 
 Here is a simple example which plots a few random triangle centers:
 ```
-SetDirectory[NotebookDirectory[]];
-Get["sources/KimberlingTrilinears1000.m"]; 
-Get["sources/TriangleExpressions.m"]; 
-Get["sources/KimberlingPoints.m"];
+SetDirectory[NotebookDirectory[]]; ClearAll["Global`*"];
+Get["../db/ETC.mx"];
+Get["../sources/KimberlingPoints.m"];
+Get["../sources/TriangleTools.m"];
+Get["../sources/KimberlingTriangles.m"];
+Get["../sources/TriangleExpressions.m"];
 
 PA = {0, 0}; PB = {3, 0}; PC = {1, 2};
-indices = {1, 3, 7, 9, 14, 97, 111};
-centers = Table[KimberlingCenter[i, PA, PB, PC], {i, indices}] // Simplify;
+indices = {1, 10, 22, 32, 40};
+centers = 
+  Table[KimberlingCenter[i, PA, PB, PC], {i, indices}] // Simplify;
 names = Table["X" <> TextString[n], {n, indices}];
 Graphics[Join[
   {EdgeForm[{Thin, Black}], FaceForm[], Triangle[{PA, PB, PC}]},
@@ -23,7 +26,8 @@ Graphics[Join[
    Transpose@{names, centers}
   ], AspectRatio -> Automatic, Axes -> True
  ]
+Print /@ centers;
 ```
-![](https://i.postimg.cc/rFpHKVnf/etc.jpg)
+![](https://i.postimg.cc/WzQSTTw3/etc.png)
 
-There are some other helpful tools as well, but they are not documented yet.
+There are some other helpful tools as well, but most are not documented yet.

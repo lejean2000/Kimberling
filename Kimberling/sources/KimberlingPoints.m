@@ -1,10 +1,11 @@
 KimberlingCenter[k_, XPA_, XPB_, XPC_] := Module[{bary}, 
-     bary = KimberlingCenterC[k]; (bary/Total[bary]) . {XPA, XPB, XPC} /. 
+     bary = KimberlingCenterCN[k]; (bary/Total[bary]) . {XPA, XPB, XPC} /. 
        {a -> EuclideanDistance[XPB, XPC], b -> EuclideanDistance[XPA, XPC], 
         c -> EuclideanDistance[XPA, XPB]}]
  
-KimberlingCenterC[k_] := symmetrizeInternalAngle[
-     ETC[StringJoin["X", ToString[k]]]]
+KimberlingCenterCN[k_] := symmetrizeInternalAngle[
+      ETC[StringJoin["X", ToString[k]]]] /. 
+     Thread[{A -> angleA, B -> angleB, C -> angleC}]
  
 KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name}, 
      Clear[a, b, c]; name = StringJoin["X", ToString[k]]; 
@@ -25,9 +26,8 @@ KimberlingCenterB[k_] := Module[{wA, wB, wC, w, name},
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
  
-KimberlingCenterCN[k_] := symmetrizeInternalAngle[
-      ETC[StringJoin["X", ToString[k]]]] /. 
-     Thread[{A -> angleA, B -> angleB, C -> angleC}]
+KimberlingCenterC[k_] := symmetrizeInternalAngle[
+     ETC[StringJoin["X", ToString[k]]]]
  
 getTriangleCurve[name_] := TriangleCurves[name]
  
