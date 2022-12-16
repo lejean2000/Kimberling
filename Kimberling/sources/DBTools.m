@@ -109,17 +109,18 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
      local = bPIsogonalConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
       Return[Normalize[local]*Sign[local[[1]]]]; ]
  
-linesProcessAlg[ptcoord_, prec_:20] := Module[{res, gr, hg, out, head, test, 
-      hgroups, ptc, unproven}, ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
+linesProcessAlg[ptcoord_, prec_:20, debug_:False] := 
+    Module[{res, gr, hg, out, head, test, hgroups, ptc, unproven}, 
+     ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
       res = intLinesProcessFullGroups[ptc, prec]; 
       gr = (StringJoin["{", StringTake[#1[[1]][[1]], {2, -1}], ",", 
           StringTake[#1[[2]][[1]], {2, -1}], "}"] & ) /@ res[[1]]; out = {}; 
-      unproven = {}; Do[test = TimeConstrained[bCollinearityMatrix[
-           KimberlingCenterC[ToExpression[el][[1]]], KimberlingCenterC[
-            ToExpression[el][[2]]], ptcoord], 10, -1]; 
-        If[TrueQ[Simplify[test] == 0], AppendTo[out, el], 
-         AppendTo[unproven, el]]; , {el, gr}]; Print["Lines"]; 
-      Print[ToString[out]]; hg = {}; 
+      unproven = {}; Do[If[debug, PrintTemporary[el]]; 
+        test = TimeConstrained[bCollinearityMatrix[KimberlingCenterC[
+            ToExpression[el][[1]]], KimberlingCenterC[ToExpression[el][[2]]], 
+           ptcoord], 10, -1]; If[TrueQ[Simplify[test] == 0], 
+         AppendTo[out, el], AppendTo[unproven, el]]; , {el, gr}]; 
+      Print["Lines"]; Print[ToString[out]]; hg = {}; 
       Do[head = Select[igroup, Length[#1] == 0 & ]; 
         Do[If[el == head[[1]], Continue[]]; AppendTo[hg, 
            (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]], 
@@ -193,8 +194,12 @@ ffbarycentricquotient[pt1_, pt2_] := Module[{local},
      local = (pt1 /. rule69)/(pt2 /. rule69); 
       Return[Normalize[local]*Sign[local[[1]]]]; ]
  
-checkIsogonalConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc}, 
-     ptc = N[Normalize[pt /. rule69], 35]; 
+ffanticomplconjugate[pt1_, pt2_] := Module[{local}, 
+     local = bAnticomplementaryConjugate[pt1 /. rule69, pt2 /. rule69] /. 
+        rule69; Return[Normalize[local]*Sign[local[[1]]]]; ]
+ 
+checkIsogonalConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc, rc}, 
+     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffisoconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -207,8 +212,8 @@ checkIsogonalConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc},
           Abs[cx[n][[3]] - prev[[1]][[3]]] < 10^(-15), 
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[Simplify[Det[{{1, 1, 1}, pt, bPIsogonalConjugate[
-                KimberlingCenterCN[idx1], KimberlingCenterCN[idx2]]}]] == 0, 
+          If[Det[{{1, 1, 1}, pt /. rc, bPIsogonalConjugate[KimberlingCenterCN[
+                 idx1], KimberlingCenterCN[idx2]] /. rc}] == 0, 
            If[idx1 < idx2, AppendTo[res, {idx1, idx2}], AppendTo[res, 
              {idx2, idx1}]], Print[idx1]; Print[idx2]; ]]; 
         prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
@@ -254,5 +259,28 @@ checkBarycentricProduct[pt_] := Module[{cx, prev, res, idx1, idx2, ptc},
                 KimberlingCenterCN[idx2]}]] == 0, If[idx1 < idx2, 
             AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]], 
            Print[idx1]; Print[idx2]; ]]; prev = Association[n -> cx[n]]; , 
+       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+      Print[ToString[res]]; ]
+ 
+checkAnticomplementaryConjugates[pt_] := 
+    Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
+     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+      cx = (ffanticomplconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
+      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
+             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
+      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
+      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
+         prev = Association[n -> cx[n]]; Continue[]]; 
+        If[Abs[cx[n][[1]] - prev[[1]][[1]]] < 10^(-15) && 
+          Abs[cx[n][[2]] - prev[[1]][[2]]] < 10^(-15) && 
+          Abs[cx[n][[3]] - prev[[1]][[3]]] < 10^(-15), 
+         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
+          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
+          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
+           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
+              bAnticomplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
+                KimberlingCenterCN[i2] /. rc] /. rc}] == 0, 
+           AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       Print[ToString[res]]; ]
