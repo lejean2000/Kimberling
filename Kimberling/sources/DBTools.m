@@ -110,31 +110,43 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
       Return[Normalize[local]*Sign[local[[1]]]]; ]
  
 linesProcessAlg[ptcoord_, prec_:20, debug_:False] := 
-    Module[{res, gr, hg, out, head, test, hgroups, ptc, unproven}, 
-     ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
+    Module[{res, gr, hg, out, head, test, hgroups, ptc, unproven, rc, 
+      eltest}, rc = {a -> 5, b -> 6, c -> 7}; 
+      ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
       res = intLinesProcessFullGroups[ptc, prec]; 
       gr = (StringJoin["{", StringTake[#1[[1]][[1]], {2, -1}], ",", 
           StringTake[#1[[2]][[1]], {2, -1}], "}"] & ) /@ res[[1]]; out = {}; 
       unproven = {}; Do[If[debug, PrintTemporary[el]]; 
-        test = TimeConstrained[bCollinearityMatrix[KimberlingCenterC[
-            ToExpression[el][[1]]], KimberlingCenterC[ToExpression[el][[2]]], 
-           ptcoord], 10, -1]; If[TrueQ[Simplify[test] == 0], 
-         AppendTo[out, el], AppendTo[unproven, el]]; , {el, gr}]; 
-      Print["Lines"]; Print[ToString[out]]; hg = {}; 
+        test = TimeConstrained[bCollinearityMatrix[
+           KimberlingCenterCN[ToExpression[el][[1]]] /. rc, 
+           KimberlingCenterCN[ToExpression[el][[2]]] /. rc, ptcoord /. rc], 
+          10, -1]; If[TrueQ[Simplify[test] == 0], AppendTo[out, el], 
+         AppendTo[unproven, el]]; , {el, gr}]; Print["Lines"]; 
+      Print[ToString[out]]; hg = {}; 
       Do[head = Select[igroup, Length[#1] == 0 & ]; 
-        Do[If[el == head[[1]], Continue[]]; AppendTo[hg, 
-           (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]], 
+        Do[If[el == head[[1]], Continue[]]; eltest = 
+           (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]; 
+          test = Det[{{1, 1, 1}, bHarmonicConjugate[KimberlingCenterCN[
+                eltest[[1]]] /. rc, KimberlingCenterCN[eltest[[2]]] /. rc, 
+              KimberlingCenterCN[eltest[[3]]] /. rc], ptcoord /. rc}]; 
+          If[TrueQ[Simplify[test] == 0], AppendTo[hg, eltest]; ]; , 
          {el, igroup}], {igroup, intHarmonicProcess[res[[2]], ptc, prec]}]; 
       Print["Harmonic groups"]; Print[ToString[SortBy[hg, 
          ToExpression[#1[[1]]] & ]]]; hg = {}; 
-      Do[AppendTo[hg, (StringTake[#1, {2, -1}] & ) /@ igroup]; , 
+      Do[eltest = (StringTake[#1, {2, -1}] & ) /@ igroup; 
+        test = Det[{{1, 1, 1}, bMidpoint[KimberlingCenterCN[eltest[[1]]] /. 
+             rc, KimberlingCenterCN[eltest[[2]]] /. rc], ptcoord /. rc}]; 
+        If[TrueQ[Simplify[test] == 0], AppendTo[hg, eltest]; ]; , 
        {igroup, intMidpointProcess[res[[2]], ptc, prec]}]; 
       Print["Midpoints"]; Print[ToString[SortBy[hg, 
          ToExpression[#1[[1]]] & ]]]; hg = {}; 
-      Do[AppendTo[hg, (StringTake[#1, {2, -1}] & ) /@ igroup]; , 
-       {igroup, intReflectionProcess[res[[2]], ptc, prec]}]; 
-      Print["Reflections"]; Print[ToString[SortBy[hg, 
-         ToExpression[#1[[1]]] & ]]]; ]
+      Do[eltest = (StringTake[#1, {2, -1}] & ) /@ igroup; 
+        test = Det[{{1, 1, 1}, bReflectionPP[KimberlingCenterCN[
+              eltest[[1]]] /. rc, KimberlingCenterCN[eltest[[2]]] /. rc], 
+           ptcoord /. rc}]; If[TrueQ[Simplify[test] == 0], 
+         AppendTo[hg, eltest]; ]; , {igroup, intReflectionProcess[res[[2]], 
+         ptc, prec]}]; Print["Reflections"]; 
+      Print[ToString[SortBy[hg, ToExpression[#1[[1]]] & ]]]; ]
  
 intLinesProcessFullGroups[pt_, prec_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump}, 

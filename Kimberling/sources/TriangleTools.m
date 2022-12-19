@@ -8,12 +8,11 @@ symmetrizeInternal[eq_] := Module[{partB, partC, angleA, angleB, angleC},
      Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
          rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
       partB = partB /. {a -> b, b -> c, c -> a, angleA -> angleB, 
-         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
-         sa -> sb, sb -> sc, sc -> sa}; 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A}; 
       partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
          angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa}; {eq, partB, partC}]
+         B -> C, C -> A}; {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
      Clear[pp, qq, rr, uu, vv, ww]; eq = qq*rr*vv*ww /. 
@@ -543,11 +542,10 @@ bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}},
 symmetrizeInternalAngle[eq_] := Module[{partB, partC}, 
      Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
          rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
-      partB = partB /. {a -> b, b -> c, c -> a, A -> B, B -> C, C -> A, 
-         sa -> sb, sb -> sc, sc -> sa}; 
+      partB = partB /. {a -> b, b -> c, c -> a, A -> B, B -> C, C -> A}; 
       partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, A -> B, B -> C, 
-         C -> A, sa -> sb, sb -> sc, sc -> sa}; {eq, partB, partC}]
+         C -> A}; {eq, partB, partC}]
  
 bCyclocevianConjugate[P1_] := Module[{}, Clear[pp, qq, rr, uu, vv, ww]; 
       symmetrizeInternal[1/(c^2*pp*qq*(pp + rr)*(qq + rr) - 
@@ -658,3 +656,12 @@ bVuPole[{p_, q_, r_}, {u_, v_, w_}] :=
        c^2*q*v*(u*(q + r) - p*(v + w)) - a^2*q*v*(w*(q + p) - r*(v + u))), 
      p*q*(c^2*(p*q*w*(u + v + w) - r*u*v*(p + q + r)) - 
        a^2*r*w*(v*(r + p) - q*(w + u)) - b^2*r*w*(u*(r + q) - p*(w + v)))}
+ 
+symmetrizeInternalUVW[eq_] := Module[{partB, partC, angleA, angleB, angleC}, 
+     Clear[u, v, w]; partB = eq /. {pp -> qq, qq -> rr, rr -> pp, u -> v, 
+         v -> w, w -> u}; partB = partB /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, 
+         u -> v, v -> w, w -> u}; partC = partC /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A}; {eq, partB, partC}]
