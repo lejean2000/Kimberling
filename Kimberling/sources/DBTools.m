@@ -77,21 +77,20 @@ pointCheckAllProcesses[pt_] := Module[{res},
 checkCircumconics[pt_, start_:1, time_:60, excl_:0] := 
     Module[{ptc, p1, p2, crv, dset, test, out, conicname}, 
      TimeConstrained[out = {}; ptc = N[Normalize[pt /. rule69], 35]; 
-       Do[crv = N[bFivePointConicEq[{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, ptc, 
-             ETCBaryNorm[StringJoin["X", ToString[nx]]]] /. rule69, 35]; 
-         dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
-         test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
-          p1 = ToExpression[StringTake[Keys[test][[1]], {2, -1}]]; 
-           p2 = ToExpression[StringTake[Keys[test][[2]], {2, -1}]]; 
-           If[p1 == excl || p2 == excl, Continue[]]; 
+       Do[funcind = nx; crv = N[bFivePointConicEq[{1, 0, 0}, {0, 1, 0}, 
+             {0, 0, 1}, ptc, ETCBaryNorm[StringJoin["X", ToString[nx]]]] /. 
+            rule69, 35]; dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ 
+           ETCBaryNorm; test = Select[dset, #1 < 10^(-10) & ]; 
+         If[Length[test] > 1, p1 = ToExpression[StringTake[Keys[test][[1]], 
+              {2, -1}]]; p2 = ToExpression[StringTake[Keys[test][[2]], 
+              {2, -1}]]; If[p1 == excl || p2 == excl, Continue[]]; 
            If[Simplify[bFivePointConicEq[{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, 
                 KimberlingCenterCN[p1], KimberlingCenterCN[p2]] /. Thread[
                 {x, y, z} -> pt]] == 0, conicname = StringJoin["{A,B,C,X(", 
                ToString[p1], "),X(", ToString[p2], ")}"]; 
              If[ !MemberQ[out, conicname], AppendTo[out, conicname]; Print[
-                conicname]]]; ]; funcind = nx; , {nx, start, 
-         start + Max[1, Floor[time/60]]*200}]; Return[funcind]; , time, 
-      funcind]]
+                conicname]]]; ]; , {nx, start, start + Max[1, Floor[time/60]]*
+           200}]; Return[funcind]; , time, funcind]]
  
 checkCrossConjugate[pt_, size_:1000] := Module[{res, scope, test}, 
      scope = Take[ETCBaryNorm, size]; test = N[Normalize[pt /. rule69], 35]; 

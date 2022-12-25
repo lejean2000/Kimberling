@@ -631,6 +631,13 @@ bHarmonicConjugate[{a1_, a2_, a3_}, {b1_, b2_, b3_}, {c1_, c2_, c3_}] :=
     {a3*b1*c1 + a1*b3*c1 - 2*a1*b1*c3, a3*b2*c1 + a2*b3*c1 - a2*b1*c3 - 
       a1*b2*c3, 2*a3*b3*c1 - a3*b1*c3 - a1*b3*c3}
  
+bHarmonicConjugateFull[{a1_, a2_, a3_}, {b1_, b2_, b3_}, {c1_, c2_, c3_}] := 
+    {a2*b1*c1 - a3*b1*c1 + a1*b2*c1 - a1*b3*c1 - 2*a1*b1*c2 + a3*b1*c2 + 
+      a1*b3*c2 + 2*a1*b1*c3 - a2*b1*c3 - a1*b2*c3, 2*a2*b2*c1 - a3*b2*c1 - 
+      a2*b3*c1 - a2*b1*c2 - a1*b2*c2 + a3*b2*c2 + a2*b3*c2 + a2*b1*c3 + 
+      a1*b2*c3 - 2*a2*b2*c3, a3*b2*c1 + a2*b3*c1 - 2*a3*b3*c1 - a3*b1*c2 - 
+      a1*b3*c2 + 2*a3*b3*c2 + a3*b1*c3 - a3*b2*c3 + a1*b3*c3 - a2*b3*c3}
+ 
 NormalizeBary[v_] := Normalize[v]*Sign[v[[1]]]
  
 bAnticevianTriangle[{u_, v_, w_}] := {{-u, v, w}, {u, -v, w}, {u, v, -w}}
