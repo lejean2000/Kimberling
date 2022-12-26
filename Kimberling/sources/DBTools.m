@@ -64,8 +64,8 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
        {set, fullgroups}]; Return[hgroups]; ]
  
 pointCheck[pt_, process_] := Module[{tmp, res, ptn}, 
-     ptn = N[Normalize[pt]*Sign[pt[[1]]], 35]; 
-      tmp = pointProcessBary[singlePointProcesses[process], process]; 
+     ptn = N[NormalizeBary[pt], 35]; tmp = pointProcessBary[
+        singlePointProcesses[process], process]; 
       res = MinimalBy[Value][(Abs[(#1[[1]] - ptn[[1]])^2 + 
             (#1[[2]] - ptn[[2]])^2 + (#1[[3]] - ptn[[3]])^2] & ) /@ tmp]; 
       If[res[[1]] < 10^(-20), Return[Keys[res][[1]]]]; ]
