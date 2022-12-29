@@ -1,0 +1,85 @@
+<h3 id="X5394">X(5394)&nbsp;=&nbsp;CONGRUENT INCIRCLES POINT</h3>
+Barycentrics&nbsp;&nbsp; (unknown)
+<p>
+X(5394) is the point X for which the three triangles AXB, BXC, CXA have congruent incircles. The existence of this point is proved by Noam Elkies in <i>Mathematics Magazine</i> 60 (1987) 117. His proof applies to a much wider range of functions (with the inradius replaced by the area, semiperimeter, etc., or any positive combination thereof).
+</p>
+<p>
+Following is a copy-and-run Mathematica program that computes actual trilinear distances (1.7916..., 1.7057..., 1.6328...) of X(5394) for the triangle given by (a,b,c) = (6,9,13).
+</p>
+
+<blockquote>
+    (1/2 Sqrt[(a + b - c) (a - b + c) (-a + b + c) (a + b + c)] {x/a, y/b, z/c} /. #1 /.<br>
+    NSolve[{x + y + z == 1, (a + Sqrt[b^2 x^2 + (a^2 + b^2 - c^2) x y + a^2 y^2] +<br>
+    Sqrt[c^2 x^2 + (a^2 - b^2 + c^2) x z + a^2 z^2])/<br>
+    x == (b + Sqrt[b^2 x^2 + (a^2 + b^2 - c^2) x y + a^2 y^2] +<br>
+    Sqrt[c^2 y^2 + (-a^2 + b^2 + c^2) y z + b^2 z^2])/<br>
+    y == (c + Sqrt[c^2 x^2 + (a^2 - b^2 + c^2) x z + a^2 z^2] +<br>
+    Sqrt[c^2 y^2 + (-a^2 + b^2 + c^2) y z + b^2 z^2])/<br>
+    z /. #1}, {x, y, z}, WorkingPrecision &srarr; 40][[1]] &)[Thread[{a, b, c} &srarr; {6, 9,13}]] <br>
+   (* Code by Peter Moses, October 23, 2012. *)
+</blockquote>
+
+<p>
+Let S = 2 area ABC, s1 = a + b + c, s2 = b c + c a + a c, s3 = a b c.  Then the radius of the congruent incircles is the least positive solution of the following 8th-degree polynomial equation:
+</p>
+
+<blockquote>
+1 - <br>
+8 s1 x / S + <br>
+(23 s1^2 + 8 s2) x^2 / S^2 - <br>
+2 s1 (13 s1^2 + 24 s2) x^3 / S^3 + <br>
+2 (3 s1^4 + 42 s1^2 s2 + 8 s2^2 + 12 s1 s3) x^4 / S^4 - <br>
+16 s1 (s1^2 s2 + 4 s2^2 + 6 s1 s3) x^5 / S^5 + <br>
+4 s1 (2 s1^5 - 9 s1^3 s2 + 4 s1 s2^2 + 24 s1^2 s3 + 24 s2 s3) x^6 / S^6 + <br>
+96 s1 s2 x^7 / S^5 - <br>
+288 s1 s3 x^8 / S^6 = 0.
+</blockquote>
+
+<p>
+For example, if {a,b,c} = {6,9,13} the equation is as follows:
+</p>
+<p>
+1-4 Sqrt[7/5] x+(2503 x^2)/280-(2021 x^3)/(40 Sqrt[35])+(269373 x^4)/62720-(140289 x^5)/(22400 Sqrt[35])+(187 x^6)/1960+(747 x^7)/(44800 Sqrt[35])-(3159 x^8)/6272000 = 0,
+</p>
+<p>
+of which the least positive solution is x = 0.803384896325630173615878150981...
+</p>
+<p>
+Here is a Mathematica code for computing the radius:
+</p>
+
+<blockquote>
+testtriangle = {6, 9, 13}; <br>
+N[First[Sort[Select[x/.Solve[(1 - 8 s1 x / S + (23 s1^2 + 8 s2) x^2 / S^2 - 2 s1 (13 s1^2 + 24 s2) x^3 / S^3 + 2 (3 s1^4 + 42 s1^2 s2 + 8 s2^2 + 12 s1 s3) x^4 / S^4 - 16 s1 (s1^2 s2 + 4 s2^2 + 6 s1 s3) x^5 / S^5 + 4 s1 (2 s1^5 - 9 s1^3 s2 + 4 s1 s2^2 + 24 s1^2 s3 + 24 s2 s3) x^6 / S^6 + 96 s1 s2 x^7 / S^5 - 288 s1 s3 x^8 / S^6 /.Thread[{s1, s2, s3, S} &srarr; {a + b + c, b c + c a + a b, a b c, 1/2 Sqrt[(a + b - c) (a - b + c) (-a + b + c) (a + b + c)]}] /.Thread[{a, b, c} &srarr; testtriangle]) == 0, x], #>0&]]], 30]
+</blockquote>
+(Notes and code from Peter Moses, July 24, 2019)
+
+<p>
+Following is another approach to formulating and computing the congruent incircles radius.  Let<br>
+k0 = s1^2 (s1^3-4 s1 s2+12 s3)^2<br>
+k1 = -s1 (11 s1^5-60 s1^3 s2+80 s1 s2^2+48 s1^2 s3-96 s2 s3)<br>
+k2 = 4 (11 s1^4-36 s1^2 s2+16 s2^2+24 s1 s3)<br>
+k3 = -16 (5 s1^2-8 s2)<br>
+k4 = 64, where<br>
+s1 = a + b + c<br>
+s2 = b c + c a + a b<br>
+s3 = a b c.<br>
+Next, let x be the maximal root of k0 + k1 x + k2 x^2 + k3 x^3 + k4 x^4 = 0.  Then the
+desired radius is S / (s1 + 2 Sqrt[x]) where S = 2 * Area ABC.
+</p>
+<p>
+Here is a Mathematica code for computing the radius:
+</p>
+
+<blockquote>
+testtriangle={6,9,13};
+N[S/(s1+2 Sqrt[Last[Sort[x/.Solve[
+(s1^2 (s1^3-4 s1 s2+12 s3)^2-s1 (11 s1^5-60 s1^3 s2+80 s1 s2^2+48 s1^2 s3-96 s2 s3)x+4 (11 s1^4-36 s1^2 s2+16 s2^2+24 s1 s3) x^2-16 (5 s1^2-8 s2) x^3+64 x^4/.#)==0,x]]]])/.#&[Thread[{s1,s2,s3,S} &srarr; {a+b+c,b c+c a+a b,a b c,1/2 Sqrt[(a+b-c) (a-b+c) (-a+b+c) (a+b+c)]}]/.Thread[{a,b,c} &srarr; testtriangle]],30]
+</blockquote>
+(Notes and code from Peter Moses, August 13, 2019)
+
+<p>
+X(5394) lies on no line X(i)X(j) for 1 &lt;= i &lt; j &lt;= 33000.
+</p>
+<hr class="gray">
+
