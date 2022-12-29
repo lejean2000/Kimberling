@@ -1,0 +1,124 @@
+<h3 id="X175">X(175)&nbsp;=&nbsp;ISOPERIMETRIC POINT<a id="IsoperimetricPoint"></a></h3>
+Trilinears &nbsp;&nbsp; -1 + sec A/2 cos B/2 cos C/2 : :
+<br>
+Barycentrics &nbsp;&nbsp; (sin A)(-1 + sec A/2 cos B/2 cos C/2) : :
+<br>
+Barycentrics &nbsp;&nbsp; -2a + (a + b + c) tan(A/2) : :
+<br>
+Barycentrics &nbsp;&nbsp; a - r<sub>a</sub> : b - r<sub>b</sub> : c - r<sub>c</sub>, where r<sub>a</sub>, r<sub>b</sub>, r<sub>c</sub> are the exradii
+<br>
+Barycentrics &nbsp;&nbsp; (a + b - c)*(a - b + c)*(a*(a - b - c) + S) : :
+<b><br>
+X(175) = 2s*X(1) - (r + 4R)*X(7) =  3X[2]-4X[31534]<br>
+X(175) = 3 X[2] - 4 X[31534]
+</b><p>
+The points X(175) and X(176) are discussed in an 1890 article by Emile Lemoine, accessible at
+<a href="http://gallica.bnf.fr/ark:/12148/bpt6k201173h">Gallica</a>. The article begins on page 111, and the two points are considered beginning on page 128.
+</p><p>
+A point X is defined as an isoperimetric point of triangle ABC if |XB| + |XC| + |BC| = |XC| + |XA| + |CA| = |XA| + |XB| + |AB|. Veldkamp established that X = X(175), uniquely, for some triangles ABC, but the conditions he gives are not correct. Hajja and Yff proved that the condition tan(A/2) + tan(B/2) + tan(C/2) &lt; 2 is necessary and sufficient. See also X(176) and the 1st and 2nd Eppstein points, X(481), X(482).
+</p><p>
+In unpublished notes, Yff proved that X(175) is the center of the outer Soddy circle. His proof later appeared in the paper by Hajja and         Yff cited below.
+</p><p>
+Every point on the Soddy line has barycentric coordinates of the form a + k/sa : b + k/sb : c + k/sc, where k is a symmetric function in a,b,c, and sa=(b+c-a)/2, sb=(c+a-b)/2, sc=(a+b-c)/2. Writing S for 4*area(ABC):
+</p><p>
+X(175) = 2a - S/sa : 2b - S/sb : 2c - S/sc<br>
+X(176) = 2a + S/sa : 2b + S/sb : 2c + S/sc<br>
+X(481) = a - S/sa : b - S/sb : c - S/sc<br>
+X(482) = a + S/sa : b + S/sb : c + S/sc<br>
+X(1371) = a + 2S/(3 sa) : b + 2S/(3 sb) : c + 2S/(3 sc)<br>
+X(1372) = a - 2S/(3 sa) : b - 2S/(3 sb) : c - 2S/(3 sc)<br>
+X(1373) = a + 2S/sa : b + 2S/sb : c + 2S/sc<br>
+X(1374) = a - 2S/sa : b - 2S/sb : c - 2S/sc<br>
+</p><p>
+<b>Clark Kimberling and R. W. Wagner,</b> Problem E 3020 and Solution, <i>American Mathematical Monthly</i> 93 (1986) 650-652 [proposed 1983].
+</p><p>
+<b>G. R. Veldkamp,</b> "The isoperimetric point and the point(s) of equal detour," <i>American Mathematical Monthly</i> 92 (1985) 546-558.
+</p><p>
+Muwaffaq Hajja and Peter Yff, "The isoperimetric point and the point(s) of equal detour in a triangle," <i>Journal of Geometry</i> 87         (2007) 76-82.
+</p><p>
+Randy Hutson (August 23, 2011) noted that "There are exactly two points P such that the incircles of the triangles PBC, PCA, PAB are pairwise tangent to one another; the two points are X(175) and X(176). There are exactly two points P such that the radical center of the incircles of PBC, PCA, PAB is P; the two points are X(175) and X(176).''  However, an anonymous contributor noted that there are cases in which the second statement does not hold. His counterexamples and conditions for such points P to exist are quoted here:
+</p>
+<blockquote>
+<p>
+For the isoperimetric point, the incircles become excircles, so really we need two separate claims, as follows:
+</p><p>
+(1) P is an isoperimetric point, in the sense that triangles PBC, PCA, and PAB have the same perimeter, if and only if P is the radical center of the excircles of triangles PBC, PCA, and PAB opposite P.
+</p><p>
+(2) P is an equal detour point, in the sense that |XB| + |XC| - |BC| = |XC| + |XA| - |CA| = |XA| + |XB| - |AB|, if and only if P is the radical center of the incircles of triangles PBC, PCA, and PAB.'
+</p><p>
+The proofs are clear: P is these circles' radical center if and only if the tangents from P to them have the same length, and we can express these tangents explicitly in terms of the triangles' sides.
+</p><p>
+The claim about pairwise tangency deserves further examination. Once again we must change the incircles to excircles for the isoperimetric point, but this time around that doesn't really fix everything. It is indeed true that if P is an isoperimetric point, then the excircles are pairwise tangent and if P is an equal detour point, then so are the incircles. However, the converses do not hold. Following is a counterexample. Start with an isosceles triangle ABC where AB = AC and angle A is sufficiently small. Let M be the midpoint of side BC and let Q be some point on ray AM beyond M. Observe that the excircles omega_B and omega_C of triangles QCA and QAB are always tangent on line QA, by symmetry. When Q is close to M, the excircle omega_A of triangle QBC intersects both omega_B and omega_C. Conversely, when Q tend to infinity away from M, however, both of omega_B and omega_C are disjoint from omega_A and lie outside of it. (This step is why we need angle A to be sufficiently small.) Therefore, there exists some intermediate position of point Q such that omega_A, omega_B, and omega_C are pairwise externally tangent. But then Q cannot be an isoperimetric point because the tangency points of omega_A with omega_B and omega_C do not lie on lines QC and QB, respectively.
+</p><p>
+A counterexample for incircles is similar. Start with an isosceles triangle ABC where AB = AC and angle A is sufficiently large. (For example, at least 60 degrees.) Let M be the midpoint of side BC and let Q be some point on ray MA beyond A. The rest of the construction is fully analogous, but here we have disjoint incircles when Q is close to A and intersecting incircles when Q tends to infinity away from A. We can still salvage some of this if we explicitly require P to be an interior point, as follows:
+</p><p>
+(1') Let point P lie in the interior of triangle ABC. Then P is an isoperimetric point, in the sense that triangles PBC, PCA, and PAB have the same perimeter, if and only if the excircles of triangles PBC, PCA, and PAB opposite P are pairwise tangent.'
+</p><p>
+(2') Let point P lie in the interior of triangle ABC. Then P is an equal detour point, in the sense that |XB| + |XC| - |BC| = |XC| + |XA| - |CA| = |XA| + |XB| - |AB|, if and only if the incircles of triangles PBC, PCA, PAB are pairwise tangent.'
+</p><p>
+Now lines PA, PB, PC separate the incircles or excircles from one another, so that their tangency points must necessarily lie on these lines, and from here on we can finish the proofs in the exact same way as for the pair of radical center claims.
+</p><p>
+Note that X(175) and X(176) do not correspond exactly to the isoperimetric and equal detour points! For the outer Soddy circle, whether we get equal perimeters or equal detours depends on whether this circle is tangent to the three small circles with centers A, B, and C and radii (-a + b + c)/2, etc., internally or externally. When the tangencies are internal, we get an isoperimetric point; when they are external we get an equal detour point; and when the outer Soddy circle degenerates into a straight line, X(175) is undefined.
+</p><p>
+Therefore, if we define the isoperimetric and equal detour points in terms of <b>lengths</b>, then some triangles will have one of each, others will have no isoperimetric point and two equal detour points, and still others will have no isoperimetric point and just a single equal detour point -- all depending on what happens with the outer Soddy circle.
+</p><p>
+Something like this is also in the entry for X(176), attributed to Hajja and Yff.</p>
+</blockquote>
+<p>
+If you have GeoGebra, you can view <a href="X%28175%29%2C%20X%28176%29.ggb">X(175), X(176).ggb</a>
+</p><p>
+Let Ha be the hyperbola through A having foci B and C, and define Hb and Hc cyclically. The three hyperbolas meet in in two points: X(175) and X(176).  The 6 vertices of the hyperbolas lie on the Privalov conic (an ellipse).  Specifically, if the vertices are labeled as A1, A2; B1, B2; C1,C2; then A1, B1, C1 are the vertices of the extouch triangle, and A2, B2, C2 are the vertices of the intouch triangle; see X(5452) and this
+<a href="https://user-images.githubusercontent.com/16231062/147100386-8ab23b07-e546-48f2-a0b6-c805c1e6c964.png"><b>Figure</b></a>.
+(Liliana Gheorghe, Dan Reznik, Peter Moses, December,  2021)
+</p>
+<blockquote>
+<p>In the plane of a triangle ABC, let
+</p><p>
+Oa = circle with diameter BC <br>
+C' = the point, other than B, where Oa meets AB <br>
+B' = the point, other than C, where Oa meets AC<br>
+Ub = B-mixtilinear incircle of BCC'<br>
+Uc = C-mixtilinear incircle of CBB'<br>
+Ab = touchpoint of Ub and BC; define Bc and Ca cyclically<br>
+Ac = touchpoint of Uc and BC; define Ba and Cb cyclically<br>  
+The points Ab, Ac, Ba, Ba, Cb, Cb line on a conic, of which the center is X(176).  A barycentric equation for this conic follows:
+</p><p>
+2 (a-b-c) (a^2-b^2-c^2) (a^2 (b+c)-(b-c)^2 (b+c)+2 a S) x^2 - ((a+b-c) (a-b+c) (3 a^4-2 a^3 (b+c)-3 (b^2-c^2)^2+2 a (b+c) (b^2+c^2))+2 (a^4-3 (b^2-c^2)^2+2 a^2 (b^2+c^2)) S) y z + (cyclic) = 0.
+</p><p>
+See <a href="X(175)andX(176).png">X(175) and X(176)</a>. Continuing, let
+</p><p>
+Vb = B-mixtilinear excircle of BCC'<br>
+Vc = C-mixtilinear excircle of CBB'<br>
+A'b = touchpoint of Vb and BC; define B'c and C'a cyclically<br>
+A'c = touchpoint of Vc and BC; define B'a and C'b cyclically<br>  
+The points A'b, A'c, B'a, B'c, C'a, C'b line on a conic, of which the center is X(175).  A barycentric equation for this conic follows:
+</p><p>
+(a+b-c) (a-b+c) (2 (a-b-c) (2 a^3 b c+a^4 (b+c)-2 a b c (b+c)^2+(b-c)^2 (b+c)^3-2 a^2 (b^3+b^2 c+b c^2+c^3)+2 (a^3-2 b c (b+c)-a (b+c)^2) S) x^2 + (3 a^6-4 a^5 (b+c)-4 a (b-c)^2 (b+c)^3-3 (b-c)^2 (b+c)^4+a^2 (b+c)^2 (9 b^2+2 b c+9 c^2)-a^4 (9 b^2+14 b c+9 c^2)+8 a^3 (b^3+b^2 c+b c^2+c^3)-2 (a^4+6 a^3 (b+c)-4 a^2 (b+c)^2+3 (b^2-c^2)^2-2 a (3 b^3+7 b^2 c+7 b c^2+3 c^3)) S) y z) + (cyclic) = 0.  (Angel Montesdeoca, September 9, 2022)
+</blockquote>
+<p>
+X(175) lies on the curves K032, K199, K200, K,1175, Q074, Q092, Q104 and on these lines: {1, 7}, {2, 13386}, {4, 10905}, {8, 1270}, {40, 34495}, {65, 6252}, {69, 10908}, {105, 30385}, {144, 30557}, {174, 483}, {226, 1131}, {280, 40700}, {329, 3084}, {388, 10911}, {490, 664}, {517, 39795}, {651, 1335}, {1086, 44636}, {1336, 10253}, {1463, 7353}, {2082, 6203}, {2550, 45713}, {3062, 10973}, {3083, 9776}, {3296, 34216}, {3297, 5228}, {3298, 6180}, {4000, 7968}, {4644, 7969}, {5045, 39794}, {5222, 18992}, {5226, 5393}, {5261, 9907}, {5405, 5435}, {5932, 31528}, {5933, 31530}, {6283, 49537}, {6360, 46422}, {6405, 20358}, {7090, 10405}, {7585, 30325}, {9778, 10135}, {9789, 21147}, {10580, 16663}, {11293, 17086}, {13387, 20211}, {13389, 21454}, {13459, 16441}, {15913, 31536}, {16214, 32081}, {17365, 44635}, {17950, 43134}, {21453, 30335}, {30347, 31588}, {30413, 31547}, {31544, 32201}<br>
+</p><p>
+X(175) = reflection of X(i) in X(j) for these {i,j}: {176, 3160}, {10405, 7090}, {14121, 31534}, {30334, 1}<br>
+X(175) = isogonal conjugate of X(30336)<br>
+X(175) = isotomic conjugate of X(40699)<br>
+X(175) = anticomplement of X(14121)<br>
+X(175) = anticomplement of the isogonal conjugate of X(2067)
+X(175) = X(i)-anticomplementary conjugate of X(j) for these (i,j): {6, 13386}, {603, 176}, {1659, 21270}, {1805, 3869}, {2067, 8}, {2362, 4}, {5414, 329}, {6502, 31552}, {13388, 69}, {30557, 3436}, {34121, 13387}<br>
+X(175) = X(8)-Ceva conjugate of X(176)<br>
+X(175) = X(10135)-cross conjugate of X(7)<br>
+X(175) = X(i)-isoconjugate of X(j) for these (i,j): {1, 30336}, {6, 15891}, {31, 40699}, {56, 34911}<br>
+X(175) = cevapoint of X(i) and X(j) for these (i,j): {1, 34495}, {10253, 32058}<br>
+X(175) = crosssum of X(55) and X(19037)<br>
+X(175) = reflection of X(175) in the Soddy line<br>
+X(175) = X(6406)-of-excentral-triangle<br>
+X(175) = X(1152)-of-intouch-triangle<br>
+X(175) = X(7353)-of-(inner)-tangential-mid-arc-triangle (TCCT 6.15)<br>
+X(175) = X(12224)-of-first-circumperp-triangle (TCCT 6.21)<br>
+X(175) = X(6400)-of-second-circumperp-triangle (TCCT 6.22)<br>
+X(175) = barycentric product X(i)*X(j) for these {i,j}: {7, 30413}, {8, 16662}, {1659, 31547}<br>
+X(175) = barycentric quotient X(i)/X(j) for these {i,j}: 1, 15891}, {2, 40699}, {6, 30336}, {9, 34911}, {9778, 30412}, {16662, 7}, {30413, 8}<br>
+X(175) = {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): {1, 7, 176}, {1, 15891}, {2, 40699}, {6, 30336}, {9, 34911}, {9778, 30412}, {16662, 7}, {30413, 8}<br>
+{X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): {1, 7, 176}, {1, 481, 7}, {1, 482, 17805}, {1, 1372, 481}, {1, 1373, 31538}, {1, 1374, 482}, {1, 17803, 31539}, {1, 30342, 11038}, {1, 31539, 17802}, {1, 31568, 8236}, {7, 176, 21169}, {7, 482, 21170}, {7, 1372, 17801}, {7, 8236, 31566}, {7, 17802, 1}, {7, 17805, 482}, {7, 31601, 1373}, {7, 31602, 481}, {20, 347, 176}, {77, 962, 176}, {176, 21169, 17804}, {176, 21170, 482}, {269, 9785, 176}, {279, 390, 176}, {481, 482, 1374}, {481, 1372, 31602}, {481, 17802, 176}, {481, 17803, 17802}, {481, 31539, 1}, {481, 31602, 17801}, {482, 1374, 7}, {482, 17805, 176}, {482, 21170, 21169}, {1323, 30332, 176}, {1372, 17803, 1}, {1372, 31539, 7}, {1373, 31538, 31601}, {1374, 17805, 21170}, {1442, 4295, 176}, {1443, 30305, 176}, {3600, 3672, 176}, {3638, 3639, 1372}, {3663, 4308, 176}, {3664, 4323, 176}, {3668, 4313, 176}, {3674, 4344, 176}, {4296, 4329, 176}, {4297, 36640, 176}, {4318, 17170, 176}, {4862, 6049, 176}, {5542, 5543, 176}, {5731, 22464, 176}, {7190, 11037, 176}, {8236, 10481, 176}, {10135, 32083, 16662}, {10481, 31568, 31566}, {13388, 13390, 2}, {14121, 31534, 2}, {17801, 17802, 21169}, {17802, 31602, 7}, {30424, 31721, 176}, {31538, 31601, 176}, {31539, 31602, 176}<br>
+</p><hr class="gray">
+
+

@@ -1,0 +1,268 @@
+<h3 id="X1">X(1)&nbsp;=&nbsp;INCENTER</h3>
+<a id="Incenter"></a>
+Trilinears &nbsp;&nbsp; 1 : 1 : 1<br>
+Barycentrics &nbsp;&nbsp;a : b : c<br>
+Barycentrics&nbsp;&nbsp;sin A : sin B : sin C<br>
+Tripolars &nbsp;&nbsp; Sqrt[b c (b + c - a)] : :<br>
+Tripolars &nbsp;&nbsp; sec A' : :, where A'B'C' is the excentral triangle
+<br>
+<b>
+X(1) = 3R*X(2) + r*X(3) + s*cot(&omega;)*X(6)<br>
+X(1) = [A]/Ra + [B]/Rb + [C]/Rc - X(176)/Rs, where Ra, Rb, Rc = radii of Soddy circles, Rs = radius of inner Soddy circle, [A], [B], [C] are the vertices of ABC<br>
+X(1) = [A]/Ra + [B]/Rb + [C]/Rc - X(175)/Rs', where Ra, Rb, Rc = radii of Soddy circles, Rs' = radius of outer Soddy circle, [A], [B], [C] are the vertices of ABC
+<br>
+X(1) = (sin A)*[A] + (sin B)*[B] + (sin C)*[C], where [A], [B], [C] are vertices of ABC<br>
+X(1) = a*[A] + b*[B] + c*[C], where [A], [B], [C] are vertices
+</b>
+<p>
+X(1) is the point of concurrence of the interior angle bisectors of ABC; the point inside ABC whose distances from sidelines BC, CA, AB are equal. This equal distance, r, is the radius of the incircle, given by r = 2*area(ABC)/(a + b + c).
+</p>
+<p>
+Three more points are also equidistant from the sidelines; they are given by these names and trilinears:
+</p>
+<p>
+A-excenter = -1 : 1 : 1, &nbsp;&nbsp;&nbsp;&nbsp;B-excenter = 1 : -1 : 1, &nbsp;&nbsp;&nbsp;&nbsp;C-excenter = 1 : 1 : -1.
+</p>
+<p> The radii of the excircles are 2*area(ABC)/(-a + b + c), 2*area(ABC)/(a - b + c), 2*area(ABC)/(a + b - c).
+</p>
+<p>
+If you have The Geometer's Sketchpad, you can view <a href="X(1).gsp"><b>Incenter</b></a>.
+<br>
+If you have GeoGebra, you can view <a href="X(1).ggb"><b>Incenter</b></a>.
+</p>
+<p>
+Writing the A-exradius as r(a,b,c), the others are r(b,c,a) and r(c,a,b). If these exradii are abbreviated as r<sub>a</sub>,         r<sub>b</sub>, r<sub>c</sub>, then 1/r = 1/r<sub>a</sub> +1/r<sub>b</sub> + 1/r<sub>c</sub>. Moreover,
+</p>
+<p>
+area(ABC) = sqrt(r*r<sub>a</sub>*r<sub>b</sub>*r<sub>c</sub>) and r<sub>a</sub> + r<sub>b</sub> + r<sub>c</sub> = r + 4R, where R denotes the radius of the circumcircle.
+</p>
+<p>
+The incenter is the identity of the group of triangle centers under <b>trilinear multiplication</b> defined by (x : y : z)*(u : v : w) = xu : yv : zw.
+</p>
+<p> A construction for * is easily obtained from the construction for "barycentric multiplication" mentioned in         connection with X(2), just below.
+</p>
+<p>
+The incenter and the other classical centers are discussed in these highly recommended books:
+</p>
+<p>
+<a href="http://www.math.fau.edu/yiu/GeometryNotes020402.pdf"><b>Paul Yiu,</b> Introduction to the Geometry of the Triangle, 2002</a>;<br>
+<b>Nathan Altshiller Court,</b> <i>College Geometry,</i> Barnes &amp; Noble, 1952;
+<br>
+<b>Roger A. Johnson,</b> <i>Advanced Euclidean Geometry,</i> Dover, 1960.
+</p>
+<p>
+Let O<sub>A</sub> be the circle tangent to side BC at its midpoint and to the circumcircle on the side of BC opposite A. Define O<sub>B</sub> and O<sub>C</sub> cyclically. Let L<sub>A</sub> be the external tangent to circles O<sub>B</sub> and O<sub>C</sub> that is nearest to O<sub>A</sub>. Define L<sub>B</sub> and L<sub>C</sub>         cyclically. Let A' = L<sub>B</sub> &cap;L<sub>C</sub>, and define B' and C' cyclically. Then triangle A'B'C' is homothetic to the medial triangle, and the center of homothety is X(1); see the reference at X(1001).
+</p>
+<p>
+Let A'B'C' and A&Prime;B&Prime;C&Prime; be the intouch and excentral triangles; X(1) is the radical center of the circumcircles of AA'&Prime;, BB'B&Prime;, CC'C&Prime;.    (Randy Hutson, December 10, 2016)
+</p>
+<p>
+Let A'B'C' be the Feuerbach triangle.  Let A&Prime; be the trilinear pole of line B'C', and define B&Prime; and C&Prime; cyclically.  The lines A&Prime;, BB&Prime;, CC&Prime; concur in X(1).  (Randy Hutson, November 17, 2019)
+</p>
+<p>
+Let A'B'C' be the mixtilinear excentral triangle.  Let A&Prime; be the cevapoint of B' and C', and define B&Prime; and C&Prime; cyclically.  The lines A&Prime;, BB&Prime;, CC&Prime; concur in X(1).  (Randy Hutson, November 17, 2019)
+</p>
+<p>
+Let A'B'C' be the mixtilinear excentral triangle.  Let A&Prime; be the trilinear pole of line B'C', and define B&Prime; and C&Prime; cyclically.  The lines A&Prime;, BB&Prime;, CC&Prime; concur in X(1).  (Randy Hutson, November 17, 2019)
+</p>
+<p>
+Let A'B'C' be the mixtilinear excentral triangle.  Let L<sub>A</sub> be the trilinear polar of A', and define L<sub>B</sub> and L<sub>C</sub> cyclically.  Let A&Prime; = L<sub>B</sub>&cap;L<sub>C</sub>, and define B&Prime; and C&Prime; cyclically.  The lines A&Prime;, BB&Prime;, CC&Prime; concur in X(1).  (Randy Hutson, November 17, 2019)
+</p>
+<p>
+Let O<sub>A</sub> be the circle centered at the A-vertex of the excenters-midpoints triangle and passing through A; define O<sub>B</sub> and O<sub>C</sub> cyclically.  X(1) is the radical center of O<sub>A</sub>, O<sub>B</sub>, O<sub>C</sub>.  (Randy Hutson, August 30, 2020)
+</p>
+<p>
+Let O<sub>A</sub> be the circle centered at the A-vertex of the Gemini triangle 22 and passing through A; define O<sub>B</sub> and O<sub>C</sub> cyclically.  X(1) is the radical center of O<sub>A</sub>, O<sub>B</sub>, O<sub>C</sub>.  (Randy Hutson, August 30, 2020)
+</p>
+<p>
+X(1) lies on all Z-cubics (e.g., Thomson, Darboux, Napoleon, Neuberg) and these lines: 2,8&nbsp;&nbsp; 3,35&nbsp;&nbsp; 4,33&nbsp;&nbsp; 5,11&nbsp;&nbsp; 6,9&nbsp;&nbsp; 7,20&nbsp;&nbsp; 15,1251&nbsp;&nbsp;
+        16,1250&nbsp;&nbsp; 19,28&nbsp;&nbsp; 21,31&nbsp;&nbsp;
+        24,1061&nbsp;&nbsp; 25,1036&nbsp;&nbsp; 29,92&nbsp;&nbsp;
+        30,79&nbsp;&nbsp; 32,172&nbsp;&nbsp; 39,291&nbsp;&nbsp;
+        41,101&nbsp;&nbsp; 49,215&nbsp;&nbsp; 54,3460&nbsp;&nbsp;
+        60,110&nbsp;&nbsp; 61,203&nbsp;&nbsp; 62,202&nbsp;&nbsp;
+        64,1439&nbsp;&nbsp; 69,1245&nbsp;&nbsp; 71,579&nbsp;&nbsp;
+        74,3464&nbsp;&nbsp; 75,86&nbsp;&nbsp; 76,350&nbsp;&nbsp;
+        82,560&nbsp;&nbsp; 84,221&nbsp;&nbsp; 87,192&nbsp;&nbsp;
+        88,100&nbsp;&nbsp; 90,155&nbsp;&nbsp; 99,741&nbsp;&nbsp;
+        102,108&nbsp;&nbsp; 104,109&nbsp;&nbsp; 142,277&nbsp;&nbsp;
+        147,150&nbsp;&nbsp; 159,1486&nbsp;&nbsp; 163,293&nbsp;&nbsp;
+        164,258&nbsp;&nbsp; 166,1488&nbsp;&nbsp; 167,174&nbsp;&nbsp;
+        168,173&nbsp;&nbsp; 179,1142&nbsp;&nbsp; 181,970&nbsp;&nbsp;
+        182,983&nbsp;&nbsp; 184,1726&nbsp;&nbsp; 185,296&nbsp;&nbsp;
+        188,361&nbsp;&nbsp; 190,537&nbsp;&nbsp; 195,3467&nbsp;&nbsp;
+        196,207&nbsp;&nbsp; 201,212&nbsp;&nbsp; 204,1712&nbsp;&nbsp;
+        210,2334&nbsp;&nbsp; 224,377&nbsp;&nbsp; 227,1465&nbsp;&nbsp; 228,1730&nbsp;&nbsp;
+        229,267&nbsp;&nbsp; 256,511&nbsp;&nbsp; 257,385&nbsp;&nbsp;
+        280,1256&nbsp;&nbsp; 281,282&nbsp;&nbsp; 289,363&nbsp;&nbsp;
+        312,1089&nbsp;&nbsp; 318,1897&nbsp;&nbsp; 320,752&nbsp;&nbsp;
+        321,964&nbsp;&nbsp; 329,452&nbsp;&nbsp; 335,384&nbsp;&nbsp;
+        336,811&nbsp;&nbsp; 341,1050&nbsp;&nbsp; 344,1265&nbsp;&nbsp;
+        346,1219&nbsp;&nbsp; 357,1508&nbsp;&nbsp; 358,1507&nbsp;&nbsp;
+        364,365&nbsp;&nbsp; 371,1702&nbsp;&nbsp; 372,1703&nbsp;&nbsp;
+        376,553&nbsp;&nbsp; 378,1063&nbsp;&nbsp; 393,836&nbsp;&nbsp;
+        394,1711&nbsp;&nbsp; 399,3065&nbsp;&nbsp; 409,1247&nbsp;&nbsp;
+        410,1248&nbsp;&nbsp; 411,1254&nbsp;&nbsp; 442,1834&nbsp;&nbsp;
+        474,1339&nbsp;&nbsp; 475,1861&nbsp;&nbsp; 512,875&nbsp;&nbsp;
+        513,764&nbsp;&nbsp; 514,663&nbsp;&nbsp; 522,1459&nbsp;&nbsp;
+        528,1086&nbsp;&nbsp; 561,718&nbsp;&nbsp; 563,1820&nbsp;&nbsp;
+        564,1048&nbsp;&nbsp; 572,604&nbsp;&nbsp; 573,941&nbsp;&nbsp;
+        574,1571&nbsp;&nbsp; 594,1224&nbsp;&nbsp; 607,949&nbsp;&nbsp;
+        615,3300&nbsp;&nbsp; 631,1000&nbsp;&nbsp; 644,1280&nbsp;&nbsp; 647,1021&nbsp;&nbsp;
+        650,1643&nbsp;&nbsp; 651,1156&nbsp;&nbsp; 659,891&nbsp;&nbsp;
+        662,897&nbsp;&nbsp; 672,1002&nbsp;&nbsp; 689,719&nbsp;&nbsp;
+        704,1502&nbsp;&nbsp; 727,932&nbsp;&nbsp; 731,789&nbsp;&nbsp;
+        748,756&nbsp;&nbsp; 761,825&nbsp;&nbsp; 765,1052&nbsp;&nbsp;
+        810,1577&nbsp;&nbsp; 840,1308&nbsp;&nbsp; 905,1734&nbsp;&nbsp;
+        908,998&nbsp;&nbsp; 921,1800&nbsp;&nbsp; 939,1260&nbsp;&nbsp;
+        945,1875&nbsp;&nbsp; 947,1753&nbsp;&nbsp; 951,1435&nbsp;&nbsp;
+        969,1444&nbsp;&nbsp; 971,1419&nbsp;&nbsp; 989,1397&nbsp;&nbsp;
+        1013,1430&nbsp;&nbsp; 1037,1041&nbsp;&nbsp; 1053,1110&nbsp;&nbsp;
+        1057,1598&nbsp;&nbsp; 1059,1597&nbsp;&nbsp; 1073,3341&nbsp;&nbsp;
+        1075,1148&nbsp;&nbsp; 1106,1476&nbsp;&nbsp; 1157,3483&nbsp;&nbsp;
+        1168,1318&nbsp;&nbsp; 1170,1253&nbsp;&nbsp; 1185,1206&nbsp;&nbsp;
+        1197,1613&nbsp;&nbsp; 1292,1477&nbsp;&nbsp; 1333,1761&nbsp;&nbsp;
+        1342,1700&nbsp;&nbsp; 1343,1701&nbsp;&nbsp; 1361,1364&nbsp;&nbsp;
+        1389,1393&nbsp;&nbsp; 1399,1727&nbsp;&nbsp; 1406,1480&nbsp;&nbsp;
+        1409,1765&nbsp;&nbsp; 1437,1710&nbsp;&nbsp; 1472,1791&nbsp;&nbsp;
+        1719,1790&nbsp;&nbsp; 1855,1886&nbsp;&nbsp; 1859,1871&nbsp;&nbsp;
+        1872,1887&nbsp;&nbsp; 2120,3461&nbsp;&nbsp; 2130,3347&nbsp;&nbsp;
+        3183,3345&nbsp;&nbsp; 3342,3343&nbsp;&nbsp; 3344,3351&nbsp;&nbsp;
+        3346,3353&nbsp;&nbsp; 3348,3472&nbsp;&nbsp; 3350,3352&nbsp;&nbsp;
+        3354,3355&nbsp;&nbsp; 3462,3469
+</p>
+<p>
+X(1) is the {X(2),X(8)}-harmonic conjugate of X(10). For a list of other harmonic conjugates of X(1), click <b>Tables</b> at the top of this page.
+</p>
+<p>
+X(1) = midpoint of X(i) and X(j) for these (i,j):<br>
+ (3, 1482), (7,390), (8,145), (55,2099), (56,2098)<br>
+X(1) = reflection of X(i)  in X(j)  for these (i,j):<br>
+ (2,551), (3,1385), (4,946), (6,1386), (8,10), (9,1001), (10,1125), (11,1387), (36,1319), (40,3), (43,995), (46,56), (57,999), (63,993), (65,942), (72,960), (80,11), (100,214), (191,21), (200,997), (238,1279), (267,229), (291,1015), (355,5), (484,36), (984,37), (1046,58), (1054,106), (1478,226)<br>
+X(1) = isogonal conjugate of X(1)<br>
+X(1) = isotomic conjugate of X(75)<br>
+X(1) = cyclocevian conjugate of X(1029)<br>
+X(1) = circumcircle-inverse of X(36)<br>
+X(1) = Fuhrmann-circle-inverse of X(80)<br>
+X(1) = Bevan-circle-inverse of X(484)<br>
+X(1) = Spieker-radical-circle-inverse of X(38471)<br>
+X(1) = complement of X(8)<br>
+X(1) = anticomplement of X(10)<br>
+X(1) = anticomplementary conjugate of X(1330)<br>
+X(1) = complementary conjugate at X(1329)<br>
+X(1) = eigencenter of cevian triangle of X(i)  for I = 1, 88, 100, 162, 190<br>
+X(1) = eigencenter of anticevian triangle of X(i)  for I = 1, 44, 513<br>
+X(1) = exsimilicenter of inner and outer Soddy circles; insimilicenter is X(7)<br>
+X(1) = X(i)-Ceva conjugate of X(j)  for these (i,j): (2,9), (4,46), (6,43), (7,57), (8,40), (9,165), (10,191), (21,3), (29,4), (75,63), (77,223), (78,1490), (80,484), (81,6), (82,31), (85,169), (86,2), (88,44), (92,19), (100,513), (104,36), (105,238), (174,173), (188,164), (220,170), (259,503), (266,361), (280,84), (366,364), (508,362), (1492,1491)<br>
+X(1) = cevapoint of X(i) and X(j) for these (i,j):<br>
+(2,192), (6,55), (11,523), (15,202), (16,203), (19,204), (31,48), (34,207), (37,42), (50,215), (56,221), (65,73), (244,513)<br>
+X(1) = X(i)-cross conjugate of X(j)  for these (i,j): (2,87), (3,90), (6,57), (31,19), (33,282), (37,2), (38,75), (42,6), (44,88), (48,63), (55,9), (56,84), (58,267), (65,4), (73,3), (192,43), (207,1490), (221,40), (244,513), (259,258), (266,505), (354,7), (367,366), (500,35), (513,100), (517,80), (518,291), (1491,1492)<br>
+X(1) = crosspoint of X(i) and X(j) for these (i,j): (2,7), (8,280), (21,29), (59,110), (75,92), (81,86)<br>
+X(1) = crosssum of X(i) and X(j) for these (i,j): (2,192), (4,1148), (6,55), (11,523), (15,202), (16,203), (19,204), (31,48), (34,207), (37,42), (44,678), (50,215), (56,221), (57,1419), (65,73), (214,758), (244,513), (500,942), (512,1015), (774,820), (999,1480)<br>
+X(1) = crossdifference of every pair of points on line X(44)X(513)<br>
+X(1) = X(i)-Hirst inverse of X(j)  for these (i,j):  (2,239), (4,243), (6,238), (9,518), (19,240), (57,241), (105,294), (291,292)<br>
+X(1) = X(6)-line conjugate of X(44)<br>
+X(1) = X(i)-aleph conjugate of X(j)  for these (i,j):<br>
+(1,1), (2,63), (4,920), (21,411), (29,412), (88,88), (100,100), (162,162), (174,57), (188,40), (190,190), (266,978), (365,43), (366,9), (507,173), (508,169), (513,1052), (651, 651), (653,653), (655,655), (658,658), (660,660), (662,662), (673,673), (771,771), (799,799), (823,823), (897,897)<br>
+X(1) = X(i)-beth conjugate of X(j)  for these (i,j):  (1,56), (2,948), (8,8), (9,45), (21,1), (29,34), (55,869), (99,85),  (100,1), (110,603), (162,208), (643,1), (644,1), (663,875), (664,1),  (1043,78)<br>
+X(1) = insimilicenter of 1st &amp; 2nd Johnson-Yff circles (the exsimilicenter is X(4))<br>
+X(1) = orthic-isogonal conjugate of X(46)<br>
+X(1) = excentral-isogonal conjugate of X(40)<br>
+X(1) = excentral-isotomic conjugate of X(2951)<br>
+X(1) = center of Conway circle<br>
+X(1) = center of Adams circle<br>
+X(1) = X(3) of polar triangle of Conway circle<br>
+X(1) = homothetic center of intangents triangle and reflection of extangents triangle in X(3)<br>
+X(1) = Hofstadter 1/2 point<br>
+X(1) = orthocenter of X(4)X(9)X(885)<br>
+X(1) = intersection of tangents at X(7) and X(8) to Lucas cubic K007<br>
+X(1) = trilinear product of vertices of 2nd mixtilinear triangle<br>
+X(1) = trilinear product of vertices of 2nd Sharygin triangle<br>
+X(1) = homothetic center of Mandart-incircle triangle and 2nd isogonal triangle of X(1); see X(36)<br>
+X(1) = trilinear pole of the antiorthic axis (which is also the Monge line of the mixtilinear excircles)<br>
+X(1) = pole wrt polar circle of trilinear polar of X(92) (line X(240)X(522))<br>
+X(1) = X(48)-isoconjugate (polar conjugate) of X(92)<br>
+X(1) = X(6)-isoconjugate of X(2)<br>
+X(1) = trilinear product of PU(i) for these i: 1, 17, 114, 115, 118, 119, 113<br>
+X(1) = barycentric product of PU(i) for these i:  6, 124<br>
+X(1) = vertex conjugate of PU(9)<br>
+X(1) = bicentric sum of PU(i) for these i: 28, 47, 51, 55, 64<br>
+X(1) = trilinear pole of PU(i) for these i: 33, 50, 57, 58, 74, 76, 78<br>
+X(1) = crossdifference of PU(i) for these i: 33, 50, 57, 58, 74, 76, 78<br>
+X(1) = midpoint of PU(i) for these i: 47, 51, 55<br>
+X(1) = PU(28)-harmonic conjugate of X(1023)<br>
+X(1) = PU(64)-harmonic conjugate of X(351)<br>
+X(1) = intersection of diagonals of trapezoid PU(6)PU(31)<br>
+X(1) = perspector circumconic centered at X(9)<br>
+X(1) = eigencenter of mixtilinear excentral triangle<br>
+X(1) = eigencenter of 2nd Sharygin triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of extangents triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of Feuerbach triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of Apollonius triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of 2nd mixtilinear triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of 4th mixtilinear triangle<br>
+X(1) = perspector of ABC and unary cofactor triangle of Apus triangle<br>
+X(1) = perspector of unary cofactor triangles of 6th and 7th mixtilinear triangles<br>
+X(1) = perspector of unary cofactor triangles of 2nd and 3rd extouch triangles<br>
+X(1) = perspector of 5th mixtilinear triangle and unary cofactor triangle of 2nd mixtilinear triangle<br>
+X(1) = perspector of 5th mixtilinear triangle and unary cofactor triangle of 4th mixtilinear triangle<br>
+X(1) = X(3)-of-reflection-triangle-of-X(1)<br>
+X(1) = X(1181)-of-2nd-extouch triangle<br>
+X(1) = perspector of ABC and orthic-triangle-of-2nd-circumperp-triangle<br>
+X(1) = X(4)-of-excentral triangle<br>
+X(1) = X(40)-of-Yff central triangle<br>
+X(1) = X(20)-of-1st circumperp triangle<br>
+X(1) = X(4)-of-2nd circumperp triangle<br>
+X(1) = X(4)-of-Fuhrmann triangle<br>
+X(1) = X(100)-of-X(1)-Brocard triangle<br>
+X(1) = antigonal image of X(80)<br>
+X(1) = trilinear pole wrt excentral triangle of antiorthic axis<br>
+X(1) = trilinear pole wrt incentral triangle of antiorthic axis<br>
+X(1) = Miquel associate of X(7)<br>
+X(1) = homothetic center of Johnson triangle and cross-triangle of ABC and 2nd isogonal triangle of X(1)<br>
+X(1) = homothetic center of 1st Johnson-Yff triangle and cross-triangle of ABC and 2nd isogonal triangle of X(1)<br>
+X(1) = homothetic center of 2nd Johnson-Yff triangle and cross-triangle of ABC and 2nd isogonal triangle of X(1)<br>
+X(1) = homothetic center of Mandart-incircle triangle and cross-triangle of ABC and 1st Johnson-Yff triangle<br>
+X(1) = homothetic center of medial triangle and cross-triangle of Aquila and anti-Aquila triangles<br>
+X(1) = homothetic center of outer Garcia triangle and cross-triangle of Aquila and anti-Aquila triangles<br>
+X(1) = X(8)-of-cross-triangle-of Aquila-and-anti-Aquila-triangles<br>
+X(1) = X(3)-of-Mandart-incircle-triangle<br>
+X(1) = X(100)-of-inner-Garcia-triangle<br>
+X(1) = Thomson-isogonal conjugate of X(165)<br>
+X(1) = X(8)-of-outer-Garcia-triangle<br>
+X(1) = X(486)-of-BCI-triangle<br>
+X(1) = X(164)-of-orthic-triangle if ABC is acute<br>
+X(1) = X(1593)-of-Ascella-triangle<br>
+X(1) = excentral-to-Ascella similarity image of X(1697)<br>
+X(1) = Dao image of X(1)<br>
+X(1) = X(40)-of-reflection of ABC in X(3)<br>
+X(1) = radical center of the tangent circles of ABC<br>
+X(1) = homothetic center of intangents triangle and anti-tangential midarc triangle<br>
+X(1) = K(X(15)) = K(X(16)), as defined at X(174)<br>
+X(1) = X(3)-of-hexyl-triangle<br>
+X(1) = eigencenter of trilinear obverse triangle of X(2)<br>
+X(1) = hexyl-isogonal conjugate of X(40)<br>
+X(1) = inverse-in-polar-circle of X(1785)<br>
+X(1) = inverse-in-orthoptic-circle-of-Steiner-inellipse of X(5121)<br>
+X(1) = inverse-in-OI-inverter of X(1155)<br>
+X(1) = inverse-in-Steiner-circumellipse of X(239)<br>
+X(1) = inverse-in-MacBeath-circumconic of X(2323)<br>
+X(1) = inverse-in-circumconic-centered-at-X(9) of X(44)<br>
+X(1) = excentral-to-ABC barycentric image of X(40)<br>
+X(1) = excentral-to-ABC functional image of X(164)<br>
+X(1) = excentral-to-ABC trilinear image of X(164)<br>
+X(1) = orthic-to-ABC functional image of X(4), if ABC is acute<br>
+X(1) = orthic-to-ABC trilinear image of X(4), if ABC is acute<br>
+X(1) = intouch-to-ABC barycentric image of X(1)<br>
+X(1) = excentral-to-intouch similarity image of X(40)<br>
+X(1) = ABC-to-excentral barycentric image of X(8)<br>
+X(1) = X(1)-vertex conjugate of X(56)<br>
+X(1) = perspector of ABC and reflection triangle of intangents triangle<br>
+X(1) = perspector of pedal and anticevian triangles of X(40)<br>
+X(1) = perspector of hexyl triangle and antipedal triangle of X(40)<br>
+X(1) = perspector of hexyl triangle and anticevian triangle of X(57)<br>
+X(1) = X(4)-of-Pelletier-triangle<br>
+</p>
+<hr class="gray">
+
+
