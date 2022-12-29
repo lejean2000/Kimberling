@@ -672,3 +672,5 @@ symmetrizeInternalUVW[eq_] := Module[{partB, partC, angleA, angleB, angleC},
          u -> v, v -> w, w -> u}; partC = partC /. {a -> b, b -> c, c -> a, 
          angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
          B -> C, C -> A}; {eq, partB, partC}]
+ 
+bPole[mtx_, ln_] := adjugate[mtx] . ln
