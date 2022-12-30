@@ -4,15 +4,17 @@ bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]],
 bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp]; 
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
  
-symmetrizeInternal[eq_] := Module[{partB, partC, angleA, angleB, angleC}, 
+symmetrizeInternal[eq_] := Module[{partB, partC}, 
      Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
          rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
       partB = partB /. {a -> b, b -> c, c -> a, angleA -> angleB, 
-         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A}; 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
+         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
          ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
          angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A}; {eq, partB, partC}]
+         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, 
+         SC -> SA}; {eq, partB, partC}]
  
 bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
      Clear[pp, qq, rr, uu, vv, ww]; eq = qq*rr*vv*ww /. 
@@ -539,14 +541,6 @@ bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}},
      {u_, v_, w_}] := First /@ ({{m11, m12, m13}, {m12, m22, m23}, 
        {m13, m23, m33}} . {{u}, {v}, {w}})
  
-symmetrizeInternalAngle[eq_] := Module[{partB, partC}, 
-     Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
-         rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
-      partB = partB /. {a -> b, b -> c, c -> a, A -> B, B -> C, C -> A}; 
-      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
-         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, A -> B, B -> C, 
-         C -> A}; {eq, partB, partC}]
- 
 bCyclocevianConjugate[P1_] := Module[{}, Clear[pp, qq, rr, uu, vv, ww]; 
       symmetrizeInternal[1/(c^2*pp*qq*(pp + rr)*(qq + rr) - 
           (pp + qq)*rr*(a^2*qq*(pp + rr) - b^2*pp*(qq + rr)))] /. 
@@ -664,13 +658,10 @@ bVuPole[{p_, q_, r_}, {u_, v_, w_}] :=
      p*q*(c^2*(p*q*w*(u + v + w) - r*u*v*(p + q + r)) - 
        a^2*r*w*(v*(r + p) - q*(w + u)) - b^2*r*w*(u*(r + q) - p*(w + v)))}
  
-symmetrizeInternalUVW[eq_] := Module[{partB, partC, angleA, angleB, angleC}, 
-     Clear[u, v, w]; partB = eq /. {pp -> qq, qq -> rr, rr -> pp, u -> v, 
-         v -> w, w -> u}; partB = partB /. {a -> b, b -> c, c -> a, 
-         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A}; partC = partB /. {pp -> qq, qq -> rr, rr -> pp, 
-         u -> v, v -> w, w -> u}; partC = partC /. {a -> b, b -> c, c -> a, 
-         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A}; {eq, partB, partC}]
- 
 bPole[mtx_, ln_] := adjugate[mtx] . ln
+ 
+centralCircle[l_] := Module[{expr, eq}, expr = symmetrizeInternal[l]; 
+      eq = (expr[[1]]*x + expr[[2]]*y + expr[[3]]*z)*(a*x + b*y + c*z) + 
+        (a*y*z + b*x*z + c*x*y); multiCollect[
+       Simplify[a*b*c*(eq /. Thread[{x, y, z} -> {x/a, y/b, z/c}])], 
+       {x, y, z}]]
