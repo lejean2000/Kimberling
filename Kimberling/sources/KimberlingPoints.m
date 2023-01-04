@@ -11,7 +11,7 @@ KimberlingCenterC[k_] := symmetrizeInternal[
       ETC[StringJoin["X", ToString[k]]]] /. 
      Thread[{A -> angleA, B -> angleB, C -> angleC}]
  
-getTriangleCurve[name_] := TriangleCurves[name]
+getTriangleCurve[name_] := evaluate[TriangleCurves[name]]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]

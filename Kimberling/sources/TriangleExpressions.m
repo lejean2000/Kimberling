@@ -1,11 +1,14 @@
 symmetrizeEq[eq_] := Module[{partB, partC}, 
      partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x, pp -> qq, 
-         qq -> rr, rr -> pp}; partC = partB /. {a -> b, b -> c, c -> a, 
-         x -> y, y -> z, z -> x, pp -> qq, qq -> rr, rr -> pp}; 
+         qq -> rr, rr -> pp, A -> B, B -> C, C -> A, SA -> SB, SB -> SC, 
+         SC -> SA, p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
+      partC = partB /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x, 
+         pp -> qq, qq -> rr, rr -> pp, A -> B, B -> C, C -> A, SA -> SB, 
+         SB -> SC, SC -> SA, p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
       eq + partB + partC]
  
-conwaySimplify[poly_] := PolynomialReduce[poly, {SW, SA, SB, SC, sp, sa, sb, 
-      sc}, {a, b, c}]
+conwaySimplify[poly_] := PolynomialReduce[poly, 
+     evaluate[{SW, SA, SB, SC, sp, sa, sb, sc}], {a, b, c}]
  
 evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW, 
       qR, qjJ, qangleA, qangleB, qangleC, qangleW}, 
@@ -24,7 +27,8 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
          sb -> (a - b + c)/2, sc -> (a + b - c)/2, s -> qsp, S -> qS, 
          r -> qS/(2*qsp), \[CapitalDelta] -> qS/2, SA -> qSA, SB -> qSB, 
          SC -> qSC, SW -> qSW, R -> qR, angleA -> qangleA, angleB -> qangleB, 
-         angleC -> qangleC, angleW -> qangleW, \[Omega] -> qangleW, 
+         angleC -> qangleC, angleW -> qangleW, A -> qangleA, B -> qangleB, 
+         C -> qangleC, \[Omega] -> qangleW, 
          e -> Sqrt[(a^4 - a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2 + c^4)/
             (a^2*b^2 + a^2*c^2 + b^2*c^2)], \[Tau] -> 
           Sqrt[(1/2)*(3 + Sqrt[5])], jJ -> qjJ, J -> qjJ, 
