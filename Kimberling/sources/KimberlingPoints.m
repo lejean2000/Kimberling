@@ -20,9 +20,13 @@ ruleAbsSquare = {Abs[x___]^2 :> x^2}
  
 rule69 = {a -> 6, b -> 9, c -> 13}
  
-checkCurves[pt_] := Do[ptest = NormalizeBary[pt /. rule69]; 
-      d = evaluate[TriangleCurves[name]] /. Thread[{x, y, z} -> ptest] /. 
-        rule69; If[Abs[d] < 10^(-10), Print[name]; Print[N[d]]]; , 
+checkCurves[pt_] := Do[ptest = NormalizeBary[(evaluate /. rule69)[pt]]; 
+      d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+      If[Abs[d] < 10^(-10), Print[name]; Print[N[d]]]; , 
+     {name, Keys[TriangleCurves]}]
+ 
+checkCurvesSymb[pt_] := Do[curve = getTriangleCurve[name]; 
+      If[Simplify[curve /. Thread[{x, y, z} -> pt]] == 0, Print[name]]; , 
      {name, Keys[TriangleCurves]}]
  
 checkPointinETC[pt_] := MinimalBy[Value][
