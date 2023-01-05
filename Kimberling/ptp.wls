@@ -1,13 +1,16 @@
 #!/usr/bin/env wolframscript
 
 ClearAll["Global`*"];
+Get["../db/EtcCheckNumbers.mx"];
 Get["../sources/KimberlingPoints.m"];
 Get["../sources/TriangleTools.m"];
 Get["../db/ETC.mx"];
 Get["../db/ETCBaryNorm.mx"];
+Get["../sources/TriangleCurves.m"];
+Get["../sources/conicTools.m"];
 Get["../sources/KimberlingTriangles.m"];
-Get["../sources/TriangleExpressions.m"];
 Get["../sources/DBTools.m"];
+Get["../sources/TriangleExpressions.m"];
 
 argv = Rest @ $ScriptCommandLine;
 
