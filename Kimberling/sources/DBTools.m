@@ -232,7 +232,10 @@ checkIsogonalConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc, rc},
            If[idx1 < idx2, AppendTo[res, {idx1, idx2}], AppendTo[res, 
              {idx2, idx1}]], Print[idx1]; Print[idx2]; ]]; 
         prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
-      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; Print[ToString[res]]; ]
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+      If[Length[res] > 0, 
+       Print["= X(i)-isoconjugate-of-X(j) for these {i, j}: "]; 
+        Print[ToString[res]]; ]; ]
  
 checkBarycentricQuotient[pt_] := Module[{cx, prev, res, idx1, idx2, ptc}, 
      ptc = N[Normalize[pt /. rule69], 35]; 
@@ -254,7 +257,9 @@ checkBarycentricQuotient[pt_] := Module[{cx, prev, res, idx1, idx2, ptc},
                KimberlingCenterCN[idx2]/KimberlingCenterCN[idx1]}]] == 0, 
            AppendTo[res, {idx2, idx1}]]; ]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      Print[ToString[res]]; ]
+      If[Length[res] > 0, 
+       Print["= barycentric quotient X(i)*X(j) for these (i, j): "]; 
+        Print[ToString[res]]; ]; ]
  
 checkCrossConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc, rc, i1, 
       i2}, rc = {a -> 5, b -> 6, c -> 7}; 
@@ -275,7 +280,9 @@ checkCrossConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, ptc, rc, i1,
                 rc, KimberlingCenterCN[i1] /. rc], 35]]], 
            AppendTo[res, {i2, i1}]]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      Print[ToString[res]]; ]
+      If[Length[res] > 0, 
+       Print["= X(i) cross conjugate of X(j) for these {i, j}: "]; 
+        Print[ToString[res]]; ]; ]
  
 ffcrosspoint[pt1_, pt2_] := Module[{local}, 
      local = bCrosspoint[pt1 /. rule69, pt2 /. rule69]; 
@@ -300,7 +307,9 @@ checkBarycentricProduct[pt_] := Module[{cx, prev, res, idx1, idx2, ptc},
             AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]], 
            Print[idx1]; Print[idx2]; ]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      Print[ToString[res]]; ]
+      If[Length[res] > 0, 
+       Print["= barycentric product X(i)*X(j) for these (i, j): "]; 
+        Print[ToString[res]]; ]; ]
  
 checkAnticomplementaryConjugates[pt_] := 
     Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
@@ -321,4 +330,44 @@ checkAnticomplementaryConjugates[pt_] :=
                 KimberlingCenterCN[i2] /. rc] /. rc}] == 0, 
            AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      Print[ToString[res]]; ]
+      If[Length[res] > 0, 
+       Print["= X(i)-anticomplementary conjugate of X(j) for these (i,j): "]; 
+        Print[ToString[res]]; ]; ]
+ 
+ffdaoconjugate[pt1_, pt2_] := Module[{local}, 
+     local = bDaoConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
+      Return[NormalizeBary[local]]; ]
+ 
+checkDaoConjugates[pt_] := Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, 
+      rc}, rc = {a -> 5, b -> 6, c -> 7}; 
+      ptc = N[NormalizeBary[pt /. rule69], 35]; 
+      cx = (ffdaoconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
+      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
+             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
+      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
+      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
+         prev = Association[n -> cx[n]]; Continue[]]; 
+        If[coincide[cx[n], prev[[1]]], 
+         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
+          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
+          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
+           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
+              bDaoConjugate[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
+                  i2] /. rc] /. rc}] == 0, AppendTo[res, {i1, i2}]; ]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+      If[Length[res] > 0, 
+       Print["= X(i)-Dao conjugate of X(j) for these {i, j}: "]; 
+        Print[ToString[res]]; ]; ]
+ 
+checkTrilinearPolar[pt_] := Module[{cx, ptc, p1, p2}, 
+     ptc = N[Normalize[pt /. rule69], 35]; cx = bTripolarEq[ptc] . {x, y, z}; 
+      dset = (Abs[cx] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
+      test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
+       p1 = ToExpression[StringTake[Keys[test][[1]], {2, -1}]]; 
+        p2 = ToExpression[StringTake[Keys[test][[2]], {2, -1}]]; 
+        If[Simplify[Det[{{1, 1, 1}, pt, bTripole[KimberlingCenterCN[p1], 
+              KimberlingCenterCN[p2]]}]] == 0, 
+         Print[StringJoin[" = trilinear pole of line {", ToString[p1], ",", 
+            ToString[p2], "}"]]; ]; ]; ]

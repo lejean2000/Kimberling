@@ -611,10 +611,8 @@ symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3,
          sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
-bDaoConjugate[pt1_, pt2_] := Module[{w}, 
-     w = {a^3*(x - y + z)*(x + y - z)*y*z, b^3*(-x + y + z)*(x + y - z)*x*z, 
-        c^3*(x - y + z)*(-x + y + z)*x*y}; w = w /. Thread[{x, y, z} -> pt1]; 
-      bPIsogonalConjugate[w, pt2]]
+bDaoConjugate[{u_, v_, w_}, {p_, q_, r_}] := {q*r*u*(-u + v + w), 
+     p*r*v*(u - v + w), p*q*(u + v - w)*w}
  
 cundyParryPhi[{x_, y_, z_}] := {(SB*y - SC*z)/(c^2*SC*y - b^2*SB*z), 
      (SC*z - SA*x)/(a^2*SA*z - c^2*SC*x), (SA*x - SB*y)/(b^2*SB*x - a^2*SA*y)}
