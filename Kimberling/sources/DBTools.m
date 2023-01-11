@@ -99,7 +99,7 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
      local = bPIsogonalConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
       Return[NormalizeBary[local]]; ]
  
-linesProcessAlg[ptcoord_, prec_:20, debug_:False] := 
+linesProcessAlg[ptcoord_, prec_:20, debug_:False, abort_:True] := 
     Module[{res, gr, hg, out, head, test, test2, hgroups, ptc, unproven, rc, 
       rc2, eltest}, rc = {a -> 5, b -> 6, c -> 7}; 
       rc2 = {a -> 4, b -> 11, c -> 13}; 
@@ -117,7 +117,8 @@ linesProcessAlg[ptcoord_, prec_:20, debug_:False] :=
           10, -1]; If[TrueQ[Simplify[test] == 0] && 
           TrueQ[Simplify[test2] == 0], AppendTo[out, el], 
          AppendTo[unproven, el]]; , {el, gr}]; Print["Lies on lines: "]; 
-      Print[ToString[out]]; hg = {}; 
+      Print[ToString[out]]; If[abort && Length[out] < 3, 
+       Return[out, Module]; ]; hg = {}; 
       Do[head = Select[igroup, Length[#1] == 0 & ]; 
         Do[If[el == head[[1]], Continue[]]; eltest = 
            (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]; 
@@ -153,7 +154,8 @@ linesProcessAlg[ptcoord_, prec_:20, debug_:False] :=
          AppendTo[hg, eltest]; ]; , {igroup, intReflectionProcess[res[[2]], 
          ptc, prec]}]; If[Length[hg] > 0, 
        Print["= reflection of X(i) in X(j) for these {i,j}: "]; 
-        Print[ToString[SortBy[hg, ToExpression[#1[[1]]] & ]]]; ]; ]
+        Print[ToString[SortBy[hg, ToExpression[#1[[1]]] & ]]]; ]; 
+      Return[out]; ]
  
 intLinesProcessFullGroups[pt_, prec_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump}, 
