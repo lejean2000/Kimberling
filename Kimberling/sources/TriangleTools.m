@@ -670,3 +670,7 @@ centralCircle[l_] := Module[{expr, eq}, expr = symmetrizeInternal[l];
         (a*y*z + b*x*z + c*x*y); multiCollect[
        Simplify[a*b*c*(eq /. Thread[{x, y, z} -> {x/a, y/b, z/c}])], 
        {x, y, z}]]
+ 
+bImplicitTangent[crv_, pt_] := x*(D[crv, x] /. Thread[{x, y, z} -> pt]) + 
+     y*(D[crv, y] /. Thread[{x, y, z} -> pt]) + 
+     z*(D[crv, z] /. Thread[{x, y, z} -> pt])
