@@ -266,10 +266,18 @@ checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] :=
       First[(Union[{x:Blank[Subscript] :> x}, Thread[{x, y, z} -> #1]] & ) /@ 
         {XX}]]
  
-bConicCenter[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
-    Module[{p}, p = {-m23^2 + (m13 + m12)*m23 + m22*m33 - m13*m22 - m12*m33, 
-        -m13^2 + (m12 + m23)*m13 + m11*m33 - m12*m33 - m23*m11, 
-        -m12^2 + (m23 + m13)*m12 + m11*m22 - m23*m11 - m13*m22}; p/Total[p]]
+bConicCenter[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
+     If[ !MatrixQ[mx], {{m11, m12, m13}, {m12, m22, m23}, {m13, m23, m33}} = 
+        conicEqtoMtx[mx], {{m11, m12, m13}, {m12, m22, m23}, 
+         {m13, m23, m33}} = mx]; p = {-m23^2 + (m13 + m12)*m23 + m22*m33 - 
+         m13*m22 - m12*m33, -m13^2 + (m12 + m23)*m13 + m11*m33 - m12*m33 - 
+         m23*m11, -m12^2 + (m23 + m13)*m12 + m11*m22 - m23*m11 - m13*m22}]
+ 
+conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y], 
+      (1/2)*Coefficient[eq, x*z]}, {(1/2)*Coefficient[eq, x*y], 
+      Coefficient[eq, y^2], (1/2)*Coefficient[eq, y*z]}, 
+     {(1/2)*Coefficient[eq, x*z], (1/2)*Coefficient[eq, y*z], 
+      Coefficient[eq, z^2]}}
  
 bSaragossa1[{x_, y_, z_}] := Module[{u, v, w, x1, y1, z1, pt}, 
      x1 = x/(a*(x + y + z)); y1 = y/(b*(x + y + z)); z1 = z/(c*(x + y + z)); 
@@ -354,15 +362,11 @@ bReciprocalConjugate[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww];
 bToSearchNumbers[pt_] := S*(pt/(Total[pt]*{a, b, c})) /. 
      {a -> 6, b -> 9, c -> 13}
  
-bPerspector[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
-    Module[{p}, p = {1/(m12*m13 - m11*m23), 1/((-m13)*m22 + m12*m23), 
-        1/(m13*m23 - m12*m33)}; p/Total[p]]
- 
-conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y], 
-      (1/2)*Coefficient[eq, x*z]}, {(1/2)*Coefficient[eq, x*y], 
-      Coefficient[eq, y^2], (1/2)*Coefficient[eq, y*z]}, 
-     {(1/2)*Coefficient[eq, x*z], (1/2)*Coefficient[eq, y*z], 
-      Coefficient[eq, z^2]}}
+bPerspector[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
+     If[ !MatrixQ[mx], {{m11, m12, m13}, {m12, m22, m23}, {m13, m23, m33}} = 
+        conicEqtoMtx[mx], {{m11, m12, m13}, {m12, m22, m23}, 
+         {m13, m23, m33}} = mx]; p = {1/(m12*m13 - m11*m23), 
+        1/((-m13)*m22 + m12*m23), 1/(m13*m23 - m12*m33)}; p/Total[p]]
  
 bVertexConjugate[P1_, U1_] := Module[{eq, eq2}, 
      eq = a/(c^4*pp*qq*uu*vv + rr*(b^4*pp*uu - a^4*qq*vv)*ww + 
@@ -537,9 +541,9 @@ bMixtilinearIncircleC[a_, b_, c_] := Module[{s}, s = (a + b + c)/2;
          4*a^2*b^2*(x + y + z)*((s/a - 1)^2*x + (s/b - 1)^2*y + z)], 
        {x, y, z}]]
  
-bPolar[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}, 
-     {u_, v_, w_}] := First /@ ({{m11, m12, m13}, {m12, m22, m23}, 
-       {m13, m23, m33}} . {{u}, {v}, {w}})
+bPolar[mx_, {u_, v_, w_}] := Module[{mxm}, 
+     If[ !MatrixQ[mx], mxm = conicEqtoMtx[mx], mxm = mx]; 
+      First /@ (mxm . {{u}, {v}, {w}})]
  
 bCyclocevianConjugate[P1_] := Module[{}, Clear[pp, qq, rr, uu, vv, ww]; 
       symmetrizeInternal[1/(c^2*pp*qq*(pp + rr)*(qq + rr) - 
@@ -634,9 +638,12 @@ NormalizeBary[v_] := Normalize[v]*Sign[v[[1]]]
  
 bAnticevianTriangle[{u_, v_, w_}] := {{-u, v, w}, {u, -v, w}, {u, v, -w}}
  
-bDualConic[{{m11_, m12_, m13_}, {m12_, m22_, m23_}, {m13_, m23_, m33_}}] := 
-    ({{x, y, z}} . adjugate[{{m11, m12, m13}, {m12, m22, m23}, 
-         {m13, m23, m33}}] . {{x}, {y}, {z}})[[1]][[1]]
+bDualConic[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
+     If[ !MatrixQ[mx], {{m11, m12, m13}, {m12, m22, m23}, {m13, m23, m33}} = 
+        conicEqtoMtx[mx], {{m11, m12, m13}, {m12, m22, m23}, 
+         {m13, m23, m33}} = mx]; 
+      ({{x, y, z}} . Adjugate[{{m11, m12, m13}, {m12, m22, m23}, 
+           {m13, m23, m33}}] . {{x}, {y}, {z}})[[1]][[1]]]
  
 bDrozFarnyPole[{p_, q_, r_}] := {2*SA*p*(p + q + r) - 
       (a^2*q*r + b^2*r*p + c^2*p*q), 2*SB*q*(p + q + r) - 
