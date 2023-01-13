@@ -33,3 +33,7 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
             (a^2*b^2 + a^2*c^2 + b^2*c^2)], \[Tau] -> 
           Sqrt[(1/2)*(3 + Sqrt[5])], jJ -> qjJ, J -> qjJ, 
          dD -> 4*qS*Sqrt[qR*(4*qR + qr)]}]]
+ 
+simplifyRationalBarycentrics[expr_] := Module[{out}, 
+     out = Simplify[expr*PolynomialLCM @@ Denominator[expr]]; 
+      Simplify[out/PolynomialGCD @@ out]]

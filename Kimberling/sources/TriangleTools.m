@@ -674,3 +674,17 @@ centralCircle[l_] := Module[{expr, eq}, expr = symmetrizeInternal[l];
 bImplicitTangent[crv_, pt_] := x*(D[crv, x] /. Thread[{x, y, z} -> pt]) + 
      y*(D[crv, y] /. Thread[{x, y, z} -> pt]) + 
      z*(D[crv, z] /. Thread[{x, y, z} -> pt])
+ 
+bCollingsTransform[{u_, v_, w_}] := symmetrizeInternal2[
+     1/((-b^2)*(u + v - w)*w + c^2*v*(u - v + w))]
+ 
+symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w]; 
+      partB = eq /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
+      partB = partB /. {a -> b, b -> c, c -> a, angleA -> angleB, 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
+         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      partC = partB /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
+      partC = partC /. {a -> b, b -> c, c -> a, angleA -> angleB, 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
+         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      {eq, partB, partC}]

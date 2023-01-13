@@ -1,7 +1,6 @@
 #!/usr/bin/env wolframscript
 
 ClearAll["Global`*"];
-Get["../db/EtcCheckNumbers.mx"];
 Get["../sources/KimberlingPoints.m"];
 Get["../sources/TriangleTools.m"];
 Get["../db/ETC.mx"];
@@ -13,9 +12,13 @@ Get["../sources/TriangleExpressions.m"];
 
 argv = Rest @ $ScriptCommandLine;
 
+num = argv[[2]];
+Print["X(" <> num <> ") of X(2)-circleconcevian triangle"];
+
 Print["Barycentrics    "<>argv[[1]]];
 
 expr = ToExpression[argv[[1]]];
+
 
 ptcoord = symmetrizeInternal[expr]// evaluate;
 
@@ -25,29 +28,26 @@ chk = checkPointinETC[pt];
 If[chk[[1]] < 10^(-12), Print["ETC: " <> Keys[chk]]];
 
 If[chk[[1]] > 10^(-12),
-	linesProcessAlg[ptcoord]//Quiet;
+	full = False;
 
-	Print["Curves"];
-	checkCurves[ptcoord]// Quiet;
-	
-	Print["Processes"];
-	TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord]],60];
-
-	Print["Lies on circumconics: "];
-	checkCircumconics[ptcoord, 1, 120]//Quiet;
-	
-	Print["= X(i)-isoconjugate-of-X(j) for these {i, j}: "];
-	checkIsogonalConjugates[ptcoord]//Quiet;
-
-	Print["= X(i)-anticomplementary conjugate of X(j) for these (i,j): "];
-	checkAnticomplementaryConjugates[ptcoord]//Quiet;
-	
-	Print["= barycentric product X(i)*X(j) for these (i, j): "];
-	checkBarycentricProduct[ptcoord]//Quiet;
-
-	Print["= barycentric quotient X(i)/X(j) for these (i, j): "];
-	checkBarycentricQuotient[ptcoord]//Quiet;
-
-	Print["Check cross conjugate"];
-	checkCrossConjugate[ptcoord,500]//Quiet;
+	If[full,
+	  lines = linesProcessAlg[ptcoord, 20, False, False] // Quiet,
+	  lines = linesProcessAlg[ptcoord] // Quiet;
+	  ];
+	If[full || Length[lines] > 3,
+	  Print["Lies on circumconics: "];
+	  checkCircumconics[ptcoord, 1, 60] // Quiet;
+	  
+	  Print["Lies on curves: "];
+	  checkCurves[ptcoord] // Quiet;
+	  
+	  checkTrilinearPolar[ptcoord] // Quiet;
+	  checkIsogonalConjugates[ptcoord] // Quiet; 
+	  checkDaoConjugates[ptcoord] // Quiet; 
+	  checkAnticomplementaryConjugates[ptcoord] // Quiet; 
+	  checkCrossConjugates[ptcoord] // Quiet; 
+	  checkBarycentricProduct[ptcoord] // Quiet; 
+	  checkBarycentricQuotient[ptcoord] // Quiet; 
+	  TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord]], 90];
+	  ];
 ]
