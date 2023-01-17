@@ -548,7 +548,7 @@ bPolar[mx_, {u_, v_, w_}] := Module[{mxm},
 bCyclocevianConjugate[P1_] := Module[{}, Clear[pp, qq, rr, uu, vv, ww]; 
       symmetrizeInternal[1/(c^2*pp*qq*(pp + rr)*(qq + rr) - 
           (pp + qq)*rr*(a^2*qq*(pp + rr) - b^2*pp*(qq + rr)))] /. 
-       Thread[{pp, qq, rr} -> P1]; ]
+       Thread[{pp, qq, rr} -> P1]]
  
 bExsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2}, 
      O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
@@ -688,3 +688,19 @@ symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
          angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
          sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       {eq, partB, partC}]
+ 
+symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] := 
+    Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
+     (partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
+        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
+        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
+        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; ); 
+      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
