@@ -22,12 +22,13 @@ pointProcessBaryWriter[pointsBary_, prefix_] :=
 singlePointProcesses = <|"complement" -> 
       Hold[bComplement[KimberlingCenterC[2], #1]], 
      "anticomplement" -> Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
-     "cyclocevian_conjugate" -> Hold[bCyclocevianConjugate[#1]], 
-     "circumcircle_inverse" -> Hold[bCircumcircleInverse[#1]], 
-     "circlecevian_perspector" -> Hold[bCirclecevianPerspector[#1]], 
-     "zosma_transform" -> Hold[bZosmaTransform[#1]], 
-     "antitomic_conjugate" -> Hold[bAntitomicConjugate[#1]], 
-     "barycentric_square" -> Hold[#1^2], 
+     "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
+     "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
+     "circlecevian perspector" -> Hold[bCirclecevianPerspector[#1]], 
+     "zosma transform" -> Hold[bZosmaTransform[#1]], 
+     "antitomic conjugate" -> Hold[bAntitomicConjugate[#1]], 
+     "barycentric square" -> Hold[#1^2], "polar conjugate" -> 
+      Hold[bPIsogonalConjugate[KimberlingCenterCN[48], #1]], 
      "anticomplement of isogonal conjugate" -> 
       Hold[bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
      "anticomplement of isotomic conjugate" -> 
@@ -38,10 +39,10 @@ singlePointProcesses = <|"complement" ->
       Hold[bComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
      "tcc_perspector" -> Hold[bTCCPerspector[#1]], 
      "eigentransform" -> Hold[bEigentransform[#1]], 
-     "ortoassociate" -> Hold[bOrthoassociate[#1]], "syngonal_conjugate" -> 
-      Hold[bSyngonal[#1]], "1st_saragossa_point" -> Hold[bSaragossa1[#1]], 
-     "2nd_saragossa_point" -> Hold[bSaragossa2[#1]], 
-     "3rd_saragossa_point" -> Hold[bSaragossa3[#1]]|>
+     "ortoassociate" -> Hold[bOrthoassociate[#1]], "syngonal conjugate" -> 
+      Hold[bSyngonal[#1]], "1st saragossa point" -> Hold[bSaragossa1[#1]], 
+     "2nd saragossa point" -> Hold[bSaragossa2[#1]], 
+     "3rd saragossa point" -> Hold[bSaragossa3[#1]]|>
  
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 

@@ -1,670 +1,1207 @@
-KimberlingTrianglesTrilinear := Association["Yff central" -> 
-      {2*Sin[angleA/2], (2*a*Sin[angleB/2] + a + b - c)/b, 
-       (2*a*Sin[angleC/2] + a - b + c)/c}, "Yff contact" -> 
-      {0, -b^(-1)/(a - c), 1/c/(a - b)}, "inner-Yff" -> 
-      {-(a^4 - 2*(b^2 + b*c + c^2)*a^2 + (b^2 - c^2)^2)/(2*a^2*b*c), 1, 1}, 
-     "outer-Yff" -> {(a^4 - 2*(b^2 - b*c + c^2)*a^2 + (b^2 - c^2)^2)/
-        (2*a^2*b*c), 1, 1}, "inner-Yff tangents" -> 
-      {(b + c - a)*((a^3 + (b + c)*a^2 - (b^2 + c^2)*a - (b^2 - c^2)*(b - c))/
-         (4*a^2*b*c)), 1, 1}, "outer-Yff tangents" -> 
-      -{(b + c - a)*((a^3 + (b + c)*a^2 - (b^2 - 4*b*c + c^2)*a - 
-           (b^2 - c^2)*(b - c))/(4*a^2*b*c)), 1, 1}, 
-     "Yiu" -> {2*S*((SA^2 - R^2*SA - S^2)/R), c*(S^2 + SA*SC), 
-       b*(S^2 + SA*SB)}, "Yiu tangents" -> -{(SB + 3*SC)*((SC + 3*SB)/a), 
-        (SA + 3*SC)*((SC + 3*SB)/b), (SA + 3*SB)*((SB + 3*SC)/c)}, 
-     "1st Zaniah" -> {2, (a + b - c)/b, (a - b + c)/c}, 
-     "2nd Zaniah" -> {2, (a - b + c)/b, (a + b - c)/c}, 
-     "Walsmith" -> {-(2*a^6 - (3*b^4 - 4*b^2*c^2 + 3*c^4)*a^2 + 
-           (b^4 - c^4)*(b^2 - c^2))/(2*a^4 - (b^2 + c^2)*a^2 - (b^2 - c^2)^2)/
-        a, b, c}, "Wasat" -> {(b + c)/a, (c - a)/b, (b - a)/c}, 
-     "X-ABC reflections" -> {-(3*S^2 + SB*SC)/a, SB*b, SC*c}, 
-     "X-parabola-tangential" -> {-(b^2 - c^2)^2/a, (a^2 - c^2)^2/b, 
-       (a^2 - b^2)^2/c}, "Vijay-Paasche-midpoints" -> 
-      {(2*R + b)*((2*R + c)/R), (4*R*(R + b) + b*c + (b - c)*a)/b, 
-       (4*R*(R + c) + c*b + (c - b)*a)/c}, "Vijay-Paasche-polar" -> 
-      {-(-2*a*R + S)^2/a, (S^2 + 2*R*(a + b + 4*R)*S + 2*a*b*(2*R^2 + S))/b, 
-       (S^2 + 2*R*(a + c + 4*R)*S + 2*a*c*(2*R^2 + S))/c}, 
-     "Vijay-Paasche-tangents" -> {-(-2*a*R + S)^2/a, 
-       (S^2 + 2*R*(a + b + 4*R)*S + 2*a*b*(2*R^2 + S))/b, 
-       (S^2 + 2*R*(a + c + 4*R)*S + 2*a*c*(2*R^2 + S))/c}, 
-     "outer-Vecten" -> {-a, (SC + S)/b, (SB + S)/c}, 
-     "Trinh" -> {(-a)*(S^2 + 3*SA^2), b*(S^2 - 3*SA*SB), c*(S^2 - 3*SA*SC)}, 
-     "Ursa-major" -> {(-(b + c))*a^2 + 2*(b^2 + c^2)*a - (b + c)*(b^2 + c^2), 
-       ((a - b)^2 + (2*a - c)*c)*(a - c), ((a - c)^2 + (2*a - b)*b)*(a - b)}, 
-     "Ursa-minor" -> {(-(b + c))*a - (b - c)^2, (a - b + c)*(a - c), 
-       (a + b - c)*(a - b)}, "inner-Vecten" -> {-a, (SC - S)/b, (SB - S)/c}, 
-     "tangential" -> {-a, b, c}, "(1st) tangential-midarc" -> 
-      {-2*b*c*Sin[angleA/2], c*(2*Sin[angleB/2]*a + a + b - c), 
-       b*(2*Sin[angleC/2]*a + a + c - b)}, "2nd tangential-midarc" -> 
-      {2*b*c*Sin[angleA/2], c*(2*Sin[angleB/2]*a - (a + b - c)), 
-       b*(2*Sin[angleC/2]*a - (a + c - b))}, "inner tri-equilateral" -> 
-      {a*((SA - Sqrt[3]*S)/(SA + Sqrt[3]*S)), b, c}, 
-     "outer tri-equilateral" -> {a*((SA + Sqrt[3]*S)/(SA - Sqrt[3]*S)), b, 
-       c}, "AAOA" -> {(a^8 + 3*a^4*b^2*c^2 - 2*(b^2 + c^2)*a^6 + 
-         2*(b^4 - c^4)*(b^2 - c^2)*a^2 - (b^4 - c^4)^2)/(a*b*c), 
-       ((-b^2)*(a^2 - b^2) - c^4 + a^4)*c, ((-c^2)*(a^2 - c^2) - b^4 + a^4)*
-        b}, "ABC-X reflections" -> {-a^(-1), b/SC, c/SB}, 
-     "AOA" -> {((b^2 + c^2)*a^6 - (b^4 + c^4)*a^4 - (b^4 - c^4)*(b^2 - c^2)*
-          a^2 + (b^4 - c^4)^2)/a, (b^8 - 3*b^6*a^2 - 
-         (3*c^4 - 4*c^2*a^2 - a^4)*b^4 + (c^2 - a^2)*(7*c^2 - 3*a^2)*b^2*
-          a^2 + 2*(c^4 - a^4)*(c^2 - a^2)^2)/b, 
-       (c^8 - 3*c^6*a^2 - (3*b^4 - 4*b^2*a^2 - a^4)*c^4 + 
-         (b^2 - a^2)*(7*b^2 - 3*a^2)*c^2*a^2 + 2*(b^4 - a^4)*(b^2 - a^2)^2)/
-        c}, "Andromeda" -> {(a^2 + 3*(b - c)^2)/(3*a^2 + (b - c)^2), 1, 1}, 
-     "anticomplementary" -> {-a^(-1), 1/b, 1/c}, "anti-Aquila" -> 
-      {(2*a + b + c)/a, 1, 1}, "anti-Ara" -> {(2*SA + SB + SC)/(a*SA), b/SB, 
-       c/SC}, "anti-Ascella" -> {-a, b*((SA + 2*SB)/SB), c*((SA + 2*SC)/SC)}, 
-     "anti-Atik" -> {S^2*((4*R^2 - SA)/(a*SA^2)), SB/b, SC/c}, 
-     "1st anti-Brocard" -> {(a^4 - b^2*c^2)/a, (c^4 - a^2*b^2)/b, 
-       (b^4 - a^2*c^2)/c}, "4th anti-Brocard" -> 
-      {a*(((a^2 + b^2 + c^2)^2 - 9*b^2*c^2)/(-5*a^2 + b^2 + c^2)), 
-       b*(a^2 + b^2 - 2*c^2), c*(a^2 - 2*b^2 + c^2)}, 
-     "5th anti-Brocard" -> {(a^2 + c^2)*((a^2 + b^2)/a), b^3, c^3}, 
-     "6th anti-Brocard" -> {a*(a^4 - b^2*c^2), 
-       (b^6 - (a^2 + c^2)*b^4 - (a^2 - c^2)*b^2*c^2 + a^2*c^4)/b, 
-       (c^6 - (a^2 + b^2)*c^4 - (a^2 - b^2)*b^2*c^2 + a^2*b^4)/c}, 
-     "1st anti-circumperp" -> {-a, (b^2 - c^2)/b, (c^2 - b^2)/c}, 
-     "2nd anti-circumperp-tangential" -> {(b + c)^2/(a*(-a + b + c)), 
-       b/(a - b + c), c/(a + b - c)}, "1st anti-Conway" -> 
-      {a^3*((-a^2 + b^2 + c^2)/((b^2 + c^2)*a^2 - (b^2 - c^2)^2)), b, c}, 
-     "2nd anti-Conway" -> {((b^2 + c^2)*a^2 - (b^2 - c^2)^2)/a/
-        (-a^2 + b^2 + c^2), b, c}, "anti-Ehrmann-mid" -> 
-      {-3*a*SA, (S^2 + 3*SA*SC)/b, (S^2 + 3*SA*SB)/c}, 
-     "anti-Euler" -> {(3*a^4 - 4*(b^2 + c^2)*a^2 + (b^2 - c^2)^2)/
-        (a*(-a^2 + b^2 + c^2)), (a^2 + b^2 - c^2)/b, (a^2 - b^2 + c^2)/c}, 
-     "3rd anti-Euler" -> {(-((b^2 + c^2)*a^2 - b^4 + b^2*c^2 - c^4))*a, 
-       (a^4 - (b^2 - c^2)*(a^2 - c^2))*b, (a^4 - (c^2 - b^2)*(a^2 - b^2))*c}, 
-     "4th anti-Euler" -> {(-(-4*R^2*SA - S^2 + SA^2 - 2*SB*SC))*a, 
-       (S^2 - 2*SA*SC - SB^2 + 4*(R^2 - SC)*SB)*b, 
-       (S^2 - 2*SA*SB - SC^2 + 4*(R^2 - SB)*SC)*c}, 
-     "anti-excenters-incenter reflections" -> {2*(a/(S^2 - 2*SB*SC)), 
-       1/(b*SB), 1/(c*SC)}, "2nd anti-extouch" -> {S^2*(a/SA), SB*b, SC*c}, 
-     "anti-inner-Garcia" -> {(-(a^2 - b^2 + b*c - c^2))*a, 
-       a*(b*a - c^2) - (b^2 - c^2)*(b - c), a*(c*a - b^2) - 
-        (c^2 - b^2)*(c - b)}, "anti-inner-Grebe" -> {(a^2 - S)/a, b, c}, 
-     "anti-outer-Grebe" -> {(a^2 + S)/a, b, c}, "anti-Honsberger" -> 
-      {-a^3/(b^2 + c^2), b, c}, "anti-Hutson intouch" -> 
-      {(-(S^2 + 2*SA^2))*a, (S^2 - 2*SA*SB)*b, (S^2 - 2*SC*SA)*c}, 
-     "anti-incircle-circles" -> {(-a)*(2*S^2 + SA^2), b*(2*S^2 - SA*SB), 
-       c*(2*S^2 - SA*SC)}, "anti-inverse-in-incircle" -> 
-      {-(a^2 + b^2 + c^2)/a, (a^2 + b^2 - c^2)/b, (a^2 - b^2 + c^2)/c}, 
-     "anti-Mandart-incircle" -> {-a^2 + (b + c)*a - 2*b*c, (a - b + c)*b, 
-       (a + b - c)*c}, "anti-McCay" -> 
-      {-(5*a^4 - 2*(b^2 + c^2)*a^2 + (2*b^2 - c^2)*(b^2 - 2*c^2))/a, 
-       ((2*a^2 + 2*b^2 - c^2)^2 - 9*a^2*b^2)/b, 
-       ((2*a^2 + 2*c^2 - b^2)^2 - 9*a^2*c^2)/c}, "6th anti-mixtilinear" -> 
-      {2*a, (a^2 - b^2 + c^2)/b, (a^2 + b^2 - c^2)/c}, 
-     "anti-orthocentroidal" -> {a*((-a^2 + b^2 + c^2)^2 - b^2*c^2), 
-       b*(a^4 - (2*b^2 - c^2)*a^2 + (b^2 - c^2)*(b^2 + 2*c^2)), 
-       c*(a^4 + (b^2 - 2*c^2)*a^2 - (b^2 - c^2)*(2*b^2 + c^2))}, 
-     "1st anti-orthosymmedial" -> 
-      {(S^4 + 3*SA^2*S^2 + 2*(SA^2 - SB*SC - SW^2)*SA^2)*
-        (a/(2*SA + SB + SC)), ((SA - SB)*S^2 - 2*(SA*SC - SB^2)*SA)*b, 
-       ((SA - SC)*S^2 - 2*(SA*SB - SC^2)*SA)*c}, "anti-1st Parry" -> 
-      {-(a^4 - 2*(b^2 + c^2)*a^2 + 3*(b^2 - c^2)^2)/a, 
-       (a^2 + b^2 - 5*c^2)*(b/(a^2 - c^2))*(b^2 - c^2), 
-       (a^2 - 5*b^2 + c^2)*c*((c^2 - b^2)/(a^2 - b^2))}, 
-     "anti-2nd Parry" -> {-(2*S^4 + (5*SA^2 - 8*SB*SC + SW^2)*S^2 + 
-          3*(SA^2 - 4*SB*SC - SW^2)*SA^2)/(a*(3*SA - SW)), b*(S^2 - 3*SA*SB), 
-       c*(S^2 - 3*SA*SC)}, "1st anti-Sharygin" -> 
-      {(-a)*SB*(SC/(S^2 + SB*SC)), SC^2*((SA + SB)/(b*(S^2 + SA*SC))), 
-       SB^2*((SA + SC)/(c*(S^2 + SA*SB)))}, "anti-tangential-midarc" -> 
-      {-a/(-a + b + c), (a + c)/(a - b + c), (a + b)/(a + b - c)}, 
-     "3rd anti-tri-squares" -> 
-      {2*S*((2*S^2 - (18*R^2 + SA - 4*SW)*S - 3*SB*SC)/
-         (a*(3*SA - S)*(SA - S))), (3*SC - S)/b, (3*SB - S)/c}, 
-     "4th anti-tri-squares" -> 
-      {-2*S*((2*S^2 + (18*R^2 + SA - 4*SW)*S - 3*SB*SC)/
-         (a*(3*SA + S)*(SA + S))), (3*SC + S)/b, (3*SB + S)/c}, 
-     "anti-Ursa minor" -> {(b^2 + c^2)/a, (c^2 - a^2)/b, (b^2 - a^2)/c}, 
-     "anti-Wasat" -> {(S^2 + SB*SC)*a, SB*(SA - SC)*b, SC*(SA - SB)*c}, 
-     "anti-X3-ABC reflections" -> 
-      {-(2*a^4 - 3*(b^2 + c^2)*a^2 + (b^2 - c^2)^2)/a, (a^2 - b^2 + c^2)*b, 
-       (a^2 + b^2 - c^2)*c}, "Antlia" -> 
-      {-(a^2 + 3*(b - c)^2)/(3*a^2 + (b - c)^2), 1, 1}, 
-     "Apollonius" -> {(-((b + c)*a + b^2 + c^2)^2)*(a/(a + b + c)), 
-       (a + c)^2*(a + b - c)*b, (a + b)^2*(a - b + c)*c}, 
-     "Apus" -> {a/(a + b + c), -b/(a + b - c), -c/(a - b + c)}, 
-     "Aquila" -> {(a + 2*b + 2*c)/a, -1, -1}, 
-     "Ara" -> {a*(a^2 + b^2 + c^2), (-b)*(a^2 + b^2 - c^2), 
-       (-c)*(a^2 - b^2 + c^2)}, "Aries" -> {-(a^4 + (b^2 - c^2)^2)/(2*a), 
-       b*(b^2 - c^2), c*(c^2 - b^2)}, "Artzt" -> 
-      {-(3*a^4 + (b^2 - c^2)^2)/(2*a), ((2*b^2 + c^2)*a^2 + c^2*(b^2 - c^2))/
-        b, ((2*c^2 + b^2)*a^2 - (b^2 - c^2)*b^2)/c}, 
-     "Ascella" -> {2*a, (a^2 - 2*(b + c)*a + c^2 - b^2)/b, 
-       (a^2 - 2*(b + c)*a + b^2 - c^2)/c}, 
-     "Atik" -> {-((b + c)*a^2 - 2*(b^2 + c^2)*a + (b + c)^3)/a, 
-       a^2 - 2*(b - c)*a + (b + 3*c)*(b - c), a^2 - 2*(c - b)*a + 
-        (c + 3*b)*(c - b)}, "Ayme" -> {(b + c)*((a^2 + (b + c)^2)/a), 
-       -a^2 - b^2 + c^2, -a^2 - c^2 + b^2}, "Bankoff equilateral" -> 
-      {(-((Sqrt[3] - 2)*SA + S))*a, (2*S^2 + S*SC + (Sqrt[3] - 2)*SA*SC)/b, 
-       (2*S^2 + S*SB + (Sqrt[3] - 2)*SA*SB)/c}, 
-     "BCI" -> {1, 1 + 2*Cos[angleC/2], 1 + 2*Cos[angleB/2]}, 
-     "Bevan antipodal" -> {-(-a + b + c)^(-1), 1/(a - b + c), 1/(a + b - c)}, 
-     "1st Brocard" -> {a*b*c, c^3, b^3}, "1st Brocard-reflected" -> 
-      {-a, (a^2 + b^2)/b, (a^2 + c^2)/c}, "2nd Brocard" -> 
-      {b^2 + c^2 - a^2, a*b, a*c}, "3rd Brocard" -> {b^2*c^2, a*b^3, a*c^3}, 
-     "4th Brocard" -> {a*b*(c/(b^2 + c^2 - a^2)), c, b}, 
-     "5th Brocard" -> {((b^2 + c^2)*a^2 + (b^2 + c^2)^2 - b^2*c^2)/a, -b^3, 
-       -c^3}, "6th Brocard" -> {((b^2 + c^2)*a^2 - b^2*c^2)/a, 
-       (c^4 + c^2*b^2 - b^4)/b, (b^4 + b^2*c^2 - c^4)/c}, 
-     "7th Brocard" -> {(a^4 + (b^2 - c^2)^2)/a, b*(a^2 - b^2 + c^2), 
-       c*(a^2 + b^2 - c^2)}, "8th Brocard" -> {-2*a^3, b*(a^2 - b^2 + c^2), 
-       c*(a^2 + b^2 - c^2)}, "9th Brocard" -> 
-      {(-(a^2 + b^2 - c^2))*((a^2 - b^2 + c^2)/(2*a^3)), (a^2 + b^2 - c^2)/b, 
-       (a^2 - b^2 + c^2)/c}, "circummedial" -> {(-a)*b*(c/(b^2 + c^2)), c, 
-       b}, "circumnormal" -> {Sec[angleC/3 - angleB/3], 
-       -Sec[angleB/3 + 2*(angleC/3)], -Sec[angleC/3 + 2*(angleB/3)]}, 
-     "circumorthic" -> {-a/((b^2 + c^2)*a^2 - (b^2 - c^2)^2), 
-       1/(b*(a^2 - b^2 + c^2)), 1/(c*(a^2 + b^2 - c^2))}, 
-     "1st circumperp" -> {a, c - b, b - c}, "2nd circumperp" -> 
-      {-a, b + c, b + c}, "2nd circumperp tangential" -> 
-      {b*c + (a + b)*(a + c), (-b)*(a + b - c), (-c)*(a - b + c)}, 
-     "circumsymmedial" -> {-a/2, b, c}, "circumtangential" -> 
-      {Csc[angleC/3 - angleB/3], Csc[angleB/3 + 2*(angleC/3)], 
-       -Csc[angleC/3 + 2*(angleB/3)]}, "Conway" -> {-(a + b + c)/(b + c), 
-       (a + b - c)/b, (a - b + c)/c}, "2nd Conway" -> 
-      {-(a + b + c)/a, (a + b - c)/b, (a - b + c)/c}, 
-     "3rd Conway" -> {(-a)*(a + b + c)^2, ((b + 2*c)*a^3 + 2*a^2*b^2 + 
-         (b - c)*(2*c^2 + b*c + b^2)*a + 2*(b^2 - c^2)*b*c)/b, 
-       ((2*b + c)*a^3 + 2*a^2*c^2 - (b - c)*(c^2 + b*c + 2*b^2)*a - 
-         2*(b^2 - c^2)*b*c)/c}, "4th Conway" -> 
-      {(a^3 - (b + c)*a^2 - 2*(b^2 + b*c + c^2)*a - 2*b*c*(b + c))/
-        ((a + b + c)*a^2), 1, 1}, "5th Conway" -> 
-      {-((b + c)*a^2 + (b^2 + c^2)*a + 2*b*c*(b + c))/((a + b + c)*(b + c)*
-         a), 1, 1}, "inner-Conway" -> {-1, (b - c)/b, (c - b)/c}, 
-     "1st Ehrmann" -> {(-(a^4 - b^4 + 4*b^2*c^2 - c^4))*a, 
-       (a^2*(a^2 + 5*c^2) - b^4 + 3*b^2*c^2 - 2*c^4)*b, 
-       (a^2*(a^2 + 5*b^2) - 2*b^4 + 3*b^2*c^2 - c^4)*c}, 
-     "2nd Ehrmann" -> {a*((a^2 - 2*b^2 - 2*c^2)/(2*a^2 - b^2 - c^2)), b, c}, 
-     "Ehrmann cross" -> {(S^2 - 3*SB*SC)/a, 
-       SB*((S^2 - 3*SC^2)/(b*(SB - SC))), SC*((S^2 - 3*SB^2)/(c*(SC - SB)))}, 
-     "Ehrmann mid" -> {-(S^2 - 3*SB*SC)/a, (S^2 + 3*SA*SC)/b, 
-       (S^2 + 3*SA*SB)/c}, "Ehrmann side" -> {a*(S^2 + 3*SB*SC), 
-       SB*((S^2 - 3*SC^2)/b), SC*((S^2 - 3*SB^2)/c)}, 
-     "Ehrmann vertex" -> {-((4*SA + SB + SC)*S^2 - (3*(SB + SC))*SA^2)/
-        (a*(S^2 - 3*SA^2)), SC/b, SB/c}, "Euler" -> 
-      {2*(((b^2 + c^2)*a^2 - (b^2 - c^2)^2)/(a*(b^2 + c^2 - a^2))), 
-       (a^2 + b^2 - c^2)/b, (a^2 - b^2 + c^2)/c}, 
-     "2nd Euler" -> {-2*((b^2 + c^2)*a^2 - (b^2 - c^2)^2)*a, 
-       (a^2 - b^2 + c^2)*((a^4 - 2*a^2*c^2 + (b^2 - c^2)^2)/b), 
-       (a^2 + b^2 - c^2)*((a^4 - 2*a^2*b^2 + (b^2 - c^2)^2)/c)}, 
-     "3rd Euler" -> {-(b - c)^2/a, (a^2 + c*(b - c))/b, (a^2 + b*(c - b))/c}, 
-     "4th Euler" -> {-(b + c)^2/a, (a^2 - c*(b + c))/b, (a^2 - b*(b + c))/c}, 
-     "5th Euler" -> {-2*((b^2 + c^2)/(a*(a^2 - b^2 - c^2))), 1/b, 1/c}, 
-     "excenters-incenter reflections" -> {(-a + 3*b + 3*c)/(-3*a + b + c), 1, 
-       1}, "excenters-midpoints" -> {(-2*a + b + c)/a, 1, 1}, 
-     "excentral" -> {-1, 1, 1}, "extangents" -> {(-a)*(a + b + c), 
-       (a + c)*(a + b - c), (a + b)*(a - b + c)}, 
-     "extouch" -> {0, 1/(b*(a + b - c)), 1/(c*(a - b + c))}, 
-     "2nd extouch" -> {-2*(b + c), (a^2 + b^2 - c^2)/b, (a^2 - b^2 + c^2)/c}, 
-     "3rd extouch" -> {-2*(b + c)*(a + b - c)*((a - b + c)/
-         ((-a + b + c)*(a + b + c))), (a^2 + b^2 - c^2)/b, 
-       (a^2 - b^2 + c^2)/c}, "4th extouch" -> 
-      {-2*(b + c)*((a + b + c)/(-a + b + c)), (a^2 - b^2 + c^2)/b, 
-       (a^2 + b^2 - c^2)/c}, "5th extouch" -> {-2*((b + c)/(-a + b + c)), 
-       (b^2 + c^2 + a^2 + 2*c*a)/(b*(a - b + c)), (b^2 + 2*a*b + a^2 + c^2)/
-        (c*(a + b - c))}, "inner-Fermat" -> {(-Sqrt[3])*a, 
-       (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, "outer-Fermat" -> 
-      {(-Sqrt[3])*a, (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}, 
-     "Feuerbach" -> {(-(b - c)^2)*((a + b + c)/a), (a + c)^2*((a + b - c)/b), 
-       (a + b)^2*((a - b + c)/c)}, "Fuhrmann" -> {a, -(a^2 - c*(b + c))/b, 
-       -(a^2 - b*(b + c))/c}, "2nd Fuhrmann" -> {-a, (b*c + a^2 - c^2)/b, 
-       (b*c + a^2 - b^2)/c}, "inner-Garcia" -> {a, (c*a - b^2 + c^2)/b, 
-       (a*b + b^2 - c^2)/c}, "outer-Garcia" -> {-1, (a + c)/b, (a + b)/c}, 
-     "Garcia-reflection" -> {1, (c - a)/b, (b - a)/c}, 
-     "Gossard" -> {SA^2*(SB - SC)^2*((S^2 - 3*SB*SC)/(a*S^2)), 
-       (S^2 - 3*SA*SC)*((4*R^2*(-6*SB + SW) + 5*S^2 - SW^2 + 6*SB^2 - 
-          4*SA*SC)/b), (S^2 - 3*SA*SB)*((4*R^2*(-6*SC + SW) + 5*S^2 - SW^2 + 
-          6*SC^2 - 4*SA*SB)/c)}, "inner-Grebe" -> {-(b^2 + c^2 - S)/a, b, c}, 
-     "outer-Grebe" -> {-(b^2 + c^2 + S)/a, b, c}, "1st Hatzipolakis" -> 
-      {(-a + b + c)*a, (a^2 + b^2 - c^2)^2/(b*(a - b + c)), 
-       (a^2 - b^2 + c^2)^2/(c*(a + b - c))}, "2nd Hatzipolakis" -> 
-      {0, 1/(b*(a^2 - b^2 + c^2)*(a - b + c)^2), 
-       1/(c*(a^2 + b^2 - c^2)*(a + b - c)^2)}, "3rd Hatzipolakis" -> 
-      {2*S^2*((10*R^2 - 2*SA - SB - SC)/a), b*(S^2 + SA*SB), 
-       c*(S^2 + SA*SC)}, "Hatzipolakis-Moses" -> 
-      {2*S^2*((6*R^2 - 2*SA - SB - SC)/a), b*(S^2 + SA*SB), c*(S^2 + SC*SA)}, 
-     "hexyl" -> {a^3 + (-b - c)*a^2 - (b + c)^2*a + (b^2 - c^2)*(b - c), 
-       a^3 + (c - b)*a^2 - (b - c)^2*a + (b^2 - c^2)*(b + c), 
-       a^3 + (b - c)*a^2 - (b - c)^2*a - (b^2 - c^2)*(b + c)}, 
-     "Honsberger" -> {1/((b + c)*a - (b - c)^2), -(b*(a - b + c))^(-1), 
-       -(c*(a + b - c))^(-1)}, "Hung-Feuerbach" -> 
-      {(-(b + c)^2)*(a + b - c)*(a - b + c)*(a^2 + (b + c)^2)*
-        (a^2 + c*a + b*(b - c))*((a^2 + b*a + 3*(c - b))/a), 
-       (a + c)*(a^5 + c*a^4 - (b^2 - c^2)^2*a + c*(b^2 - c^2)*(3*b^2 + c^2))*
-        ((a + c)*b + a^2 + c^2)*(((-a + b)*c + a^2 + b^2)/b), 
-       (a + b)*(a^5 + b*a^4 - (c^2 - b^2)^2*a + b*(c^2 - b^2)*(3*c^2 + b^2))*
-        ((a + b)*c + a^2 + b^2)*(((-a + c)*b + a^2 + c^2)/c)}, 
-     "Hutson extouch" -> {-4*(a/(a + b + c)), (a + b - c)/b, (a - b + c)/c}, 
-     "Hutson intouch" -> {4*(a/(-a + b + c)), (a - b + c)/b, (a + b - c)/c}, 
-     "1st Hyacinth" -> {(-a^3)*SA*((SA^2 - 3*S^2)/(2*S^2)), 
-       ((12*R^2 - 2*SW)*S^2 - (2*R^2*(SA + SC) - SC^2 + S^2 - (SA + SC)^2)*
-          SB)/b, ((12*R^2 - 2*SW)*S^2 - (2*R^2*(SA + SB) - SB^2 + S^2 - 
-           (SA + SB)^2)*SC)/c}, "2nd Hyacinth" -> 
-      {-((b^2 + c^2)*a^4 - 2*(b^2 - c^2)^2*a^2 + (b^2 + c^2)*(b^2 - c^2)^2)/
-        (a*(a^2 - b^2 - c^2)), (a^2 - b^2 + c^2)*b, (a^2 + b^2 - c^2)*c}, 
-     "incentral" -> {0, 1, 1}, "incircle-circles" -> 
-      {2*a, (a^2 + 4*a*b + b^2 - c^2)/b, (a^2 + 4*a*c + c^2 - b^2)/c}, 
-     "intangents" -> {(-a)*(-a + b + c), (a - c)*(a - b + c), 
-       (a - b)*(a + b - c)}, "intouch" -> {0, 1/(b*(a - b + c)), 
-       1/(c*(a + b - c))}, "inverse-in-excircles" -> 
-      {-((b + c)*a + (b - c)^2)/(a*(a + b + c)), 1, 1}, 
-     "inverse-in-incircle" -> {((b + c)*a - (b - c)^2)/(a*(-a + b + c)), 1, 
-       1}, "Jenkins-contact" -> {(-(b + c)^2)*(a + b - c)*
-        ((a - b + c)/(a*(a + b + c))), c^2*((a - b + c)/b), 
-       b^2*((a - c + b)/c)}, "Jenkins-tangential" -> 
-      {(-((3*(b + c))*a^3 + (2*b^2 + 3*b*c + 2*c^2)*a^2 - (b + c)^2*b*c - 
-          (b + c)*(b^2 + c^2)*a))*b*(c/a^2), ((b + c)*a^3 + (2*b - c)*b*a^2 + 
-         (b^3 - c^3 - b*c*(b + c))*a + (b^2 - c^2)*b*c)*((a + c)/b), 
-       ((c + b)*a^3 + (2*c - b)*c*a^2 + (c^3 - b^3 - c*b*(c + b))*a + 
-         (c^2 - b^2)*c*b)*((a + b)/c)}, "Johnson" -> {(-a)*(a^2 - b^2 - c^2), 
-       (a^4 + (-b^2 - 2*c^2)*a^2 - c^2*(b^2 - c^2))/b, 
-       (a^4 + (-2*b^2 - c^2)*a^2 + (b^2 - c^2)*b^2)/c}, 
-     "inner-Johnson" -> {-a^2 + (b + c)*a - 2*b*c, (a - b + c)*((a - c)^2/b), 
-       (a + b - c)*((a - b)^2/c)}, "outer-Johnson" -> 
-      {-a^2 - (b + c)*a - 2*b*c, (a + c)^2*((a + b - c)/b), 
-       (a + b)^2*((a - b + c)/c)}, "1st Johnson-Yff" -> 
-      {a/(-a + b + c), (a + c)^2/(b*(a - b + c)), (a + b)^2/(c*(a + b - c))}, 
-     "2nd Johnson-Yff" -> {(-a)*(-b - c + a), (a - b + c)*((a - c)^2/b), 
-       (a + b - c)*((a - b)^2/c)}, "1st Kenmotu diagonals" -> 
-      {a*((b^2 + c^2 - a^2 - 2*S)/(b^2 + c^2 - a^2 + 2*S)), b, c}, 
-     "2nd Kenmotu diagonals" -> {a*((b^2 + c^2 - a^2 + 2*S)/
-         (b^2 + c^2 - a^2 - 2*S)), b, c}, "Kosnita" -> 
-      {(a^4 + (-2*b^2 - 2*c^2)*a^2 + b^4 + c^4)*a, 
-       (-b)*(a^4 + (-2*b^2 - c^2)*a^2 + (b^2 - c^2)*b^2), 
-       (-(a^4 + (-b^2 - 2*c^2)*a^2 - c^2*(b^2 - c^2)))*c}, 
-     "Lemoine" -> {0, a*(c/(2*a^2 + 2*c^2 - b^2)), 
-       a*(b/(2*a^2 + 2*b^2 - c^2))}, "MacBeath" -> 
-      {0, 1/(b^3*(a^2 - b^2 + c^2)), 1/(c^3*(a^2 + b^2 - c^2))}, 
-     "Malfatti" -> {(2*Cos[angleB/2]*Cos[angleC/2] + 2*Cos[angleB/2] + 
-         2*Cos[angleC/2] - Cos[angleA/2] + 1)/(Cos[angleA/2] + 1), 1, 1}, 
-     "Mandart-excircles" -> {(-(b - c)^2)*((a + b + c)/a), b*(a + b - c), 
-       c*(a - b + c)}, "Mandart-incircle" -> {(b + c - a)*((b - c)^2/a), 
-       b*(a - b + c), c*(a + b - c)}, "McCay" -> {a*(a^2 + b^2 + c^2), 
-       -(2*a^4 + (-3*c^2 - 2*b^2)*a^2 + (b^2 - c^2)*(-c^2 + 2*b^2))/b, 
-       -(2*a^4 + (-2*c^2 - 3*b^2)*a^2 + (b^2 - c^2)*(-2*c^2 + b^2))/c}, 
-     "medial" -> {0, 1/b, 1/c}, "midarc" -> 
-      {(Cos[angleB/2] + Cos[angleC/2])^2, Cos[angleA/2]^2, Cos[angleA/2]^2}, 
-     "2nd midarc" -> {(Cos[angleB/2] - Cos[angleC/2])^2, Cos[angleA/2]^2, 
-       Cos[angleA/2]^2}, "midheight" -> {2*a, (a^2 + b^2 - c^2)/b, 
-       (a^2 - b^2 + c^2)/c}, "2nd mixtilinear" -> 
-      {-(a^3 + (b + c)*a^2 - (b + c)^2*a - (b^2 - c^2)*(b - c))/(4*a*b*c), 1, 
-       1}, "3rd mixtilinear" -> {-1, 2*(b/(a - b + c)), 2*(c/(a + b - c))}, 
-     "4th mixtilinear" -> {-1, 2*(b/(a + b - c)), 2*(c/(a - b + c))}, 
-     "5th mixtilinear" -> {-(b + c - a)/(2*a), 1, 1}, 
-     "6th mixtilinear" -> {a^2 - 2*(b + c)*a + (b - c)^2, 
-       a^2 - (b - c)*(2*a - b - 3*c), a^2 - (c - b)*(2*a - c - 3*b)}, 
-     "7th mixtilinear" -> {(a - b + c)*(a + b - c)*
-        ((a^2 - 2*(b + c)*a + (b - c)^2)/(2*(-a + b + c)*a)), 
-       a^2 - 2*(b - c)*a + (b + 3*c)*(b - c), a^2 + 2*(b - c)*a + 
-        (c + 3*b)*(c - b)}, "Montesdeoca-Hung" -> 
-      {2*a^5*(a + 2*b + 2*c) + 4*a^3*(b^2 + 3*b*c + c^2)*(a + b + c) + 
-        (3*b^4 + 3*c^4 + 4*b*c*(3*b^2 + 5*b*c + 3*c^2))*a^2 + 
-        (b + c)^2*(2*(b + c)*(b^2 + c^2)*a + b^4 + c^4), 
-       (-(a + c)^2)*(a^2 + b*a + c*(b + c))^2, (-(a + b)^2)*
-        (a^2 + c*a + b*(c + b))^2}, "1st Morley" -> {1, 2*Cos[angleC/3], 
-       2*Cos[angleB/3]}, "2nd Morley" -> {-1, 2*Cos[angleC/3 + Pi/3], 
-       2*Cos[angleB/3 + Pi/3]}, "3rd Morley" -> {-1, 2*Cos[angleC/3 - Pi/3], 
-       2*Cos[angleB/3 - Pi/3]}, "1st Morley-adjunct" -> 
-      {2, Sec[angleC/3], Sec[angleB/3]}, "2nd Morley-adjunct" -> 
-      {-2, Sec[angleC/3 + Pi/3], Sec[angleB/3 + Pi/3]}, 
-     "3rd Morley-adjunct" -> {-2, Sec[angleC/3 - Pi/3], 
-       Sec[angleB/3 - Pi/3]}, "Moses-Hung" -> 
-      {-(2*a^3 + (b + c)*a^2 + (b^2 - c^2)*(b - c))^2/(a*(a + b + c)), 
-       (a + c)^2*((a + b - c)^3/b), (a + b)^2*((a - b + c)^3/c)}, 
-     "Moses-Soddy" -> {1/a, (a - c)/(b*(b - c)), (a - b)/(c*(c - b))}, 
-     "Moses-Steiner osculatory" -> 
-      {(-3*a^4 + 2*(b^2 + c^2)*a^2 - (b^2 - c^2)^2)/a^3, (a^2 + b^2 - c^2)/b, 
-       (a^2 - b^2 + c^2)/c}, "Moses-Steiner reflection" -> 
-      {(-a^2 + b^2 + c^2)/a, (a^2 - b^2 - 2*c^2)/b, (a^2 - 2*b^2 - c^2)/c}, 
-     "inner-Napoleon" -> {-a, (SC - Sqrt[3]*S)/b, (SB - Sqrt[3]*S)/c}, 
-     "outer-Napoleon" -> {-a, (SC + Sqrt[3]*S)/b, (SB + Sqrt[3]*S)/c}, 
-     "1st Neuberg" -> {(-a)*SW, (SC^2 - SA*SB)/b, (SB^2 - SA*SC)/c}, 
-     "2nd Neuberg" -> {(-a)*SW, (SC^2 - SA*SB + 2*S^2)/b, 
-       (SB^2 - SA*SC + 2*S^2)/c}, "orthic" -> {0, 1/(b*(a^2 - b^2 + c^2)), 
-       1/(c*(a^2 + b^2 - c^2))}, "orthic axes" -> {2*SB*(SC/a), SA*(SC/b), 
-       SA*(SB/c)}, "orthocentroidal" -> {a, (a^2 + b^2 - c^2)/b, 
-       (a^2 - b^2 + c^2)/c}, "1st orthosymmedial" -> 
-      {2*(a^3/(b^2 + c^2)), (a^2 + b^2 - c^2)/b, (a^2 - b^2 + c^2)/c}, 
-     "2nd orthosymmedial" -> {-((b^4 + c^4)*a^2 + (b^2 - c^2)^2*(-b^2 - c^2))/
-        (a*(b^2 + c^2)*(a^2 - b^2 - c^2)), b, c}, "Paasche-Hutson" -> 
-      {S*((S - 2*a*R)/a), (S + a*b)*c, (S + a*c)*b}, 
-     "1st Pamfilos-Zhou" -> {(-a^4)*(a^2 + b*c) + (b^2 + c^2)*(b + c)^2*a^2 + 
-        b*c*(b + c)*(4*S*a - (b^2 - c^2)*(b - c)), (a^2 - b^2 + c^2)*
-        ((a^2 + b^2 + c^2)*a*b + 2*c^2*S), (a^2 + b^2 - c^2)*
-        ((a^2 + b^2 + c^2)*a*c + 2*b^2*S)}, "2nd Pamfilos-Zhou" -> 
-      {-2*(b + c)*S - (-a + b + c)*((b + c)*a + (b - c)^2), 
-       (2*(a - c)*a*S + (-a + b + c)*(a^2*c + (b - c)*(b^2 + a*b + c^2)))/b, 
-       (2*(a - b)*a*S + (-a + b + c)*(a^2*b + (c - b)*(c^2 + a*c + b^2)))/c}, 
-     "1st Parry" -> {3*a^4 + (-2*b^2 - 2*c^2)*a^2 - b^2*c^2 + c^4 + b^4, 
-       (-b)*(a^2 + b^2 - 2*c^2)*a, (-c)*(a^2 - 2*b^2 + c^2)*a}, 
-     "2nd Parry" -> {(a^4 + b^2*c^2 - b^4 - c^4)*(b^2 - c^2), 
-       (a^2 - b^2)*b*a*(2*a^2 - b^2 - c^2), (-(a^2 - c^2))*c*a*
-        (2*a^2 - b^2 - c^2)}, "3rd Parry" -> 
-      {a*(a^4 + (-3*b^2 - 3*c^2)*a^2 + 2*b^4 + b^2*c^2 + 2*c^4), 
-       b*c^2*(2*a^2 - b^2 - c^2), b^2*c*(2*a^2 - b^2 - c^2)}, 
-     "Pelletier" -> {(-(b - c))*(-a + b + c), (c - a)*(a - b + c), 
-       (a - b)*(a - c + b)}, "1st Przybyowski-Bollin" -> 
-      {a*(Sqrt[3]*SA + S), Sqrt[3]*SB*b + (b + 2*Sqrt[SW + Sqrt[3]*S])*S, 
-       Sqrt[3]*SC*c + (c + 2*Sqrt[SW + Sqrt[3]*S])*S}, 
-     "2nd Przybyowski-Bollin" -> {a*(Sqrt[3]*SA + S), 
-       Sqrt[3]*b*SB + (b - 2*Sqrt[SW + Sqrt[3]*S])*S, 
-       Sqrt[3]*c*SC + (c - 2*Sqrt[SW + Sqrt[3]*S])*S}, 
-     "3rd Przybyowski-Bollin" -> {a*(Sqrt[3]*SA - S), 
-       Sqrt[3]*SB*b - (b + 2*Sqrt[SW - Sqrt[3]*S])*S, 
-       Sqrt[3]*SC*c - (c + 2*Sqrt[SW - Sqrt[3]*S])*S}, 
-     "4th Przybyowski-Bollin" -> {a*(Sqrt[3]*SA - S), 
-       Sqrt[3]*SB*b - (b - 2*Sqrt[SW - Sqrt[3]*S])*S, 
-       Sqrt[3]*SC*c - (c - 2*Sqrt[SW - Sqrt[3]*S])*S}, 
-     "reflection" -> {-1, (a^2 + b^2 - c^2)/(a*b), (a^2 - b^2 + c^2)/(a*c)}, 
-     "Roussel" -> {-a^2 - 2*(c*Cos[angleB/3] + b*Cos[angleC/3])*a + 
-        4*b*c*(4*Cos[angleA/3]^2 - 1)*Cos[angleB/3]*Cos[angleC/3], 
-       (a + 2*b*Cos[angleC/3])*(2*Cos[angleA/3]*c + b) + 
-        4*c*Cos[angleA/3]*Cos[angleB/3]*(2*Cos[angleA/3]*b + c), 
-       (a + 2*c*Cos[angleB/3])*(2*Cos[angleA/3]*b + c) + 
-        4*b*Cos[angleA/3]*Cos[angleC/3]*(2*Cos[angleA/3]*c + b)}, 
-     "1st Schiffler" -> {1/a, (a - c)/(a^2 - (b + 2*c)*a + c^2 - b^2), 
-       (a - b)/(a^2 - (c + 2*b)*a + b^2 - c^2)}, "2nd Schiffler" -> 
-      {-a^(-1), (a - c)/(a^2 + (b - 2*c)*a + c^2 - b^2), 
-       (a - b)/(a^2 + (c - 2*b)*a + b^2 - c^2)}, "Schr\[ODoubleDot]eter" -> 
-      {1/a, (a^2 - c^2)/(b*(b^2 - c^2)), (a^2 - b^2)/(c*(c^2 - b^2))}, 
-     "1st Sharygin" -> {-a^2 + b*c, a*b + c^2, a*c + b^2}, 
-     "2nd Sharygin" -> {-a^2 + b*c, a*b - c^2, a*c - b^2}, 
-     "Soddy" -> {-(a*(-a + b + c))^(-1), 1/(b*(a - b + c)), 
-       1/(c*(a + b - c))}, "inner-Soddy" -> 
-      {(a*(-a + b + c) + 2*S)/(a*(-a + b + c)), (b*(a + c - b) + S)/
-        (b*(a - b + c)), (c*(a + b - c) + S)/(c*(a - c + b))}, 
-     "outer-Soddy" -> {(a*(-a + b + c) - 2*S)/(a*(-a + b + c)), 
-       (b*(a + c - b) - S)/(b*(a - b + c)), (c*(a + b - c) - S)/
-        (c*(a - c + b))}, "inner-squares" -> {2*a, (a^2 + b^2 - c^2 + 2*S)/b, 
-       (a^2 + c^2 - b^2 + 2*S)/c}, "outer-squares" -> 
-      {2*a, (a^2 + b^2 - c^2 - 2*S)/b, (a^2 + c^2 - b^2 - 2*S)/c}, 
-     "Stammler" -> {Cos[angleA] - 2*Cos[(angleB - angleC)/3], 
-       Cos[angleB] + 2*Cos[angleB/3 + 2*(angleC/3)], 
-       Cos[angleC] + 2*Cos[2*(angleB/3) + angleC/3]}, 
-     "Steiner" -> {0, (-c)*(a^2 - b^2), b*(a^2 - c^2)}, 
-     "submedial" -> {2*a*b*c, (3*a^2 + b^2 - c^2)*c, (3*a^2 + c^2 - b^2)*b}, 
-     "symmedial" -> {0, 1/c, 1/b}, "1st Altintas-isodynamic" -> 
-      {-((S^2 + SB*SC)*Sqrt[3]*S + (SA + 3*SW)*S^2 - 2*(S^2 - SA*SW + SW^2)*
-           SA)/(a*(S^2 - Sqrt[3]*SA*S - 2*SA*SW)), SC/b, SB/c}, 
-     "2nd Altintas-isodynamic" -> 
-      {-((-(S^2 + SB*SC))*Sqrt[3]*S + (SA + 3*SW)*S^2 - 
-          2*(S^2 - SA*SW + SW^2)*SA)/(a*(S^2 + Sqrt[3]*SA*S - 2*SA*SW)), 
-       SC/b, SB/c}, "anti-1st Auriga" -> 
-      {-(Sqrt[r*R + 4*R^2]*a + (a + b + c)*(a*(b^2 + c^2) - 
-            (b + c)*(b - c)^2))/a, b*(a + b + c)*(a - b + c) - 
-        Sqrt[r*R + 4*R^2], c*(a + b + c)*(a + b - c) - Sqrt[r*R + 4*R^2]}, 
-     "anti-2nd Auriga" -> 
-      {-((-Sqrt[r*R + 4*R^2])*a + (a + b + c)*(a*(b^2 + c^2) - 
-            (b + c)*(b - c)^2))/a, b*(a + b + c)*(a - b + c) + 
-        Sqrt[r*R + 4*R^2], c*(a + b + c)*(a + b - c) + Sqrt[r*R + 4*R^2]}, 
-     "anti-1st Kenmotu-free-vertices" -> {(SA + S)*((SB + SC + 2*S)/a), 
-       (SB - S)*b, (SC - S)*c}, "anti-2nd Kenmotu-free-vertices" -> 
-      {(SA - S)*((SB + SC - 2*S)/a), (SB + S)*b, (SC + S)*c}, 
-     "anti-3rd tri-squares-central" -> {-(b^2 + c^2 + 3*S)/a, (b^2 + S)/b, 
-       (c^2 + S)/c}, "anti-4th tri-squares-central" -> 
-      {-(b^2 + c^2 - 3*S)/a, (b^2 - S)/b, (c^2 - S)/c}, 
-     "anti-inner-Yff" -> {(a^4 - 2*(b^2 + c^2)*a^2 - 2*(b + c)*b*c*a + 
-         (b^2 - c^2)^2)/(2*a^2*b*c), 1, 1}, "anti-outer-Yff" -> 
-      {(a^4 - 2*(b^2 + c^2)*a^2 + 2*(b + c)*b*c*a + (b^2 - c^2)^2)/
-        (2*a^2*b*c), -1, -1}, "1st Auriga" -> 
-      {(a^4 - (b + c)^2*a^2 - 4*(b + c)*S*Sqrt[r*R + 4*R^2])/a, 
-       (b^4 - b^2*(a + c)^2 + 4*b*S*Sqrt[r*R + 4*R^2])/b, 
-       (c^4 - c^2*(a + b)^2 + 4*c*S*Sqrt[r*R + 4*R^2])/c}, 
-     "2nd Auriga" -> {(a^4 - (b + c)^2*a^2 + 4*(b + c)*S*Sqrt[r*R + 4*R^2])/
-        a, (b^4 - b^2*(a + c)^2 - 4*b*S*Sqrt[r*R + 4*R^2])/b, 
-       (c^4 - c^2*(a + b)^2 - 4*c*S*Sqrt[r*R + 4*R^2])/c}, 
-     "1st Ehrmann circumscribing" -> {-(S^2 - Sqrt[3]*(SB - SC)*S - 3*SB*SC)/
-        a, (S + Sqrt[3]*SA)*((S + Sqrt[3]*SC)/b), (S - Sqrt[3]*SA)*
-        ((S - Sqrt[3]*SB)/c)}, "2nd Ehrmann circumscribing" -> 
-      {-(S^2 + Sqrt[3]*(SB - SC)*S - 3*SB*SC)/a, (S - Sqrt[3]*SA)*
-        ((S - Sqrt[3]*SC)/b), (S + Sqrt[3]*SA)*((S + Sqrt[3]*SB)/c)}, 
-     "1st Ehrmann inscribed" -> {0, (S - Sqrt[3]*SA)*c, (S + Sqrt[3]*SA)*b}, 
-     "2nd Ehrmann inscribed" -> {0, (S + Sqrt[3]*SA)*c, (S - Sqrt[3]*SA)*b}, 
-     "1st excosine" -> {(-S^2)*a, (S^2 - 2*SA*SB)*b, (S^2 - 2*SA*SC)*c}, 
-     "2nd excosine" -> {(-S^2)*SB*(SC/(SA*a)), (S^2 - 2*SA*SB)*b, 
-       (S^2 - 2*SA*SC)*c}, "1st Fermat-Dao equilateral" -> 
-      {(-a)*((Sqrt[3]*S*((-6*R^2 + 3*SA + 12*SW)*S^2 + 
-            (7*SA^2 + SB*SC + SW^2)*SW + 18*R^2*SB*SC) + 
-          (20*S^2 - 6*R^2*(3*SA - SW) + 19*SA^2 - SB*SC + 11*SW^2)*S^2 + 
-          3*(2*SA - SW)*SA*SW^2)/(Sqrt[3]*a^2 + 2*S)), 
-       (S + Sqrt[3]*SB)*(S^2 + Sqrt[3]*(6*R^2 - SW + SC)*S + SW*SC)*b, 
-       (S + Sqrt[3]*SC)*(S^2 + Sqrt[3]*(6*R^2 - SW + SB)*S + SB*SW)*c}, 
-     "2nd Fermat-Dao equilateral" -> 
-      {(-a)*(((-Sqrt[3])*S*((-6*R^2 + 3*SA + 12*SW)*S^2 + 
-            (7*SA^2 + SB*SC + SW^2)*SW + 18*R^2*SB*SC) + 
-          (20*S^2 - 6*R^2*(3*SA - SW) + 19*SA^2 - SB*SC + 11*SW^2)*S^2 + 
-          3*(2*SA - SW)*SA*SW^2)/(Sqrt[3]*a^2 - 2*S)), 
-       (-S + Sqrt[3]*SB)*(S^2 - Sqrt[3]*(6*R^2 - SW + SC)*S + SW*SC)*b, 
-       (-S + Sqrt[3]*SC)*(S^2 - Sqrt[3]*(6*R^2 - SW + SB)*S + SB*SW)*c}, 
-     "3rd Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(3*S^2 + SB*SC) + 5*(SB + SC)*S)/(a*(Sqrt[3]*SA + S)), 
-       (SC + Sqrt[3]*S)/b, (SB + Sqrt[3]*S)/c}, 
-     "4th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(3*S^2 + SB*SC) - 5*(SB + SC)*S)/(a*(Sqrt[3]*SA - S)), 
-       (SC - Sqrt[3]*S)/b, (SB - Sqrt[3]*S)/c}, 
-     "5th Fermat-Dao equilateral" -> 
-      {((7*SA + 4*SW)*S^2 + 3*SA^3 + 5*Sqrt[3]*(S^2 + SA^2)*S)/
-        (a*(Sqrt[3]*SA + S)^2), b*((Sqrt[3]*c^2 + 2*S)/(Sqrt[3]*SB + S)), 
-       c*((Sqrt[3]*b^2 + 2*S)/(Sqrt[3]*SC + S))}, 
-     "6th Fermat-Dao equilateral" -> 
-      {((7*SA + 4*SW)*S^2 + 3*SA^3 - 5*Sqrt[3]*(S^2 + SA^2)*S)/
-        (a*(Sqrt[3]*SA - S)^2), b*((Sqrt[3]*c^2 - 2*S)/(Sqrt[3]*SB - S)), 
-       c*((Sqrt[3]*b^2 - 2*S)/(Sqrt[3]*SC - S))}, 
-     "7th Fermat-Dao equilateral" -> 
-      {2*((Sqrt[3]*(SB + SC) + 2*S)/(a*(Sqrt[3]*SA + S))), 1/b, 1/c}, 
-     "8th Fermat-Dao equilateral" -> 
-      {2*((Sqrt[3]*(SB + SC) - 2*S)/(a*(Sqrt[3]*SA - S))), 1/b, 1/c}, 
-     "9th Fermat-Dao equilateral" -> 
-      {2*S*(((2*S^2 + SA^2 + SB*SC)*Sqrt[3] + (6*R^2 + SA + SW)*S)/
-         (a*(Sqrt[3]*SA + S)^2)), b, c}, "10th Fermat-Dao equilateral" -> 
-      {-2*S*(((2*S^2 + SA^2 + SB*SC)*Sqrt[3] - (6*R^2 + SA + SW)*S)/
-         (a*(Sqrt[3]*SA - S)^2)), b, c}, "11th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(S^2 + SB*SC) + (SB + SC)*S)/(a*(Sqrt[3]*SA - S)), SC/b, 
-       SB/c}, "12th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(S^2 + SB*SC) - (SB + SC)*S)/(a*(Sqrt[3]*SA + S)), SC/b, 
-       SB/c}, "13th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(2*S^2 + SA^2 + SB*SC) + (SA + SW)*S)/(a*(Sqrt[3]*SA - S)), 
-       b, c}, "14th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(2*S^2 + SA^2 + SB*SC) - (SA + SW)*S)/(a*(Sqrt[3]*SA + S)), 
-       b, c}, "15th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(3*S^2 + SB*SC) + 5*(SB + SC)*S)/(a*(SA - Sqrt[3]*S)), 
-       (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}, 
-     "16th Fermat-Dao equilateral" -> 
-      {(Sqrt[3]*(3*S^2 + SB*SC) - 5*(SB + SC)*S)/(a*(SA + Sqrt[3]*S)), 
-       (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
-     "VPH1" -> {((-b)*c + 4*R^2)/a, 2*R + c, 2*R + b}, 
-     "VPH2" -> {(8*R^3 - a*S)/a, (-c)*a + 4*R^2, (-b)*a + 4*R^2}, 
-     "VPH3" -> {((-b)*c + 4*R^2)/(4*R^2), (2*R + b)/b, (2*R + c)/c}, 
-     "VPH4" -> {(2*a*b*c + (b + c)*S)/S, (b*a + S)/b, (c*a + S)/c}, 
-     "VPH6" -> {(2*a*b*c + (b + c)*S)*(S/(2*b*c + S)), 
-       (c*a + S)*((2*b*a + S)/b), (b*a + S)*((2*c*a + S)/c)}, 
-     "VPH7" -> {(a^4 - 2*(b - c)^2*a^2 + (b^2 - c^2)^2)*
-        (S/(4*(2*b*c + S)*a^2)), c*a + S, b*a + S}, 
-     "VPH8" -> {((-a^4 + 2*(b^2 + 6*b*c + c^2)*a^2 + 8*(b + c)*S*a - 
-          (b^2 - c^2)^2)/4)*S*a, (b*a + S)/b, (c*a + S)/c}, 
-     "VPH9" -> {(2*a*b*c + (b + c)*S)/(2*b*c + S), -(b*a + S)/b, 
-       -(c*a + S)/c}, "VPH10" -> {(-a^8 + 4*(b^2 + c^2)*a^6 + 
-         32*(b + c)*S*a*b^2*c^2 - 2*(3*b^4 + 4*b^2*c^2 + 3*c^4)*a^4 + 
-         4*(b^6 + c^6 + (b^2 + 16*b*c + c^2)*b^2*c^2)*a^2 - (b^4 - c^4)^2)/
-        (4*a*S), (4*S*b*c + a^4 - 2*(b^2 + c^2)*a^2 + 8*b^2*c*a + 
-         (b^2 - c^2)^2)*c, (4*S*b*c + a^4 - 2*(b^2 + c^2)*a^2 + 8*b*c^2*a + 
-         (b^2 - c^2)^2)*b}, "VPH11" -> {0, 1/(b*((c + R)*b + 3*R*c + 4*R^2)), 
-       1/(c*((c + 3*R)*b + R*c + 4*R^2))}, 
-     "VPH12" -> {(-3*a^4 + 2*(3*b^2 + 2*b*c + 3*c^2)*a^2 + 8*(b + c)*S*a - 
-         3*(b^2 - c^2)^2)/(4*a*(b*c + 2*S)), -(b*a + S)/b, -(c*a + S)/c}, 
-     "VPH13" -> {(-3*a^4 + 2*(3*b^2 + 2*b*c + 3*c^2)*a^2 + 8*(b + c)*S*a - 
-         3*(b^2 - c^2)^2)/(4*S*a), -(b*a + S)/b, -(c*a + S)/c}, 
-     "VPH14" -> {(-3*a^4 + 2*(3*b^2 + 2*b*c + 3*c^2)*a^2 + 8*(b + c)*S*a - 
-         3*(b^2 - c^2)^2)*(S/(4*a*(b*c + 2*S))), (-(c*a + S))*
-        ((b*a + 2*S)/b), (-(b*a + S))*((c*a + 2*S)/c)}, 
-     "VPH15" -> {(-3*a^4 + 2*(3*b^2 + 2*b*c + 3*c^2)*a^2 + 8*(b + c)*S*a - 
-         3*(b^2 - c^2)^2)/(4*a*S^2), -(c*a + S)/(c*a + 2*S)/b, 
-       -(b*a + S)/(b*a + 2*S)/c}, "VPH16" -> {S/(a*(b*c + 2*S)), -b^(-1), 
-       -c^(-1)}, "VPH17" -> {(a^4 - 2*(b - c)^2*a^2 + (b^2 - c^2)^2)*
-        (S/(4*a^2*(b*c + 2*S))), (-c)*a - S, (-b)*a - S}, 
-     "VPH18" -> {(2*a*b*c + (b + c)*S)*(S/(b*c + 2*S)), 
-       (-(c*a + S))*((2*b*a + S)/b), (-(b*a + S))*((2*c*a + S)/c)}, 
-     "VPH19" -> {4*(S/a), -(8*(a + c)*S*b - 3*a^4 + 6*(b^2 + c^2)*a^2 + 
-          4*b^2*c*a - 3*(b^2 - c^2)^2)/(b*(b*a + S)), 
-       -(8*(a + b)*S*c - 3*a^4 + 6*(b^2 + c^2)*a^2 + 4*b*c^2*a - 
-          3*(b^2 - c^2)^2)/(c*(c*a + S))}, 
-     "VPH24" -> {0, 1/((c*a + S)*b), 1/((b*a + S)*c)}, 
-     "VPH25" -> {4*S^2*((b*c + S)/((b*c + 2*S)*a)), 
-       -(8*(a + c)*S*b - 3*a^4 + 6*(b^2 + c^2)*a^2 + 4*b^2*c*a - 
-          3*(b^2 - c^2)^2)/b, -(8*(a + b)*S*c - 3*a^4 + 6*(b^2 + c^2)*a^2 + 
-          4*b*c^2*a - 3*(b^2 - c^2)^2)/c}, 
-     "VPH30" -> {-(a + R)^(-1), 1/b, 1/c}, 
-     "VPH31" -> {(2*(2*c + 3*R)*b + 6*R*c + 8*R^2)/a, -2*R - c, -b - 2*R}, 
-     "1st half-diamonds" -> {-(Sqrt[3]*a^2 - 2*S)/a, (Sqrt[3]*SC + S)/b, 
-       (Sqrt[3]*SB + S)/c}, "2nd half-diamonds" -> {-(Sqrt[3]*a^2 + 2*S)/a, 
-       (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
-     "1st half-diamonds-central equilateral" -> {-(a^2 + 2*Sqrt[3]*S)/a, 
-       (SC - Sqrt[3]*S)/b, (SB - Sqrt[3]*S)/c}, 
-     "2nd half-diamonds-central equilateral" -> {-(a^2 - 2*Sqrt[3]*S)/a, 
-       (SC + Sqrt[3]*S)/b, (SB + Sqrt[3]*S)/c}, "1st half-squares" -> 
-      {-(a^2 + S)/a, SC/b, SB/c}, "2nd half-squares" -> 
-      {-(a^2 - S)/a, SC/b, SB/c}, "1st inner-Fermat-Dao-Nhi" -> 
-      {(7*S - 3*Sqrt[3]*a^2)/a, (-2*S + 3*Sqrt[3]*SC)/b, 
-       (-2*S + 3*Sqrt[3]*SB)/c}, "2nd inner-Fermat-Dao-Nhi" -> 
-      {(5*S - 3*Sqrt[3]*a^2)/a, (-4*S + 3*Sqrt[3]*SC)/b, 
-       (-4*S + 3*Sqrt[3]*SB)/c}, "3rd inner-Fermat-Dao-Nhi" -> 
-      {(-4*S - 3*Sqrt[3]*a^2)/a, (5*S + 3*Sqrt[3]*SC)/b, 
-       (5*S + 3*Sqrt[3]*SB)/c}, "4th inner-Fermat-Dao-Nhi" -> 
-      {(-8*S - 3*Sqrt[3]*a^2)/a, (S + 3*Sqrt[3]*SC)/b, (S + 3*Sqrt[3]*SB)/c}, 
-     "1st outer-Fermat-Dao-Nhi" -> {(-7*S - 3*Sqrt[3]*a^2)/a, 
-       (2*S + 3*Sqrt[3]*SC)/b, (2*S + 3*Sqrt[3]*SB)/c}, 
-     "2nd outer-Fermat-Dao-Nhi" -> {(-5*S - 3*Sqrt[3]*a^2)/a, 
-       (4*S + 3*Sqrt[3]*SC)/b, (4*S + 3*Sqrt[3]*SB)/c}, 
-     "3rd outer-Fermat-Dao-Nhi" -> {(4*S - 3*Sqrt[3]*a^2)/a, 
-       (-5*S + 3*Sqrt[3]*SC)/b, (-5*S + 3*Sqrt[3]*SB)/c}, 
-     "4th outer-Fermat-Dao-Nhi" -> {(8*S - 3*Sqrt[3]*a^2)/a, 
-       (-S + 3*Sqrt[3]*SC)/b, (-S + 3*Sqrt[3]*SB)/c}, 
-     "1st isodynamic-Dao equilateral" -> {(-(SB + SC))*((Sqrt[3]*SA + S)/a), 
-       (Sqrt[3]*(S^2 + SA*SC) + (SA + 3*SC)*S)/b, 
-       (Sqrt[3]*(S^2 + SA*SB) + (SA + 3*SB)*S)/c}, 
-     "2nd isodynamic-Dao equilateral" -> {(-(SB + SC))*((Sqrt[3]*SA - S)/a), 
-       (Sqrt[3]*(S^2 + SA*SC) - (SA + 3*SC)*S)/b, 
-       (Sqrt[3]*(S^2 + SA*SB) - (SA + 3*SB)*S)/c}, 
-     "3rd isodynamic-Dao equilateral" -> 
-      {(Sqrt[3]*(S^2 + SB*SC) + 2*(SB + SC)*S)/(a*SA), (Sqrt[3]*SC + S)/b, 
-       (Sqrt[3]*SB + S)/c}, "4th isodynamic-Dao equilateral" -> 
-      {(Sqrt[3]*(S^2 + SB*SC) - 2*(SB + SC)*S)/(a*SA), (Sqrt[3]*SC - S)/b, 
-       (Sqrt[3]*SB - S)/c}, "1st Jenkins" -> 
-      {-(2*(b + c)*a^4 + (3*b^2 + 4*b*c + 3*c^2)*a^3 - (b + c)*(b^2 + c^2)*
-           a^2 - (b^2 - c^2)^2*a + (b^2 - c^2)^2*(b + c))/a, 
-       ((2*b^2 + 2*b*c + c^2)*a^3 + (b + c)*(2*b^2 + c^2)*a^2 + 
-         (b^2 - c^2)*(2*b + c)*c*a + (b^2 - c^2)*(b + c)*c^2)/b, 
-       ((2*c^2 + 2*c*b + b^2)*a^3 + (c + b)*(2*c^2 + b^2)*a^2 + 
-         (c^2 - b^2)*(2*c + b)*b*a + (c^2 - b^2)*(c + b)*b^2)/c}, 
-     "2nd Jenkins" -> {(-(a + b + c))*(((b + c)*a + b^2 + c^2)/
-         (a*(a - b + c)*(a + b - c))), (a + c)/b, (a + b)/c}, 
-     "3rd Jenkins" -> {(a + b + c)*((2*(b + c)*a^4 + (3*b^2 + 4*b*c + 3*c^2)*
-           a^3 + (b + c)*(b^2 + 5*b*c + c^2)*a^2 + 3*(b^2 + b*c + c^2)*b*c*
-           a + (b + c)*b^2*c^2)/a), ((b + c)*a^3 + (2*b^2 + b*c + c^2)*a^2 + 
-         (b^2 + b*c + 3*c^2)*b*a + b^2*c*(b + c))*(a - b + c)*((a + c)/b), 
-       ((c + b)*a^3 + (2*c^2 + c*b + b^2)*a^2 + (c^2 + c*b + 3*b^2)*c*a + 
-         c^2*b*(c + b))*(a - c + b)*((a + b)/c)}, 
-     "K798e" -> {(-a)*b*c, (b*c*SC + 2*S^2)/b, (b*c*SB + 2*S^2)/c}, 
-     "K798i" -> {(-a)*b*c, (b*c*SC - 2*S^2)/b, (b*c*SB - 2*S^2)/c}, 
-     "1st Kenmotu free vertices" -> {-(4*S^2 - (SB + SC)*(SA - S))/a, 
-       (SB - S)*b, (SC - S)*c}, "2nd Kenmotu free vertices" -> 
-      {-(4*S^2 - (SB + SC)*(SA + S))/a, (SB + S)*b, (SC + S)*c}, 
-     "largest-circumscribed-equilateral" -> 
-      {(-6*Sqrt[3]*S*a^2 - 3*(a^2 + b^2 + c^2)*a^2 + 2*(b^2 - c^2)^2)/a, 
-       ((7*b^2 + 2*c^2)*a^2 - 3*b^4 + 5*b^2*c^2 - 2*c^4 + 
-         2*Sqrt[3]*S*(2*a^2 + b^2))/b, ((2*b^2 + 7*c^2)*a^2 - 3*c^4 + 
-         5*b^2*c^2 - 2*b^4 + 2*Sqrt[3]*S*(2*a^2 + c^2))/c}, 
-     "inner-Le Viet An" -> {(SW - Sqrt[3]*S)*a, (SB - SC)*b, (SC - SB)*c}, 
-     "outer-Le Viet An" -> {(SW + Sqrt[3]*S)*a, (SB - SC)*b, (SC - SB)*c}, 
-     "1st Lemoine-Dao equilateral" -> {(-(Sqrt[3]*SA + 2*S))*
-        ((SB + SC)/(a*SA)), (Sqrt[3]*SC - S)/b, (Sqrt[3]*SB - S)/c}, 
-     "2nd Lemoine-Dao equilateral" -> {(-(Sqrt[3]*SA - 2*S))*
-        ((SB + SC)/(a*SA)), (Sqrt[3]*SC + S)/b, (Sqrt[3]*SB + S)/c}, 
-     "Lucas antipodal" -> {Cos[angleB]*Cos[angleC] - Sin[angleA], 
-       -Cos[angleB], -Cos[angleC]}, "Lucas(-1) antipodal" -> 
-      {Cos[angleB]*Cos[angleC] + Sin[angleA], -Cos[angleB], -Cos[angleC]}, 
-     "Lucas antipodal tangents" -> {(2*SA + SB + SC + S)*SA*a, 
-       (S^2 + SB*SC + (2*SB + SA)*S)*b, (S^2 + SB*SC + (2*SC + SA)*S)*c}, 
-     "Lucas(-1) antipodal tangents" -> {(2*SA + SB + SC - S)*SA*a, 
-       (S^2 + SB*SC - (2*SB + SA)*S)*b, (S^2 + SB*SC - (2*SC + SA)*S)*c}, 
-     "Lucas Brocard" -> {(-a)*(a^2 - 2*S), b*(a^2 + c^2 - S), 
-       c*(a^2 + b^2 - S)}, "Lucas(-1) Brocard" -> {(-a)*(a^2 + 2*S), 
-       b*(a^2 + c^2 + S), c*(a^2 + b^2 + S)}, "Lucas central" -> 
-      {Cos[angleA] + 2*Sin[angleA], Cos[angleB], Cos[angleC]}, 
-     "Lucas(-1) central" -> {Cos[angleA] - 2*Sin[angleA], Cos[angleB], 
-       Cos[angleC]}, "Lucas homothetic" -> {-(b^2 + c^2 - a^2)^2/(4*a), 
-       b*(c^2 + S), c*(b^2 + S)}, "Lucas(-1) homothetic" -> 
-      {-(b^2 + c^2 - a^2)^2/(4*a), b*(c^2 - S), c*(b^2 - S)}, 
-     "Lucas inner" -> {2*Cos[angleA] + 3*(Sin[angleA]/2), 
-       2*Cos[angleB] + Sin[angleB], 2*Cos[angleC] + Sin[angleC]}, 
-     "Lucas(-1) inner" -> {2*Cos[angleA] - 3*(Sin[angleA]/2), 
-       2*Cos[angleB] - Sin[angleB], 2*Cos[angleC] - Sin[angleC]}, 
-     "Lucas inner tangential" -> {4*Cos[angleA] + Sin[angleA], 
-       4*Cos[angleB] + 3*Sin[angleB], 4*Cos[angleC] + 3*Sin[angleC]}, 
-     "Lucas(-1) inner tangential" -> {4*Cos[angleA] - Sin[angleA], 
-       4*Cos[angleB] - 3*Sin[angleB], 4*Cos[angleC] - 3*Sin[angleC]}, 
-     "Lucas reflection" -> {(-Cos[angleB])*Cos[angleC]*Sin[angleA]^2 + 
-        (Cos[angleB] + (1 + Sin[2*angleB])*Cos[angleA - angleC] + 
-          Sin[angleB])*(Cos[angleC] + (1 + Sin[2*angleC])*
-           Cos[angleA - angleB] + Sin[angleC]), Cos[angleB]*
-        (Cos[angleC]*Sin[angleA]*Sin[angleB] - 
-         (Cos[angleC] + (1 + Sin[2*angleC])*Cos[angleA - angleB] + 
-           Sin[angleC])*Sin[angleC]), Cos[angleC]*
-        (Cos[angleB]*Sin[angleA]*Sin[angleC] - 
-         (Cos[angleB] + (1 + Sin[2*angleB])*Cos[angleA - angleC] + 
-           Sin[angleB])*Sin[angleB])}, "Lucas(-1) reflection" -> 
-      {(-Cos[angleB])*Cos[angleC]*Sin[angleA]^2 + 
-        (Cos[angleB] + (1 - Sin[2*angleB])*Cos[angleA - angleC] - 
-          Sin[angleB])*(Cos[angleC] + (1 - Sin[2*angleC])*
-           Cos[angleA - angleB] - Sin[angleC]), Cos[angleB]*
-        (Cos[angleC]*Sin[angleA]*Sin[angleB] + 
-         (Cos[angleC] + (1 - Sin[2*angleC])*Cos[angleA - angleB] - 
-           Sin[angleC])*Sin[angleC]), Cos[angleC]*
-        (Cos[angleB]*Sin[angleA]*Sin[angleC] + 
-         (Cos[angleB] + (1 - Sin[2*angleB])*Cos[angleA - angleC] - 
-           Sin[angleB])*Sin[angleB])}, "Lucas secondary central" -> 
-      {Cos[angleA] - 2*Sin[angleA], Cos[angleB] + 4*Sin[angleB], 
-       Cos[angleC] + 4*Sin[angleC]}, "Lucas(-1) secondary central" -> 
-      {Cos[angleA] + 2*Sin[angleA], Cos[angleB] - 4*Sin[angleB], 
-       Cos[angleC] - 4*Sin[angleC]}, "Lucas 1st secondary tangents" -> 
-      {Cos[angleA] - 2*Sin[angleA], Cos[angleB] + 3*Sin[angleB], 
-       Cos[angleC] + 3*Sin[angleC]}, "Lucas(-1) 1st secondary tangents" -> 
-      {Cos[angleA] + 2*Sin[angleA], Cos[angleB] - 3*Sin[angleB], 
-       Cos[angleC] - 3*Sin[angleC]}, "Lucas 2nd secondary tangents" -> 
-      {Cos[angleA] + 6*Sin[angleA], Cos[angleB] - Sin[angleB], 
-       Cos[angleC] - Sin[angleC]}, "Lucas(-1) 2nd secondary tangents" -> 
-      {Cos[angleA] - 6*Sin[angleA], Cos[angleB] + Sin[angleB], 
-       Cos[angleC] + Sin[angleC]}, "Lucas tangents" -> 
-      {Cos[angleA], Cos[angleB] + Sin[angleB], Cos[angleC] + Sin[angleC]}, 
-     "Lucas(-1) tangents" -> {Cos[angleA], Cos[angleB] - Sin[angleB], 
-       Cos[angleC] - Sin[angleC]}, "1st Savin" -> {2/(-a + b + c), 1/b, 1/c}, 
-     "2nd Savin" -> {2/(3*a + b + c), 1/b, 1/c}, "2nd inner-Soddy" -> 
-      {((-a + b + c)*a + 2*S)/(a*(-a + b + c)), 1, 1}, 
-     "2nd outer-Soddy" -> {((-a + b + c)*a - 2*S)/(a*(-a + b + c)), 1, 1}, 
-     "1st tri-square" -> {2*(S/a), (a^2 + 3*b^2 - c^2 + 2*S)/b, 
-       (a^2 - b^2 + 3*c^2 + 2*S)/c}, "2nd tri-square" -> 
-      {-2*(S/a), (a^2 + 3*b^2 - c^2 - 2*S)/b, (a^2 - b^2 + 3*c^2 - 2*S)/c}, 
-     "3rd tri-square" -> {4*((a^2 + S)/(a*(b^2 + c^2 - a^2 + 2*S))), 1/b, 
-       1/c}, "4th tri-square" -> {4*((a^2 - S)/(a*(b^2 + c^2 - a^2 - 2*S))), 
-       1/b, 1/c}, "1st tri-square-central" -> {2*((3*a^2 + 4*S)/a), 
-       (3*b^2 + c^2 - a^2 + 2*S)/b, (b^2 + 3*c^2 - a^2 + 2*S)/c}, 
-     "2nd tri-square-central" -> {2*((3*a^2 - 4*S)/a), 
-       (3*b^2 + c^2 - a^2 - 2*S)/b, (b^2 + 3*c^2 - a^2 - 2*S)/c}, 
-     "3rd tri-square-central" -> {(a^2 + 2*S)/a, (b^2 + S)/b, (c^2 + S)/c}, 
-     "4th tri-square-central" -> {(a^2 - 2*S)/a, (b^2 - S)/b, (c^2 - S)/c}, 
-     "2nd inner-Vecten" -> {1/(a*SA), 1/(b*(SB - S)), 1/(c*(SC - S))}, 
-     "3rd inner-Vecten" -> {(3*S^2 + SB*SC - 2*S*SW)/(a*SA), (SC - S)/b, 
-       (SB - S)/c}, "2nd outer-Vecten triangle" -> {1/(a*SA), 1/(b*(SB + S)), 
-       1/(c*(SC + S))}, "3rd outer-Vecten" -> 
-      {(3*S^2 + SB*SC + 2*S*SW)/(a*SA), (SC + S)/b, (SB + S)/c}, 
-     "Vu-Dao-X(15)-isodynamic equilateral" -> 
-      {((S^2 + 3*SB*SC)*a^2 - 4*Sqrt[3]*S*SB*SC)/
-        (4*a*SA*(Sqrt[3]*a^2 - 2*S)), (Sqrt[3]*SC - S)/b, 
-       (Sqrt[3]*SB - S)/c}, "Vu-Dao-X(16)-isodynamic equilateral" -> 
-      {((S^2 + 3*SB*SC)*a^2 + 4*Sqrt[3]*S*SB*SC)/
-        (4*a*SA*(Sqrt[3]*a^2 + 2*S)), (Sqrt[3]*SC + S)/b, 
-       (Sqrt[3]*SB + S)/c}, "Maia" -> {0, (a^2 + 2*b^2 - c^2)*
-        (a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2), (a^2 - b^2 + 2*c^2)*
-        (a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4)}]
+KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" -> 
+      {1/2, -(b^2/(a^2 + b^2 - c^2)), -(c^2/(a^2 - b^2 + c^2))}, 
+     "1st Altintas-isodynamic" -> {(-(Sqrt[3]*S*(S^2 + SB*SC)) - 
+         S^2*(SA + 3*SW) + 2*SA*(S^2 - SA*SW + SW^2))/(S^2 - Sqrt[3]*S*SA - 
+         2*SA*SW), SC, SB}, "2nd Altintas-isodynamic" -> 
+      {(-(Sqrt[3]*S*(-S^2 - SB*SC)) - S^2*(SA + 3*SW) + 
+         2*SA*(S^2 - SA*SW + SW^2))/(S^2 + Sqrt[3]*S*SA - 2*SA*SW), SC, SB}, 
+     "Andromeda" -> {(a*(a^2 + 3*b^2 - 6*b*c + 3*c^2))/(3*a^2 + b^2 - 2*b*c + 
+         c^2), b, c}, "anti-Aquila" -> {2*a + b + c, b, c}, 
+     "anti-Ara" -> {(b^2 + c^2)/(-a^2 + b^2 + c^2), b^2/(a^2 - b^2 + c^2), 
+       c^2/(a^2 + b^2 - c^2)}, "anti-Artzt" -> {(-5*a^2 + b^2 + c^2)/2, 
+       2*a^2 + 2*b^2 - c^2, 2*a^2 - b^2 + 2*c^2}, 
+     "anti-Ascella" -> {a^2, -((b^2*(a^2 - b^2 + 3*c^2))/(a^2 - b^2 + c^2)), 
+       -((c^2*(a^2 + 3*b^2 - c^2))/(a^2 + b^2 - c^2))}, 
+     "anti-Atik" -> {(-a^6 + 3*a^4*b^2 - 3*a^2*b^4 + b^6 + 3*a^4*c^2 + 
+         6*a^2*b^2*c^2 - b^4*c^2 - 3*a^2*c^4 - b^2*c^4 + c^6)/
+        (-a^2 + b^2 + c^2)^2, a^2 - b^2 + c^2, a^2 + b^2 - c^2}, 
+     "1st anti-Auriga" -> {a^2*b^2 - b^4 + 2*a*b^2*c + a^2*c^2 + 2*a*b*c^2 + 
+        2*b^2*c^2 - c^4 + 4*a*Sqrt[R*(r + 4*R)]*S, 
+       b*(-(a^2*b) + b^3 - 2*a*b*c - b*c^2 + 4*Sqrt[R*(r + 4*R)]*S), 
+       c*(-(a^2*c) - 2*a*b*c - b^2*c + c^3 + 4*Sqrt[R*(r + 4*R)]*S)}, 
+     "2nd anti-Auriga" -> {-(a^2*b^2) + b^4 - 2*a*b^2*c - a^2*c^2 - 
+        2*a*b*c^2 - 2*b^2*c^2 + c^4 + 4*a*Sqrt[R*(r + 4*R)]*S, 
+       b*(a^2*b - b^3 + 2*a*b*c + b*c^2 + 4*Sqrt[R*(r + 4*R)]*S), 
+       c*(a^2*c + 2*a*b*c + b^2*c - c^3 + 4*Sqrt[R*(r + 4*R)]*S)}, 
+     "1st anti-Brocard" -> {a^4 - b^2*c^2, -(a^2*b^2) + c^4, b^4 - a^2*c^2}, 
+     "4th anti-Brocard" -> {(a^2*(a^2 + b^2 - 3*b*c + c^2)*
+         (a^2 + b^2 + 3*b*c + c^2))/(5*a^2 - b^2 - c^2), 
+       -(b^2*(a^2 + b^2 - 2*c^2)), -(c^2*(a^2 - 2*b^2 + c^2))}, 
+     "5th anti-Brocard" -> {(a^2 + b^2)*(a^2 + c^2), b^4, c^4}, 
+     "6th anti-Brocard" -> {a^2*(a^4 - b^2*c^2), -(a^2*b^4) + b^6 - 
+        a^2*b^2*c^2 - b^4*c^2 + a^2*c^4 + b^2*c^4, a^2*b^4 - a^2*b^2*c^2 + 
+        b^4*c^2 - a^2*c^4 - b^2*c^4 + c^6}, 
+     "2nd anti-circumperp-tangential" -> {(b + c)^2/(-a + b + c), 
+       b^2/(a - b + c), c^2/(a + b - c)}, "1st anti-circumperp" -> 
+      {a^2/(b^2 - c^2), -1, 1}, "anti-Conway" -> 
+      {(a^4*(-a^2 + b^2 + c^2))/(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4), 
+       b^2, c^2}, "2nd anti-Conway" -> 
+      {(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4)/(-a^2 + b^2 + c^2), b^2, 
+       c^2}, "anti-Ehrmann-mid" -> {-3*a^2*(-a^2 + b^2 + c^2), 
+       -2*a^4 + a^2*b^2 + b^4 + 4*a^2*c^2 + b^2*c^2 - 2*c^4, 
+       -2*a^4 + 4*a^2*b^2 - 2*b^4 + a^2*c^2 + b^2*c^2 + c^4}, 
+     "anti-Euler" -> {(3*a^4 - 4*a^2*b^2 + b^4 - 4*a^2*c^2 - 2*b^2*c^2 + c^4)/
+        (-a^2 + b^2 + c^2), a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
+     "3rd anti-Euler" -> {a^2*(-(a^2*b^2) + b^4 - a^2*c^2 - b^2*c^2 + c^4), 
+       b^2*(a^4 - a^2*b^2 + a^2*c^2 + b^2*c^2 - c^4), 
+       c^2*(a^4 + a^2*b^2 - b^4 - a^2*c^2 + b^2*c^2)}, 
+     "4th anti-Euler" -> {a^2*(-(a^6*b^2) + 3*a^4*b^4 - 3*a^2*b^6 + b^8 - 
+         a^6*c^2 + a^4*b^2*c^2 + 3*a^2*b^4*c^2 - 3*b^6*c^2 + 3*a^4*c^4 + 
+         3*a^2*b^2*c^4 + 4*b^4*c^4 - 3*a^2*c^6 - 3*b^2*c^6 + c^8), 
+       b^2*(a^8 - 3*a^6*b^2 + 3*a^4*b^4 - a^2*b^6 - a^6*c^2 + a^4*b^2*c^2 - 
+         a^2*b^4*c^2 + b^6*c^2 - 2*a^4*c^4 - a^2*b^2*c^4 - 3*b^4*c^4 + 
+         3*a^2*c^6 + 3*b^2*c^6 - c^8), c^2*(a^8 - a^6*b^2 - 2*a^4*b^4 + 
+         3*a^2*b^6 - b^8 - 3*a^6*c^2 + a^4*b^2*c^2 - a^2*b^4*c^2 + 
+         3*b^6*c^2 + 3*a^4*c^4 - a^2*b^2*c^4 - 3*b^4*c^4 - a^2*c^6 + 
+         b^2*c^6)}, "anti-excenters-reflections" -> 
+      {(-4*a^2)/(3*a^4 - 2*a^2*b^2 - b^4 - 2*a^2*c^2 + 2*b^2*c^2 - c^4), 
+       (a^2 - b^2 + c^2)^(-1), (a^2 + b^2 - c^2)^(-1)}, 
+     "2nd anti-extouch" -> {(4*a^2*S^2)/(-a^2 + b^2 + c^2), 
+       b^2*(a^2 - b^2 + c^2), c^2*(a^2 + b^2 - c^2)}, 
+     "anti-inner-Garcia" -> {a^2*(-a^2 + b^2 - b*c + c^2), 
+       b*(a^2*b - b^3 + b^2*c - a*c^2 + b*c^2 - c^3), 
+       c*(-(a*b^2) - b^3 + a^2*c + b^2*c + b*c^2 - c^3)}, 
+     "anti-inner-Grebe" -> {-a^2 + S, -b^2, -c^2}, "anti-outer-Grebe" -> 
+      {a^2 + S, b^2, c^2}, "anti-Honsberger" -> {a^4/(b^2 + c^2), -b^2, 
+       -c^2}, "anti-Hutson intouch" -> 
+      {a^2*(-a^4 + 2*a^2*b^2 - b^4 + 2*a^2*c^2 - 6*b^2*c^2 - c^4), 
+       b^2*(a^4 - 2*a^2*b^2 + b^4 + 2*a^2*c^2 + 2*b^2*c^2 - 3*c^4), 
+       c^2*(a^4 + 2*a^2*b^2 - 3*b^4 - 2*a^2*c^2 + 2*b^2*c^2 + c^4)}, 
+     "anti-incircle-circles" -> 
+      {-(a^2*(a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 - 6*b^2*c^2 + c^4)), 
+       b^2*(a^4 - 2*a^2*b^2 + b^4 - 4*a^2*c^2 - 4*b^2*c^2 + 3*c^4), 
+       c^2*(a^4 - 4*a^2*b^2 + 3*b^4 - 2*a^2*c^2 - 4*b^2*c^2 + c^4)}, 
+     "anti-inverse-in-incircle" -> {-a^2 - b^2 - c^2, a^2 + b^2 - c^2, 
+       a^2 - b^2 + c^2}, "1st anti-Kenmotu centers" -> 
+      {-b^2 - c^2 - 2*S, b^2, c^2}, "2nd anti-Kenmotu centers" -> 
+      {-b^2 - c^2 + 2*S, b^2, c^2}, "1st anti-Kenmotu-free-vertices" -> 
+      {-2*a^4 + 3*a^2*b^2 - b^4 + 3*a^2*c^2 + 2*b^2*c^2 - c^4 + 2*b^2*S + 
+        2*c^2*S, b^2*(a^2 - b^2 + c^2 - 2*S), c^2*(a^2 + b^2 - c^2 - 2*S)}, 
+     "2nd anti- Kenmotu-free-vertices" -> {2*a^4 - 3*a^2*b^2 + b^4 - 
+        3*a^2*c^2 - 2*b^2*c^2 + c^4 + 2*b^2*S + 2*c^2*S, 
+       -(b^2*(a^2 - b^2 + c^2 + 2*S)), -(c^2*(a^2 + b^2 - c^2 + 2*S))}, 
+     "anti-Lucas(+1) homothetic" -> 
+      {-1/2*(S*(-a^4 - (b^2 - c^2)^2 + 2*a^2*(b^2 + c^2) + 2*SA^2 + 
+          S*(2*SA + 2*SW))), (b^2*(-a^4 - (b^2 - c^2)^2 + 2*a^2*(b^2 + c^2) + 
+          2*SB^2 + S*(2*SB + 2*SW)))/2, 
+       (c^2*(-a^4 - (b^2 - c^2)^2 + 2*a^2*(b^2 + c^2) + 2*SC^2 + 
+          S*(2*SC + 2*SW)))/2}, "anti-Lucas(-1) homothetic" -> 
+      {(S*(-a^4 - (b^2 - c^2)^2 + 2*a^2*(b^2 + c^2) + 2*SA^2 + 
+          S*(-2*SA - 2*SW)))/2, (b^2*(-a^4 - (b^2 - c^2)^2 + 
+          2*a^2*(b^2 + c^2) + 2*SB^2 + S*(-2*SB - 2*SW)))/2, 
+       (c^2*(-a^4 - (b^2 - c^2)^2 + 2*a^2*(b^2 + c^2) + 2*SC^2 + 
+          S*(-2*SC - 2*SW)))/2}, "anti-Mandart-incircle" -> 
+      {a*(-a^2 + a*b + a*c - 2*b*c), b^2*(a - b + c), (a + b - c)*c^2}, 
+     "anti-McCay" -> {-5*a^4 + 2*a^2*b^2 - 2*b^4 + 2*a^2*c^2 + 5*b^2*c^2 - 
+        2*c^4, (2*a^2 - 3*a*b + 2*b^2 - c^2)*(2*a^2 + 3*a*b + 2*b^2 - c^2), 
+       (2*a^2 - b^2 - 3*a*c + 2*c^2)*(2*a^2 - b^2 + 3*a*c + 2*c^2)}, 
+     "6th anti-mixtilinear" -> {2*a^2, a^2 - b^2 + c^2, a^2 + b^2 - c^2}, 
+     "anti-orthocentroidal" -> {a^2*(a^2 - b^2 - b*c - c^2)*
+        (a^2 - b^2 + b*c - c^2), b^2*(a^4 - 2*a^2*b^2 + b^4 + a^2*c^2 + 
+         b^2*c^2 - 2*c^4), c^2*(a^4 + a^2*b^2 - 2*b^4 - 2*a^2*c^2 + b^2*c^2 + 
+         c^4)}, "1st anti-orthosymmedial" -> 
+      {(a^2*(a^8 - a^6*b^2 - a^4*b^4 + a^2*b^6 - a^6*c^2 - a^4*b^2*c^2 + 
+          a^2*b^4*c^2 + b^6*c^2 - a^4*c^4 + a^2*b^2*c^4 - 2*b^4*c^4 + 
+          a^2*c^6 + b^2*c^6))/(b^2 + c^2), b^2*(a^6 - a^4*b^2 - a^2*b^4 + 
+         b^6 + a^2*c^4 + b^2*c^4 - 2*c^6), c^2*(a^6 + a^2*b^4 - 2*b^6 - 
+         a^4*c^2 + b^4*c^2 - a^2*c^4 + c^6)}, "1st anti-Parry" -> 
+      {(a^4 - 2*a^2*b^2 + 3*b^4 - 2*a^2*c^2 - 6*b^2*c^2 + 3*c^4)/(b^2 - c^2), 
+       (b^2*(-a^2 - b^2 + 5*c^2))/(a^2 - c^2), (c^2*(a^2 - 5*b^2 + c^2))/
+        (a^2 - b^2)}, "2nd anti-Parry" -> 
+      {(a^8 - a^6*b^2 - a^4*b^4 + a^2*b^6 - a^6*c^2 + 3*a^4*b^2*c^2 - 
+         a^2*b^4*c^2 - 3*b^6*c^2 - a^4*c^4 - a^2*b^2*c^4 + 6*b^4*c^4 + 
+         a^2*c^6 - 3*b^2*c^6)/(2*a^2 - b^2 - c^2), 
+       -(b^2*(a^4 - 2*a^2*b^2 + b^4 + a^2*c^2 + b^2*c^2 - 2*c^4)), 
+       c^2*(-a^4 - a^2*b^2 + 2*b^4 + 2*a^2*c^2 - b^2*c^2 - c^4)}, 
+     "1st anti-Sharygin" -> {a^2/(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4), 
+       (c^2*(a^2 + b^2 - c^2))/((a^2 - b^2 + c^2)*(a^4 - a^2*b^2 - 
+          2*a^2*c^2 - b^2*c^2 + c^4)), (b^2*(a^2 - b^2 + c^2))/
+        ((a^2 + b^2 - c^2)*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2))}, 
+     "anti-tangential-midarc" -> {-(a^2/(-a + b + c)), 
+       (b*(a + c))/(a - b + c), ((a + b)*c)/(a + b - c)}, 
+     "3rd anti-tri-squares-central" -> {b^2 + c^2 + 3*S, -b^2 - S, -c^2 - S}, 
+     "4th anti-tri-squares-central" -> {b^2 + c^2 - 3*S, -b^2 + S, -c^2 + S}, 
+     "3rd anti-tri-squares" -> {(-S^2 + 3*SB*SC + S*(SB + SC))/(-S + SA), 
+       -S + 3*SC, -S + 3*SB}, "4th anti-tri-squares" -> 
+      {(-S^2 + 3*SB*SC - S*(SB + SC))/(S + SA), S + 3*SC, S + 3*SB}, 
+     "anti-Ursa minor" -> {-b^2 - c^2, a^2 - c^2, a^2 - b^2}, 
+     "anti-Wasat" -> {a^2*(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4), 
+       b^2*(-a^2 + c^2)*(a^2 - b^2 + c^2), (a^2 - b^2)*c^2*
+        (-a^2 - b^2 + c^2)}, "anti-X3-ABC reflections" -> 
+      {2*a^4 - 3*a^2*b^2 + b^4 - 3*a^2*c^2 - 2*b^2*c^2 + c^4, 
+       b^2*(-a^2 + b^2 - c^2), c^2*(-a^2 - b^2 + c^2)}, 
+     "anti-inner-Yff" -> {(-a^4 + 2*a^2*b^2 - b^4 + 2*a*b^2*c + 2*a^2*c^2 + 
+         2*a*b*c^2 + 2*b^2*c^2 - c^4)/(2*a*b*c), -b, -c}, 
+     "anti-outer-Yff" -> {(-a^4 + 2*a^2*b^2 - b^4 - 2*a*b^2*c + 2*a^2*c^2 - 
+         2*a*b*c^2 + 2*b^2*c^2 - c^4)/(2*a*b*c), b, c}, 
+     "AAOA" -> {(a^8 - 2*a^6*b^2 + 2*a^2*b^6 - b^8 - 2*a^6*c^2 + 
+         3*a^4*b^2*c^2 - 2*a^2*b^4*c^2 - 2*a^2*b^2*c^4 + 2*b^4*c^4 + 
+         2*a^2*c^6 - c^8)/(b*c), b*c*(a^4 - a^2*b^2 + b^4 - c^4), 
+       b*c*(a^4 - b^4 - a^2*c^2 + c^4)}, "anticomplementary" -> {-1, 1, 1}, 
+     "Antlia" -> {(a*(a^2 + 3*b^2 - 6*b*c + 3*c^2))/(3*a^2 + b^2 - 2*b*c + 
+         c^2), -b, -c}, "AOA" -> {-(a^6*b^2) + a^4*b^4 + a^2*b^6 - b^8 - 
+        a^6*c^2 - a^2*b^4*c^2 + a^4*c^4 - a^2*b^2*c^4 + 2*b^4*c^4 + a^2*c^6 - 
+        c^8, 2*a^8 - 3*a^6*b^2 - a^4*b^4 + 3*a^2*b^6 - b^8 - 4*a^6*c^2 + 
+        10*a^4*b^2*c^2 - 4*a^2*b^4*c^2 - 7*a^2*b^2*c^4 + 3*b^4*c^4 + 
+        4*a^2*c^6 - 2*c^8, 2*a^8 - 4*a^6*b^2 + 4*a^2*b^6 - 2*b^8 - 
+        3*a^6*c^2 + 10*a^4*b^2*c^2 - 7*a^2*b^4*c^2 - a^4*c^4 - 
+        4*a^2*b^2*c^4 + 3*b^4*c^4 + 3*a^2*c^6 - c^8}, 
+     "Apollonius" -> {-((a^2*(a*b + b^2 + a*c + c^2)^2)/(a + b + c)), 
+       b^2*(a + b - c)*(a + c)^2, (a + b)^2*c^2*(a - b + c)}, 
+     "Apus" -> {a^2/(a + b + c), -(b^2/(a + b - c)), -(c^2/(a - b + c))}, 
+     "Aquila" -> {a + 2*b + 2*c, -b, -c}, 
+     "Ara" -> {a^2*(a^2 + b^2 + c^2), -(b^2*(a^2 + b^2 - c^2)), 
+       -(c^2*(a^2 - b^2 + c^2))}, "Aries" -> 
+      {(a^4 + b^4 - 2*b^2*c^2 + c^4)/(2*(b^2 - c^2)), -b^2, c^2}, 
+     "Artzt" -> {(3*a^4 + b^4 - 2*b^2*c^2 + c^4)/2, -2*a^2*b^2 - a^2*c^2 - 
+        b^2*c^2 + c^4, -(a^2*b^2) + b^4 - 2*a^2*c^2 - b^2*c^2}, 
+     "Ascella" -> {2*a^2, a^2 - 2*a*b - b^2 - 2*a*c + c^2, 
+       a^2 - 2*a*b + b^2 - 2*a*c - c^2}, 
+     "Atik" -> {-(a^2*b) + 2*a*b^2 - b^3 - a^2*c - 3*b^2*c + 2*a*c^2 - 
+        3*b*c^2 - c^3, b*(a^2 - 2*a*b + b^2 + 2*a*c + 2*b*c - 3*c^2), 
+       c*(a^2 + 2*a*b - 3*b^2 - 2*a*c + 2*b*c + c^2)}, 
+     "1st Auriga" -> {a^4 - a^2*b^2 - 2*a^2*b*c - a^2*c^2 - 
+        4*b*Sqrt[R*(r + 4*R)]*S - 4*c*Sqrt[R*(r + 4*R)]*S, 
+       b*(-(a^2*b) + b^3 - 2*a*b*c - b*c^2 + 4*Sqrt[R*(r + 4*R)]*S), 
+       c*(-(a^2*c) - 2*a*b*c - b^2*c + c^3 + 4*Sqrt[R*(r + 4*R)]*S)}, 
+     "2nd Auriga" -> {a^4 - a^2*b^2 - 2*a^2*b*c - a^2*c^2 + 
+        4*b*Sqrt[R*(r + 4*R)]*S + 4*c*Sqrt[R*(r + 4*R)]*S, 
+       b*(-(a^2*b) + b^3 - 2*a*b*c - b*c^2 - 4*Sqrt[R*(r + 4*R)]*S), 
+       c*(-(a^2*c) - 2*a*b*c - b^2*c + c^3 - 4*Sqrt[R*(r + 4*R)]*S)}, 
+     "Ayme" -> {(b + c)*(a^2 + b^2 + 2*b*c + c^2), b*(-a^2 - b^2 + c^2), 
+       c*(-a^2 + b^2 - c^2)}, "Bankoff" -> 
+      {2*a^2*(-2*a^2 + Sqrt[3]*a^2 + 2*b^2 - Sqrt[3]*b^2 + 2*c^2 - 
+         Sqrt[3]*c^2 - 2*S), -(Sqrt[3]*a^4) + 4*a^2*b^2 - 4*b^4 + 
+        Sqrt[3]*b^4 + 2*Sqrt[3]*a^2*c^2 + 4*b^2*c^2 - Sqrt[3]*c^4 + 2*a^2*S + 
+        2*b^2*S - 2*c^2*S, -(Sqrt[3]*a^4) + 2*Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 
+        4*a^2*c^2 + 4*b^2*c^2 - 4*c^4 + Sqrt[3]*c^4 + 2*a^2*S - 2*b^2*S + 
+        2*c^2*S}, "BCE" -> {-a, b*(1 - 2*Sin[C/2]), c*(1 - 2*Sin[B/2])}, 
+     "BCE-incenters" -> {-a, b*(1 + 2*Sin[C/2]), c*(1 + 2*Sin[B/2])}, 
+     "BCI" -> {a, b*(1 + 2*Cos[C/2]), c*(1 + 2*Cos[B/2])}, 
+     "BCI-excenters" -> {a, b*(1 - 2*Cos[C/2]), c*(1 - 2*Cos[B/2])}, 
+     "Bevan antipodal" -> {-(a*(a + b - c)*(a - b + c)), 
+       b*(a + b - c)*(-a + b + c), c*(a - b + c)*(-a + b + c)}, 
+     "1st Brocard" -> {a^2, c^2, b^2}, "2nd Brocard" -> 
+      {-a^2 + b^2 + c^2, b^2, c^2}, "3rd Brocard" -> {1, b^2/c^2, c^2/b^2}, 
+     "4th Brocard" -> {a^2/(-a^2 + b^2 + c^2), 1, 1}, 
+     "5th Brocard" -> {a^2*b^2 + b^4 + a^2*c^2 + b^2*c^2 + c^4, -b^4, -c^4}, 
+     "6th Brocard" -> {a^2*b^2 + a^2*c^2 - b^2*c^2, -b^4 + b^2*c^2 + c^4, 
+       b^4 + b^2*c^2 - c^4}, "7th Brocard" -> {a^4 + b^4 - 2*b^2*c^2 + c^4, 
+       b^2*(a^2 - b^2 + c^2), c^2*(a^2 + b^2 - c^2)}, 
+     "8th Brocard" -> {-2*a^4, b^2*(a^2 - b^2 + c^2), c^2*(a^2 + b^2 - c^2)}, 
+     "9th Brocard" -> {-1/2*1/a^2, (a^2 - b^2 + c^2)^(-1), 
+       (a^2 + b^2 - c^2)^(-1)}, "10th Brocard" -> 
+      {-a^8 + (b^2 - c^2)^4 - 2*a^2*(b^2 - c^2)*(b^4 - c^4) + 
+        2*a^4*(b^4 + c^4), b^2*(a^6 - a^4*(b^2 - 3*c^2) - (b^2 - c^2)^3 + 
+         a^2*(b^4 - c^4)), c^2*(a^6 + (b^2 - c^2)^3 + a^4*(3*b^2 - c^2) - 
+         a^2*(b^4 - c^4))}, "1st Brocard-reflected" -> 
+      {-a^2, a^2 + b^2, a^2 + c^2}, "circummedial" -> 
+      {a^2/(b^2 + c^2), -1, -1}, "circumnormal" -> 
+      {a/(Cos[B/3]*Cos[C/3] + Sin[B/3]*Sin[C/3]), 
+       b/(-(Cos[B/3]*Cos[(2*C)/3]) + Sin[B/3]*Sin[(2*C)/3]), 
+       c/(-(Cos[(2*B)/3]*Cos[C/3]) + Sin[(2*B)/3]*Sin[C/3])}, 
+     "circumorthic" -> {a^2/(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4), 
+       -(a^2 - b^2 + c^2)^(-1), -(a^2 + b^2 - c^2)^(-1)}, 
+     "2nd circumperp tangential" -> {a*(a^2 + a*b + a*c + 2*b*c), 
+       -(b^2*(a + b - c)), -(c^2*(a - b + c))}, "1st circumperp" -> 
+      {a^2/(b - c), (b*(-b + c))/(b - c), c}, "2nd circumperp" -> 
+      {-(a^2/(b + c)), b, c}, "circumsymmedial" -> {-1/2*a^2, b^2, c^2}, 
+     "circumtangential" -> {-(a/(Cos[C/3]*Sin[B/3] - Cos[B/3]*Sin[C/3])), 
+       b/(Cos[(2*C)/3]*Sin[B/3] + Cos[B/3]*Sin[(2*C)/3]), 
+       -(c/(Cos[C/3]*Sin[(2*B)/3] + Cos[(2*B)/3]*Sin[C/3]))}, 
+     "inner-Conway" -> {a/(b - c), -1, 1}, "Conway" -> 
+      {(a*(-a - b - c))/(b + c), a + b - c, a - b + c}, 
+     "2nd Conway" -> {-a - b - c, a + b - c, a - b + c}, 
+     "3rd Conway" -> {-(a^2*(a + b + c)^2), a^3*b + 2*a^2*b^2 + a*b^3 + 
+        2*a^3*c + 2*b^3*c + a*b*c^2 - 2*a*c^3 - 2*b*c^3, 
+       2*a^3*b - 2*a*b^3 + a^3*c + a*b^2*c - 2*b^3*c + 2*a^2*c^2 + a*c^3 + 
+        2*b*c^3}, "4th Conway" -> {(a^3 + a^2*(-b - c) - 2*b*c*(b + c) + 
+         a*(-2*b^2 - 2*b*c - 2*c^2))/(a*(a + b + c)), b, c}, 
+     "5th Conway" -> {(a^2*b + a*b^2 + a^2*c + 2*b^2*c + a*c^2 + 2*b*c^2)/
+        ((b + c)*(a + b + c)), -b, -c}, 
+     "Dao" -> {0, b*(a + b)*c*(a - b + c)^2, b*(a + b - c)^2*c*(a + c)}, 
+     "Ehrmann-cross" -> {(b^2 - c^2)*(2*a^4 - a^2*b^2 - b^4 - a^2*c^2 + 
+         2*b^2*c^2 - c^4), (-a^2 + b^2 - c^2)*(a^2 - a*b + b^2 - c^2)*
+        (a^2 + a*b + b^2 - c^2), (a^2 + b^2 - c^2)*(a^2 - b^2 - a*c + c^2)*
+        (a^2 - b^2 + a*c + c^2)}, "Ehrmann-mid" -> 
+      {-2*a^4 + a^2*b^2 + b^4 + a^2*c^2 - 2*b^2*c^2 + c^4, 
+       2*a^4 - a^2*b^2 - b^4 - 4*a^2*c^2 - b^2*c^2 + 2*c^4, 
+       2*a^4 - 4*a^2*b^2 + 2*b^4 - a^2*c^2 - b^2*c^2 - c^4}, 
+     "Ehrmann-side" -> {-(a^2*(a^4 + a^2*b^2 - 2*b^4 + a^2*c^2 + 4*b^2*c^2 - 
+          2*c^4)), (a^2 - a*b + b^2 - c^2)*(a^2 + a*b + b^2 - c^2)*
+        (a^2 - b^2 + c^2), (a^2 + b^2 - c^2)*(a^2 - b^2 - a*c + c^2)*
+        (a^2 - b^2 + a*c + c^2)}, "Ehrmann-vertex" -> 
+      {(-a^6 + a^4*b^2 + a^2*b^4 - b^6 + a^4*c^2 + b^4*c^2 + a^2*c^4 + 
+         b^2*c^4 - c^6)/((a^2 - b^2 - b*c - c^2)*(a^2 - b^2 + b*c - c^2)), 
+       a^2 + b^2 - c^2, a^2 - b^2 + c^2}, "1st Ehrmann" -> 
+      {a^2*(-a^4 + b^4 - 4*b^2*c^2 + c^4), b^2*(a^4 - b^4 + 5*a^2*c^2 + 
+         3*b^2*c^2 - 2*c^4), c^2*(a^4 + 5*a^2*b^2 - 2*b^4 + 3*b^2*c^2 - 
+         c^4)}, "2nd Ehrmann" -> {(a^2*(a^2 - 2*b^2 - 2*c^2))/
+        (2*a^2 - b^2 - c^2), b^2, c^2}, "Euler" -> 
+      {2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(-(b^2 - c^2)^2 + 
+         a^2*(b^2 + c^2)), (a^2 + b^2 - c^2)^2*(a^2 - b^2 + c^2)*
+        (-a^2 + b^2 + c^2), (a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)^2*
+        (-a^2 + b^2 + c^2)}, "2nd Euler" -> 
+      {-2*a^2*(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4), 
+       (a^2 - b^2 + c^2)*(a^4 + b^4 - 2*a^2*c^2 - 2*b^2*c^2 + c^4), 
+       (a^2 + b^2 - c^2)*(a^4 - 2*a^2*b^2 + b^4 - 2*b^2*c^2 + c^4)}, 
+     "3rd Euler" -> {-(b - c)^2, a^2 + b*c - c^2, a^2 - b^2 + b*c}, 
+     "4th Euler" -> {-(b + c)^2, a^2 - b*c - c^2, a^2 - b^2 - b*c}, 
+     "5th Euler" -> {(-2*(b^2 + c^2))/(-a^2 + b^2 + c^2), -1, -1}, 
+     "excenters-midpoints" -> {2*a - b - c, -b, -c}, 
+     "excenters-reflections" -> {a*(-a + 3*b + 3*c), b*(-3*a + b + c), 
+       c*(-3*a + b + c)}, "excentral" -> {-a, b, c}, 
+     "1st excosine" -> {4*a^2*S^2, b^2*(-a^4 + 2*a^2*b^2 - b^4 - 2*a^2*c^2 - 
+         2*b^2*c^2 + 3*c^4), c^2*(-a^4 - 2*a^2*b^2 + 3*b^4 + 2*a^2*c^2 - 
+         2*b^2*c^2 - c^4)}, "2nd excosine" -> 
+      {(2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*S^2)/(-a^2 + b^2 + c^2), 
+       b^2*(-a^4 + 2*a^2*b^2 - b^4 - 2*a^2*c^2 - 2*b^2*c^2 + 3*c^4), 
+       c^2*(-a^4 - 2*a^2*b^2 + 3*b^4 + 2*a^2*c^2 - 2*b^2*c^2 - c^4)}, 
+     "extangents" -> {a^2*(a + b + c), b*(-a - c)*(a + b - c), 
+       (-a - b)*c*(a - b + c)}, "extouch" -> {0, (a + b - c)^(-1), 
+       (a - b + c)^(-1)}, "2nd extouch" -> {a*(-2*b - 2*c), a^2 + b^2 - c^2, 
+       a^2 - b^2 + c^2}, "3rd extouch" -> 
+      {(2*a*(a + b - c)*(a - b + c)*(b + c))/((-a + b + c)*(a + b + c)), 
+       -a^2 - b^2 + c^2, -a^2 + b^2 - c^2}, "4th extouch" -> 
+      {(2*a*(b + c)*(a + b + c))/(-a + b + c), -a^2 + b^2 - c^2, 
+       -a^2 - b^2 + c^2}, "5th extouch" -> {(2*a*(b + c))/(-a + b + c), 
+       (-a^2 - b^2 - 2*a*c - c^2)/(a - b + c), (-a^2 - 2*a*b - b^2 - c^2)/
+        (a + b - c)}, "inner-Fermat" -> {2*Sqrt[3]*a^2, 
+       -(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S, 
+       -(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S}, 
+     "outer-Fermat" -> {-2*Sqrt[3]*a^2, Sqrt[3]*a^2 + Sqrt[3]*b^2 - 
+        Sqrt[3]*c^2 + 2*S, Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S}, 
+     "1st Fermat-Dao" -> {(2*a^2*(6*a^8*b^4 - 12*a^6*b^6 + 3*a^4*b^8 + 
+          6*a^2*b^10 - 3*b^12 + 12*a^8*b^2*c^2 + 3*a^6*b^4*c^2 - 
+          111*a^4*b^6*c^2 + 84*a^2*b^8*c^2 + 6*a^8*c^4 + 3*a^6*b^2*c^4 - 
+          225*a^4*b^4*c^4 - 156*a^2*b^6*c^4 + 60*b^8*c^4 - 12*a^6*c^6 - 
+          111*a^4*b^2*c^6 - 156*a^2*b^4*c^6 - 114*b^6*c^6 + 3*a^4*c^8 + 
+          84*a^2*b^2*c^8 + 60*b^4*c^8 + 6*a^2*c^10 - 3*c^12 + 
+          4*Sqrt[3]*a^6*b^4*S - 16*Sqrt[3]*a^4*b^6*S + 14*Sqrt[3]*a^2*b^8*S - 
+          2*Sqrt[3]*b^10*S + 4*Sqrt[3]*a^6*b^2*c^2*S - 74*Sqrt[3]*a^4*b^4*c^2*
+           S - 16*Sqrt[3]*a^2*b^6*c^2*S + 30*Sqrt[3]*b^8*c^2*S + 
+          4*Sqrt[3]*a^6*c^4*S - 74*Sqrt[3]*a^4*b^2*c^4*S - 
+          194*Sqrt[3]*a^2*b^4*c^4*S - 34*Sqrt[3]*b^6*c^4*S - 
+          16*Sqrt[3]*a^4*c^6*S - 16*Sqrt[3]*a^2*b^2*c^6*S - 
+          34*Sqrt[3]*b^4*c^6*S + 14*Sqrt[3]*a^2*c^8*S + 30*Sqrt[3]*b^2*c^8*
+           S - 2*Sqrt[3]*c^10*S))/((Sqrt[3]*a^2 + 2*S)*
+         (Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S)*
+         (Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S)), 
+       (b^2*(-3*a^6*b^2 + 6*a^4*b^4 - 3*a^2*b^6 + 15*a^4*b^2*c^2 + 
+          15*a^2*b^4*c^2 + 3*a^4*c^4 + 3*b^4*c^4 - 6*a^2*c^6 - 6*b^2*c^6 + 
+          3*c^8 + 2*Sqrt[3]*a^4*b^2*S + 2*Sqrt[3]*a^2*b^4*S + 
+          4*Sqrt[3]*a^4*c^2*S + 16*Sqrt[3]*a^2*b^2*c^2*S + 
+          4*Sqrt[3]*b^4*c^2*S - 6*Sqrt[3]*a^2*c^4*S - 6*Sqrt[3]*b^2*c^4*S + 
+          2*Sqrt[3]*c^6*S))/(Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S), 
+       (c^2*(3*a^4*b^4 - 6*a^2*b^6 + 3*b^8 - 3*a^6*c^2 + 15*a^4*b^2*c^2 - 
+          6*b^6*c^2 + 6*a^4*c^4 + 15*a^2*b^2*c^4 + 3*b^4*c^4 - 3*a^2*c^6 + 
+          4*Sqrt[3]*a^4*b^2*S - 6*Sqrt[3]*a^2*b^4*S + 2*Sqrt[3]*b^6*S + 
+          2*Sqrt[3]*a^4*c^2*S + 16*Sqrt[3]*a^2*b^2*c^2*S - 
+          6*Sqrt[3]*b^4*c^2*S + 2*Sqrt[3]*a^2*c^4*S + 4*Sqrt[3]*b^2*c^4*S))/
+        (Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S)}, 
+     "2nd Fermat-Dao" -> {(2*a^2*(-6*a^8*b^4 + 12*a^6*b^6 - 3*a^4*b^8 - 
+          6*a^2*b^10 + 3*b^12 - 12*a^8*b^2*c^2 - 3*a^6*b^4*c^2 + 
+          111*a^4*b^6*c^2 - 84*a^2*b^8*c^2 - 6*a^8*c^4 - 3*a^6*b^2*c^4 + 
+          225*a^4*b^4*c^4 + 156*a^2*b^6*c^4 - 60*b^8*c^4 + 12*a^6*c^6 + 
+          111*a^4*b^2*c^6 + 156*a^2*b^4*c^6 + 114*b^6*c^6 - 3*a^4*c^8 - 
+          84*a^2*b^2*c^8 - 60*b^4*c^8 - 6*a^2*c^10 + 3*c^12 + 
+          4*Sqrt[3]*a^6*b^4*S - 16*Sqrt[3]*a^4*b^6*S + 14*Sqrt[3]*a^2*b^8*S - 
+          2*Sqrt[3]*b^10*S + 4*Sqrt[3]*a^6*b^2*c^2*S - 74*Sqrt[3]*a^4*b^4*c^2*
+           S - 16*Sqrt[3]*a^2*b^6*c^2*S + 30*Sqrt[3]*b^8*c^2*S + 
+          4*Sqrt[3]*a^6*c^4*S - 74*Sqrt[3]*a^4*b^2*c^4*S - 
+          194*Sqrt[3]*a^2*b^4*c^4*S - 34*Sqrt[3]*b^6*c^4*S - 
+          16*Sqrt[3]*a^4*c^6*S - 16*Sqrt[3]*a^2*b^2*c^6*S - 
+          34*Sqrt[3]*b^4*c^6*S + 14*Sqrt[3]*a^2*c^8*S + 30*Sqrt[3]*b^2*c^8*
+           S - 2*Sqrt[3]*c^10*S))/((-(Sqrt[3]*a^2) + 2*S)*
+         (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S)*
+         (-(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S)), 
+       (b^2*(3*a^6*b^2 - 6*a^4*b^4 + 3*a^2*b^6 - 15*a^4*b^2*c^2 - 
+          15*a^2*b^4*c^2 - 3*a^4*c^4 - 3*b^4*c^4 + 6*a^2*c^6 + 6*b^2*c^6 - 
+          3*c^8 + 2*Sqrt[3]*a^4*b^2*S + 2*Sqrt[3]*a^2*b^4*S + 
+          4*Sqrt[3]*a^4*c^2*S + 16*Sqrt[3]*a^2*b^2*c^2*S + 
+          4*Sqrt[3]*b^4*c^2*S - 6*Sqrt[3]*a^2*c^4*S - 6*Sqrt[3]*b^2*c^4*S + 
+          2*Sqrt[3]*c^6*S))/(-(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 
+         2*S), (c^2*(-3*a^4*b^4 + 6*a^2*b^6 - 3*b^8 + 3*a^6*c^2 - 
+          15*a^4*b^2*c^2 + 6*b^6*c^2 - 6*a^4*c^4 - 15*a^2*b^2*c^4 - 
+          3*b^4*c^4 + 3*a^2*c^6 + 4*Sqrt[3]*a^4*b^2*S - 6*Sqrt[3]*a^2*b^4*S + 
+          2*Sqrt[3]*b^6*S + 2*Sqrt[3]*a^4*c^2*S + 16*Sqrt[3]*a^2*b^2*c^2*S - 
+          6*Sqrt[3]*b^4*c^2*S + 2*Sqrt[3]*a^2*c^4*S + 4*Sqrt[3]*b^2*c^4*S))/
+        (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S)}, 
+     "3rd Fermat-Dao" -> {9*a^6 - 18*a^4*b^2 + 6*a^2*b^4 + 3*b^6 - 
+        18*a^4*c^2 - 30*a^2*b^2*c^2 - 3*b^4*c^2 + 6*a^2*c^4 - 3*b^2*c^4 + 
+        3*c^6 - 2*Sqrt[3]*a^4*S - 14*Sqrt[3]*a^2*b^2*S + 6*Sqrt[3]*b^4*S - 
+        14*Sqrt[3]*a^2*c^2*S - 12*Sqrt[3]*b^2*c^2*S + 6*Sqrt[3]*c^4*S, 
+       6*a^4*b^2 - 9*a^2*b^4 + 3*b^6 + 3*a^4*c^2 - 12*a^2*b^2*c^2 - 
+        6*b^4*c^2 - 6*a^2*c^4 + 3*c^6 + 4*Sqrt[3]*a^4*S - 
+        4*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S - 6*Sqrt[3]*a^2*c^2*S - 
+        6*Sqrt[3]*b^2*c^2*S + 2*Sqrt[3]*c^4*S, 3*a^4*b^2 - 6*a^2*b^4 + 
+        3*b^6 + 6*a^4*c^2 - 12*a^2*b^2*c^2 - 9*a^2*c^4 - 6*b^2*c^4 + 3*c^6 + 
+        4*Sqrt[3]*a^4*S - 6*Sqrt[3]*a^2*b^2*S + 2*Sqrt[3]*b^4*S - 
+        4*Sqrt[3]*a^2*c^2*S - 6*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S}, 
+     "4th Fermat-Dao" -> {-9*a^6 + 18*a^4*b^2 - 6*a^2*b^4 - 3*b^6 + 
+        18*a^4*c^2 + 30*a^2*b^2*c^2 + 3*b^4*c^2 - 6*a^2*c^4 + 3*b^2*c^4 - 
+        3*c^6 - 2*Sqrt[3]*a^4*S - 14*Sqrt[3]*a^2*b^2*S + 6*Sqrt[3]*b^4*S - 
+        14*Sqrt[3]*a^2*c^2*S - 12*Sqrt[3]*b^2*c^2*S + 6*Sqrt[3]*c^4*S, 
+       -6*a^4*b^2 + 9*a^2*b^4 - 3*b^6 - 3*a^4*c^2 + 12*a^2*b^2*c^2 + 
+        6*b^4*c^2 + 6*a^2*c^4 - 3*c^6 + 4*Sqrt[3]*a^4*S - 
+        4*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S - 6*Sqrt[3]*a^2*c^2*S - 
+        6*Sqrt[3]*b^2*c^2*S + 2*Sqrt[3]*c^4*S, -3*a^4*b^2 + 6*a^2*b^4 - 
+        3*b^6 - 6*a^4*c^2 + 12*a^2*b^2*c^2 + 9*a^2*c^4 + 6*b^2*c^4 - 3*c^6 + 
+        4*Sqrt[3]*a^4*S - 6*Sqrt[3]*a^2*b^2*S + 2*Sqrt[3]*b^4*S - 
+        4*Sqrt[3]*a^2*c^2*S - 6*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S}, 
+     "5th Fermat-Dao" -> {-1/9*(-2*Sqrt[3]*a^4*b^2 + 4*Sqrt[3]*a^2*b^4 - 
+          2*Sqrt[3]*b^6 - 2*Sqrt[3]*a^4*c^2 + 5*Sqrt[3]*a^2*b^2*c^2 + 
+          5*Sqrt[3]*b^4*c^2 + 4*Sqrt[3]*a^2*c^4 + 5*Sqrt[3]*b^2*c^4 - 
+          2*Sqrt[3]*c^6 + 30*b^2*c^2*S)/(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + 
+          Sqrt[3]*c^2 + 2*S), (b^2*(Sqrt[3]*a^4 - 2*Sqrt[3]*a^2*b^2 + 
+          Sqrt[3]*b^4 + Sqrt[3]*a^2*c^2 - 5*Sqrt[3]*b^2*c^2 - 2*Sqrt[3]*c^4 + 
+          6*a^2*S - 6*b^2*S - 12*c^2*S))/(9*(Sqrt[3]*a^2 - Sqrt[3]*b^2 + 
+          Sqrt[3]*c^2 + 2*S)), (c^2*(Sqrt[3]*a^4 + Sqrt[3]*a^2*b^2 - 
+          2*Sqrt[3]*b^4 - 2*Sqrt[3]*a^2*c^2 - 5*Sqrt[3]*b^2*c^2 + 
+          Sqrt[3]*c^4 + 6*a^2*S - 12*b^2*S - 6*c^2*S))/
+        (9*(Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S))}, 
+     "6th Fermat-Dao" -> {-1/9*(2*Sqrt[3]*a^4*b^2 - 4*Sqrt[3]*a^2*b^4 + 
+          2*Sqrt[3]*b^6 + 2*Sqrt[3]*a^4*c^2 - 5*Sqrt[3]*a^2*b^2*c^2 - 
+          5*Sqrt[3]*b^4*c^2 - 4*Sqrt[3]*a^2*c^4 - 5*Sqrt[3]*b^2*c^4 + 
+          2*Sqrt[3]*c^6 + 30*b^2*c^2*S)/(Sqrt[3]*a^2 - Sqrt[3]*b^2 - 
+          Sqrt[3]*c^2 + 2*S), (b^2*(-(Sqrt[3]*a^4) + 2*Sqrt[3]*a^2*b^2 - 
+          Sqrt[3]*b^4 - Sqrt[3]*a^2*c^2 + 5*Sqrt[3]*b^2*c^2 + 2*Sqrt[3]*c^4 + 
+          6*a^2*S - 6*b^2*S - 12*c^2*S))/(9*(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 - 
+          Sqrt[3]*c^2 + 2*S)), (c^2*(-(Sqrt[3]*a^4) - Sqrt[3]*a^2*b^2 + 
+          2*Sqrt[3]*b^4 + 2*Sqrt[3]*a^2*c^2 + 5*Sqrt[3]*b^2*c^2 - 
+          Sqrt[3]*c^4 + 6*a^2*S - 12*b^2*S - 6*c^2*S))/
+        (9*(-(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S))}, 
+     "7th Fermat-Dao" -> {(4*(Sqrt[3]*a^2 + 2*S))/(-(Sqrt[3]*a^2) + 
+         Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S), 1, 1}, "8th Fermat-Dao" -> 
+      {(4*(-(Sqrt[3]*a^2) + 2*S))/(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 
+         2*S), 1, 1}, "9th Fermat-Dao" -> 
+      {(2*(-(a^4*b^2) + 2*a^2*b^4 - b^6 - a^4*c^2 + 10*a^2*b^2*c^2 + 
+          b^4*c^2 + 2*a^2*c^4 + b^2*c^4 - c^6 + 2*Sqrt[3]*a^2*b^2*S - 
+          2*Sqrt[3]*b^4*S + 2*Sqrt[3]*a^2*c^2*S + 8*Sqrt[3]*b^2*c^2*S - 
+          2*Sqrt[3]*c^4*S))/(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 
+          2*S)^2, b^2, c^2}, "10th Fermat-Dao" -> 
+      {(-2*(a^4*b^2 - 2*a^2*b^4 + b^6 + a^4*c^2 - 10*a^2*b^2*c^2 - b^4*c^2 - 
+          2*a^2*c^4 - b^2*c^4 + c^6 + 2*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S + 
+          2*Sqrt[3]*a^2*c^2*S + 8*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S))/
+        (Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S)^2, b^2, c^2}, 
+     "11th Fermat-Dao" -> {3*a^6 - 9*a^4*b^2 + 3*a^2*b^4 + 3*b^6 - 
+        9*a^4*c^2 - 18*a^2*b^2*c^2 - 3*b^4*c^2 + 3*a^2*c^4 - 3*b^2*c^4 + 
+        3*c^6 - 2*Sqrt[3]*a^4*S - 8*Sqrt[3]*a^2*b^2*S + 6*Sqrt[3]*b^4*S - 
+        8*Sqrt[3]*a^2*c^2*S - 12*Sqrt[3]*b^2*c^2*S + 6*Sqrt[3]*c^4*S, 
+       Sqrt[3]*(a^2 + b^2 - c^2)*(Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 
+         Sqrt[3]*a^2*c^2 - Sqrt[3]*c^4 + 4*a^2*S - 2*b^2*S - 2*c^2*S), 
+       Sqrt[3]*(a^2 - b^2 + c^2)*(Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 
+         Sqrt[3]*a^2*c^2 - Sqrt[3]*c^4 + 4*a^2*S - 2*b^2*S - 2*c^2*S)}, 
+     "12th Fermat-Dao" -> {-3*a^6 + 9*a^4*b^2 - 3*a^2*b^4 - 3*b^6 + 
+        9*a^4*c^2 + 18*a^2*b^2*c^2 + 3*b^4*c^2 - 3*a^2*c^4 + 3*b^2*c^4 - 
+        3*c^6 - 2*Sqrt[3]*a^4*S - 8*Sqrt[3]*a^2*b^2*S + 6*Sqrt[3]*b^4*S - 
+        8*Sqrt[3]*a^2*c^2*S - 12*Sqrt[3]*b^2*c^2*S + 6*Sqrt[3]*c^4*S, 
+       Sqrt[3]*(a^2 + b^2 - c^2)*(-(Sqrt[3]*a^2*b^2) + Sqrt[3]*b^4 - 
+         Sqrt[3]*a^2*c^2 + Sqrt[3]*c^4 + 4*a^2*S - 2*b^2*S - 2*c^2*S), 
+       Sqrt[3]*(a^2 - b^2 + c^2)*(-(Sqrt[3]*a^2*b^2) + Sqrt[3]*b^4 - 
+         Sqrt[3]*a^2*c^2 + Sqrt[3]*c^4 + 4*a^2*S - 2*b^2*S - 2*c^2*S)}, 
+     "13th Fermat-Dao" -> {(-(Sqrt[3]*a^2*b^2) + Sqrt[3]*b^4 - 
+         Sqrt[3]*a^2*c^2 - 4*Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 - 2*b^2*S - 
+         2*c^2*S)/(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S), b^2, c^2}, 
+     "14th Fermat-Dao" -> {(Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + Sqrt[3]*a^2*c^2 + 
+         4*Sqrt[3]*b^2*c^2 - Sqrt[3]*c^4 - 2*b^2*S - 2*c^2*S)/
+        (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S), b^2, c^2}, 
+     "15th Fermat-Dao" -> {2*(6*a^8 + 3*a^6*b^2 - 30*a^4*b^4 + 24*a^2*b^6 - 
+         3*b^8 + 3*a^6*c^2 - 69*a^4*b^2*c^2 - 33*a^2*b^4*c^2 + 18*b^6*c^2 - 
+         30*a^4*c^4 - 33*a^2*b^2*c^4 - 30*b^4*c^4 + 24*a^2*c^6 + 18*b^2*c^6 - 
+         3*c^8 + 8*Sqrt[3]*a^6*S - 26*Sqrt[3]*a^4*b^2*S + 
+         2*Sqrt[3]*a^2*b^4*S + 6*Sqrt[3]*b^6*S - 26*Sqrt[3]*a^4*c^2*S - 
+         50*Sqrt[3]*a^2*b^2*c^2*S - 6*Sqrt[3]*b^4*c^2*S + 
+         2*Sqrt[3]*a^2*c^4*S - 6*Sqrt[3]*b^2*c^4*S + 6*Sqrt[3]*c^6*S), 
+       (-(Sqrt[3]*a^4) + 3*Sqrt[3]*a^2*b^2 - 2*Sqrt[3]*b^4 + 
+         3*Sqrt[3]*a^2*c^2 + 2*Sqrt[3]*b^2*c^2 - 2*Sqrt[3]*c^4 + 6*a^2*S)*
+        (2*Sqrt[3]*a^2*b^2 + Sqrt[3]*a^2*c^2 + Sqrt[3]*b^2*c^2 - 
+         Sqrt[3]*c^4 + 4*a^2*S + 4*b^2*S - 2*c^2*S), 
+       (-(Sqrt[3]*a^4) + 3*Sqrt[3]*a^2*b^2 - 2*Sqrt[3]*b^4 + 
+         3*Sqrt[3]*a^2*c^2 + 2*Sqrt[3]*b^2*c^2 - 2*Sqrt[3]*c^4 + 6*a^2*S)*
+        (Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 2*Sqrt[3]*a^2*c^2 + 
+         Sqrt[3]*b^2*c^2 + 4*a^2*S - 2*b^2*S + 4*c^2*S)}, 
+     "16th Fermat-Dao" -> {-2*(-6*a^8 - 3*a^6*b^2 + 30*a^4*b^4 - 24*a^2*b^6 + 
+         3*b^8 - 3*a^6*c^2 + 69*a^4*b^2*c^2 + 33*a^2*b^4*c^2 - 18*b^6*c^2 + 
+         30*a^4*c^4 + 33*a^2*b^2*c^4 + 30*b^4*c^4 - 24*a^2*c^6 - 18*b^2*c^6 + 
+         3*c^8 + 8*Sqrt[3]*a^6*S - 26*Sqrt[3]*a^4*b^2*S + 
+         2*Sqrt[3]*a^2*b^4*S + 6*Sqrt[3]*b^6*S - 26*Sqrt[3]*a^4*c^2*S - 
+         50*Sqrt[3]*a^2*b^2*c^2*S - 6*Sqrt[3]*b^4*c^2*S + 
+         2*Sqrt[3]*a^2*c^4*S - 6*Sqrt[3]*b^2*c^4*S + 6*Sqrt[3]*c^6*S), 
+       (Sqrt[3]*a^4 - 3*Sqrt[3]*a^2*b^2 + 2*Sqrt[3]*b^4 - 3*Sqrt[3]*a^2*c^2 - 
+         2*Sqrt[3]*b^2*c^2 + 2*Sqrt[3]*c^4 + 6*a^2*S)*(-2*Sqrt[3]*a^2*b^2 - 
+         Sqrt[3]*a^2*c^2 - Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 + 4*a^2*S + 
+         4*b^2*S - 2*c^2*S), (Sqrt[3]*a^4 - 3*Sqrt[3]*a^2*b^2 + 
+         2*Sqrt[3]*b^4 - 3*Sqrt[3]*a^2*c^2 - 2*Sqrt[3]*b^2*c^2 + 
+         2*Sqrt[3]*c^4 + 6*a^2*S)*(-(Sqrt[3]*a^2*b^2) + Sqrt[3]*b^4 - 
+         2*Sqrt[3]*a^2*c^2 - Sqrt[3]*b^2*c^2 + 4*a^2*S - 2*b^2*S + 4*c^2*S)}, 
+     "1st inner-Fermat-Dao-Nhi" -> {3*Sqrt[3]*a^2 - 7*S, 2*S - 3*Sqrt[3]*SC, 
+       2*S - 3*Sqrt[3]*SB}, "2nd inner-Fermat-Dao-Nhi" -> 
+      {3*Sqrt[3]*a^2 - 5*S, 4*S - 3*Sqrt[3]*SC, 4*S - 3*Sqrt[3]*SB}, 
+     "3rd inner-Fermat-Dao-Nhi" -> {-3*Sqrt[3]*a^2 - 4*S, 5*S + 3*Sqrt[3]*SC, 
+       5*S + 3*Sqrt[3]*SB}, "4th inner-Fermat-Dao-Nhi" -> 
+      {-3*Sqrt[3]*a^2 - 8*S, S + 3*Sqrt[3]*SC, S + 3*Sqrt[3]*SB}, 
+     "1st outer-Fermat-Dao-Nhi" -> {-3*Sqrt[3]*a^2 - 7*S, 2*S + 3*Sqrt[3]*SC, 
+       2*S + 3*Sqrt[3]*SB}, "2nd outer-Fermat-Dao-Nhi" -> 
+      {-3*Sqrt[3]*a^2 - 5*S, 4*S + 3*Sqrt[3]*SC, 4*S + 3*Sqrt[3]*SB}, 
+     "3rd outer-Fermat-Dao-Nhi" -> {3*Sqrt[3]*a^2 - 4*S, 5*S - 3*Sqrt[3]*SC, 
+       5*S - 3*Sqrt[3]*SB}, "4th outer-Fermat-Dao-Nhi" -> 
+      {3*Sqrt[3]*a^2 - 8*S, S - 3*Sqrt[3]*SC, S - 3*Sqrt[3]*SB}, 
+     "Feuerbach" -> {-((b - c)^2*(a + b + c)), (a + b - c)*(a + c)^2, 
+       (a + b)^2*(a - b + c)}, "Fuhrmann" -> {-a^2, a^2 - b*c - c^2, 
+       a^2 - b^2 - b*c}, "2nd Fuhrmann" -> {-a^2, a^2 + b*c - c^2, 
+       a^2 - b^2 + b*c}, "inner-Garcia" -> {a^2, -b^2 + a*c + c^2, 
+       a*b + b^2 - c^2}, "outer-Garcia" -> {-a, a + c, a + b}, 
+     "Garcia-Moses" -> {a, a + c, a + b}, "Garcia-reflection" -> 
+      {-a, a - c, a - b}, "Gossard" -> {(b - c)^2*(b + c)^2*
+        (-a^2 + b^2 + c^2)^2*(2*a^4 - a^2*b^2 - b^4 - a^2*c^2 + 2*b^2*c^2 - 
+         c^4), (a^4 + a^2*b^2 - 2*b^4 - 2*a^2*c^2 + b^2*c^2 + c^4)*
+        (a^8 - 3*a^6*b^2 + 2*a^4*b^4 + a^2*b^6 - b^8 + a^6*c^2 + 
+         3*a^4*b^2*c^2 - 5*a^2*b^4*c^2 + b^6*c^2 - 4*a^4*c^4 + 
+         3*a^2*b^2*c^4 + 2*b^4*c^4 + a^2*c^6 - 3*b^2*c^6 + c^8), 
+       (a^4 - 2*a^2*b^2 + b^4 + a^2*c^2 + b^2*c^2 - 2*c^4)*
+        (a^8 + a^6*b^2 - 4*a^4*b^4 + a^2*b^6 + b^8 - 3*a^6*c^2 + 
+         3*a^4*b^2*c^2 + 3*a^2*b^4*c^2 - 3*b^6*c^2 + 2*a^4*c^4 - 
+         5*a^2*b^2*c^4 + 2*b^4*c^4 + a^2*c^6 + b^2*c^6 - c^8)}, 
+     "inner-Grebe" -> {b^2 + c^2 - S, -b^2, -c^2}, 
+     "outer-Grebe" -> {b^2 + c^2 + S, -b^2, -c^2}, 
+     "1st half-diamonds-central" -> {Sqrt[3]*a^2 + 6*S, 3*S - Sqrt[3]*SC, 
+       3*S - Sqrt[3]*SB}, "2nd half-diamonds-central" -> 
+      {-(Sqrt[3]*a^2) + 6*S, 3*S + Sqrt[3]*SC, 3*S + Sqrt[3]*SB}, 
+     "1st half-diamonds" -> {-(Sqrt[3]*a^2) + 2*S, S + Sqrt[3]*SC, 
+       S + Sqrt[3]*SB}, "2nd half-diamonds" -> {-(Sqrt[3]*a^2) - 2*S, 
+       -S + Sqrt[3]*SC, -S + Sqrt[3]*SB}, "1st half-squares" -> 
+      {a^2 + S, -SC, -SB}, "2nd half-squares" -> {-a^2 + S, SC, SB}, 
+     "Hatzipolakis-Moses" -> {a^4*(-b^2 - c^2) - (b^2 - c^2)*(b^4 - c^4) + 
+        2*a^2*(b^4 - b^2*c^2 + c^4), b^2*(b^4 - a^2*(-a^2 + c^2) - 
+         b^2*(2*a^2 + c^2)), c^2*(a^2*(a^2 - b^2) - (2*a^2 + b^2)*c^2 + 
+         c^4)}, "1st Hatzipolakis" -> {a^2*(a - b - c), 
+       -((a^2 + b^2 - c^2)^2/(a - b + c)), 
+       -((a^2 - b^2 + c^2)^2/(a + b - c))}, "2nd Hatzipolakis" -> 
+      {0, 1/((a - b + c)^2*(a^2 - b^2 + c^2)), 
+       1/((a + b - c)^2*(a^2 + b^2 - c^2))}, "3rd Hatzipolakis" -> 
+      {a^4*(b^2 + c^2) + (b^2 - c^2)*(b^4 - c^4) - 
+        2*a^2*(b^4 - 3*b^2*c^2 + c^4), b^2*(-b^4 + a^2*(-a^2 + c^2) + 
+         b^2*(2*a^2 + c^2)), c^2*(-(a^2*(a^2 - b^2)) + (2*a^2 + b^2)*c^2 - 
+         c^4)}, "hexyl" -> {a*(a^3 - a^2*b - a*b^2 + b^3 - a^2*c - 2*a*b*c - 
+         b^2*c - a*c^2 - b*c^2 + c^3), b*(a^3 - a^2*b - a*b^2 + b^3 + a^2*c + 
+         2*a*b*c + b^2*c - a*c^2 - b*c^2 - c^3), 
+       c*(a^3 + a^2*b - a*b^2 - b^3 - a^2*c + 2*a*b*c - b^2*c - a*c^2 + 
+         b*c^2 + c^3)}, "Honsberger" -> 
+      {-(a/(a*b - b^2 + a*c + 2*b*c - c^2)), (a - b + c)^(-1), 
+       (a + b - c)^(-1)}, "Hung-Feuerbach" -> 
+      {-((a + b - c)*(a - b + c)*(b + c)^2*(a^2 + b^2 + a*c - b*c)*
+         (a^2 + a*b - b*c + c^2)*(a^2 + b^2 + 2*b*c + c^2)), 
+       (a + c)*(a^2 + b^2 - a*c + b*c)*(a^2 + a*b + b*c + c^2)*
+        (a^5 - a*b^4 + a^4*c + 3*b^4*c + 2*a*b^2*c^2 - 2*b^2*c^3 - a*c^4 - 
+         c^5), (a + b)*(a^2 + b^2 + a*c + b*c)*(a^2 - a*b + b*c + c^2)*
+        (a^5 + a^4*b - a*b^4 - b^5 + 2*a*b^2*c^2 - 2*b^3*c^2 - a*c^4 + 
+         3*b*c^4)}, "Hutson extouch" -> {(-4*a^2)/(a + b + c), a + b - c, 
+       a - b + c}, "inner-Hutson" -> 
+      {a*(a^2*Sin[A/2] - 2*a*b*Sin[A/2] + b^2*Sin[A/2] - 2*a*c*Sin[A/2] - 
+         2*b*c*Sin[A/2] + c^2*Sin[A/2] + a^2*Sin[B/2] - 2*a*b*Sin[B/2] + 
+         b^2*Sin[B/2] + 2*a*c*Sin[B/2] - 2*b*c*Sin[B/2] + c^2*Sin[B/2] + 
+         a^2*Sin[C/2] + 2*a*b*Sin[C/2] + b^2*Sin[C/2] - 2*a*c*Sin[C/2] - 
+         2*b*c*Sin[C/2] + c^2*Sin[C/2]), a^2*b*Sin[A/2] - 2*a*b^2*Sin[A/2] + 
+        b^3*Sin[A/2] + 2*a*b*c*Sin[A/2] + 2*b^2*c*Sin[A/2] - 
+        3*b*c^2*Sin[A/2] - a^3*Sin[B/2] + 2*a^2*b*Sin[B/2] - a*b^2*Sin[B/2] - 
+        a^2*c*Sin[B/2] + b^2*c*Sin[B/2] + a*c^2*Sin[B/2] - 2*b*c^2*Sin[B/2] + 
+        c^3*Sin[B/2] - a^2*b*Sin[C/2] - 2*a*b^2*Sin[C/2] - b^3*Sin[C/2] + 
+        2*a*b*c*Sin[C/2] + 2*b^2*c*Sin[C/2] - b*c^2*Sin[C/2], 
+       a^2*c*Sin[A/2] + 2*a*b*c*Sin[A/2] - 3*b^2*c*Sin[A/2] - 
+        2*a*c^2*Sin[A/2] + 2*b*c^2*Sin[A/2] + c^3*Sin[A/2] - a^2*c*Sin[B/2] + 
+        2*a*b*c*Sin[B/2] - b^2*c*Sin[B/2] - 2*a*c^2*Sin[B/2] + 
+        2*b*c^2*Sin[B/2] - c^3*Sin[B/2] - a^3*Sin[C/2] - a^2*b*Sin[C/2] + 
+        a*b^2*Sin[C/2] + b^3*Sin[C/2] + 2*a^2*c*Sin[C/2] - 2*b^2*c*Sin[C/2] - 
+        a*c^2*Sin[C/2] + b*c^2*Sin[C/2]}, "Hutson intouch" -> 
+      {(-4*a^2)/(-a + b + c), -a + b - c, -a - b + c}, 
+     "outer-Hutson" -> {a*(a^2*Sin[A/2] - 2*a*b*Sin[A/2] + b^2*Sin[A/2] - 
+         2*a*c*Sin[A/2] - 2*b*c*Sin[A/2] + c^2*Sin[A/2] - a^2*Sin[B/2] + 
+         2*a*b*Sin[B/2] - b^2*Sin[B/2] - 2*a*c*Sin[B/2] + 2*b*c*Sin[B/2] - 
+         c^2*Sin[B/2] - a^2*Sin[C/2] - 2*a*b*Sin[C/2] - b^2*Sin[C/2] + 
+         2*a*c*Sin[C/2] + 2*b*c*Sin[C/2] - c^2*Sin[C/2]), 
+       a^2*b*Sin[A/2] - 2*a*b^2*Sin[A/2] + b^3*Sin[A/2] + 2*a*b*c*Sin[A/2] + 
+        2*b^2*c*Sin[A/2] - 3*b*c^2*Sin[A/2] + a^3*Sin[B/2] - 
+        2*a^2*b*Sin[B/2] + a*b^2*Sin[B/2] + a^2*c*Sin[B/2] - b^2*c*Sin[B/2] - 
+        a*c^2*Sin[B/2] + 2*b*c^2*Sin[B/2] - c^3*Sin[B/2] + a^2*b*Sin[C/2] + 
+        2*a*b^2*Sin[C/2] + b^3*Sin[C/2] - 2*a*b*c*Sin[C/2] - 
+        2*b^2*c*Sin[C/2] + b*c^2*Sin[C/2], a^2*c*Sin[A/2] + 
+        2*a*b*c*Sin[A/2] - 3*b^2*c*Sin[A/2] - 2*a*c^2*Sin[A/2] + 
+        2*b*c^2*Sin[A/2] + c^3*Sin[A/2] + a^2*c*Sin[B/2] - 2*a*b*c*Sin[B/2] + 
+        b^2*c*Sin[B/2] + 2*a*c^2*Sin[B/2] - 2*b*c^2*Sin[B/2] + c^3*Sin[B/2] + 
+        a^3*Sin[C/2] + a^2*b*Sin[C/2] - a*b^2*Sin[C/2] - b^3*Sin[C/2] - 
+        2*a^2*c*Sin[C/2] + 2*b^2*c*Sin[C/2] + a*c^2*Sin[C/2] - 
+        b*c^2*Sin[C/2]}, "1st Hyacinth" -> 
+      {2*a^4*(-a^2 + b^2 + c^2)*(a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 - 
+         b^2*c^2 + c^4), a^10 - 3*a^8*b^2 + 4*a^6*b^4 - 4*a^4*b^6 + 
+        3*a^2*b^8 - b^10 - 3*a^8*c^2 + 5*a^6*b^2*c^2 - 3*a^4*b^4*c^2 - 
+        3*a^2*b^6*c^2 + 4*b^8*c^2 + 2*a^6*c^4 - 5*a^4*b^2*c^4 - 
+        4*a^2*b^4*c^4 - 7*b^6*c^4 + 2*a^4*c^6 + 7*a^2*b^2*c^6 + 7*b^4*c^6 - 
+        3*a^2*c^8 - 4*b^2*c^8 + c^10, a^10 - 3*a^8*b^2 + 2*a^6*b^4 + 
+        2*a^4*b^6 - 3*a^2*b^8 + b^10 - 3*a^8*c^2 + 5*a^6*b^2*c^2 - 
+        5*a^4*b^4*c^2 + 7*a^2*b^6*c^2 - 4*b^8*c^2 + 4*a^6*c^4 - 
+        3*a^4*b^2*c^4 - 4*a^2*b^4*c^4 + 7*b^6*c^4 - 4*a^4*c^6 - 
+        3*a^2*b^2*c^6 - 7*b^4*c^6 + 3*a^2*c^8 + 4*b^2*c^8 - c^10}, 
+     "2nd Hyacinth" -> {(a^4*b^2 - 2*a^2*b^4 + b^6 + a^4*c^2 + 
+         4*a^2*b^2*c^2 - b^4*c^2 - 2*a^2*c^4 - b^2*c^4 + c^6)/
+        (-a^2 + b^2 + c^2), b^2*(a^2 - b^2 + c^2), c^2*(a^2 + b^2 - c^2)}, 
+     "incentral" -> {0, b, c}, "incircle-circles" -> 
+      {2*a^2, a^2 + 4*a*b + b^2 - c^2, a^2 - b^2 + 4*a*c + c^2}, 
+     "infinite-altitude" -> {-2*a^2, a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
+     "intangents" -> {a^2*(a - b - c), b*(a - c)*(a - b + c), 
+       (a - b)*(a + b - c)*c}, "intouch" -> {0, (a - b + c)^(-1), 
+       (a + b - c)^(-1)}, "inverse-in-Conway" -> 
+      {(a*b^2 + a*b*c + b^2*c + a*c^2 + b*c^2)/(a*(b + c)), -b, -c}, 
+     "inverse-in-excircles" -> {(-(a*b) - b^2 - a*c + 2*b*c - c^2)/
+        (a + b + c), b, c}, "inverse-in-incircle" -> 
+      {(-(a*b) + b^2 - a*c - 2*b*c + c^2)/(-a + b + c), -b, -c}, 
+     "1st isodynamic-Dao" -> {a^2*(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 - 
+         2*S), -(Sqrt[3]*a^4) + Sqrt[3]*a^2*b^2 + 2*Sqrt[3]*a^2*c^2 + 
+        Sqrt[3]*b^2*c^2 - Sqrt[3]*c^4 + 2*a^2*S + 4*b^2*S - 2*c^2*S, 
+       -(Sqrt[3]*a^4) + 2*Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + Sqrt[3]*a^2*c^2 + 
+        Sqrt[3]*b^2*c^2 + 2*a^2*S - 2*b^2*S + 4*c^2*S}, 
+     "2nd isodynamic-Dao" -> {a^2*(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + 
+         Sqrt[3]*c^2 - 2*S), Sqrt[3]*a^4 - Sqrt[3]*a^2*b^2 - 
+        2*Sqrt[3]*a^2*c^2 - Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 + 2*a^2*S + 
+        4*b^2*S - 2*c^2*S, Sqrt[3]*a^4 - 2*Sqrt[3]*a^2*b^2 + Sqrt[3]*b^4 - 
+        Sqrt[3]*a^2*c^2 - Sqrt[3]*b^2*c^2 + 2*a^2*S - 2*b^2*S + 4*c^2*S}, 
+     "3rd isodynamic-Dao" -> {(-2*(Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 
+          Sqrt[3]*a^2*c^2 + 2*Sqrt[3]*b^2*c^2 - Sqrt[3]*c^4 + 4*a^2*S))/
+        (-a^2 + b^2 + c^2), -(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S, 
+       -(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 - 2*S}, 
+     "4th isodynamic-Dao" -> {(-2*(-(Sqrt[3]*a^2*b^2) + Sqrt[3]*b^4 - 
+          Sqrt[3]*a^2*c^2 - 2*Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 + 4*a^2*S))/
+        (-a^2 + b^2 + c^2), Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 - 2*S, 
+       Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S}, 
+     "Jenkins-contact" -> {-((b + c)^2/(a + b + c)), c^2/(a + b - c), 
+       b^2/(a - b + c)}, "Jenkins-tangential" -> 
+      {(b*c*(-3*a^3*b - 2*a^2*b^2 + a*b^3 - 3*a^3*c - 3*a^2*b*c + a*b^2*c + 
+          b^3*c - 2*a^2*c^2 + a*b*c^2 + 2*b^2*c^2 + a*c^3 + b*c^3))/a, 
+       (a + c)*(a^3*b + 2*a^2*b^2 + a*b^3 + a^3*c - a^2*b*c - a*b^2*c + 
+         b^3*c - a*b*c^2 - a*c^3 - b*c^3), (a + b)*(a^3*b - a*b^3 + a^3*c - 
+         a^2*b*c - a*b^2*c - b^3*c + 2*a^2*c^2 - a*b*c^2 + a*c^3 + b*c^3)}, 
+     "1st Jenkins" -> {-2*a^4*b - 3*a^3*b^2 + a^2*b^3 + a*b^4 - b^5 - 
+        2*a^4*c - 4*a^3*b*c + a^2*b^2*c - b^4*c - 3*a^3*c^2 + a^2*b*c^2 - 
+        2*a*b^2*c^2 + 2*b^3*c^2 + a^2*c^3 + 2*b^2*c^3 + a*c^4 - b*c^4 - c^5, 
+       2*a^3*b^2 + 2*a^2*b^3 + 2*a^3*b*c + 2*a^2*b^2*c + 2*a*b^3*c + 
+        a^3*c^2 + a^2*b*c^2 + a*b^2*c^2 + b^3*c^2 + a^2*c^3 - 2*a*b*c^3 + 
+        b^2*c^3 - a*c^4 - b*c^4 - c^5, a^3*b^2 + a^2*b^3 - a*b^4 - b^5 + 
+        2*a^3*b*c + a^2*b^2*c - 2*a*b^3*c - b^4*c + 2*a^3*c^2 + 2*a^2*b*c^2 + 
+        a*b^2*c^2 + b^3*c^2 + 2*a^2*c^3 + 2*a*b*c^3 + b^2*c^3}, 
+     "2nd Jenkins" -> {((-a - b - c)*(a*b + b^2 + a*c + c^2))/
+        ((a + b - c)*(a - b + c)), a + c, a + b}, 
+     "3rd Jenkins" -> {(a + b + c)*(2*a^4*b + 3*a^3*b^2 + a^2*b^3 + 2*a^4*c + 
+         4*a^3*b*c + 6*a^2*b^2*c + 3*a*b^3*c + 3*a^3*c^2 + 6*a^2*b*c^2 + 
+         3*a*b^2*c^2 + b^3*c^2 + a^2*c^3 + 3*a*b*c^3 + b^2*c^3), 
+       (a + c)*(a - b + c)*(a^3*b + 2*a^2*b^2 + a*b^3 + a^3*c + a^2*b*c + 
+         a*b^2*c + b^3*c + a^2*c^2 + 3*a*b*c^2 + b^2*c^2), 
+       (a + b)*(a + b - c)*(a^3*b + a^2*b^2 + a^3*c + a^2*b*c + 3*a*b^2*c + 
+         2*a^2*c^2 + a*b*c^2 + b^2*c^2 + a*c^3 + b*c^3)}, 
+     "Johnson" -> {a^2*(-a^2 + b^2 + c^2), a^4 - a^2*b^2 - 2*a^2*c^2 - 
+        b^2*c^2 + c^4, a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2}, 
+     "inner-Johnson" -> {a*(-a^2 + a*b + a*c - 2*b*c), 
+       (-a + c)^2*(a - b + c), (a - b)^2*(a + b - c)}, 
+     "outer-Johnson" -> {a*(-a^2 - a*b - a*c - 2*b*c), (a + b - c)*(a + c)^2, 
+       (a + b)^2*(a - b + c)}, "1st Johnson-Yff" -> {-(a^2/(a - b - c)), 
+       (a + c)^2/(a - b + c), (a + b)^2/(a + b - c)}, 
+     "2nd Johnson-Yff" -> {a^2*(-a + b + c), (-a + c)^2*(a - b + c), 
+       (a - b)^2*(a + b - c)}, "K798e" -> {2*a^2*b*c, 
+       b^4 - b^3*c + b*c*(-a^2 + c^2) + (-a^2 + c^2)^2 - 2*b^2*(a^2 + c^2), 
+       (a^2 - b^2)^2 - b*(a^2 - b^2)*c - 2*(a^2 + b^2)*c^2 - b*c^3 + c^4}, 
+     "K798i" -> {-2*a^2*b*c, a^4 - 2*a^2*b^2 + b^4 + a^2*b*c + b^3*c - 
+        2*a^2*c^2 - 2*b^2*c^2 - b*c^3 + c^4, a^4 - 2*a^2*b^2 + b^4 + 
+        a^2*b*c - b^3*c - 2*a^2*c^2 - 2*b^2*c^2 + b*c^3 + c^4}, 
+     "1st Kenmotu-centers" -> {a^2 + 2*S, b^2, c^2}, 
+     "2nd Kenmotu-centers" -> {a^2 - 2*S, b^2, c^2}, 
+     "1st Kenmotu diagonals" -> {(a^2*(-a^2 + b^2 + c^2 - 2*S))/
+        (-a^2 + b^2 + c^2 + 2*S), b^2, c^2}, "2nd Kenmotu diagonals" -> 
+      {(a^2*(-a^2 + b^2 + c^2 + 2*S))/(a^2 - b^2 - c^2 + 2*S), -b^2, -c^2}, 
+     "1st Kenmotu-free-vertices" -> {-a^4 + 3*a^2*b^2 - 2*b^4 + 3*a^2*c^2 + 
+        4*b^2*c^2 - 2*c^4 + 2*a^2*S, b^2*(-a^2 + b^2 - c^2 + 2*S), 
+       c^2*(-a^2 - b^2 + c^2 + 2*S)}, "2nd Kenmotu-free-vertices" -> 
+      {-a^4 - 2*(b^2 - c^2)^2 + 3*a^2*(b^2 + c^2) - 2*a^2*S, 
+       b^2*(-a^2 + b^2 - c^2 - 2*S), c^2*(-a^2 - b^2 + c^2 - 2*S)}, 
+     "Kosnita" -> {a^2*(a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 + c^4), 
+       b^2*(-a^4 + 2*a^2*b^2 - b^4 + a^2*c^2 + b^2*c^2), 
+       c^2*(-a^4 + a^2*b^2 + 2*a^2*c^2 + b^2*c^2 - c^4)}, 
+     "Largest-circumscribed-equilateral" -> 
+      {3*Sqrt[3]*a^4 + 3*Sqrt[3]*a^2*b^2 - 2*Sqrt[3]*b^4 + 
+        3*Sqrt[3]*a^2*c^2 + 4*Sqrt[3]*b^2*c^2 - 2*Sqrt[3]*c^4 + 18*a^2*S, 
+       -7*Sqrt[3]*a^2*b^2 + 3*Sqrt[3]*b^4 - 2*Sqrt[3]*a^2*c^2 - 
+        5*Sqrt[3]*b^2*c^2 + 2*Sqrt[3]*c^4 - 12*a^2*S - 6*b^2*S, 
+       -2*Sqrt[3]*a^2*b^2 + 2*Sqrt[3]*b^4 - 7*Sqrt[3]*a^2*c^2 - 
+        5*Sqrt[3]*b^2*c^2 + 3*Sqrt[3]*c^4 - 12*a^2*S - 6*c^2*S}, 
+     "Lemoine" -> {0, (2*a^2 - b^2 + 2*c^2)^(-1), (2*a^2 + 2*b^2 - c^2)^
+        (-1)}, "1st Lemoine-Dao" -> 
+      {(-2*a^2*(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 4*S))/
+        (-a^2 + b^2 + c^2), Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 - 2*S, 
+       Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S}, 
+     "2nd Lemoine-Dao" -> {(-2*a^2*(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 
+          4*S))/(-a^2 + b^2 + c^2), -(Sqrt[3]*a^2) - Sqrt[3]*b^2 + 
+        Sqrt[3]*c^2 - 2*S, -(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 - 2*S}, 
+     "inner-Le Viet An" -> {(a^2*(-(Sqrt[3]*a^2) - Sqrt[3]*b^2 - 
+          Sqrt[3]*c^2 + 6*S))/(b^2 - c^2), 2*Sqrt[3]*b^2, -2*Sqrt[3]*c^2}, 
+     "outer-Le Viet An" -> {(a^2*(Sqrt[3]*a^2 + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 
+          6*S))/(b^2 - c^2), -2*Sqrt[3]*b^2, 2*Sqrt[3]*c^2}, 
+     "Lucas antipodal" -> {a*(Cos[B]*Cos[C] - Sin[A]), -(b*Cos[B]), 
+       -(c*Cos[C])}, "Lucas(-1) antipodal" -> {a*(Cos[B]*Cos[C] + Sin[A]), 
+       -(b*Cos[B]), -(c*Cos[C])}, "Lucas antipodal tangents" -> 
+      {a^2*(-a^2 + b^2 + c^2)*(b^2 + c^2 + S), 
+       b^2*(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4 + a^2*S - b^2*S + 
+         3*c^2*S), c^2*(a^2*b^2 - b^4 + a^2*c^2 + 2*b^2*c^2 - c^4 + a^2*S + 
+         3*b^2*S - c^2*S)}, "Lucas(-1) antipodal tangents" -> 
+      {a^2*(-a^2 + b^2 + c^2)*(-b^2 - c^2 + S), 
+       b^2*(-(a^2*b^2) + b^4 - a^2*c^2 - 2*b^2*c^2 + c^4 + a^2*S - b^2*S + 
+         3*c^2*S), c^2*(-(a^2*b^2) + b^4 - a^2*c^2 - 2*b^2*c^2 + c^4 + 
+         a^2*S + 3*b^2*S - c^2*S)}, "Lucas Brocard" -> 
+      {a^2*(-a^2 + 2*S), -(b^2*(-a^2 - c^2 + S)), -(c^2*(-a^2 - b^2 + S))}, 
+     "Lucas(-1) Brocard" -> {a^2*(a^2 + 2*S), -(b^2*(a^2 + c^2 + S)), 
+       -(c^2*(a^2 + b^2 + S))}, "Lucas central" -> {a*(Cos[A] + 2*Sin[A]), 
+       b*Cos[B], c*Cos[C]}, "Lucas(-1) central" -> {a*(Cos[A] - 2*Sin[A]), 
+       b*Cos[B], c*Cos[C]}, "Lucas homothetic" -> {-1/4*(-a^2 + b^2 + c^2)^2, 
+       b^2*(c^2 + S), c^2*(b^2 + S)}, "Lucas(-1) homothetic" -> 
+      {-1/4*(a^2 - b^2 - c^2)^2, b^2*(c^2 - S), c^2*(b^2 - S)}, 
+     "Lucas inner" -> {a*(2*Cos[A] + (3*Sin[A])/2), b*(2*Cos[B] + Sin[B]), 
+       c*(2*Cos[C] + Sin[C])}, "Lucas(-1) inner" -> 
+      {a*(2*Cos[A] - (3*Sin[A])/2), b*(2*Cos[B] - Sin[B]), 
+       c*(2*Cos[C] - Sin[C])}, "Lucas inner tangential" -> 
+      {a*(4*Cos[A] + Sin[A]), b*(4*Cos[B] + 3*Sin[B]), 
+       c*(4*Cos[C] + 3*Sin[C])}, "Lucas(-1) inner tangential" -> 
+      {a*(4*Cos[A] - Sin[A]), b*(4*Cos[B] - 3*Sin[B]), 
+       c*(4*Cos[C] - 3*Sin[C])}, "Lucas reflection" -> 
+      {(-a^12 + 3*a^10*b^2 - 2*a^8*b^4 - 2*a^6*b^6 + 3*a^4*b^8 - a^2*b^10 + 
+         3*a^10*c^2 + 4*a^8*b^2*c^2 - 12*a^6*b^4*c^2 + a^4*b^6*c^2 + 
+         5*a^2*b^8*c^2 - b^10*c^2 - 2*a^8*c^4 - 12*a^6*b^2*c^4 - 
+         12*a^4*b^4*c^4 - 4*a^2*b^6*c^4 + 4*b^8*c^4 - 2*a^6*c^6 + 
+         a^4*b^2*c^6 - 4*a^2*b^4*c^6 - 6*b^6*c^6 + 3*a^4*c^8 + 
+         5*a^2*b^2*c^8 + 4*b^4*c^8 - a^2*c^10 - b^2*c^10 + 4*a^8*b^2*S - 
+         8*a^6*b^4*S + 4*a^4*b^6*S + 4*a^8*c^2*S - 8*a^6*b^2*c^2*S - 
+         12*a^4*b^4*c^2*S + 8*a^2*b^6*c^2*S - 8*a^6*c^4*S - 
+         12*a^4*b^2*c^4*S - 16*a^2*b^4*c^4*S + 4*a^4*c^6*S + 8*a^2*b^2*c^6*S)/
+        (b*c), b*c*(a^2 - b^2 + c^2)*(-a^6 - b^6 + 2*a^4*c^2 + 
+         3*a^2*b^2*c^2 + 2*b^4*c^2 - a^2*c^4 - b^2*c^4 + 4*a^2*b^2*S), 
+       b*c*(a^2 + b^2 - c^2)*(-a^6 + 2*a^4*b^2 - a^2*b^4 + 3*a^2*b^2*c^2 - 
+         b^4*c^2 + 2*b^2*c^4 - c^6 + 4*a^2*c^2*S)}, 
+     "Lucas(-1) reflection" -> {(-a^12 - 2*a^8*(b^2 - c^2)^2 - 
+         b^2*c^2*(b^2 - c^2)^4 + 3*a^10*(b^2 + c^2) - a^2*(b^2 - c^2)*
+          (b^4 - c^4)*(b^4 - 4*b^2*c^2 + c^4) - 2*a^6*(b^2 + c^2)*
+          (b^4 + 5*b^2*c^2 + c^4) + a^4*(3*b^8 + 3*c^8 + 
+           b^2*c^2*(b^4 - 12*b^2*c^2 + c^4)) - 
+         4*(2*a^2*b^2*c^2*(b^2 - c^2)^2 + a^8*(b^2 + c^2) + 
+           a^4*(b^2 + c^2)*(b^4 - 4*b^2*c^2 + c^4) - 
+           2*a^6*(b^4 + b^2*c^2 + c^4))*S)/(b*c), b*c*(a^2 - b^2 + c^2)*
+        (-a^6 + 2*a^4*c^2 - b^2*(b^2 - c^2)^2 + a^2*c^2*(3*b^2 - c^2) - 
+         4*a^2*b^2*S), b*c*(a^2 + b^2 - c^2)*(-a^6 + 2*a^4*b^2 - 
+         a^2*b^2*(b^2 - 3*c^2) - c^2*(b^2 - c^2)^2 - 4*a^2*c^2*S)}, 
+     "Lucas secondary central" -> {a*(Cos[A] - 2*Sin[A]), 
+       b*(Cos[B] + 4*Sin[B]), c*(Cos[C] + 4*Sin[C])}, 
+     "Lucas(-1) secondary central" -> {a*(Cos[A] + 2*Sin[A]), 
+       b*(Cos[B] - 4*Sin[B]), c*(Cos[C] - 4*Sin[C])}, 
+     "Lucas 1st secondary tangents" -> {a^2*(a^2 - b^2 - c^2 + 4*S), 
+       b^2*(-a^2 + b^2 - c^2 - 6*S), c^2*(-a^2 - b^2 + c^2 - 6*S)}, 
+     "Lucas(-1) 1st secondary tangents" -> {a^2*(-a^2 + b^2 + c^2 + 4*S), 
+       b^2*(a^2 - b^2 + c^2 - 6*S), c^2*(a^2 + b^2 - c^2 - 6*S)}, 
+     "Lucas 2nd secondary tangents" -> {a^2*(-a^2 + b^2 + c^2 + 12*S), 
+       b^2*(a^2 - b^2 + c^2 - 2*S), c^2*(a^2 + b^2 - c^2 - 2*S)}, 
+     "Lucas(-1) 2nd secondary tangents" -> {a^2*(a^2 - b^2 - c^2 + 12*S), 
+       b^2*(-a^2 + b^2 - c^2 - 2*S), c^2*(-a^2 - b^2 + c^2 - 2*S)}, 
+     "Lucas tangents" -> {a*Cos[A], b*(Cos[B] + Sin[B]), 
+       c*(Cos[C] + Sin[C])}, "Lucas(-1) tangents" -> 
+      {a*Cos[A], b*(Cos[B] - Sin[B]), c*(Cos[C] - Sin[C])}, 
+     "Macbeath" -> {0, 1/(b^2*(a^2 - b^2 + c^2)), 1/(c^2*(a^2 + b^2 - c^2))}, 
+     "inner-Malfatti" -> {(a*(1 - Cos[A/2] + 2*Cos[B/2] + 2*Cos[C/2] + 
+          2*Cos[B/2]*Cos[C/2]))/(1 + Cos[A/2]), b, c}, 
+     "outer-Malfatti" -> {(a*(-1 - Cos[A/2] + 2*Cos[B/2] + 2*Cos[C/2] - 
+          2*Cos[B/2]*Cos[C/2]))/(-1 + Cos[A/2]), b, c}, 
+     "inner-Malfatti-touchpoints" -> {(a*(1 + Cos[B/2])*(1 + Cos[C/2]))/
+        (1 + Cos[A/2]), b*(1 + Cos[C/2])^2, c*(1 + Cos[B/2])^2}, 
+     "outer-Malfatti-touchpoints" -> {(a*(-1 + Cos[B/2])*(1 - Cos[C/2]))/
+        (-1 + Cos[A/2]), b*(-1 + Cos[C/2])^2, c*(-1 + Cos[B/2])^2}, 
+     "Mandart-excircles" -> {-((b - c)^2*(a + b + c)), b^2*(a + b - c), 
+       c^2*(a - b + c)}, "Mandart-incircle" -> {-((a - b - c)*(b - c)^2), 
+       b^2*(a - b + c), (a + b - c)*c^2}, 
+     "McCay" -> {-(a^2*(a^2 + b^2 + c^2)), 2*a^4 - 2*a^2*b^2 + 2*b^4 - 
+        3*a^2*c^2 - 3*b^2*c^2 + c^4, 2*a^4 - 3*a^2*b^2 + b^4 - 2*a^2*c^2 - 
+        3*b^2*c^2 + 2*c^4}, "medial" -> {0, 1, 1}, 
+     "midarc" -> {(a*b - b^2 + a*c + 2*b*c - c^2 + 4*b*c*Sin[A/2])/
+        (-a + b + c), b, c}, "2nd midarc" -> 
+      {(-(a*b) + b^2 - a*c - 2*b*c + c^2 + 4*b*c*Sin[A/2])/(-a + b + c), -b, 
+       -c}, "midheight" -> {2*a^2, a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
+     "mixtilinear" -> {(a^3 + a^2*b - a*b^2 - b^3 + a^2*c - 2*a*b*c + b^2*c - 
+         a*c^2 + b*c^2 - c^3)/(4*b*c), -b, -c}, "2nd mixtilinear" -> 
+      {(a^3 - a^2*b - a*b^2 + b^3 - a^2*c - 2*a*b*c - b^2*c - a*c^2 - b*c^2 + 
+         c^3)/(4*b*c), b, c}, "3rd mixtilinear" -> {a/2, -(b^2/(a - b + c)), 
+       -(c^2/(a + b - c))}, "4th mixtilinear" -> {a/2, -(b^2/(a + b - c)), 
+       -(c^2/(a - b + c))}, "5th mixtilinear" -> {(a - b - c)/2, b, c}, 
+     "6th mixtilinear" -> {a*(a^2 - 2*a*b + b^2 - 2*a*c - 2*b*c + c^2), 
+       b*(a^2 - 2*a*b + b^2 + 2*a*c + 2*b*c - 3*c^2), 
+       c*(a^2 + 2*a*b - 3*b^2 - 2*a*c + 2*b*c + c^2)}, 
+     "7th mixtilinear" -> {((a + b - c)*(a - b + c)*(a^2 - 2*a*b + b^2 - 
+          2*a*c - 2*b*c + c^2))/(2*(-a + b + c)), 
+       b*(a^2 - 2*a*b + b^2 + 2*a*c + 2*b*c - 3*c^2), 
+       c*(a^2 + 2*a*b - 3*b^2 - 2*a*c + 2*b*c + c^2)}, 
+     "8th mixtilinear" -> {a*(a^2/2 - (3*(b - c)^2)/2 + a*(b + c)), 
+       b^2*(a - b + c), (a + b - c)*c^2}, "9th mixtilinear" -> 
+      {a*(a^2/2 - (3*(b - c)^2)/2 - a*(b + c)), b^2*(a + b - c), 
+       c^2*(a - b + c)}, "Montesdeoca-Hung" -> 
+      {a*(2*a^5*(a + 2*b + 2*c) + 4*a^3*(a + b + c)*(b^2 + 3*b*c + c^2) + 
+         (b + c)^2*(b^4 + c^4 + 2*a*(b + c)*(b^2 + c^2)) + 
+         a^2*(3*b^4 + 3*c^4 + 4*b*c*(3*b^2 + 5*b*c + 3*c^2))), 
+       -(b*(a + c)^2*(a^2 + a*b + c*(b + c))^2), 
+       -((a + b)^2*c*(a^2 + a*c + b*(b + c))^2)}, "1st Morley-midpoint" -> 
+      {-1/4*(-(Sqrt[3]*a^4) + 2*Sqrt[3]*a^2*b^2 - Sqrt[3]*b^4 + 
+          2*Sqrt[3]*a^2*c^2 + 2*Sqrt[3]*b^2*c^2 - Sqrt[3]*c^4 + 4*S*SA + 
+          4*Sqrt[3]*SB*SC + 4*S*SW + 8*Sqrt[3]*a^2*b*c*Cos[A/3] + 
+          16*b*c*S*Cos[A/3] + 8*a*c*S*Cos[B/3] + 8*Sqrt[3]*a*c*SA*Cos[B/3] + 
+          16*Sqrt[3]*a*c*SC*Cos[B/3] + 16*Sqrt[3]*a*b*c^2*Cos[A/3]*Cos[B/3] + 
+          8*a*b*S*Cos[C/3] + 8*Sqrt[3]*a*b*SA*Cos[C/3] + 16*Sqrt[3]*a*b*SB*
+           Cos[C/3] + 16*Sqrt[3]*a*b^2*c*Cos[A/3]*Cos[C/3] + 
+          32*Sqrt[3]*a^2*b*c*Cos[B/3]*Cos[C/3])/(S - Sqrt[3]*SA - 
+          2*Sqrt[3]*b*c*Cos[A/3]), b*(b + 2*c*Cos[A/3] + 2*a*Cos[C/3]), 
+       c*(c + 2*b*Cos[A/3] + 2*a*Cos[B/3])}, "2nd Morley-midpoint" -> 
+      {-1/4*(Sqrt[3]*a^4 - 2*Sqrt[3]*a^2*b^2 + Sqrt[3]*b^4 - 
+          2*Sqrt[3]*a^2*c^2 - 2*Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 - 4*S*SA - 
+          4*Sqrt[3]*SB*SC - 4*S*SW - 8*Sqrt[3]*a^2*b*c*Sin[A/3 - Pi/6] - 
+          16*b*c*S*Sin[A/3 - Pi/6] - 8*a*c*S*Sin[B/3 - Pi/6] - 
+          8*Sqrt[3]*a*c*SA*Sin[B/3 - Pi/6] - 16*Sqrt[3]*a*c*SC*
+           Sin[B/3 - Pi/6] - 16*Sqrt[3]*a*b*c^2*Sin[A/3 - Pi/6]*
+           Sin[B/3 - Pi/6] - 8*a*b*S*Sin[C/3 - Pi/6] - 8*Sqrt[3]*a*b*SA*
+           Sin[C/3 - Pi/6] - 16*Sqrt[3]*a*b*SB*Sin[C/3 - Pi/6] - 
+          16*Sqrt[3]*a*b^2*c*Sin[A/3 - Pi/6]*Sin[C/3 - Pi/6] - 
+          32*Sqrt[3]*a^2*b*c*Sin[B/3 - Pi/6]*Sin[C/3 - Pi/6])/
+         (S - Sqrt[3]*SA - 2*Sqrt[3]*b*c*Sin[A/3 - Pi/6]), 
+       b*(-b - 2*c*Sin[A/3 - Pi/6] - 2*a*Sin[C/3 - Pi/6]), 
+       c*(-c - 2*b*Sin[A/3 - Pi/6] - 2*a*Sin[B/3 - Pi/6])}, 
+     "3rd Morley-midpoint" -> {-1/4*(Sqrt[3]*a^4 - 2*Sqrt[3]*a^2*b^2 + 
+          Sqrt[3]*b^4 - 2*Sqrt[3]*a^2*c^2 - 2*Sqrt[3]*b^2*c^2 + Sqrt[3]*c^4 - 
+          4*S*SA - 4*Sqrt[3]*SB*SC - 4*S*SW + 8*Sqrt[3]*a^2*b*c*
+           Sin[A/3 + Pi/6] + 16*b*c*S*Sin[A/3 + Pi/6] + 
+          8*a*c*S*Sin[B/3 + Pi/6] + 8*Sqrt[3]*a*c*SA*Sin[B/3 + Pi/6] + 
+          16*Sqrt[3]*a*c*SC*Sin[B/3 + Pi/6] - 16*Sqrt[3]*a*b*c^2*
+           Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6] + 8*a*b*S*Sin[C/3 + Pi/6] + 
+          8*Sqrt[3]*a*b*SA*Sin[C/3 + Pi/6] + 16*Sqrt[3]*a*b*SB*
+           Sin[C/3 + Pi/6] - 16*Sqrt[3]*a*b^2*c*Sin[A/3 + Pi/6]*
+           Sin[C/3 + Pi/6] - 32*Sqrt[3]*a^2*b*c*Sin[B/3 + Pi/6]*
+           Sin[C/3 + Pi/6])/(S - Sqrt[3]*SA + 2*Sqrt[3]*b*c*Sin[A/3 + Pi/6]), 
+       b*(-b + 2*c*Sin[A/3 + Pi/6] + 2*a*Sin[C/3 + Pi/6]), 
+       c*(-c + 2*b*Sin[A/3 + Pi/6] + 2*a*Sin[B/3 + Pi/6])}, 
+     "1st Morley" -> {a/2, b*Cos[C/3], c*Cos[B/3]}, 
+     "2nd Morley" -> {a/2, b*Sin[C/3 - Pi/6], c*Sin[B/3 - Pi/6]}, 
+     "3rd Morley" -> {a/2, -(b*Sin[C/3 + Pi/6]), -(c*Sin[B/3 + Pi/6])}, 
+     "1st Morley-adjunct midpoint" -> 
+      {(Cos[A/3]*(2*Sqrt[3]*a^2*b*c*Cos[A/3] + Sqrt[3]*a*b^2*c*Cos[B/3] + 
+          2*a*b*S*Cos[A/3]*Cos[B/3] + 2*Sqrt[3]*a*b*SA*Cos[A/3]*Cos[B/3] + 
+          4*Sqrt[3]*a*b*SB*Cos[A/3]*Cos[B/3] + Sqrt[3]*a*b*c^2*Cos[C/3] + 
+          2*a*c*S*Cos[A/3]*Cos[C/3] + 2*Sqrt[3]*a*c*SA*Cos[A/3]*Cos[C/3] + 
+          4*Sqrt[3]*a*c*SC*Cos[A/3]*Cos[C/3] + 4*b*c*S*Cos[B/3]*Cos[C/3] + 
+          2*Sqrt[3]*b*c*SB*Cos[B/3]*Cos[C/3] + 2*Sqrt[3]*b*c*SC*Cos[B/3]*
+           Cos[C/3] - Sqrt[3]*a^4*Cos[A/3]*Cos[B/3]*Cos[C/3] + 
+          2*Sqrt[3]*a^2*b^2*Cos[A/3]*Cos[B/3]*Cos[C/3] - Sqrt[3]*b^4*Cos[A/3]*
+           Cos[B/3]*Cos[C/3] + 2*Sqrt[3]*a^2*c^2*Cos[A/3]*Cos[B/3]*Cos[C/3] + 
+          2*Sqrt[3]*b^2*c^2*Cos[A/3]*Cos[B/3]*Cos[C/3] - Sqrt[3]*c^4*Cos[A/3]*
+           Cos[B/3]*Cos[C/3] + 4*S*SA*Cos[A/3]*Cos[B/3]*Cos[C/3] + 
+          4*Sqrt[3]*SB*SC*Cos[A/3]*Cos[B/3]*Cos[C/3] + 4*S*SW*Cos[A/3]*
+           Cos[B/3]*Cos[C/3]))/(-(Sqrt[3]*b*c) + 2*S*Cos[A/3] - 
+         2*Sqrt[3]*SA*Cos[A/3]), b*Cos[B/3]*(-(a*Cos[A/3]) - c*Cos[C/3] - 
+         2*b*Cos[A/3]*Cos[C/3]), c*(-(a*Cos[A/3]) - b*Cos[B/3] - 
+         2*c*Cos[A/3]*Cos[B/3])*Cos[C/3]}, "2nd Morley-adjunct midpoint" -> 
+      {-((Sin[A/3 - Pi/6]*(-2*Sqrt[3]*a^2*b*c*Sin[A/3 - Pi/6] - 
+           Sqrt[3]*a*b^2*c*Sin[B/3 - Pi/6] - 2*a*b*S*Sin[A/3 - Pi/6]*
+            Sin[B/3 - Pi/6] - 2*Sqrt[3]*a*b*SA*Sin[A/3 - Pi/6]*
+            Sin[B/3 - Pi/6] - 4*Sqrt[3]*a*b*SB*Sin[A/3 - Pi/6]*
+            Sin[B/3 - Pi/6] - Sqrt[3]*a*b*c^2*Sin[C/3 - Pi/6] - 
+           2*a*c*S*Sin[A/3 - Pi/6]*Sin[C/3 - Pi/6] - 2*Sqrt[3]*a*c*SA*
+            Sin[A/3 - Pi/6]*Sin[C/3 - Pi/6] - 4*Sqrt[3]*a*c*SC*
+            Sin[A/3 - Pi/6]*Sin[C/3 - Pi/6] - 4*b*c*S*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 2*Sqrt[3]*b*c*SB*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 2*Sqrt[3]*b*c*SC*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] + Sqrt[3]*a^4*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 2*Sqrt[3]*a^2*b^2*Sin[A/3 - Pi/6]*
+            Sin[B/3 - Pi/6]*Sin[C/3 - Pi/6] + Sqrt[3]*b^4*Sin[A/3 - Pi/6]*
+            Sin[B/3 - Pi/6]*Sin[C/3 - Pi/6] - 2*Sqrt[3]*a^2*c^2*
+            Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*Sin[C/3 - Pi/6] - 
+           2*Sqrt[3]*b^2*c^2*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] + Sqrt[3]*c^4*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 4*S*SA*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 4*Sqrt[3]*SB*SC*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6] - 4*S*SW*Sin[A/3 - Pi/6]*Sin[B/3 - Pi/6]*
+            Sin[C/3 - Pi/6]))/(Sqrt[3]*b*c - 2*S*Sin[A/3 - Pi/6] + 
+          2*Sqrt[3]*SA*Sin[A/3 - Pi/6])), 
+       -(b*Sin[B/3 - Pi/6]*(-(a*Sin[A/3 - Pi/6]) - c*Sin[C/3 - Pi/6] - 
+          2*b*Sin[A/3 - Pi/6]*Sin[C/3 - Pi/6])), 
+       -(c*(-(a*Sin[A/3 - Pi/6]) - b*Sin[B/3 - Pi/6] - 2*c*Sin[A/3 - Pi/6]*
+           Sin[B/3 - Pi/6])*Sin[C/3 - Pi/6])}, 
+     "3rd Morley-adjunct midpoint" -> 
+      {(Sin[A/3 + Pi/6]*(2*Sqrt[3]*a^2*b*c*Sin[A/3 + Pi/6] + 
+          Sqrt[3]*a*b^2*c*Sin[B/3 + Pi/6] - 2*a*b*S*Sin[A/3 + Pi/6]*
+           Sin[B/3 + Pi/6] - 2*Sqrt[3]*a*b*SA*Sin[A/3 + Pi/6]*
+           Sin[B/3 + Pi/6] - 4*Sqrt[3]*a*b*SB*Sin[A/3 + Pi/6]*
+           Sin[B/3 + Pi/6] + Sqrt[3]*a*b*c^2*Sin[C/3 + Pi/6] - 
+          2*a*c*S*Sin[A/3 + Pi/6]*Sin[C/3 + Pi/6] - 2*Sqrt[3]*a*c*SA*
+           Sin[A/3 + Pi/6]*Sin[C/3 + Pi/6] - 4*Sqrt[3]*a*c*SC*Sin[A/3 + Pi/6]*
+           Sin[C/3 + Pi/6] - 4*b*c*S*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] - 
+          2*Sqrt[3]*b*c*SB*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] - 
+          2*Sqrt[3]*b*c*SC*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] - 
+          Sqrt[3]*a^4*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          2*Sqrt[3]*a^2*b^2*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] - 
+          Sqrt[3]*b^4*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          2*Sqrt[3]*a^2*c^2*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          2*Sqrt[3]*b^2*c^2*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] - 
+          Sqrt[3]*c^4*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          4*S*SA*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          4*Sqrt[3]*SB*SC*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6] + 
+          4*S*SW*Sin[A/3 + Pi/6]*Sin[B/3 + Pi/6]*Sin[C/3 + Pi/6]))/
+        (Sqrt[3]*b*c + 2*S*Sin[A/3 + Pi/6] - 2*Sqrt[3]*SA*Sin[A/3 + Pi/6]), 
+       b*Sin[B/3 + Pi/6]*(a*Sin[A/3 + Pi/6] + c*Sin[C/3 + Pi/6] - 
+         2*b*Sin[A/3 + Pi/6]*Sin[C/3 + Pi/6]), 
+       c*(a*Sin[A/3 + Pi/6] + b*Sin[B/3 + Pi/6] - 2*c*Sin[A/3 + Pi/6]*
+          Sin[B/3 + Pi/6])*Sin[C/3 + Pi/6]}, "1st Morley-adjunct" -> 
+      {2*a, b*Sec[C/3], c*Sec[B/3]}, "2nd Morley-adjunct" -> 
+      {2*a, b*Csc[C/3 - Pi/6], c*Csc[B/3 - Pi/6]}, "3rd Morley-adjunct" -> 
+      {2*a, -(b*Csc[C/3 + Pi/6]), -(c*Csc[B/3 + Pi/6])}, 
+     "Moses-Hung" -> {-((2*a^3 + a^2*b + b^3 + a^2*c - b^2*c - b*c^2 + c^3)^2/
+         (a + b + c)), (a + b - c)^3*(a + c)^2, (a + b)^2*(a - b + c)^3}, 
+     "Moses-Soddy" -> {b - c, a - c, -a + b}, "Moses-Steiner osculatory" -> 
+      {-((3*a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 - 2*b^2*c^2 + c^4)/a^2), 
+       a^2 + b^2 - c^2, a^2 - b^2 + c^2}, "Moses-Steiner reflection" -> 
+      {-a^2 + b^2 + c^2, a^2 - b^2 - 2*c^2, a^2 - 2*b^2 - c^2}, 
+     "inner-Napoleon" -> {2*Sqrt[3]*a^2, -(Sqrt[3]*a^2) - Sqrt[3]*b^2 + 
+        Sqrt[3]*c^2 + 6*S, -(Sqrt[3]*a^2) + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 6*S}, 
+     "outer-Napoleon" -> {-2*Sqrt[3]*a^2, Sqrt[3]*a^2 + Sqrt[3]*b^2 - 
+        Sqrt[3]*c^2 + 6*S, Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 6*S}, 
+     "1st Neuberg" -> {a^2*(a^2 + b^2 + c^2), -a^4 - b^4 + a^2*c^2 + b^2*c^2, 
+       -a^4 + a^2*b^2 + b^2*c^2 - c^4}, "2nd Neuberg" -> 
+      {a^2*(a^2 + b^2 + c^2), -2*a^2*b^2 - a^2*c^2 - b^2*c^2 + c^4, 
+       -(a^2*b^2) + b^4 - 2*a^2*c^2 - b^2*c^2}, 
+     "orthic" -> {0, (a^2 - b^2 + c^2)^(-1), (a^2 + b^2 - c^2)^(-1)}, 
+     "orthic axes" -> {2/(-a^2 + b^2 + c^2), (a^2 - b^2 + c^2)^(-1), 
+       (a^2 + b^2 - c^2)^(-1)}, "orthocentroidal" -> 
+      {a^2, a^2 + b^2 - c^2, a^2 - b^2 + c^2}, "orthocentroidal-isogonic" -> 
+      {(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2), b^2*(a^2 - b^2 + c^2), 
+       c^2*(a^2 + b^2 - c^2)}, "1st orthosymmedial" -> 
+      {(2*a^4)/(b^2 + c^2), a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
+     "2nd orthosymmedial" -> {(a^2*b^4 - b^6 + b^4*c^2 + a^2*c^4 + b^2*c^4 - 
+         c^6)/((b^2 + c^2)*(-a^2 + b^2 + c^2)), b^2, c^2}, 
+     "Paasche-Hutson" -> {-((2*a*R - S)*S), b*c*(a*b + S), b*c*(a*c + S)}, 
+     "1st Pamfilos-Zhou" -> {a*(-a^6 + a^2*b^4 - a^4*b*c + 2*a^2*b^3*c - 
+         b^5*c + 2*a^2*b^2*c^2 + 2*a^2*b*c^3 + 2*b^3*c^3 + a^2*c^4 - b*c^5 + 
+         4*a*b^2*c*S + 4*a*b*c^2*S), b*(a^2 - b^2 + c^2)*
+        (a^3*b + a*b^3 + a*b*c^2 + 2*c^2*S), c*(a^2 + b^2 - c^2)*
+        (a^3*c + a*b^2*c + a*c^3 + 2*b^2*S)}, "2nd Pamfilos-Zhou" -> 
+      {a*(a^2*b - b^3 + a^2*c - 4*a*b*c + b^2*c + b*c^2 - c^3 - 2*b*S - 
+         2*c*S), -(a^2*b^2) + b^4 - a^3*c + 2*a^2*b*c + a*b^2*c + a^2*c^2 - 
+        2*a*b*c^2 + a*c^3 - c^4 + 2*a^2*S - 2*a*c*S, -(a^3*b) + a^2*b^2 + 
+        a*b^3 - b^4 + 2*a^2*b*c - 2*a*b^2*c - a^2*c^2 + a*b*c^2 + c^4 + 
+        2*a^2*S - 2*a*b*S}, "1st Parry" -> 
+      {3*a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 - b^2*c^2 + c^4, 
+       -(b^2*(a^2 + b^2 - 2*c^2)), -(c^2*(a^2 - 2*b^2 + c^2))}, 
+     "2nd Parry" -> {((b^2 - c^2)*(a^4 - b^4 + b^2*c^2 - c^4))/
+        (2*a^2 - b^2 - c^2), b^2*(a^2 - b^2), c^2*(-a^2 + c^2)}, 
+     "3rd Parry" -> {(a^2*(a^4 - 3*a^2*b^2 + 2*b^4 - 3*a^2*c^2 + b^2*c^2 + 
+          2*c^4))/(b*c*(2*a^2 - b^2 - c^2)), b*c, b*c}, 
+     "Pelletier" -> {a*(b - c)*(-a + b + c), b*(a - c)*(a - b + c), 
+       (-a + b)*(a + b - c)*c}, "1st Przyby&lstrok;owski-Bollin" -> 
+      {a^2*(S + Sqrt[3]*SA), b*(Sqrt[3]*b*SB + 
+         S*(b + 2*Sqrt[Sqrt[3]*S + SW])), 
+       c*(Sqrt[3]*c*SC + S*(c + 2*Sqrt[Sqrt[3]*S + SW]))}, 
+     "2nd Przyby&lstrok;owski-Bollin" -> {a^2*(S + Sqrt[3]*SA), 
+       b*(Sqrt[3]*b*SB + S*(b - 2*Sqrt[Sqrt[3]*S + SW])), 
+       c*(Sqrt[3]*c*SC + S*(c - 2*Sqrt[Sqrt[3]*S + SW]))}, 
+     "3rd Przyby&lstrok;owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
+       b*(-(b*S) + Sqrt[3]*b*SB - 2*S*Sqrt[-(Sqrt[3]*S) + SW]), 
+       c*(-(c*S) + Sqrt[3]*c*SC - 2*S*Sqrt[-(Sqrt[3]*S) + SW])}, 
+     "4th Przyby&lstrok;owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
+       b*(-(b*S) + Sqrt[3]*b*SB + 2*S*Sqrt[-(Sqrt[3]*S) + SW]), 
+       c*(-(c*S) + Sqrt[3]*c*SC + 2*S*Sqrt[-(Sqrt[3]*S) + SW])}, 
+     "reflection" -> {-a^2, a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
+     "Roussel" -> {a*(-a^2 - 2*a*c*Cos[B/3] - 2*a*b*Cos[C/3] - 
+         4*b*c*Cos[B/3]*Cos[C/3] + 16*b*c*Cos[A/3]^2*Cos[B/3]*Cos[C/3]), 
+       b*(a*b + 2*a*c*Cos[A/3] + 4*c^2*Cos[A/3]*Cos[B/3] + 
+         8*b*c*Cos[A/3]^2*Cos[B/3] + 2*b^2*Cos[C/3] + 4*b*c*Cos[A/3]*
+          Cos[C/3]), c*(a*c + 2*a*b*Cos[A/3] + 2*c^2*Cos[B/3] + 
+         4*b*c*Cos[A/3]*Cos[B/3] + 4*b^2*Cos[A/3]*Cos[C/3] + 
+         8*b*c*Cos[A/3]^2*Cos[C/3])}, "1st Savin" -> 
+      {2*a, -a + b + c, -a + b + c}, "2nd Savin" -> {2*a, 3*a + b + c, 
+       3*a + b + c}, "1st Schiffler" -> 
+      {1, (b*(a - c))/(-(a*b) - b^2 + (a - c)^2), 
+       ((a - b)*c)/((a - b)^2 - a*c - c^2)}, "2nd Schiffler" -> 
+      {1, (b*(-a + c))/(a^2 + a*b - b^2 - 2*a*c + c^2), 
+       ((-a + b)*c)/(a^2 - 2*a*b + b^2 + a*c - c^2)}, 
+     "Schroeter" -> {-b^2 + c^2, -a^2 + c^2, a^2 - b^2}, 
+     "1st Sharygin" -> {a*(a^2 - b*c), b*(-(a*b) - c^2), c*(-b^2 - a*c)}, 
+     "2nd Sharygin" -> {a*(a^2 - b*c), b*(-(a*b) + c^2), c*(b^2 - a*c)}, 
+     "Soddy" -> {-(-a + b + c)^(-1), (a - b + c)^(-1), (a + b - c)^(-1)}, 
+     "inner-Soddy" -> {(-a^2 + a*b + a*c + 2*S)/(-a + b + c), 
+       (a*b - b^2 + b*c + S)/(a - b + c), (a*c + b*c - c^2 + S)/(a + b - c)}, 
+     "2nd inner-Soddy" -> {(-a^2 + a*b + a*c + 2*S)/(-a + b + c), b, c}, 
+     "outer-Soddy" -> {(a^2 - a*b - a*c + 2*S)/(-a + b + c), 
+       (-(a*b) + b^2 - b*c + S)/(a - b + c), (-(a*c) - b*c + c^2 + S)/
+        (a + b - c)}, "2nd outer-Soddy" -> 
+      {(a^2 - a*b - a*c + 2*S)/(-a + b + c), -b, -c}, 
+     "inner-squares" -> {a^2, (a^2 + b^2 - c^2 + 2*S)/2, 
+       (a^2 - b^2 + c^2 + 2*S)/2}, "outer-squares" -> 
+      {-2*a^2, -a^2 - b^2 + c^2 + 2*S, -a^2 + b^2 - c^2 + 2*S}, 
+     "Stammler" -> {a*(Cos[A] - 2*Cos[(B - C)/3]), 
+       b*(Cos[B] + 2*Cos[B/3 + (2*C)/3]), c*(2*Cos[(2*B)/3 + C/3] + Cos[C])}, 
+     "Steiner" -> {0, -(-a^2 + c^2)^(-1), -(a^2 - b^2)^(-1)}, 
+     "submedial" -> {2*a^2, 3*a^2 + b^2 - c^2, 3*a^2 - b^2 + c^2}, 
+     "symmedial" -> {0, b/c, c/b}, "tangential" -> {-a^2, b^2, c^2}, 
+     "tangential-midarc" -> {2*a*Sin[A/2], -a - b + c - 2*a*Sin[B/2], 
+       -a + b - c - 2*a*Sin[C/2]}, "2nd tangential-midarc" -> 
+      {-2*a*Sin[A/2], a + b - c - 2*a*Sin[B/2], a - b + c - 2*a*Sin[C/2]}, 
+     "Thomson" -> {0, 0, 0}, "Thomson-anticomplementary" -> {0, 0, 0}, 
+     "Thomson-excentral" -> {0, 0, 0}, "Thomson-medial" -> {0, 0, 0}, 
+     "Thomson-orthic" -> {0, 0, 0}, "inner tri-equilateral" -> 
+      {(a^2*(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 6*S))/
+        (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 6*S), -b^2, -c^2}, 
+     "outer tri-equilateral" -> 
+      {(a^2*(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 6*S))/
+        (Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 6*S), -b^2, -c^2}, 
+     "1st tri-squares-central" -> {2*(3*a^2 + 4*S), -a^2 + 3*b^2 + c^2 + 2*S, 
+       -a^2 + b^2 + 3*c^2 + 2*S}, "2nd tri-squares-central" -> 
+      {2*(-3*a^2 + 4*S), a^2 - 3*b^2 - c^2 + 2*S, a^2 - b^2 - 3*c^2 + 2*S}, 
+     "3rd tri-squares-central" -> {a^2 + 2*S, b^2 + S, c^2 + S}, 
+     "4th tri-squares-central" -> {-a^2 + 2*S, -b^2 + S, -c^2 + S}, 
+     "1st tri-squares" -> {2*S, a^2 + 3*b^2 - c^2 + 2*S, 
+       a^2 - b^2 + 3*c^2 + 2*S}, "2nd tri-squares" -> 
+      {2*S, -a^2 - 3*b^2 + c^2 + 2*S, -a^2 + b^2 - 3*c^2 + 2*S}, 
+     "3rd tri-squares" -> {(4*(a^2 + S))/(-a^2 + b^2 + c^2 + 2*S), 1, 1}, 
+     "4th tri-squares" -> {(4*(-a^2 + S))/(a^2 - b^2 - c^2 + 2*S), 1, 1}, 
+     "Trinh" -> {a^2*(a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 + 4*b^2*c^2 + c^4), 
+       -(b^2*(a^4 - 2*a^2*b^2 + b^4 + a^2*c^2 + b^2*c^2 - 2*c^4)), 
+       c^2*(-a^4 - a^2*b^2 + 2*b^4 + 2*a^2*c^2 - b^2*c^2 - c^4)}, 
+     "Ursa-major" -> {a*(a^2*b - 2*a*b^2 + b^3 + a^2*c + b^2*c - 2*a*c^2 + 
+         b*c^2 + c^3), b*(-a + c)*(a^2 - 2*a*b + b^2 + 2*a*c - c^2), 
+       (a - b)*c*(-a^2 - 2*a*b + b^2 + 2*a*c - c^2)}, 
+     "Ursa-minor" -> {a*(a*b - b^2 + a*c + 2*b*c - c^2), 
+       b*(-a + c)*(a - b + c), (a - b)*c*(-a - b + c)}, 
+     "inner-Vecten" -> {2*a^2, -a^2 - b^2 + c^2 + 2*S, 
+       -a^2 + b^2 - c^2 + 2*S}, "2nd inner-Vecten" -> 
+      {(-a^2 + b^2 + c^2)^(-1), (a^2 - b^2 + c^2 - 2*S)^(-1), 
+       (a^2 + b^2 - c^2 - 2*S)^(-1)}, "3rd inner-Vecten" -> 
+      {(2*(a^4 + 2*(b^2 - c^2)^2 - 3*a^2*(b^2 + c^2) + 
+          (2*a^2 + 2*b^2 + 2*c^2)*S))/(-a^2 + b^2 + c^2), 
+       -a^2 - b^2 + c^2 + 2*S, -a^2 + b^2 - c^2 + 2*S}, 
+     "outer-Vecten" -> {-2*a^2, a^2 + b^2 - c^2 + 2*S, 
+       a^2 - b^2 + c^2 + 2*S}, "2nd outer-Vecten" -> 
+      {(-a^2 + b^2 + c^2)^(-1), (a^2 - b^2 + c^2 + 2*S)^(-1), 
+       (a^2 + b^2 - c^2 + 2*S)^(-1)}, "3rd outer-Vecten" -> 
+      {(-2*(-a^4 + 3*a^2*b^2 - 2*b^4 + 3*a^2*c^2 + 4*b^2*c^2 - 2*c^4 + 
+          2*a^2*S + 2*b^2*S + 2*c^2*S))/(-a^2 + b^2 + c^2), 
+       -a^2 - b^2 + c^2 - 2*S, -a^2 + b^2 - c^2 - 2*S}, 
+     "Vijay polar excentral" -> {(-(a^2*(b - c)^2) - 4*a^3*(b + c) + 
+         2*a*(b - c)*(b^2 - c^2) - (b^2 - c^2)^2)/(a + b + c), 
+       a*b*(a - c) + b^2*(a + c) + c*(a^2 - c^2), b*(a^2 - b^2) + 
+        a*(a - b)*c + (a + b)*c^2}, "Vijay polar incentral" -> 
+      {(-b - c)*(2*a - b - c), (a*b*(a - 3*c) + b^2*(a + c) + c*(a^2 - c^2))/
+        (a + b - c), (b*(a^2 - b^2) + a*(a - 3*b)*c + (a + b)*c^2)/
+        (a - b + c)}, "1st Vijay" -> 
+      {-1/2*((a + b + c)*(3*a^3 - a*(b - c)^2 + a^2*(b + c) + 
+           (b - c)*(b^2 - c^2)))/(b + c), (a + b - c)*
+        (b*c + c^2 + a*(2*b + c)), (a - b + c)*(b^2 + b*c + a*(b + 2*c))}, 
+     "2nd Vijay" -> {(b*c*(a + b + c)*(3*a^3 - a*(b - c)^2 + a^2*(b + c) + 
+          (b - c)*(b^2 - c^2)))/(a*(-a^2 + b^2 + c^2)), 
+       (a + b - c)*(b*c + c^2 + a*(2*b + c)), (a - b + c)*
+        (b^2 + b*c + a*(b + 2*c))}, "3rd Vijay" -> 
+      {((a + b + c)*(3*a^3 - a*(b - c)^2 + a^2*(b + c) + 
+          (b - c)*(b^2 - c^2)))/(4*a*(b + c)), 
+       ((a + b)*(a - b + c)*(b^2 + b*c + a*(b + 2*c)))/(a^2 - b^2 + c^2), 
+       ((a + b - c)*(a + c)*(b*c + c^2 + a*(2*b + c)))/(a^2 + b^2 - c^2)}, 
+     "4th Vijay" -> {-1/2*(a^7 - a^5*(b - c)^2 - a^6*(b + c) + 
+          a^4*(b - c)*(b^2 - c^2) - (b + c)^3*(b^4 - 2*b*(b - 2*c)*(2*b - c)*
+             c + c^4) - a^3*(-4*b^2*c^2 + (b^2 - c^2)^2) + 
+          a^2*(b + c)*(-4*b^2*c^2 + (b^2 - c^2)^2) + a*(b + c)^2*
+           (b^4 + c^4 - 2*b*c*(2*b^2 + 3*b*c + 2*c^2)))/
+         ((b + c)*(-a^2 + b^2 + c^2)), c*(a^3 - a^2*(b + c) + 
+         a*(b^2 + 2*b*c - c^2) + (b + c)*(3*b^2 - 2*b*c + c^2)), 
+       b*(a^3 - a^2*(b + c) - a*(b^2 - 2*b*c - c^2) + 
+         (b + c)*(b^2 - 2*b*c + 3*c^2))}, "5th Vijay" -> 
+      {(a + b + c)*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2), 
+       (a^2 + b^2 - c^2)*(-((a + b - c)*c*(a + b + c)) + (2*a + 2*b)*S), 
+       (a^2 - b^2 + c^2)*(-(b*(a - b + c)*(a + b + c)) + (2*a + 2*c)*S)}, 
+     "6th Vijay" -> {(-a - b - c)*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2), 
+       (a^2 + b^2 - c^2)*((a + b - c)*c*(a + b + c) + (2*a + 2*b)*S), 
+       (a^2 - b^2 + c^2)*(b*(a - b + c)*(a + b + c) + (2*a + 2*c)*S)}, 
+     "7th Vijay" -> {0, (a + b)*(a^2 + b^2 - c^2), 
+       (a + c)*(a^2 - b^2 + c^2)}, "Vijay-Paasche-midpoints" -> 
+      {(a*(b + 2*R)*(c + 2*R))/R, a*b - a*c + b*c + 4*b*R + 4*R^2, 
+       -(a*b) + a*c + b*c + 4*c*R + 4*R^2}, "Vijay-Paasche-polar" -> 
+      {-4*(2*a*R - S)^2, -a^4 + 2*a^2*b^2 - b^4 + 2*a^2*c^2 + 2*b^2*c^2 - 
+        c^4 + 16*a*b*R^2 + 8*a*b*S + 8*a*R*S + 8*b*R*S + 32*R^2*S, 
+       -a^4 + 2*a^2*b^2 - b^4 + 2*a^2*c^2 + 2*b^2*c^2 - c^4 + 16*a*c*R^2 + 
+        8*a*c*S + 8*a*R*S + 8*c*R*S + 32*R^2*S}, 
+     "Vijay-Paasche-reflection" -> 
+      {-1/4*(-4*a^6 + 4*a^5*(b + c) + 5*b*c*(b^2 - c^2)^2 + 
+          4*a*(b - c)*(b^2 - c^2)*(b^2 + c^2) + a^4*(8*b^2 - 3*b*c + 8*c^2) - 
+          8*a^3*(b^3 + c^3) - 2*a^2*(2*b^4 + b^3*c + 2*b^2*c^2 + b*c^3 + 
+            2*c^4) - 4*(-a + b + c)*(2*a*b*c + a^2*(b + c) - 
+            (b - c)*(b^2 - c^2))*S)/(b*c), b*(a^3 - a^2*b + b*(b^2 - c^2) - 
+         a*(b^2 - b*c + c^2) - c*S), c*(a^3 - a^2*c - c*(b^2 - c^2) - 
+         a*(b^2 - b*c + c^2) - b*S)}, "Vu-Dao-X(15)-isodynamic" -> 
+      {(2*(Sqrt[3]*a^6 + Sqrt[3]*a^4*b^2 - 2*Sqrt[3]*a^2*b^4 + 
+          Sqrt[3]*a^4*c^2 + 4*Sqrt[3]*a^2*b^2*c^2 - 2*Sqrt[3]*a^2*c^4 - 
+          6*a^4*S + 6*b^4*S - 12*b^2*c^2*S + 6*c^4*S))/
+        (Sqrt[3]*(-a^2 + b^2 + c^2)), (Sqrt[3]*a^2 - 2*S)*
+        (Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 - 2*S), 
+       (Sqrt[3]*a^2 - 2*S)*(Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S)}, 
+     "Vu-Dao-X(16)-isodynamic" -> 
+      {(2*(Sqrt[3]*a^6 + Sqrt[3]*a^4*b^2 - 2*Sqrt[3]*a^2*b^4 + 
+          Sqrt[3]*a^4*c^2 + 4*Sqrt[3]*a^2*b^2*c^2 - 2*Sqrt[3]*a^2*c^4 + 
+          6*a^4*S - 6*b^4*S + 12*b^2*c^2*S - 6*c^4*S))/
+        (Sqrt[3]*(-a^2 + b^2 + c^2)), (Sqrt[3]*a^2 + 2*S)*
+        (Sqrt[3]*a^2 + Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S), 
+       (Sqrt[3]*a^2 + 2*S)*(Sqrt[3]*a^2 - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S)}, 
+     "Walsmith" -> {(-2*a^6 - (b^2 - c^2)*(b^4 - c^4) + 
+         a^2*(3*b^4 - 4*b^2*c^2 + 3*c^4))/(2*a^4 - (b^2 - c^2)^2 - 
+         a^2*(b^2 + c^2)), b^2, c^2}, "Wasat" -> {-b - c, a - c, a - b}, 
+     "X-parabola-tangential" -> {-(b^2 - c^2)^2, (a^2 - c^2)^2, 
+       (a^2 - b^2)^2}, "X3-ABC reflections" -> 
+      {a^4 - 3*a^2*b^2 + 2*b^4 - 3*a^2*c^2 - 4*b^2*c^2 + 2*c^4, 
+       b^2*(a^2 - b^2 + c^2), c^2*(a^2 + b^2 - c^2)}, 
+     "Yff central" -> {2*a*Sin[A/2], a + b - c + 2*a*Sin[B/2], 
+       a - b + c + 2*a*Sin[C/2]}, "Yff contact" -> {0, -(a - c)^(-1), 
+       (a - b)^(-1)}, "inner-Yff" -> 
+      {-1/2*(a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + b*c + c^2))/(a*b*c), b, c}, 
+     "outer-Yff" -> {(a^4 - 2*a^2*b^2 + b^4 + 2*a^2*b*c - 2*a^2*c^2 - 
+         2*b^2*c^2 + c^4)/(2*a*b*c), b, c}, "inner-Yff tangents" -> 
+      {-1/4*((-a + b + c)*(a^3 + a^2*b - a*b^2 - b^3 + a^2*c + b^2*c - 
+           a*c^2 + b*c^2 - c^3))/(a*b*c), -b, -c}, "outer-Yff tangents" -> 
+      {((a - b - c)*(a^3 + a^2*(b + c) - (b - c)*(b^2 - c^2) + 
+          a*(-b^2 + 4*b*c - c^2)))/(4*a*b*c), b, c}, 
+     "Yiu" -> {(a^8 - 4*a^6*b^2 + 6*a^4*b^4 - 4*a^2*b^6 + b^8 - 4*a^6*c^2 + 
+         5*a^4*b^2*c^2 + a^2*b^4*c^2 - 2*b^6*c^2 + 6*a^4*c^4 + a^2*b^2*c^4 + 
+         2*b^4*c^4 - 4*a^2*c^6 - 2*b^2*c^6 + c^8)/(b*c), 
+       b*c*(a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4), 
+       b*c*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2)}, 
+     "Yiu tangents" -> {-1, (a^2 + 2*b^2 - c^2)/(2*a^2 + b^2 - c^2), 
+       (a^2 - b^2 + 2*c^2)/(2*a^2 - b^2 + c^2)}, 
+     "1st Zaniah" -> {2*a, a + b - c, a - b + c}, 
+     "2nd Zaniah" -> {2*a, a - b + c, a + b - c}, 
+     "Gemini 1" -> {a, b + c, b + c}, "Gemini 2" -> {-a, b + c, b + c}, 
+     "Gemini 3" -> {a, a + b, a + c}, "Gemini 4" -> {-a, a + b, a + c}, 
+     "Gemini 5" -> {a, a - b, a - c}, "Gemini 6" -> {a, -a + b, -a + c}, 
+     "Gemini 7" -> {a, a - c, a - b}, "Gemini 8" -> {a, -a + c, -a + b}, 
+     "Gemini 9" -> {a, -a + b + c, -a + b + c}, 
+     "Gemini 10" -> {-a, -a + b + c, -a + b + c}, 
+     "Gemini 11" -> {a, a + b + c, a + b + c}, "Gemini 12" -> 
+      {-a, a + b + c, a + b + c}, "Gemini 13" -> {b + c, a, a}, 
+     "Gemini 14" -> {b + c, 2*a, 2*a}, "Gemini 15" -> {b + c, b, c}, 
+     "Gemini 16" -> {b + c, c, b}, "Gemini 17" -> {b + c, b - c, -b + c}, 
+     "Gemini 18" -> {b + c, -b + c, b - c}, "Gemini 19" -> 
+      {b + c, a + b, a + c}, "Gemini 20" -> {2*b + 2*c, a, a}, 
+     "Gemini 21" -> {a + b + c, a, a}, "Gemini 22" -> {a + b + c, -a, -a}, 
+     "Gemini 23" -> {a + b + c, b + c, b + c}, "Gemini 24" -> 
+      {a + b + c, -b - c, -b - c}, "Gemini 25" -> {a + b + c, a + b, a + c}, 
+     "Gemini 26" -> {a + b + c, a + c, a + b}, "Gemini 27" -> 
+      {a - b - c, a, a}, "Gemini 28" -> {a - b - c, b + c, b + c}, 
+     "Gemini 29" -> {a, b - c, -b + c}, "Gemini 30" -> {a, -b + c, b - c}, 
+     "Gemini 31" -> {b*c, a^2, a^2}, "Gemini 32" -> {-(b*c), a^2, a^2}, 
+     "Gemini 33" -> {a^2, b*c, b*c}, "Gemini 34" -> {-a^2, b*c, b*c}, 
+     "Gemini 35" -> {Cos[A], 1, 1}, "Gemini 36" -> {-Cos[A], 1, 1}, 
+     "Gemini 37" -> {Sec[A], 1, 1}, "Gemini 38" -> {-Sec[A], 1, 1}, 
+     "Gemini 39" -> {-a + b + c, a + b + c, a + b + c}, 
+     "Gemini 40" -> {a + b + c, -a + b + c, -a + b + c}, 
+     "Gemini 41" -> {b^2 + c^2, a^2, a^2}, "Gemini 42" -> 
+      {a^2 + b^2 + c^2, a^2, a^2}, "Gemini 43" -> {a^2, b^2 + c^2, 
+       b^2 + c^2}, "Gemini 44" -> {-a^2, b^2 + c^2, b^2 + c^2}, 
+     "Gemini 45" -> {(b - c)^2, a^2, a^2}, "Gemini 46" -> 
+      {(b + c)^2, a^2, a^2}, "Gemini 47" -> {a^2, (b + c)^2, (b + c)^2}, 
+     "Gemini 48" -> {a^2, (b - c)^2, (b - c)^2}, 
+     "Gemini 49" -> {(b + c)^2, (b - c)^2, (b - c)^2}, 
+     "Gemini 50" -> {(b - c)^2, (b + c)^2, (b + c)^2}, 
+     "Gemini 51" -> {(b - c)^2, b^2 + c^2, b^2 + c^2}, 
+     "Gemini 52" -> {(b + c)^2, b^2 + c^2, b^2 + c^2}, 
+     "Gemini 53" -> {b^2 + c^2, (b - c)^2, (b - c)^2}, 
+     "Gemini 54" -> {b^2 + c^2, (b + c)^2, (b + c)^2}, 
+     "Gemini 55" -> {a^2, 2*b*c, 2*b*c}, "Gemini 56" -> {-a^2, 2*b*c, 2*b*c}, 
+     "Gemini 57" -> {b^2 + c^2, b*c, b*c}, "Gemini 58" -> 
+      {b^2 + c^2, -(b*c), -(b*c)}, "Gemini 59" -> {a*b + a*c - b*c, 
+       a*b + a*c + b*c, a*b + a*c + b*c}, "Gemini 60" -> 
+      {a*b + a*c + b*c, a*b + a*c - b*c, a*b + a*c - b*c}, 
+     "Gemini 61" -> {a*(a - b - c)*(a + b + c), (a + b - c)*(a - b + c)*
+        (b + c), (a + b - c)*(a - b + c)*(b + c)}, 
+     "Gemini 62" -> {(a*b - a*c + b*c)*(-(a*b) + a*c + b*c)*
+        (b^2 + b*c + c^2), (a*b - a*c - b*c)*(a*b + a*c - b*c)*(a*b + c^2), 
+       (b^2 + a*c)*(-(a*b) + a*c - b*c)*(a*b + a*c - b*c)}, 
+     "Gemini 63" -> {-b^2 - b*c - c^2, a*b + 2*a*c + 2*b*c + c^2, 
+       2*a*b + b^2 + a*c + 2*b*c}, "Gemini 64" -> 
+      {(a*b - a*c - b*c)*(a*b - a*c + b*c)*(b^2 - b*c + c^2), 
+       (a*b + a*c - b*c)*(-(a*b) + a*c + b*c)*(a*b - 2*b*c + c^2), 
+       (b^2 + a*c - 2*b*c)*(a*b + a*c - b*c)*(a*b - a*c + b*c)}, 
+     "Gemini 65" -> {(a - b - c)*(a + b + c), (a + b - c)*(a - b + c), 
+       (a + b - c)*(a - b + c)}, "Gemini 66" -> 
+      {(b + c)*(a^2 + 2*a*b + b^2 + 2*a*c + b*c + c^2), -(a*(a + b)*(a + c)), 
+       -(a*(a + b)*(a + c))}, "Gemini 67" -> 
+      {(2*a + b + c)*(a^2 + 2*a*b + b^2 + 2*a*c + b*c + c^2), 
+       a*(a + 2*b + c)*(a + b + 2*c), a*(a + 2*b + c)*(a + b + 2*c)}, 
+     "Gemini 68" -> {a*(a*b + b^2 + a*c + b*c + c^2), -(b*c*(b + c)), 
+       -(b*c*(b + c))}, "Gemini 69" -> {(b + c)*(-a^2 + b^2 - b*c + c^2), 
+       -(a*(a + b)*(a + c)), -(a*(a + b)*(a + c))}, 
+     "Gemini 70" -> {(a - 2*b - 2*c)*(a*b + b^2 + a*c - b*c + c^2), 
+       (2*a + 2*b - c)*(b + c)*(2*a - b + 2*c), (2*a + 2*b - c)*(b + c)*
+        (2*a - b + 2*c)}, "Gemini 71" -> {a*(a + b - 3*c)*(a - 3*b + c), 
+       (3*a - b - c)*(b - c)*(-a - b + 3*c), (3*a - b - c)*(b - c)*
+        (a - 3*b + c)}, "Gemini 72" -> {b*c*(a^2 - b*c)^2, 
+       a^2*(b^2 - a*c)*(-(a*b) + c^2), a^2*(b^2 - a*c)*(-(a*b) + c^2)}, 
+     "Gemini 73" -> {b*c*(a^4 - b^2*c^2), a^2*(b^2 + a*c)*(a*b + c^2), 
+       a^2*(b^2 + a*c)*(a*b + c^2)}, "Gemini 74" -> 
+      {(a^2 - b*c)^2, (b^2 - a*c)*(-(a*b) + c^2), 
+       (b^2 - a*c)*(-(a*b) + c^2)}, "Gemini 75" -> 
+      {a^4 - b^2*c^2, (-b^2 - a*c)*(a*b + c^2), (-b^2 - a*c)*(a*b + c^2)}, 
+     "Gemini 76" -> {(a + b + c)*(a^2 + b^2 - 2*b*c + c^2), 
+       2*b*(a - b - c)*c, 2*b*(a - b - c)*c}, "Gemini 77" -> 
+      {(a - b - c)^2*(a^2 + b^2 - 2*b*c + c^2), -2*b*(a + b - c)*c*
+        (a - b + c), -2*b*(a + b - c)*c*(a - b + c)}, 
+     "Gemini 78" -> {(a + b + c)*(a^2 + b^2 - 2*b*c + c^2), 
+       (-a + b + c)*(a^2 - b^2 - c^2), (-a + b + c)*(a^2 - b^2 - c^2)}, 
+     "Gemini 79" -> {(a - b - c)^2*(a^2 + b^2 - 2*b*c + c^2), 
+       (a + b - c)*(a - b + c)*(-a^2 + b^2 + c^2), (a + b - c)*(a - b + c)*
+        (-a^2 + b^2 + c^2)}, "Gemini 80" -> {a*(a*b + b^2 + a*c + c^2), 
+       -(b*c*(a + b + c)), -(b*c*(a + b + c))}, 
+     "Gemini 81" -> {a*(a*b + b^2 + a*c + c^2), b*(a - b - c)*c, 
+       b*(a - b - c)*c}, "Gemini 82" -> {(a^2 - b^2 - c^2)*(a^2 + b^2 + c^2), 
+       (a^2 + b^2 - c^2)*(a^2 - b^2 + c^2), (a^2 + b^2 - c^2)*
+        (a^2 - b^2 + c^2)}, "Gemini 83" -> 
+      {(b^2 + c^2)*(a^2 + b^2 - b*c + c^2)*(a^2 + b^2 + b*c + c^2), 
+       -(a^2*(a^2 + b^2)*(a^2 + c^2)), -(a^2*(a^2 + b^2)*(a^2 + c^2))}, 
+     "Gemini 84" -> {a^2*(a^2 - b^2 - c^2)*(a^2 + b^2 + c^2), 
+       (a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(b^2 + c^2), 
+       (a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(b^2 + c^2)}, 
+     "Gemini 85" -> {a^2 - a*b - a*c + 2*b*c, a*(a - b - c), a*(a - b - c)}, 
+     "Gemini 86" -> {(a - b - c)*(a^2 + a*b + a*c + 2*b*c), 
+       a*(a + b - c)*(a - b + c), a*(a + b - c)*(a - b + c)}, 
+     "Gemini 87" -> {a*(a - b - c)*(a^2 + a*b + a*c + 2*b*c), 
+       (a + b - c)*(a - b + c)*(b + c)^2, (a + b - c)*(a - b + c)*(b + c)^2}, 
+     "Gemini 88" -> {a*(a^2 - a*b - a*c + 2*b*c), (a - b - c)*(b - c)^2, 
+       (a - b - c)*(b - c)^2}, "Gemini 89" -> {(b + c)*(a^2 + b*c), 
+       -(a*(b - c)^2), -(a*(b - c)^2)}, "Gemini 90" -> 
+      {a^2 + b*c, -(a*b) - a*c, -(a*b) - a*c}, "Gemini 91" -> 
+      {a^2*b + a^2*c - 2*a*b*c + b^2*c + b*c^2, -(a*(b^2 + c^2)), 
+       -(a*(b^2 + c^2))}, "Gemini 92" -> {a^2*b + a^2*c + 2*a*b*c + b^2*c + 
+        b*c^2, -(a*(b^2 + c^2)), -(a*(b^2 + c^2))}, 
+     "Gemini 93" -> {a^2*b + a^2*c - 2*a*b*c + b^2*c + b*c^2, -(a*(b - c)^2), 
+       -(a*(b - c)^2)}, "Gemini 94" -> {a^2*b + a^2*c + 2*a*b*c + b^2*c + 
+        b*c^2, -(a*(b + c)^2), -(a*(b + c)^2)}, 
+     "Gemini 95" -> {(a^2 - 2*b*c)*(4*a^2 - b*c), 2*(b^2 - 2*a*c)*
+        (-2*a*b + c^2), 2*(b^2 - 2*a*c)*(-2*a*b + c^2)}, 
+     "Gemini 96" -> {(4*a^2 - b*c)*(a^2 + 2*b*c), -2*(b^2 + 2*a*c)*
+        (2*a*b + c^2), -2*(b^2 + 2*a*c)*(2*a*b + c^2)}, 
+     "Gemini 97" -> {(b^2 - b*c + c^2)*(a^4 + a^2*b^2 - a^2*b*c + a^2*c^2 + 
+         b^2*c^2), -(b*(a^2 - a*b + b^2)*c*(a^2 - a*c + c^2)), 
+       -(b*(a^2 - a*b + b^2)*c*(a^2 - a*c + c^2))}, 
+     "Gemini 98" -> {(b^2 + b*c + c^2)*(a^4 + a^2*b^2 - a^2*b*c + a^2*c^2 + 
+         b^2*c^2), b*(a^2 + a*b + b^2)*c*(a^2 + a*c + c^2), 
+       b*(a^2 + a*b + b^2)*c*(a^2 + a*c + c^2)}, 
+     "Gemini 99" -> {a*b^2 + b^2*c + a*c^2 + b*c^2, -(a*(a*b + a*c + b*c)), 
+       -(a*(a*b + a*c + b*c))}, "Gemini 100" -> 
+      {a*b^2 + b^2*c + a*c^2 + b*c^2, a*(-(a*b) - a*c + b*c), 
+       a*(-(a*b) - a*c + b*c)}, "Gemini 101" -> {a^2 - b^2 - c^2, 2*a^2, 
+       2*a^2}, "Gemini 102" -> {a - b - c, 2*a, 2*a}, 
+     "Gemini 103" -> {a^3 - b^3 - c^3, 2*a^3, 2*a^3}, 
+     "Gemini 104" -> {-(b*c), a*(b + c), a*(b + c)}, 
+     "Gemini 105" -> {-b - c, 2*a + b + c, 2*a + b + c}, 
+     "Gemini 106" -> {-b^2 - c^2, 2*a^2 + b^2 + c^2, 2*a^2 + b^2 + c^2}, 
+     "Gemini 107" -> {-1, 2, 2}, "Gemini 108" -> 
+      {3*a - b - c, 2*a - 2*b - 2*c, 2*a - 2*b - 2*c}, 
+     "Gemini 109" -> {1, 2, 2}, "Gemini 110" -> {2, 1, 1}, 
+     "Gemini 111" -> {-3, 1, 1}|>

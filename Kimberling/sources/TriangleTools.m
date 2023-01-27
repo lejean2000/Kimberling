@@ -571,8 +571,7 @@ bBicevianConic[{u1_, v1_, w1_}, {u2_, v2_, w2_}] :=
      v1*v2*(u2*w1 + u1*w2)*x*z + u1*u2*(v2*w1 + v1*w2)*y*z - u1*u2*v1*v2*z^2
  
 symmetrizeTriangle[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, 
-     {v1, v2, v3} = KimberlingTrianglesTrilinear[name]*{a, b, c}; 
+      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesBary[name]; 
       partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, sa -> sc, 
          SB -> SA, SC -> SB, SA -> SC}; 
       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
@@ -599,8 +598,7 @@ bOrthoassociate[P1_] := Module[{eq, g}, g[a_, b_, c_, p_, q_, r_] :=
 bTripoleL[L1_] := Module[{eq}, 1/L1]
  
 symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, 
-     ({v1, v2, v3} = KimberlingTrianglesTrilinear[name]*{a, b, c}; 
+      partC1, partC2, partC3}, ({v1, v2, v3} = KimberlingTrianglesBary[name]; 
        partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
           SA -> SB, SB -> SC, SC -> SA}; partB2 = 
         v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
@@ -704,3 +702,6 @@ symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] :=
       partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
          sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
+ 
+bToCartesianN[p_] := N[bToCartesian[p, {31/3, (4*Sqrt[35])/3}, {0, 0}, 
+       {6, 0}] /. rule69, 20]
