@@ -35,5 +35,13 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
          dD -> 4*qS*Sqrt[qR*(4*qR + qr)]}]]
  
 simplifyRationalBarycentrics[expr_] := Module[{out}, 
-     out = Simplify[expr*PolynomialLCM @@ Denominator[expr]]; 
+     out = Factor[expr*PolynomialLCM @@ Denominator[expr]]; 
       Simplify[out/PolynomialGCD @@ out]]
+ 
+ggCurve[expr_] := Print[StringJoin["TriangleCurve(A,B,C,", 
+      ExpressionToTrad[multiCollect[expr /. Thread[{u, v, w} -> {A, B, C}] /. 
+         Thread[{x, y, z} -> {A, B, C}], {A, B, C}]], "=0)"]]
+ 
+ggBaryToCartesian[p_] := Simplify[bToCartesian[p, {ax, ay}, {bx, by}, 
+       {cx, cy}]] /. {ax -> "x(A)", bx -> "x(B)", cx -> "x(C)", ay -> "y(A)", 
+      by -> "y(B)", cy -> "y(C)"}

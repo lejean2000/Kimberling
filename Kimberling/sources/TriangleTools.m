@@ -109,8 +109,8 @@ multiCollect[expr_, vars_] := Activate[Expand[Collect[expr, vars,
        Inactive[Simplify]]]]
  
 bAubertLine[aa_, bb_, cc_, dd_] := Module[{z}, 
-     z = bIntersection[aa, bb, cc, dd]; bLine[bCoordChange[orth[z, bb, cc], 
-        z, bb, cc], bCoordChange[orth[z, aa, dd], z, aa, dd]]]
+     z = bIntersection[aa, bb, cc, dd]; bLine[bCoordChangeK[4, z, bb, cc], 
+       bCoordChangeK[4, z, aa, dd]]]
  
 bAubertCenter[aa_, bb_, cc_, dd_] := Module[{l1, l2}, 
      l1 = bAubertLine[aa, bb, cc, dd]; l2 = bAubertLine[aa, bb, dd, cc]; 
@@ -124,12 +124,23 @@ bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{l2, l3},
      l2 = bAubertLine[aa, bb, dd, cc]; l3 = bAubertLine[aa, dd, bb, cc]; 
       bLineIntersection[l2, l3]]
  
-bKimberlingTriangle[name_] := Module[{A1, B1, C1}, 
-     Clear[a, b, c]; If[KeyExistsQ[KimberlingTrianglesTrilinear, name], 
-       A1 = KimberlingTrianglesTrilinear[name]; 
-        B1 = Permute[A1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
-        C1 = Permute[B1, Cycles[{{2, 3, 1}}]] /. {a -> b, b -> c, c -> a}; 
-        bFromTrilinear /@ {A1, B1, C1}]]
+bKimberlingTriangle[name_] := symmetrizeTriangleType2[name]
+ 
+symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
+      partC1, partC2, partC3}, ({v1, v2, v3} = KimberlingTrianglesBary[name]; 
+       partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
+        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
+        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
+        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA}; ); 
+      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
     b1*c2 - c1*b2 + c1*a2 - a1*c2 + a1*b2 - b1*a2 == 0
@@ -144,9 +155,8 @@ bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] :=
  
 bDistancePointLine[p_, l_] := Module[{p1, p2, p3, l1, l2, l3, tp}, 
      {p1, p2, p3} = p/Total[p]; {l1, l2, l3} = l; 
-      (1/2)*Sqrt[-(((a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))*
-           ({p1, p2, p3} . l)^2)/(a^2*(l1 - l2)*(l1 - l3) + 
-           b^2*(-l1 + l2)*(l2 - l3) + c^2*(l1 - l3)*(l2 - l3)))]]
+      S*Sqrt[({p1, p2, p3} . l)^2/(a^2*(l1 - l2)*(l1 - l3) + 
+          b^2*(-l1 + l2)*(l2 - l3) + c^2*(l1 - l3)*(l2 - l3))]]
  
 bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_}, 
      {p41_, p42_, p43_}] := Module[{ss}, 
@@ -597,22 +607,6 @@ bOrthoassociate[P1_] := Module[{eq, g}, g[a_, b_, c_, p_, q_, r_] :=
  
 bTripoleL[L1_] := Module[{eq}, 1/L1]
  
-symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, ({v1, v2, v3} = KimberlingTrianglesBary[name]; 
-       partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
-        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
-        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
-        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; ); 
-      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
-      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
-      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
- 
 bDaoConjugate[{u_, v_, w_}, {p_, q_, r_}] := {q*r*u*(-u + v + w), 
      p*r*v*(u - v + w), p*q*(u + v - w)*w}
  
@@ -690,18 +684,29 @@ symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
 symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] := 
     Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
      (partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
-        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
-        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
-        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; ); 
+          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+       partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+       partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+          sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; ); 
       partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bToCartesianN[p_] := N[bToCartesian[p, {31/3, (4*Sqrt[35])/3}, {0, 0}, 
        {6, 0}] /. rule69, 20]
+ 
+symmetrizeTriangleExprType1Bary[{v1_, v2_, v3_}] := 
+    Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
+     partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, sa -> sc, 
+         SB -> SA, SC -> SB, SA -> SC, v -> u, w -> v, u -> w}; 
+      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; partB3 = v3; 
+      partC1 = partB1; partC2 = v2; partC3 = 
+       partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]

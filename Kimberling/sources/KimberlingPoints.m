@@ -33,3 +33,8 @@ checkPointinETC[pt_] := MinimalBy[Value][
      (Total[Abs[#1 - NormalizeBary[pt]]] & ) /@ ETCBaryNorm]
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
+ 
+checkPointsOnCurve[crv_] := Module[{curve}, curve = evaluate[crv] /. rule69; 
+      dset = (Abs[curve] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
+      test = Select[dset, #1 < 10^(-15) & ]; 
+      (StringJoin["X(", StringTake[#1, {2, -1}], ")"] & ) /@ Keys[test]]
