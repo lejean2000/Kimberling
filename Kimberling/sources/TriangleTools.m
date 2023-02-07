@@ -710,3 +710,39 @@ symmetrizeTriangleExprType1Bary[{v1_, v2_, v3_}] :=
        partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
+ 
+bCircumconcevianM1[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    {u*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + a1*a3*b2*b3*u*v + 
+       a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
+       a2*a3*b1*b2*u*w + a1*a2*b2*b3*u*w - a1*a3*b1*b3*v^2 + 
+       a1*a2*b1*b2*w^2), v*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + 
+       a1*a3*b2*b3*u*v + a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*
+      ((-a2)*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + 
+       a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2), 
+     w*(a2*a3*b2*b3*u^2 - a1*a3*b1*b3*v^2 + a2*a3*b1*b2*u*w + 
+       a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*((-a2)*a3*b2*b3*u^2 + 
+       a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
+ 
+bCircumconcevianM2[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    {u*(a2*a3*b2*b3*u^2 - a2*a3*b1*b3*u*v - a1*a3*b2*b3*u*v + 
+       a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 - 
+       a2*a3*b1*b2*u*w - a1*a2*b2*b3*u*w - a1*a3*b1*b3*v^2 + 
+       a1*a2*b1*b2*w^2), v*(a2*a3*b2*b3*u^2 - a2*a3*b1*b3*u*v - 
+       a1*a3*b2*b3*u*v + a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*
+      ((-a2)*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 - a1*a3*b1*b2*v*w - 
+       a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2), 
+     w*(a2*a3*b2*b3*u^2 - a1*a3*b1*b3*v^2 - a2*a3*b1*b2*u*w - 
+       a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*((-a2)*a3*b2*b3*u^2 + 
+       a1*a3*b1*b3*v^2 - a1*a3*b1*b2*v*w - a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
+ 
+bCircumconcevianM3[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    {u*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + a1*a3*b2*b3*u*v + 
+       a1*a3*b1*b3*v^2 + a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
+       a2*a3*b1*b2*u*w + a1*a2*b2*b3*u*w + a1*a3*b1*b3*v^2 + 
+       a1*a2*b1*b2*w^2), v*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + 
+       a1*a3*b2*b3*u*v + a1*a3*b1*b3*v^2 + a1*a2*b1*b2*w^2)*
+      (a2*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + 
+       a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2), 
+     w*(a2*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 + a2*a3*b1*b2*u*w + 
+       a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
+       a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
