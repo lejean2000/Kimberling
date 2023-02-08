@@ -20,10 +20,12 @@ ruleAbsSquare = {Abs[x___]^2 :> x^2}
  
 rule69 = {a -> 6, b -> 9, c -> 13}
  
-checkCurves[pt_] := Do[ptest = NormalizeBary[(evaluate /. rule69)[pt]]; 
-      d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
-      If[Abs[d] < 10^(-10), Print[name]; Print[N[d]]]; , 
-     {name, Keys[TriangleCurves]}]
+checkCurves[pt_] := Module[{out}, out = {}; 
+      Do[ptest = NormalizeBary[(evaluate /. rule69)[pt]]; 
+        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
+       {name, Keys[TriangleCurves]}]; If[Length[out] > 0, 
+       Print[StringJoin["Lies on curves: ", StringRiffle[out, ", "]]]; ]; ]
  
 checkCurvesSymb[pt_] := Do[curve = getTriangleCurve[name]; 
       If[Simplify[curve /. Thread[{x, y, z} -> pt]] == 0, Print[name]]; , 
