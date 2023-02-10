@@ -746,3 +746,67 @@ bCircumconcevianM3[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
      w*(a2*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 + a2*a3*b1*b2*u*w + 
        a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
        a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
+ 
+bPerspectorGeneric[mx_, pa_, pb_, pc_] := Module[{pla, plb, plc, a1, b1}, 
+     pla = bPolar[mx, pa]; plb = bPolar[mx, pb]; plc = bPolar[mx, pc]; 
+      a1 = bLineIntersection[plb, plc]; b1 = bLineIntersection[plc, pla]; 
+      bLineIntersection[bLine[pa, a1], bLine[pb, b1]]]
+ 
+b4thConicIntersection[{x1_, y1_, z1_}, {x2_, y2_, z2_}, {x3_, y3_, z3_}, 
+     {ix_, iy_, iz_}, {hx_, hy_, hz_}] := 
+    {hz^2*(3*iy^2*x1*x2*x3 - 2*ix*iy*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) + 
+        ix^2*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3)) + 
+      hy^2*(3*iz^2*x1*x2*x3 - 2*ix*iz*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) + 
+        ix^2*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3)) + 
+      hx*hy*(-2*iz^2*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) + 
+        2*iy*iz*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) + 
+        ix*iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+          x1*y2*z3) - 2*ix*iy*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3)) + 
+      hx^2*(iz^2*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3) - 
+        iy*iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+          x1*y2*z3) + iy^2*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3)) + 
+      hz*(hx*(2*iy*iz*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) - 
+          2*ix*iz*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3) - 
+          2*iy^2*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) + 
+          ix*iy*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+            x1*y2*z3)) - hy*(6*iy*iz*x1*x2*x3 - 
+          2*ix*iy*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) + 
+          ix*(-2*iz*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) + 
+            ix*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+              x1*y2*z3)))), 
+     hz^2*(3*ix^2*y1*y2*y3 + iy^2*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) - 
+        2*ix*iy*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3)) + 
+      hy^2*(iz^2*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) - 
+        ix*iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+          x1*y2*z3) + ix^2*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3)) + 
+      hx*hy*(-2*iz^2*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3) + 
+        iy*iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+          x1*y2*z3) + 2*ix*iz*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3) - 
+        2*ix*iy*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3)) + 
+      hx^2*(3*iz^2*y1*y2*y3 - 2*iy*iz*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3) + 
+        iy^2*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3)) + 
+      hz*(hy*(-2*iy*iz*(x2*x3*y1 + x1*x3*y2 + x1*x2*y3) + 
+          2*ix*iz*(x3*y1*y2 + x2*y1*y3 + x1*y2*y3) + 
+          ix*iy*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+            x1*y2*z3) - 2*ix^2*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3)) - 
+        hx*(6*ix*iz*y1*y2*y3 + iy^2*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + 
+            x1*y3*z2 + x2*y1*z3 + x1*y2*z3) - 2*iy*(iz*x3*y1*y2 + 
+            iz*x2*y1*y3 + iz*x1*y2*y3 + ix*y2*y3*z1 + ix*y1*y3*z2 + 
+            ix*y1*y2*z3))), hz^2*(iy^2*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) - 
+        ix*iy*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+          x1*y2*z3) + ix^2*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3)) + 
+      hy^2*(3*ix^2*z1*z2*z3 + iz^2*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) - 
+        2*ix*iz*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3)) + 
+      hx^2*(3*iy^2*z1*z2*z3 + iz^2*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3) - 
+        2*iy*iz*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3)) - 
+      hx*hy*(6*ix*iy*z1*z2*z3 + iz^2*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + 
+          x1*y3*z2 + x2*y1*z3 + x1*y2*z3) - 2*iz*(iy*x3*z1*z2 + ix*y3*z1*z2 + 
+          iy*x2*z1*z3 + ix*y2*z1*z3 + iy*x1*z2*z3 + ix*y1*z2*z3)) + 
+      hz*(hx*(iy*iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+            x1*y2*z3) - 2*ix*iz*(y2*y3*z1 + y1*y3*z2 + y1*y2*z3) - 
+          2*iy^2*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3) + 
+          2*ix*iy*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3)) + 
+        hy*(-2*iy*iz*(x2*x3*z1 + x1*x3*z2 + x1*x2*z3) + 
+          2*ix*iy*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3) + 
+          ix*(iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
+              x1*y2*z3) - 2*ix*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3))))}
