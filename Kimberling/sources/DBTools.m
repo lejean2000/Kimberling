@@ -76,23 +76,23 @@ pointCheckAllProcesses[pt_] := Module[{res},
        {name, Keys[singlePointProcesses]}]; ]
  
 checkCircumconics[pt_, start_:1, time_:60, excl_:0] := 
-    Module[{ptc, p1, p2, crv, dset, test, out, conicname}, 
-     TimeConstrained[out = {}; ptc = N[Normalize[pt /. rule69], 35]; 
-       Do[funcind = nx; crv = N[bFivePointConicEq[{1, 0, 0}, {0, 1, 0}, 
-             {0, 0, 1}, ptc, ETCBaryNorm[StringJoin["X", ToString[nx]]]] /. 
-            rule69, 35]; dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ 
-           ETCBaryNorm; test = Select[dset, #1 < 10^(-10) & ]; 
-         If[Length[test] > 1, p1 = ToExpression[StringTake[Keys[test][[1]], 
-              {2, -1}]]; p2 = ToExpression[StringTake[Keys[test][[2]], 
-              {2, -1}]]; If[p1 == excl || p2 == excl, Continue[]]; 
-           If[Simplify[bFivePointConicEq[{1, 0, 0}, {0, 1, 0}, {0, 0, 1}, 
-                KimberlingCenterCN[p1], KimberlingCenterCN[p2]] /. Thread[
-                {x, y, z} -> pt]] == 0, conicname = StringJoin["{A,B,C,X(", 
-               ToString[p1], "),X(", ToString[p2], ")}"]; 
-             If[ !MemberQ[out, conicname], AppendTo[out, conicname]]]; ]; , 
-        {nx, start, start + Max[1, Floor[time/60]]*200}]; 
-       If[Length[out] > 0, Print[StringJoin["Lies on circumconics: ", 
-           StringRiffle[out, ", "]]]; ]; Return[funcind]; , time, funcind]]
+    Module[{ptc, p1, p2, crv, dset, test, out, conicname, check}, 
+     TimeConstrained[out = {}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+        Do[funcind = nx; crv = N[bCircumconicEq[ptc, ETCBaryNorm[StringJoin[
+                "X", ToString[nx]]]] /. rule69, 35]; 
+          dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
+          test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
+           p1 = ToExpression[StringTake[Keys[test][[1]], {2, -1}]]; 
+            p2 = ToExpression[StringTake[Keys[test][[2]], {2, -1}]]; 
+            If[p1 == excl || p2 == excl, Continue[]]; 
+            check = Simplify[bCircumconicEq[KimberlingCenterCN[p1], 
+                KimberlingCenterCN[p2]] /. Thread[{x, y, z} -> pt]]; 
+            If[check == 0, conicname = StringJoin["{A,B,C,X(", ToString[p1], 
+                "),X(", ToString[p2], ")}"]; If[ !MemberQ[out, conicname], 
+               AppendTo[out, conicname]]]; ]; , {nx, start, 
+          start + Max[1, Floor[time/60]]*200}]; , time, funcind]; 
+      If[Length[out] > 0, Print[StringJoin["Lies on circumconics: ", 
+          StringRiffle[out, ", "]]]; ]; Return[funcind]; ]
  
 ffcrossconjugate[var_, ptx_] := Module[{local}, 
      local = bCrossConjugate[ptx, var]; Return[NormalizeBary[local]]; ]
@@ -101,11 +101,11 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
      local = bPIsogonalConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
       Return[NormalizeBary[local]]; ]
  
-linesProcessAlg[ptcoord_, prec_:20, debug_:False, abort_:True] := 
+linesProcessAlg[ptcoord_, printexpr_, prec_:20, debug_:False, abort_:True] := 
     Module[{res, gr, hg, out, head, test, test2, hgroups, ptc, unproven, rc, 
-      rc2, eltest}, rc = {a -> 5, b -> 6, c -> 7}; 
+      rc2, eltest, sout}, rc = {a -> 5, b -> 6, c -> 7}; 
       rc2 = {a -> 4, b -> 11, c -> 13}; 
-      ptc = N[NormalizeBary[ptcoord /. rule69], 35]; 
+      ptc = N[NormalizeBary[evaluate[ptcoord] /. rule69], 35]; 
       res = intLinesProcessFullGroups[ptc, prec]; 
       gr = (StringJoin["{", StringTake[#1[[1]][[1]], {2, -1}], ",", 
           StringTake[#1[[2]][[1]], {2, -1}], "}"] & ) /@ res[[1]]; out = {}; 
@@ -118,7 +118,15 @@ linesProcessAlg[ptcoord_, prec_:20, debug_:False, abort_:True] :=
            KimberlingCenterCN[ToExpression[el][[2]]] /. rc2, ptcoord /. rc2], 
           10, -1]; If[TrueQ[Simplify[test] == 0] && 
           TrueQ[Simplify[test2] == 0], AppendTo[out, el], 
-         AppendTo[unproven, el]]; , {el, gr}]; 
+         AppendTo[unproven, el]]; , {el, gr}]; If[Length[out] >= 2, 
+       sout = SortBy[({ToExpression[StringTake[#1[[1]][[1]], {2, -1}]], 
+             ToExpression[StringTake[#1[[2]][[1]], {2, -1}]]} & ) /@ 
+           res[[1]], #1[[1]]*#1[[2]] & ]; 
+        Print[ToString[StringJoin["X(", ToString[Evaluate[sout[[1]][[1]]]], 
+           ")X(", ToString[Evaluate[sout[[1]][[2]]]], ")\:2229X(", 
+           ToString[Evaluate[sout[[2]][[1]]]], ")X(", 
+           ToString[Evaluate[sout[[2]][[2]]]], ")"]]]; ]; 
+      Print[StringJoin["Barycentrics    ", ExpressionToTrad[printexpr]]]; 
       Print[StringJoin["Lies on lines: ", StringRiffle[out, ", "]]]; 
       If[abort && Length[out] < 3, Return[out, Module]; ]; hg = {}; 
       Do[head = Select[igroup, Length[#1] == 0 & ]; 
@@ -145,9 +153,9 @@ linesProcessAlg[ptcoord_, prec_:20, debug_:False, abort_:True] :=
         If[TrueQ[Simplify[test] == 0] && TrueQ[Simplify[test2] == 0], 
          AppendTo[hg, eltest]; ]; , {igroup, intMidpointProcess[res[[2]], 
          ptc, prec]}]; If[Length[hg] > 0, 
-       Print["= midpoint of X(i) in X(j) for these {i,j}: "]; 
-        Print[ToString[SortBy[hg, ToExpression[#1[[1]]] & ]]]; ]; hg = {}; 
-      Do[eltest = (StringTake[#1, {2, -1}] & ) /@ igroup; 
+       Print[StringJoin["= midpoint of X(i) in X(j) for these {i,j}: ", 
+          StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
+      hg = {}; Do[eltest = (StringTake[#1, {2, -1}] & ) /@ igroup; 
         test = Det[{{1, 1, 1}, bReflectionPP[KimberlingCenterCN[
               eltest[[1]]] /. rc, KimberlingCenterCN[eltest[[2]]] /. rc], 
            ptcoord /. rc}]; test2 = Det[{{1, 1, 1}, bReflectionPP[
@@ -462,14 +470,14 @@ ffvertexconjugate[pt1_, pt2_] := Module[{local},
      local = bVertexConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
       Return[NormalizeBary[local]]; ]
  
-pointChecker[expr_, num:0] := Module[{full, ptcoord, pt, chk, lines}, 
+pointChecker[expr_, num:0] := Module[{full, ptcoord, pt, chk, lines, barys}, 
      ptcoord = evaluate[expr]; full = False; 
       pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       chk = checkPointinETC[pt]; If[chk[[1]] < 10^(-12), 
        Print[StringJoin["ETC: ", Keys[chk]]], 
-       Print[StringJoin["Barycentrics    ", ExpressionToTrad[expr[[1]]]]]; 
-        If[full, lines = Quiet[linesProcessAlg[ptcoord, 20, False, False]], 
-         lines = Quiet[linesProcessAlg[ptcoord]]; ]; 
+       barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
+        If[full, lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, 
+            False]], lines = Quiet[linesProcessAlg[ptcoord, barys]]; ]; 
         If[full || Length[lines] > 3, Quiet[checkCircumconics[ptcoord, 1, 60, 
             num]]; Quiet[checkCurves[ptcoord]]; Quiet[checkTrilinearPolar[
             ptcoord]]; PrintTemporary[1]; Quiet[checkIsogonalConjugates[
@@ -500,8 +508,9 @@ pointCheckerTransform[expr_, num_:0] := Module[{pointProcesses, deg, texpr},
         "ortoassociate" -> Hold[bOrthoassociate[#1]], "cundyParryPsi" -> 
          Hold[cundyParryPsi[#1]], "cundyParryPhi" -> 
          Hold[cundyParryPhi[#1]]]; 
-      Do[texpr = simplifyRationalBarycentrics[ReleaseHold[
-           pointProcesses[name] /. #1 -> expr]]; 
-        deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[
-          texpr[[1]]]; If[deg <= 20, Print[name]; pointChecker[texpr, 
-           num]; ], {name, Keys[pointProcesses]}]; ]
+      Do[texpr = simplifyRationalBarycentrics[
+          Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 
+                expr]]]]]; deg = (Max[Apply[Plus, CoefficientRules[#1][[All,
+              1]], {1}]] & )[texpr[[1]]]; If[deg <= 20, 
+         Print[name]; pointChecker[texpr, num]; ], 
+       {name, Keys[pointProcesses]}]; ]

@@ -810,3 +810,7 @@ b4thConicIntersection[{x1_, y1_, z1_}, {x2_, y2_, z2_}, {x3_, y3_, z3_},
           2*ix*iy*(x3*z1*z2 + x2*z1*z3 + x1*z2*z3) + 
           ix*(iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
               x1*y2*z3) - 2*ix*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3))))}
+ 
+bLineIntersectionETC[n1_, n2_, n3_, n4_] := bLineIntersection[
+     bLine[KimberlingCenterC[n1], KimberlingCenterC[n2]], 
+     bLine[KimberlingCenterC[n3], KimberlingCenterC[n4]]]
