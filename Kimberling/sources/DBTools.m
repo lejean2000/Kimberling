@@ -126,9 +126,10 @@ linesProcessAlg[ptcoord_, printexpr_, prec_:20, debug_:False, abort_:True] :=
            ")X(", ToString[Evaluate[sout[[1]][[2]]]], ")\:2229X(", 
            ToString[Evaluate[sout[[2]][[1]]]], ")X(", 
            ToString[Evaluate[sout[[2]][[2]]]], ")"]]]; ]; 
-      Print[StringJoin["Barycentrics    ", ExpressionToTrad[printexpr]]]; 
-      Print[StringJoin["Lies on lines: ", StringRiffle[out, ", "]]]; 
-      If[abort && Length[out] < 3, Return[out, Module]; ]; hg = {}; 
+      Print[StringJoin["Barycentrics    ", ExpressionToTrad[
+         Simplify[printexpr]]]]; Print[StringJoin["Lies on these lines: ", 
+        StringRiffle[out, ", "]]]; If[abort && Length[out] < 3, 
+       Return[out, Module]; ]; hg = {}; 
       Do[head = Select[igroup, Length[#1] == 0 & ]; 
         Do[If[el == head[[1]], Continue[]]; eltest = 
            (StringTake[#1, {2, -1}] & ) /@ Flatten[{el, head[[1]]}]; 

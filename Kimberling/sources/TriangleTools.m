@@ -830,3 +830,27 @@ bPerspeconic[a1_, b1_, c1_, a2_, b2_, c2_] := Module[{p1, p2, p3, p4, p5},
       p4 = bLineIntersection[bLine[a1, c1], bLine[b2, c2]]; 
       p5 = bLineIntersection[bLine[b1, c1], bLine[a2, b2]]; 
       bFivePointConicEq[p1, p2, p3, p4, p5]]
+ 
+bEllipse[f1_, f2_, k_] := Module[{expr}, 
+     expr = -(a^2*((-r1)*(x + y) + (p1 + q1)*z)*((p1 + r1)*y - q1*(x + z)) + 
+           b^2*((-r1)*(x + y) + (p1 + q1)*z)*(q1*x + r1*x - p1*(y + z)) + 
+           c^2*((p1 + r1)*y - q1*(x + z))*(q1*x + r1*x - p1*(y + z)))^2 - 
+        (k^2*(x + y + z)^2 + (r2*(x + y) - (p2 + q2)*z)*
+           (a^2*((p2 + r2)*y - q2*(x + z)) + b^2*(q2*x + r2*x - 
+              p2*(y + z))) + c^2*(q2^2*x*(x + z) + (p2 + r2)*y*
+             ((-r2)*x + p2*(y + z)) + q2*(r2*x*(x - y + z) - p2*(z*(y + z) + 
+                x*(2*y + z)))))^2 - 2*(k^2*(x + y + z)^2 + 
+          (r2*(x + y) - (p2 + q2)*z)*(a^2*((p2 + r2)*y - q2*(x + z)) + 
+            b^2*(q2*x + r2*x - p2*(y + z))) + c^2*(q2^2*x*(x + z) + 
+            (p2 + r2)*y*((-r2)*x + p2*(y + z)) + q2*(r2*x*(x - y + z) - 
+              p2*(z*(y + z) + x*(2*y + z)))))*
+         (a^2*((-r1)*(x + y) + (p1 + q1)*z)*((p1 + r1)*y - q1*(x + z)) + 
+          b^2*((-r1)*(x + y) + (p1 + q1)*z)*(q1*x + r1*x - p1*(y + z)) + 
+          c^2*((p1 + r1)*y - q1*(x + z))*(q1*x + r1*x - p1*(y + z))) - 
+        4*k^2*(x + y + z)^2*(a^2*((-r2)*(x + y) + (p2 + q2)*z)*
+           ((p2 + r2)*y - q2*(x + z)) + b^2*((-r2)*(x + y) + (p2 + q2)*z)*
+           (q2*x + r2*x - p2*(y + z)) + c^2*((p2 + r2)*y - q2*(x + z))*
+           (q2*x + r2*x - p2*(y + z))); pr = PolynomialReduce[expr, 
+        (x + y + z)^2, {x, y, z}]; 
+      pr[[1]][[1]] /. Thread[{p1, q1, r1} -> f1/Total[f1]] /. 
+       Thread[{p2, q2, r2} -> f2/Total[f2]]]
