@@ -854,3 +854,7 @@ bEllipse[f1_, f2_, k_] := Module[{expr},
         (x + y + z)^2, {x, y, z}]; 
       pr[[1]][[1]] /. Thread[{p1, q1, r1} -> f1/Total[f1]] /. 
        Thread[{p2, q2, r2} -> f2/Total[f2]]]
+ 
+bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    Simplify[bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
+      bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]]
