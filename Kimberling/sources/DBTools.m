@@ -22,13 +22,11 @@ pointProcessBaryWriter[pointsBary_, prefix_] :=
 singlePointProcesses = <|"complement" -> 
       Hold[bComplement[KimberlingCenterC[2], #1]], 
      "anticomplement" -> Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
-     "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
+     "polar conjugate" -> Hold[bPIsogonalConjugate[KimberlingCenterCN[48], 
+        #1]], "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
      "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
      "circlecevian perspector" -> Hold[bCirclecevianPerspector[#1]], 
      "zosma transform" -> Hold[bZosmaTransform[#1]], 
-     "antitomic conjugate" -> Hold[bAntitomicConjugate[#1]], 
-     "barycentric square" -> Hold[#1^2], "polar conjugate" -> 
-      Hold[bPIsogonalConjugate[KimberlingCenterCN[48], #1]], 
      "anticomplement of isogonal conjugate" -> 
       Hold[bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
      "anticomplement of isotomic conjugate" -> 
@@ -39,7 +37,8 @@ singlePointProcesses = <|"complement" ->
       Hold[bComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
      "tcc_perspector" -> Hold[bTCCPerspector[#1]], 
      "eigentransform" -> Hold[bEigentransform[#1]], 
-     "ortoassociate" -> Hold[bOrthoassociate[#1]], "syngonal conjugate" -> 
+     "ortoassociate" -> Hold[bOrthoassociate[#1]], "antitomic conjugate" -> 
+      Hold[bAntitomicConjugate[#1]], "syngonal conjugate" -> 
       Hold[bSyngonal[#1]], "1st saragossa point" -> Hold[bSaragossa1[#1]], 
      "2nd saragossa point" -> Hold[bSaragossa2[#1]], 
      "3rd saragossa point" -> Hold[bSaragossa3[#1]]|>
@@ -471,9 +470,17 @@ ffvertexconjugate[pt1_, pt2_] := Module[{local},
      local = bVertexConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
       Return[NormalizeBary[local]]; ]
  
-pointChecker[expr_, num:0] := Module[{full, ptcoord, pt, chk, lines, barys}, 
-     ptcoord = evaluate[expr]; full = False; 
-      pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+pointChecker[expr_, num_:0, full_:False] := 
+    Module[{ptcoord, pt, chk, lines, barys, symcheck}, 
+     ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+      symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
+           rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
+       Print[ptcoord]; Print["expression is not symmetric"]; 
+        Return[False, Module]; ]; If[Length[globalSeenPoints] > 0 && 
+        First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
+            globalSeenPoints]] <= 10^(-20), Print[ptcoord[[1]]]; 
+        Print["Point seen"]; Return[False, Module], 
+       AppendTo[globalSeenPoints, {ptcoord, pt}]; ]; 
       chk = checkPointinETC[pt]; If[chk[[1]] < 10^(-12), 
        Print[StringJoin["ETC: ", Keys[chk]]], 
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
@@ -481,17 +488,16 @@ pointChecker[expr_, num:0] := Module[{full, ptcoord, pt, chk, lines, barys},
             False]], lines = Quiet[linesProcessAlg[ptcoord, barys]]; ]; 
         If[full || Length[lines] > 3, Quiet[checkCircumconics[ptcoord, 1, 60, 
             num]]; Quiet[checkCurves[ptcoord]]; Quiet[checkTrilinearPolar[
-            ptcoord]]; PrintTemporary[1]; Quiet[checkIsogonalConjugates[
-            ptcoord]]; PrintTemporary[2]; Quiet[checkDaoConjugates[ptcoord]]; 
-          PrintTemporary[3]; Quiet[checkCevaConjugates[ptcoord]]; 
-          PrintTemporary[4.1]; Quiet[checkVertexConjugates[ptcoord]]; 
-          PrintTemporary[4.2]; Quiet[checkComplementaryConjugates[ptcoord]]; 
-          PrintTemporary[5.1]; Quiet[checkAnticomplementaryConjugates[
-            ptcoord]]; PrintTemporary[5.2]; Quiet[checkCrossConjugates[
-            ptcoord]]; PrintTemporary[6]; Quiet[checkBarycentricProduct[
-            ptcoord]]; PrintTemporary[7]; Quiet[checkBarycentricQuotient[
-            ptcoord]]; PrintTemporary[8]; TimeConstrained[
-           Quiet[pointCheckAllProcesses[ptcoord]], 60]; ]; ]; ]
+            ptcoord]]; Quiet[checkIsogonalConjugates[ptcoord]]; 
+          Quiet[checkDaoConjugates[ptcoord]]; Quiet[checkCevaConjugates[
+            ptcoord]]; Quiet[checkVertexConjugates[ptcoord]]; 
+          Quiet[checkComplementaryConjugates[ptcoord]]; 
+          Quiet[checkAnticomplementaryConjugates[ptcoord]]; 
+          Quiet[checkCrossConjugates[ptcoord]]; Quiet[checkBarycentricProduct[
+            ptcoord]]; Quiet[checkBarycentricQuotient[ptcoord]]; 
+          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord]], 60]; ]; ]; ]
+ 
+globalSeenPoints = {}
  
 pointCheckerTransform[expr_, num_:0] := Module[{pointProcesses, deg, texpr}, 
      pointChecker[expr]; pointProcesses = Association["isotomic conjugate" -> 
@@ -506,8 +512,8 @@ pointCheckerTransform[expr_, num_:0] := Module[{pointProcesses, deg, texpr},
         "antitomic conjugate" -> Hold[bAntitomicConjugate[#1]], 
         "polar conjugate" -> Hold[bPIsogonalConjugate[KimberlingCenterCN[48], 
            #1]], "eigentransform" -> Hold[bEigentransform[#1]], 
-        "ortoassociate" -> Hold[bOrthoassociate[#1]], "cundyParryPsi" -> 
-         Hold[cundyParryPsi[#1]], "cundyParryPhi" -> 
+        "collings transform" -> Hold[bCollingsTransform[#1]], 
+        "cundyParryPsi" -> Hold[cundyParryPsi[#1]], "cundyParryPhi" -> 
          Hold[cundyParryPhi[#1]]]; 
       Do[texpr = simplifyRationalBarycentrics[
           Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 

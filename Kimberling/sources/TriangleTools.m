@@ -667,6 +667,10 @@ bImplicitTangent[crv_, pt_] := x*(D[crv, x] /. Thread[{x, y, z} -> pt]) +
      y*(D[crv, y] /. Thread[{x, y, z} -> pt]) + 
      z*(D[crv, z] /. Thread[{x, y, z} -> pt])
  
+bLineFromEq[lineq_] := {lineq /. Thread[{x, y, z} -> {1, 0, 0}], 
+     lineq /. Thread[{x, y, z} -> {0, 1, 0}], 
+     lineq /. Thread[{x, y, z} -> {0, 0, 1}]}
+ 
 bCollingsTransform[{u_, v_, w_}] := symmetrizeInternal2[
      1/((-b^2)*(u + v - w)*w + c^2*v*(u - v + w))]
  
@@ -683,14 +687,14 @@ symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
  
 symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] := 
     Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
-     (partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-       partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-       partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-          sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; ); 
+     partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+      partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
+      partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
          sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 

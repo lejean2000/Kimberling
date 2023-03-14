@@ -45,3 +45,7 @@ ggCurve[expr_] := Print[StringJoin["TriangleCurve(A,B,C,",
 ggBaryToCartesian[p_] := Simplify[bToCartesian[p, {ax, ay}, {bx, by}, 
        {cx, cy}]] /. {ax -> "x(A)", bx -> "x(B)", cx -> "x(C)", ay -> "y(A)", 
       by -> "y(B)", cy -> "y(C)"}
+ 
+homogeneousPart[poly_, vars_, deg_] := Module[{intt}, 
+     SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
+      intt -> 1]
