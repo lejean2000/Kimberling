@@ -276,12 +276,12 @@ checkPointOnConic[XX_, PA_, PB_, PC_, PD_, PE_] :=
       First[(Union[{x:Blank[Subscript] :> x}, Thread[{x, y, z} -> #1]] & ) /@ 
         {XX}]]
  
-bConicCenter[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
+bConicCenter[mx_] := Module[{m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
      If[ !MatrixQ[mx], {{m11, m12, m13}, {m12, m22, m23}, {m13, m23, m33}} = 
         conicEqtoMtx[mx], {{m11, m12, m13}, {m12, m22, m23}, 
-         {m13, m23, m33}} = mx]; p = {-m23^2 + (m13 + m12)*m23 + m22*m33 - 
-         m13*m22 - m12*m33, -m13^2 + (m12 + m23)*m13 + m11*m33 - m12*m33 - 
-         m23*m11, -m12^2 + (m23 + m13)*m12 + m11*m22 - m23*m11 - m13*m22}]
+         {m13, m23, m33}} = mx]; {-m23^2 + (m13 + m12)*m23 + m22*m33 - 
+        m13*m22 - m12*m33, -m13^2 + (m12 + m23)*m13 + m11*m33 - m12*m33 - 
+        m23*m11, -m12^2 + (m23 + m13)*m12 + m11*m22 - m23*m11 - m13*m22}]
  
 conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y], 
       (1/2)*Coefficient[eq, x*z]}, {(1/2)*Coefficient[eq, x*y], 
