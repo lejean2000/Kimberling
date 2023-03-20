@@ -1,0 +1,419 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     16565,        411]
+NotebookOptionsPosition[     12928,        353]
+NotebookOutlinePosition[     13369,        370]
+CellTagsIndexPosition[     13326,        367]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";", 
+  RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../sources/KimberlingPoints.m\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../sources/TriangleTools.m\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../db/ETC.mx\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../db/ETCBaryNorm.mx\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../sources/TriangleCurves.m\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../sources/TriangleExpressions.m\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<../sources/DBTools.m\>\"", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.888287833749767*^9, 3.8882878454425592`*^9}},
+ Background->RGBColor[
+  0.9, 1, 1],ExpressionUUID->"c31269e5-7e22-413d-abea-fa61943a113a"],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"All", " ", "points", " ", "checked", " ", "by", " ", 
+    RowBox[{"pointChecker", "[", "]"}], " ", "in", " ", "the", " ", "current",
+     " ", "session", " ", "are", " ", "stored", " ", "here", " ", "for", " ", 
+    "reference"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"globalSeenPoints", "=", 
+     RowBox[{"List", "[", "]"}]}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.8881236867338724`*^9, 3.8881236867338724`*^9}, 
+   3.888127559663309*^9, {3.8882869666160636`*^9, 3.888287044998674*^9}, {
+   3.888287080242749*^9, 3.888287141397332*^9}, {3.8882874598178215`*^9, 
+   3.8882875513692207`*^9}, {3.8882877531651416`*^9, 3.888287777564823*^9}, {
+   3.8882880764330997`*^9, 
+   3.8882880962399125`*^9}},ExpressionUUID->"47ca50a0-e387-478c-a079-\
+a8745090140e"],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "This", " ", "is", " ", "the", " ", "point", " ", "to", " ", "be", " ", 
+     RowBox[{"checked", ".", " ", "Either"}], " ", "pass", " ", "all", " ", 
+     "three", " ", "barycentrics", " ", "or", " ", "pass", " ", "the", " ", 
+     "A"}], "-", 
+    RowBox[{"coordinate", " ", "only", " ", "to", " ", 
+     RowBox[{
+      RowBox[{"symmetrizeInternal", "[", "]"}], "."}]}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ptcoord", "=", 
+    RowBox[{"symmetrizeInternal", "[", 
+     FractionBox["1", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", 
+         SuperscriptBox["a", "2"]}], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"b", "-", "c"}], ")"}], "2"]}], "-", 
+       RowBox[{"b", " ", "c", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["b", "2"], "+", 
+          SuperscriptBox["c", "2"]}], ")"}]}], "+", 
+       RowBox[{"a", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["b", "3"], "+", 
+          SuperscriptBox["c", "3"]}], ")"}]}]}]], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.888288693623967*^9, 
+  3.888288701545435*^9}},ExpressionUUID->"86cbcabc-3d21-4174-8e99-\
+809a55a7ab0e"],
+
+Cell["\<\
+This function checks for some basic properties. They will be printed as they \
+are found. It takes several minutes to run.
+First parameter - the point to check
+Second parameter - the ETC number of the code; zero if it is not in ETC or \
+unknown; 
+Third parameter - True is the code must check all properties regardless of \
+its heuristics showing the point is not interesting
+Fourth parameter - point name, can be any string unique for the Mathematica \
+session\
+\>", "Text",
+ CellChangeTimes->{{3.8882877371615767`*^9, 3.8882877409572287`*^9}, {
+  3.888287928776467*^9, 3.8882879368777122`*^9}, {3.888288138662718*^9, 
+  3.888288251071865*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"6b497b3a-a91a-4ef1-8d55-8a628e66f934"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pointChecker", "[", 
+   RowBox[{"ptcoord", ",", "0", ",", "False", ",", "\"\<NewPoint1\>\""}], 
+   "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.8882881066977367`*^9, 3.8882881072957945`*^9}},
+ Background->RGBColor[
+  1, 0.85, 0.85],ExpressionUUID->"7bc24668-e8a1-4d0f-af3c-2bf73ed14cb9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"X(100)X(192)\:2229X(75)X(4598)\"\>"], "Print",
+ CellChangeTimes->{3.888287149775666*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"74f3c975-a70d-49cc-afb2-57f3c880ff1f"],
+
+Cell[BoxData["\<\"Barycentrics    \
+(-(a^2*(b-c)^2)-b*c*(b^2+c^2)+a*(b^3+c^3))^(-1)\"\>"], "Print",
+ CellChangeTimes->{3.888287149775666*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"75d51a9b-9988-4484-bc8d-4090013d8cc3"],
+
+Cell[BoxData["\<\"Lies on these lines: {75,4598}, {100,192}, {190,3501}, \
+{330,23772}, {651,3212}, {660,40848}, {662,33296}, {1492,52136}, {3248,9311}, \
+{27633,37137}\"\>"], "Print",
+ CellChangeTimes->{3.888287149791306*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"ecd381ff-b732-4530-9e9d-d4c560fbac0f"],
+
+Cell[BoxData["\<\"Lies on circumconics: {A,B,C,X(19),X(292)}, \
+{A,B,C,X(57),X(9432)}, {A,B,C,X(75),X(192)}, {A,B,C,X(86),X(16997)}, \
+{A,B,C,X(88),X(100)}\"\>"], "Print",
+ CellChangeTimes->{3.888287212049095*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"512e6c29-5174-4edf-b090-f1d104725034"],
+
+Cell[BoxData["\<\"= trilinear pole of line {1,3835}\"\>"], "Print",
+ CellChangeTimes->{3.8882872146731076`*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"5e56c1d3-78e7-4c35-a724-e9d46f0f831f"],
+
+Cell[BoxData["\<\"= X(i)-isoconjugate-of-X(j) for these {i, j}: {6, 9025}, \
+{55, 43062}\"\>"], "Print",
+ CellChangeTimes->{3.888287222385229*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"e59f09b1-f404-4342-b831-9cb971581b2b"],
+
+Cell[BoxData["\<\"= X(i)-Dao conjugate of X(j) for these {i, j}: {9, 9025}, \
+{223, 43062}\"\>"], "Print",
+ CellChangeTimes->{3.8882872253830795`*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"3215e691-b36c-4a08-9866-92304d181d3b"],
+
+Cell[BoxData["\<\"= barycentric product X(i)*X(j) for these (i, j): {75, \
+9082}\"\>"], "Print",
+ CellChangeTimes->{3.8882873071809683`*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"1a55a9ca-6390-4349-bb36-a2aaf05e79a7"],
+
+Cell[BoxData["\<\"= barycentric quotient X(i)/X(j) for these (i, j): {1, \
+9025}, {57, 43062}, {9082, 1}\"\>"], "Print",
+ CellChangeTimes->{3.88828730914014*^9},
+ CellLabel->
+  "During evaluation of \
+In[51]:=",ExpressionUUID->"b5818b5f-0d6e-4b2b-8888-3a0c137af654"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+The properties will be stored in the globalProperties variable and can be \
+printed like this.
+This format is more similar to the ETC format.\
+\>", "Text",
+ CellChangeTimes->{{3.8882877371615767`*^9, 3.8882877409572287`*^9}, {
+  3.888287928776467*^9, 3.8882879368777122`*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"528e0e02-a511-4b75-96fc-4032a8436fd9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"printGlobalProperties", "[", 
+   RowBox[{"globalProperties", ",", "\"\<NewPoint1\>\""}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.8882873434141965`*^9, 3.8882873650286016`*^9}, 
+   3.8882874094076905`*^9, {3.8882875697699375`*^9, 3.8882875977206016`*^9}, {
+   3.8882876795760155`*^9, 
+   3.888287732751293*^9}},ExpressionUUID->"50a31f9e-58a1-414e-83d4-\
+5d1b6727fe7b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988004227`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"4a8c1b98-b251-4b75-8527-79218c83eaaf"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988004227`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"a2fce913-dab2-4f58-a319-24a9ffeecb81"],
+
+Cell[BoxData["\<\"NewPoint1\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988004227`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"af3a08f8-4856-4d67-928c-7ac8f156e05e"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988004227`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"cd98ada3-ff7f-481b-97f8-bd80fa47c86e"],
+
+Cell[BoxData["\<\"X(100)X(192)\:2229X(75)X(4598)\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.888287698810018*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"8ef2ac3f-8a67-47e3-9e5e-26b6cfca8aa4"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.888287698810018*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"8ced87fd-f16e-4065-b920-05a1fe9a572e"],
+
+Cell[BoxData["\<\"Barycentrics    \
+(-(a^2*(b-c)^2)-b*c*(b^2+c^2)+a*(b^3+c^3))^(-1)\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.888287698810018*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"03f2810f-8673-4234-9294-e17d83d21278"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"42c2554c-735c-4c84-8ea3-665fc1b89052"],
+
+Cell[BoxData["\<\"lies on circumconics {A,B,C,X(19),X(292)}, \
+{A,B,C,X(57),X(9432)}, {A,B,C,X(75),X(192)}, {A,B,C,X(86),X(16997)}, \
+{A,B,C,X(88),X(100)} and on these lines: {75,4598}, {100,192}, {190,3501}, \
+{330,23772}, {651,3212}, {660,40848}, {662,33296}, {1492,52136}, {3248,9311}, \
+{27633,37137}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"42487464-0eee-42e0-a3b1-77895e284aad"],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"c3e29741-3b2f-41ca-a475-c881ee98de4c"],
+
+Cell[BoxData["\<\"= trilinear pole of line {1,3835}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"bd49235d-f41f-4309-9da8-6f3cc7f18eb6"],
+
+Cell[BoxData["\<\"= X(i)-isoconjugate-of-X(j) for these {i, j}: {6, 9025}, \
+{55, 43062}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"f79a58ba-daba-4247-9ab1-a5ef85bca1dc"],
+
+Cell[BoxData["\<\"= X(i)-Dao conjugate of X(j) for these {i, j}: {9, 9025}, \
+{223, 43062}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"9e7383cb-7434-4f8b-9e7b-040f4d42161c"],
+
+Cell[BoxData["\<\"= barycentric product X(i)*X(j) for these (i, j):  {75, \
+9082}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"8711a126-9735-4443-84af-f809635e6762"],
+
+Cell[BoxData["\<\"= barycentric quotient X(i)/X(j) for these (i, j):  {1, \
+9025}, {57, 43062}, {9082, 1}\"\>"], "Print",
+ CellChangeTimes->{{3.888287688049287*^9, 3.8882876988166256`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[66]:=",ExpressionUUID->"31e31260-5173-449b-9378-98eb0bfb143a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+If the point is already known there will be a message like this.\
+\>", "Text",
+ CellChangeTimes->{{3.8882877371615767`*^9, 3.8882877409572287`*^9}, {
+  3.888287928776467*^9, 3.888287962466329*^9}},
+ Background->RGBColor[
+  1, 1, 0.85],ExpressionUUID->"460ffadd-46d0-4ab0-b6d3-921b75801917"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"pointChecker", "[", 
+   RowBox[{"symmetrizeInternal2", "[", 
+    SuperscriptBox["a", "2"], "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.8882879706624627`*^9, 3.888288016529221*^9}},
+ CellLabel->"In[69]:=",ExpressionUUID->"3a912e4e-f241-42c3-870e-449e80b59223"],
+
+Cell[BoxData["\<\"ETC: X6\"\>"], "Print",
+ CellChangeTimes->{{3.8882879937505836`*^9, 3.8882880210016026`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[69]:=",ExpressionUUID->"7fdafac9-bcef-467e-addd-083ea4deb1b8"]
+}, Open  ]]
+},
+WindowSize->{1105.2, 615.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"c47ba2ff-bd16-4bcc-9cf4-3cbd481ca67b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1106, 28, 178, "Input",ExpressionUUID->"c31269e5-7e22-413d-abea-fa61943a113a"],
+Cell[1667, 50, 881, 17, 67, "Input",ExpressionUUID->"47ca50a0-e387-478c-a079-a8745090140e"],
+Cell[2551, 69, 1277, 36, 72, "Input",ExpressionUUID->"86cbcabc-3d21-4174-8e99-809a55a7ab0e"],
+Cell[3831, 107, 748, 15, 143, "Text",ExpressionUUID->"6b497b3a-a91a-4ef1-8d55-8a628e66f934"],
+Cell[CellGroupData[{
+Cell[4604, 126, 323, 7, 44, "Input",ExpressionUUID->"7bc24668-e8a1-4d0f-af3c-2bf73ed14cb9"],
+Cell[CellGroupData[{
+Cell[4952, 137, 211, 4, 22, "Print",ExpressionUUID->"74f3c975-a70d-49cc-afb2-57f3c880ff1f"],
+Cell[5166, 143, 246, 5, 22, "Print",ExpressionUUID->"75d51a9b-9988-4484-bc8d-4090013d8cc3"],
+Cell[5415, 150, 331, 6, 22, "Print",ExpressionUUID->"ecd381ff-b732-4530-9e9d-d4c560fbac0f"],
+Cell[5749, 158, 318, 6, 22, "Print",ExpressionUUID->"512e6c29-5174-4edf-b090-f1d104725034"],
+Cell[6070, 166, 216, 4, 22, "Print",ExpressionUUID->"5e56c1d3-78e7-4c35-a724-e9d46f0f831f"],
+Cell[6289, 172, 251, 5, 22, "Print",ExpressionUUID->"e59f09b1-f404-4342-b831-9cb971581b2b"],
+Cell[6543, 179, 255, 5, 22, "Print",ExpressionUUID->"3215e691-b36c-4a08-9866-92304d181d3b"],
+Cell[6801, 186, 245, 5, 22, "Print",ExpressionUUID->"1a55a9ca-6390-4349-bb36-a2aaf05e79a7"],
+Cell[7049, 193, 266, 5, 22, "Print",ExpressionUUID->"b5818b5f-0d6e-4b2b-8888-3a0c137af654"]
+}, Open  ]]
+}, Open  ]],
+Cell[7342, 202, 379, 8, 74, "Text",ExpressionUUID->"528e0e02-a511-4b75-96fc-4032a8436fd9"],
+Cell[CellGroupData[{
+Cell[7746, 214, 411, 9, 28, "Input",ExpressionUUID->"50a31f9e-58a1-414e-83d4-5d1b6727fe7b"],
+Cell[CellGroupData[{
+Cell[8182, 227, 207, 4, 22, "Print",ExpressionUUID->"4a8c1b98-b251-4b75-8527-79218c83eaaf"],
+Cell[8392, 233, 207, 4, 22, "Print",ExpressionUUID->"a2fce913-dab2-4f58-a319-24a9ffeecb81"],
+Cell[8602, 239, 216, 4, 22, "Print",ExpressionUUID->"af3a08f8-4856-4d67-928c-7ac8f156e05e"],
+Cell[8821, 245, 207, 4, 22, "Print",ExpressionUUID->"cd98ada3-ff7f-481b-97f8-bd80fa47c86e"],
+Cell[9031, 251, 235, 4, 22, "Print",ExpressionUUID->"8ef2ac3f-8a67-47e3-9e5e-26b6cfca8aa4"],
+Cell[9269, 257, 205, 4, 22, "Print",ExpressionUUID->"8ced87fd-f16e-4065-b920-05a1fe9a572e"],
+Cell[9477, 263, 270, 5, 22, "Print",ExpressionUUID->"03f2810f-8673-4234-9294-e17d83d21278"],
+Cell[9750, 270, 207, 4, 22, "Print",ExpressionUUID->"42c2554c-735c-4c84-8ea3-665fc1b89052"],
+Cell[9960, 276, 493, 8, 40, "Print",ExpressionUUID->"42487464-0eee-42e0-a3b1-77895e284aad"],
+Cell[10456, 286, 207, 4, 22, "Print",ExpressionUUID->"c3e29741-3b2f-41ca-a475-c881ee98de4c"],
+Cell[10666, 292, 240, 4, 22, "Print",ExpressionUUID->"bd49235d-f41f-4309-9da8-6f3cc7f18eb6"],
+Cell[10909, 298, 277, 5, 22, "Print",ExpressionUUID->"f79a58ba-daba-4247-9ab1-a5ef85bca1dc"],
+Cell[11189, 305, 279, 5, 22, "Print",ExpressionUUID->"9e7383cb-7434-4f8b-9e7b-040f4d42161c"],
+Cell[11471, 312, 270, 5, 22, "Print",ExpressionUUID->"8711a126-9735-4443-84af-f809635e6762"],
+Cell[11744, 319, 294, 5, 22, "Print",ExpressionUUID->"31e31260-5173-449b-9378-98eb0bfb143a"]
+}, Open  ]]
+}, Open  ]],
+Cell[12065, 328, 300, 6, 51, "Text",ExpressionUUID->"460ffadd-46d0-4ab0-b6d3-921b75801917"],
+Cell[CellGroupData[{
+Cell[12390, 338, 303, 6, 31, "Input",ExpressionUUID->"3a912e4e-f241-42c3-870e-449e80b59223"],
+Cell[12696, 346, 216, 4, 22, "Print",ExpressionUUID->"7fdafac9-bcef-467e-addd-083ea4deb1b8"]
+}, Open  ]]
+}
+]
+*)
+
