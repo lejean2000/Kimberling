@@ -10,7 +10,6 @@ SetDirectory[NotebookDirectory[]]; ClearAll["Global`*"];
 Get["../db/ETC.mx"];
 Get["../sources/KimberlingPoints.m"];
 Get["../sources/TriangleTools.m"];
-Get["../sources/KimberlingTriangles.m"];
 Get["../sources/TriangleExpressions.m"];
 
 PA = {0, 0}; PB = {3, 0}; PC = {1, 2};
