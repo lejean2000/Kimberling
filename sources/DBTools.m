@@ -525,29 +525,24 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[linesProcessAlg[ptcoord, barys, 20, False, False, name]], 
          lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
              name]]; ]; If[full || Length[lines] > 3, 
-         Quiet[checkCircumconics[ptcoord, 1, 60, num, name]]; 
-          Quiet[checkCurves[ptcoord, name]]; Quiet[checkTrilinearPolar[
-            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
-          Quiet[checkDaoConjugates[ptcoord, name]]; 
-          Quiet[checkCevaConjugates[ptcoord, name]]; 
-          Quiet[checkVertexConjugates[ptcoord, name]]; 
-          Quiet[checkComplementaryConjugates[ptcoord, name]]; 
-          Quiet[checkAnticomplementaryConjugates[ptcoord, name]]; 
-          Quiet[checkCrossConjugates[ptcoord, name]]; 
-          Quiet[checkBarycentricProduct[ptcoord, name]]; 
-          Quiet[checkBarycentricQuotient[ptcoord, name]]; 
-          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 
-           60]; ]; ]; ]
+         Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
+           Quiet[pointCheckAllProcesses[ptcoord, name]], 60]; ]; ]; ]
  
 globalSeenPoints = {}
  
-checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d}, 
-     out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
-        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
-        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
-       {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
-       {"curves" -> out}]; If[Length[out] > 0, 
-       If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
+checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
+      rc}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
+      crv = bCircumconicPEq[ptest]; set1 = checkPointsOnCurve[crv]; 
+      rc = {a -> 5, b -> 6, c -> 7}; 
+      Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
+        crv = bCircumconicPEq[ptest]; ptcheck = 
+         N[KimberlingCenterCN[ToExpression[StringTake[ptoncrv, {3, -2}]]] /. 
+           rc, 35]; If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
+         AppendTo[out, ptoncrv]], {ptoncrv, set1}]; 
+      AssociateTo[globalProperties[inname], {"perspector" -> out}]; 
+      If[Length[out] > 0, If[ !TrueQ[globalSilence], 
+         Print[StringJoin[
+           "Points which lie on circumconic with this perspector: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
 pointCheckerTransform[expr_, inname_, num_:0] := 
@@ -632,8 +627,20 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle},
         hg = glob[pt]["barycentric quotient"]; If[Length[hg] > 0, 
          Print[StringJoin[
             "= barycentric quotient X(i)/X(j) for these (i, j):  ", 
+            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["perspector"]; 
+        If[Length[hg] > 0, Print[StringJoin[
+            "Points which lie on circumconic with this perspector:  ", 
             StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["harmonic"]; 
         If[Length[hg] > 0, Print[StringJoin[
             "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
             StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; , 
        {pt, cycle}]]
+ 
+checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d}, 
+     out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
+        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
+       {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
+       {"curves" -> out}]; If[Length[out] > 0, 
+       If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
+           StringRiffle[out, ", "]]]]; ]; ]
