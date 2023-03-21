@@ -525,10 +525,30 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[linesProcessAlg[ptcoord, barys, 20, False, False, name]], 
          lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
              name]]; ]; If[full || Length[lines] > 3, 
-         Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
+         Quiet[checkCircumconics[ptcoord, 1, 60, num, name]]; 
+          Quiet[checkCurves[ptcoord, name]]; Quiet[checkTrilinearPolar[
+            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
+          Quiet[checkDaoConjugates[ptcoord, name]]; 
+          Quiet[checkCevaConjugates[ptcoord, name]]; 
+          Quiet[checkVertexConjugates[ptcoord, name]]; 
+          Quiet[checkComplementaryConjugates[ptcoord, name]]; 
+          Quiet[checkAnticomplementaryConjugates[ptcoord, name]]; 
+          Quiet[checkCrossConjugates[ptcoord, name]]; 
+          Quiet[checkBarycentricProduct[ptcoord, name]]; 
+          Quiet[checkBarycentricQuotient[ptcoord, name]]; 
+          Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
            Quiet[pointCheckAllProcesses[ptcoord, name]], 60]; ]; ]; ]
  
 globalSeenPoints = {}
+ 
+checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d}, 
+     out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
+        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
+       {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
+       {"curves" -> out}]; If[Length[out] > 0, 
+       If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
+           StringRiffle[out, ", "]]]]; ]; ]
  
 checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
       rc}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
@@ -635,12 +655,3 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle},
             "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
             StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; , 
        {pt, cycle}]]
- 
-checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d}, 
-     out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
-        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
-        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
-       {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
-       {"curves" -> out}]; If[Length[out] > 0, 
-       If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
-           StringRiffle[out, ", "]]]]; ]; ]
