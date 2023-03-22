@@ -126,9 +126,8 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
           10, -1]; If[TrueQ[Simplify[test] == 0] && 
           TrueQ[Simplify[test2] == 0], AppendTo[out, el], 
          AppendTo[unproven, el]]; , {el, gr}]; If[Length[out] >= 2, 
-       sout = SortBy[({ToExpression[StringTake[#1[[1]][[1]], {2, -1}]], 
-             ToExpression[StringTake[#1[[2]][[1]], {2, -1}]]} & ) /@ 
-           res[[1]], #1[[1]]*#1[[2]] & ]; AssociateTo[globalProperties[name], 
+       sout = SortBy[(ToExpression[#1] & ) /@ out, #1[[1]]*#1[[2]] & ]; 
+        AssociateTo[globalProperties[name], 
          {"name" -> ToString[StringJoin["X(", ToString[Evaluate[sout[[1]][[
                 1]]]], ")X(", ToString[Evaluate[sout[[1]][[2]]]], 
              ")\:2229X(", ToString[Evaluate[sout[[2]][[1]]]], ")X(", 
