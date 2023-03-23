@@ -44,6 +44,9 @@ bCoordChangeK[k_, d_, e_, f_] := Module[{pp},
       Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
        Transpose[pp/Total[pp]]]
  
+setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
+     b -> bDistance[x, z], c -> bDistance[x, y]}
+ 
 bDistance[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
         b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - c^2*(sp[[1]] - sq[[1]])*
@@ -492,7 +495,7 @@ bSyngonal[pt_] := Module[{eq, eq2},
  
 bCircleEqRad[cent_, rad_] := Module[{u1, v1, w1}, 
      {u1, v1, w1} = cent/Total[cent]; SA*(x - u1)^2 + SB*(y - v1)^2 + 
-       SC*(z - w1)^2 - rad^2]
+       SC*(z - w1)^2 - rad^2*(x + y + z)^2]
  
 circleBaryCoords[cent_, rad_] := Module[{u1, v1, w1, m1, m2, m3}, 
      {u1, v1, w1} = cent/Total[cent]; m1 = SA*(1 - u1)^2 + SB*v1^2 + 
@@ -862,3 +865,13 @@ bEllipse[f1_, f2_, k_] := Module[{expr},
 bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] := 
     Simplify[bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
       bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]]
+ 
+bHatzipolakisMoses[{p_, q_, r_}] = 
+    {c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*p*q + b^2*(a^2 + b^2 - c^2)*
+       (a^2 - b^2 + c^2)*p*r - 2*a^2*(-(a^2*b^2) + b^4 - a^2*c^2 - 
+        2*b^2*c^2 + c^4)*q*r, c^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*p*q - 
+      2*b^2*(a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4)*p*r + 
+      a^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*q*r, 
+     -2*c^2*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2)*p*q + 
+      b^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*p*r + 
+      a^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*q*r}

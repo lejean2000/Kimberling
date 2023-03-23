@@ -32,5 +32,5 @@ rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
 checkPointsOnCurve[crv_] := Module[{curve}, 
      curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}] /. rule69; 
       dset = (Abs[curve] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
-      test = Select[dset, #1 < 10^(-15) & ]; 
+      test = Select[dset, #1 < 10^(-12) & ]; 
       (StringJoin["X(", StringTake[#1, {2, -1}], ")"] & ) /@ Keys[test]]

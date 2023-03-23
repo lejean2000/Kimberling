@@ -603,15 +603,19 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle},
            " and on these lines: ", StringRiffle[glob[pt]["lines"], ", "]]], 
          Print[StringJoin["lies on these lines: ", StringRiffle[
              glob[pt]["lines"], ", "]]]; ]; Print[]; 
-        If[ !MemberQ[Keys[glob[pt]], "circumconics"], Continue[]]; 
-        hg = glob[pt]["curves"]; If[Length[hg] > 0, 
-         Print[StringJoin["lies on curves: ", StringRiffle[hg, ", "]]]; ]; 
         hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
          Print[StringJoin["= midpoint of X(i) in X(j) for these {i,j}: ", 
             StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
         hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
          Print[StringJoin["= reflection of X(i) in X(j) for these {i,j}: ", 
             StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
+        If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
+         hg = glob[pt]["harmonic"]; If[Length[hg] > 0, 
+           Print[StringJoin[
+              "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
+              StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
+          Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
+         Print[StringJoin["lies on curves: ", StringRiffle[hg, ", "]]]; ]; 
         Do[If[KeyExistsQ[glob[pt], proc], Print[StringJoin["= ", proc, 
               " of ", glob[pt][proc]]]; ]; , 
          {proc, Keys[singlePointProcesses]}]; 
