@@ -1,23 +1,14 @@
-pointProcessBary[expr_] := Module[{pointsBary, pti, pta, str, coords}, 
-     pointsBary = Association[]; Do[pta = ETCBaryNorm[k]; 
-        If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
+pointProcessBary[expr_, rule_:rule69] := 
+    Module[{pointsBary, pti, pta, str, coords}, pointsBary = Association[]; 
+      Do[pta = ETCBaryNorm[k]; If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
         If[AnyTrue[pta, #1 === ComplexInfinity & ] || AnyTrue[pta, 
            #1 === Infinity & ], Continue[]]; 
-        pti = N[ReleaseHold[expr /. #1 -> pta] /. rule69, 36]; 
+        pti = N[ReleaseHold[expr /. #1 -> pta] /. rule, 36]; 
         pti = pti*Sign[pti[[1]]]; If[Total[pti] != 0, pti = Normalize[pti], 
          If[pti[[1]] != 0, pti = pti/pti[[1]]]]; 
         If[pti[[1]] =!= Indeterminate, AppendTo[pointsBary, 
            ToString[k] -> pti]; ], {k, Keys[ETCBaryNorm]}]; 
       Return[pointsBary]; ]
- 
-pointProcessBaryWriter[pointsBary_, prefix_] := 
-    Module[{filename, str, coords}, {filename = StringJoin[prefix, ".txt"]; 
-       str = OpenWrite[filename]; 
-       Do[coords = StringJoin[ToString[DecimalForm[pointsBary[l][[1]], 30]], 
-           ",", ToString[DecimalForm[pointsBary[l][[2]], 30]], ",", 
-           ToString[DecimalForm[pointsBary[l][[3]], 30]]]; 
-         WriteLine[str, StringJoin[l, ",", coords]]; , 
-        {l, Keys[pointsBary]}]; Close[str]; }]
  
 singlePointProcesses = <|"complement" -> 
       Hold[bComplement[KimberlingCenterC[2], #1]], 
@@ -64,15 +55,32 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
           prev = Association[el -> un[el]]; , {el, Keys[un]}], 
        {set, fullgroups}]; Return[hgroups]; ]
  
-intPointCheck[pt_, process_] := Module[{tmp, res, ptn}, 
-     ptn = N[NormalizeBary[pt], 35]; tmp = pointProcessBary[
-        singlePointProcesses[process]]; res = MinimalBy[Value][
-        (Abs[(#1[[1]] - ptn[[1]])^2 + (#1[[2]] - ptn[[2]])^2 + 
-            (#1[[3]] - ptn[[3]])^2] & ) /@ tmp]; If[res[[1]] < 10^(-20), 
-       Return[StringTake[Keys[res][[1]], {2, -1}]]]; ]
+intPointCheck[pt_, process_, rule_:rule69] := Module[{tmp, res, ptn, ptnum}, 
+     ptn = N[NormalizeBary[pt /. rule], 35]; 
+      tmp = pointProcessBary[singlePointProcesses[process], rule]; 
+      res = Select[(coincide[#1, ptn] & ) /@ tmp, TrueQ]; 
+      If[Length[res] > 0, ptnum = StringTake[Keys[res][[1]], {2, -1}]; 
+        intVerifyPointProcess[pt, ToExpression[ptnum], singlePointProcesses[
+          process]]; Return[ptnum]; ]; ]
+ 
+coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) && 
+     Abs[pt1[[2]] - pt2[[2]]] < 10^(-prec) && Abs[pt1[[3]] - pt2[[3]]] < 
+      10^(-prec)
+ 
+intVerifyPointProcess[pt_, xnum_, processexpr_] := 
+    Module[{ptn, pta, pti}, Do[ptn = N[NormalizeBary[pt /. rc], 35]; 
+        pta = N[NormalizeBary[KimberlingCenterCN[xnum] /. rc], 35]; 
+        pti = N[NormalizeBary[ReleaseHold[singlePointProcesses[
+               "eigentransform"] /. #1 -> pta] /. rc], 35]; 
+        If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
+       {rc, intCheckList}]; Return[True]; ]
+ 
+xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
+ 
+intCheckList = {{a -> 5, b -> 6, c -> 7}, {a -> 4, b -> 11, c -> 13}}
  
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
-     Do[res = intPointCheck[pt /. rule69, proc]; If[StringQ[res], 
+     Do[res = intPointCheck[pt, proc]; If[StringQ[res], 
          prop = StringJoin["= ", proc, " of X(", res, ")"]; 
           If[ !TrueQ[globalSilence], Print[prop]]; AssociateTo[
            globalProperties[name], proc -> StringJoin["X(", res, ")"]]; ]; , 
@@ -110,10 +118,9 @@ ffisoconjugate[pt1_, pt2_] := Module[{local},
  
 linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] := 
     Module[{res, gr, hg, out, head, test, test2, hgroups, ptc, unproven, rc, 
-      rc2, eltest, sout, barys}, rc = {a -> 5, b -> 6, c -> 7}; 
-      rc2 = {a -> 4, b -> 11, c -> 13}; 
-      ptc = N[NormalizeBary[evaluate[ptcoord] /. rule69], 35]; 
-      res = intLinesProcessFullGroups[ptc, prec]; 
+      rc2, eltest, sout, barys}, rc = intCheckList[[1]]; 
+      rc2 = intCheckList[[2]]; ptc = N[NormalizeBary[evaluate[ptcoord] /. 
+          rule69], 35]; res = intLinesProcessFullGroups[ptc, prec]; 
       gr = (StringJoin["{", StringTake[#1[[1]][[1]], {2, -1}], ",", 
           StringTake[#1[[2]][[1]], {2, -1}], "}"] & ) /@ res[[1]]; out = {}; 
       unproven = {}; Do[If[debug, PrintTemporary[el]]; 
@@ -230,12 +237,6 @@ intReflectionProcess[fullgroups_, pt_, prec_] :=
           If[Length[refl] > 0, AppendTo[hgroups, {el, First[refl]}]], 
          {el, Keys[checks]}]; , {set, fullgroups}]; Return[hgroups]; ]
  
-xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
- 
-coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) && 
-     Abs[pt1[[2]] - pt2[[2]]] < 10^(-prec) && Abs[pt1[[3]] - pt2[[3]]] < 
-      10^(-prec)
- 
 ffbarycentricproduct[pt1_, pt2_] := Module[{local}, 
      local = (pt1 /. rule69)*(pt2 /. rule69); Return[NormalizeBary[local]]; ]
  
@@ -247,8 +248,8 @@ ffanticomplconjugate[pt1_, pt2_] := Module[{local},
         rule69; Return[NormalizeBary[local]]; ]
  
 checkIsogonalConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc}, 
-     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc}, rc = intCheckList[[1]]; 
+      ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffisoconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -256,20 +257,22 @@ checkIsogonalConjugates[pt_, name_:"X"] :=
       prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
       Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
          prev = Association[n -> cx[n]]; Continue[]]; 
-        If[Abs[cx[n][[1]] - prev[[1]][[1]]] < 10^(-15) && 
-          Abs[cx[n][[2]] - prev[[1]][[2]]] < 10^(-15) && 
-          Abs[cx[n][[3]] - prev[[1]][[3]]] < 10^(-15), 
+        If[coincide[cx[n], prev[[1]], 15], 
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[Det[{{1, 1, 1}, pt /. rc, bPIsogonalConjugate[KimberlingCenterCN[
-                 idx1], KimberlingCenterCN[idx2]] /. rc}] == 0, 
-           If[idx1 < idx2, AppendTo[res, {idx1, idx2}], AppendTo[res, 
-             {idx2, idx1}]]]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+          If[coincideNorm[pt /. rc, bPIsogonalConjugate[KimberlingCenterCN[
+               idx1], KimberlingCenterCN[idx2]] /. rc], If[idx1 < idx2, 
+            AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]]]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"isoconjugate" -> res}]; 
       If[ !TrueQ[globalSilence], If[Length[res] > 0, 
         Print[StringJoin["= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
            StringRiffle[res, ", "]]]; ]]; ]
+ 
+coincideNorm[pt1_, pt2_, prec_:20] := Module[{p1, p2}, 
+     p1 = N[NormalizeBary[pt1], 35]; p2 = N[NormalizeBary[pt2], 35]; 
+      Return[coincide[p1, p2, prec]]; ]
  
 checkBarycentricQuotient[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, ptc}, 
@@ -299,7 +302,7 @@ checkBarycentricQuotient[pt_, name_:"X"] :=
  
 checkCrossConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, ptc, rc, i1, i2}, 
-     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffcrosspoint[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -311,11 +314,11 @@ checkCrossConjugates[pt_, name_:"X"] :=
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
           If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincide[N[NormalizeBary[pt /. rc], 
-             35], NormalizeBary[N[bCrossConjugate[KimberlingCenterCN[i2] /. 
-                rc, KimberlingCenterCN[i1] /. rc], 35]]], 
-           AppendTo[res, {i2, i1}]]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            bCrossConjugate[KimberlingCenterCN[i2] /. rc, KimberlingCenterCN[
+                i1] /. rc] /. rc], AppendTo[res, {i2, i1}]]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"cross conjugate" -> res}]; 
       If[ !TrueQ[globalSilence], If[Length[res] > 0, 
         Print[StringJoin["= X(i) cross conjugate of X(j) for these {i, j}: ", 
@@ -353,7 +356,7 @@ checkBarycentricProduct[pt_, name_:"X"] :=
  
 checkAnticomplementaryConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
-     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffanticomplconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -365,9 +368,9 @@ checkAnticomplementaryConjugates[pt_, name_:"X"] :=
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
           If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
-              bAnticomplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
-                KimberlingCenterCN[i2] /. rc] /. rc}] == 0, 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            bAnticomplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
+              KimberlingCenterCN[i2] /. rc] /. rc], 
            AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"anticomplementary conjugate" -> 
@@ -381,7 +384,7 @@ ffdaoconjugate[pt1_, pt2_] := Module[{local},
       Return[NormalizeBary[local]]; ]
  
 checkDaoConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1, 
-      i2, ptc, rc}, rc = {a -> 5, b -> 6, c -> 7}; 
+      i2, ptc, rc}, rc = intCheckList[[1]]; 
       ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffdaoconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
@@ -394,9 +397,9 @@ checkDaoConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1,
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
           If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
-              bDaoConjugate[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
-                  i2] /. rc] /. rc}] == 0, AppendTo[res, {i1, i2}]; ]]; 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            bDaoConjugate[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
+                i2] /. rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
         prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
       res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"dao conjugate" -> res}]; 
@@ -422,7 +425,7 @@ ffcevaconjugate[pt1_, pt2_] := Module[{local},
       Return[NormalizeBary[local]]; ]
  
 checkCevaConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1, 
-      i2, ptc, rc}, rc = {a -> 5, b -> 6, c -> 7}; 
+      i2, ptc, rc}, rc = intCheckList[[1]]; 
       ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffcevaconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
@@ -435,11 +438,11 @@ checkCevaConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1,
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
           If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
-              bCevianQuotient[KimberlingCenterCN[i1] /. rc, 
-                KimberlingCenterCN[i2] /. rc] /. rc}] == 0, 
-           AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            bCevianQuotient[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
+                i2] /. rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"ceva conjugate" -> res}]; 
       If[ !TrueQ[globalSilence], If[Length[res] > 0, 
         Print[StringJoin["= X(i)-Ceva conjugate of X(j) for these {i, j}: ", 
@@ -447,7 +450,7 @@ checkCevaConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1,
  
 checkComplementaryConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
-     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffcomplconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -459,9 +462,9 @@ checkComplementaryConjugates[pt_, name_:"X"] :=
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
           If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[Det[{{1, 1, 1}, pt /. rc, 
-              bComplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
-                KimberlingCenterCN[i2] /. rc] /. rc}] == 0, 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            bComplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
+              KimberlingCenterCN[i2] /. rc] /. rc], 
            AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
        {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"complementary conjugate" -> 
@@ -475,8 +478,8 @@ ffcomplconjugate[pt1_, pt2_] := Module[{local},
       Return[NormalizeBary[local]]; ]
  
 checkVertexConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc}, 
-     rc = {a -> 5, b -> 6, c -> 7}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc}, rc = intCheckList[[1]]; 
+      ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
@@ -484,16 +487,14 @@ checkVertexConjugates[pt_, name_:"X"] :=
       prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
       Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
          prev = Association[n -> cx[n]]; Continue[]]; 
-        If[Abs[cx[n][[1]] - prev[[1]][[1]]] < 10^(-15) && 
-          Abs[cx[n][[2]] - prev[[1]][[2]]] < 10^(-15) && 
-          Abs[cx[n][[3]] - prev[[1]][[3]]] < 10^(-15), 
+        If[coincide[cx[n], prev[[1]], 15], 
          idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
           idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[Det[{{1, 1, 1}, pt /. rc, bVertexConjugate[KimberlingCenterCN[
-                 idx1], KimberlingCenterCN[idx2]] /. rc}] == 0, 
-           If[idx1 < idx2, AppendTo[res, {idx1, idx2}], AppendTo[res, 
-             {idx2, idx1}]]]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+          If[coincideNorm[pt /. rc, bVertexConjugate[KimberlingCenterCN[
+               idx1], KimberlingCenterCN[idx2]] /. rc], If[idx1 < idx2, 
+            AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]]]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
       AssociateTo[globalProperties[name], {"vertex conjugate" -> res}]; 
       If[ !TrueQ[globalSilence], If[Length[res] > 0, 
         Print[StringJoin[
@@ -552,9 +553,8 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d},
 checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
       rc}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
       crv = bCircumconicPEq[ptest]; set1 = checkPointsOnCurve[crv]; 
-      rc = {a -> 5, b -> 6, c -> 7}; 
-      Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
-        crv = bCircumconicPEq[ptest]; ptcheck = 
+      rc = intCheckList[[1]]; Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 
+          35]; crv = bCircumconicPEq[ptest]; ptcheck = 
          N[KimberlingCenterCN[ToExpression[StringTake[ptoncrv, {3, -2}]]] /. 
            rc, 35]; If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
          AppendTo[out, ptoncrv]], {ptoncrv, set1}]; 
