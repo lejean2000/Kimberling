@@ -1,6 +1,6 @@
-pointProcessBary[expr_, prefix_] := Module[{pointsBary, pti, pta, str, 
-      coords}, pointsBary = Association[]; 
-      Do[pta = ETCBaryNorm[k]; If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
+pointProcessBary[expr_] := Module[{pointsBary, pti, pta, str, coords}, 
+     pointsBary = Association[]; Do[pta = ETCBaryNorm[k]; 
+        If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
         If[AnyTrue[pta, #1 === ComplexInfinity & ] || AnyTrue[pta, 
            #1 === Infinity & ], Continue[]]; 
         pti = N[ReleaseHold[expr /. #1 -> pta] /. rule69, 36]; 
@@ -66,10 +66,10 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
  
 intPointCheck[pt_, process_] := Module[{tmp, res, ptn}, 
      ptn = N[NormalizeBary[pt], 35]; tmp = pointProcessBary[
-        singlePointProcesses[process], process]; 
-      res = MinimalBy[Value][(Abs[(#1[[1]] - ptn[[1]])^2 + 
-            (#1[[2]] - ptn[[2]])^2 + (#1[[3]] - ptn[[3]])^2] & ) /@ tmp]; 
-      If[res[[1]] < 10^(-20), Return[StringTake[Keys[res][[1]], {2, -1}]]]; ]
+        singlePointProcesses[process]]; res = MinimalBy[Value][
+        (Abs[(#1[[1]] - ptn[[1]])^2 + (#1[[2]] - ptn[[2]])^2 + 
+            (#1[[3]] - ptn[[3]])^2] & ) /@ tmp]; If[res[[1]] < 10^(-20), 
+       Return[StringTake[Keys[res][[1]], {2, -1}]]]; ]
  
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
      Do[res = intPointCheck[pt /. rule69, proc]; If[StringQ[res], 
