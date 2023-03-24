@@ -91,8 +91,10 @@ globalProperties = <||>
 checkCircumconics[pt_, start_:1, time_:60, excl_:0, name_:"X"] := 
     Module[{ptc, p1, p2, crv, dset, test, out, conicname, check}, 
      TimeConstrained[out = {}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-        Do[funcind = nx; crv = N[bCircumconicEq[ptc, ETCBaryNorm[StringJoin[
-                "X", ToString[nx]]]] /. rule69, 35]; 
+        Do[funcind = nx; If[ !PolynomialQ[evaluate[ETC[StringJoin["X", 
+                ToString[nx]]]], {a, b, c}], Continue[]]; 
+          crv = N[bCircumconicEq[ptc, ETCBaryNorm[StringJoin["X", 
+                ToString[nx]]]] /. rule69, 35]; 
           dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
           test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
            p1 = ToExpression[StringTake[Keys[test][[1]], {2, -1}]]; 

@@ -1,3 +1,9 @@
+polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
+      (v_)?VectorQ :> Total[v], 2]]
+ 
+countSummands[expr_] := If[Head[Expand[expr]] === Plus, Length[Expand[expr]], 
+     If[expr === 0, 0, 1]]
+ 
 symmetrizeEq[eq_] := Module[{partB, partC}, 
      partB = eq /. {a -> b, b -> c, c -> a, x -> y, y -> z, z -> x, pp -> qq, 
          qq -> rr, rr -> pp, A -> B, B -> C, C -> A, SA -> SB, SB -> SC, 
