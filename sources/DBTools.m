@@ -3,7 +3,7 @@ pointProcessBary[expr_, rule_:rule69] :=
       Do[pta = ETCBaryNorm[k]; If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
         If[AnyTrue[pta, #1 === ComplexInfinity & ] || AnyTrue[pta, 
            #1 === Infinity & ], Continue[]]; 
-        pti = N[ReleaseHold[expr /. #1 -> pta] /. rule, 36]; 
+        pti = N[evaluate[ReleaseHold[expr /. #1 -> pta]] /. rule, 36]; 
         pti = pti*Sign[pti[[1]]]; If[Total[pti] != 0, pti = Normalize[pti], 
          If[pti[[1]] != 0, pti = pti/pti[[1]]]]; 
         If[pti[[1]] =!= Indeterminate, AppendTo[pointsBary, 
@@ -16,6 +16,7 @@ singlePointProcesses = <|"complement" ->
      "polar conjugate" -> Hold[bPIsogonalConjugate[KimberlingCenterCN[48], 
         #1]], "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
      "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
+     "zosma transform" -> Hold[bZosmaTransform[#1]], 
      "anticomplement of isogonal conjugate" -> 
       Hold[bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
      "anticomplement of isotomic conjugate" -> 
@@ -24,7 +25,6 @@ singlePointProcesses = <|"complement" ->
       Hold[bComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
      "complement of isotomic conjugate" -> 
       Hold[bComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
-     "zosma transform" -> Hold[bZosmaTransform[#1]], 
      "circlecevian perspector" -> Hold[bCirclecevianPerspector[#1]], 
      "tcc_perspector" -> Hold[bTCCPerspector[#1]], 
      "eigentransform" -> Hold[bEigentransform[#1]], 
@@ -57,11 +57,11 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
  
 intPointCheck[pt_, process_, rule_:rule69] := Module[{tmp, res, ptn, ptnum}, 
      ptn = N[NormalizeBary[pt /. rule], 35]; 
-      tmp = pointProcessBary[singlePointProcesses[process], rule]; 
+      tmp = pointProcessBary[process, rule]; 
       res = Select[(coincide[#1, ptn] & ) /@ tmp, TrueQ]; 
       If[Length[res] > 0, ptnum = StringTake[Keys[res][[1]], {2, -1}]; 
-        intVerifyPointProcess[pt, ToExpression[ptnum], singlePointProcesses[
-          process]]; Return[ptnum]; ]; ]
+        intVerifyPointProcess[pt, ToExpression[ptnum], process]; 
+        Return[ptnum]; ]; ]
  
 coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) && 
      Abs[pt1[[2]] - pt2[[2]]] < 10^(-prec) && Abs[pt1[[3]] - pt2[[3]]] < 
@@ -80,8 +80,8 @@ xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
 intCheckList = {{a -> 5, b -> 6, c -> 7}, {a -> 4, b -> 11, c -> 13}}
  
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
-     Do[res = intPointCheck[pt, proc]; If[StringQ[res], 
-         prop = StringJoin["= ", proc, " of X(", res, ")"]; 
+     Do[res = intPointCheck[pt, singlePointProcesses[proc]]; 
+        If[StringQ[res], prop = StringJoin["= ", proc, " of X(", res, ")"]; 
           If[ !TrueQ[globalSilence], Print[prop]]; AssociateTo[
            globalProperties[name], proc -> StringJoin["X(", res, ")"]]; ]; , 
        {proc, Keys[singlePointProcesses]}]; ]
