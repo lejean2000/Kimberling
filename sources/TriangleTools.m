@@ -658,7 +658,7 @@ bVuPole[{p_, q_, r_}, {u_, v_, w_}] :=
      p*q*(c^2*(p*q*w*(u + v + w) - r*u*v*(p + q + r)) - 
        a^2*r*w*(v*(r + p) - q*(w + u)) - b^2*r*w*(u*(r + q) - p*(w + v)))}
  
-bPole[mtx_, ln_] := adjugate[mtx] . ln
+bPole[mtx_, ln_] := Adjugate[mtx] . ln
  
 centralCircle[l_] := Module[{expr, eq}, expr = symmetrizeInternal[l]; 
       eq = (expr[[1]]*x + expr[[2]]*y + expr[[3]]*z)*(a*x + b*y + c*z) + 
