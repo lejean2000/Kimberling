@@ -890,3 +890,11 @@ bZayinConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] :=
       {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
        {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
          {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]
+ 
+bWawConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] := 
+    Module[{eq, hh, pp1, qq1, rr1, uu1, vv1, ww1}, 
+     hh[{p_, q_, r_}, {x_, y_, z_}] := p*(x^2*q^2*r^2 + 2*p^2*(r*y - q*z)^2 - 
+         p*q*r^2*x*y - p*q^2*r*x*z); {pp1, qq1, rr1} = bToTril[{pp, qq, rr}]; 
+      {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
+       {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
+         {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]

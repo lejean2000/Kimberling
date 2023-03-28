@@ -80,7 +80,8 @@ xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
 intCheckList = {{a -> 5, b -> 6, c -> 7}, {a -> 4, b -> 11, c -> 13}}
  
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
-     Do[res = intPointCheck[pt, singlePointProcesses[proc]]; 
+     Do[If[ !TrueQ[globalSilence], PrintTemporary[proc]]; 
+        res = intPointCheck[pt, singlePointProcesses[proc]]; 
         If[StringQ[res], prop = StringJoin["= ", proc, " of X(", res, ")"]; 
           If[ !TrueQ[globalSilence], Print[prop]]; AssociateTo[
            globalProperties[name], proc -> StringJoin["X(", res, ")"]]; ]; , 
@@ -91,8 +92,7 @@ globalProperties = <||>
 checkCircumconics[pt_, start_:1, time_:60, excl_:0, name_:"X"] := 
     Module[{ptc, p1, p2, crv, dset, test, out, conicname, check}, 
      TimeConstrained[out = {}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-        Do[funcind = nx; If[ !PolynomialQ[evaluate[ETC[StringJoin["X", 
-                ToString[nx]]]], {a, b, c}], Continue[]]; 
+        Do[ClearSystemCache[]; funcind = nx; 
           crv = N[bCircumconicEq[ptc, ETCBaryNorm[StringJoin["X", 
                 ToString[nx]]]] /. rule69, 35]; 
           dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
@@ -100,23 +100,17 @@ checkCircumconics[pt_, start_:1, time_:60, excl_:0, name_:"X"] :=
            p1 = ToExpression[StringTake[Keys[test][[1]], {2, -1}]]; 
             p2 = ToExpression[StringTake[Keys[test][[2]], {2, -1}]]; 
             If[p1 == excl || p2 == excl, Continue[]]; 
-            check = Simplify[bCircumconicEq[KimberlingCenterCN[p1], 
-                KimberlingCenterCN[p2]] /. Thread[{x, y, z} -> pt]]; 
-            If[check == 0, conicname = StringJoin["{A,B,C,X(", ToString[p1], 
-                "),X(", ToString[p2], ")}"]; If[ !MemberQ[out, conicname], 
-               AppendTo[out, conicname]]]; ]; , {nx, start, 
+            check = TimeConstrained[Simplify[bCircumconicEq[
+                 KimberlingCenterCN[p1], KimberlingCenterCN[p2]] /. 
+                Thread[{x, y, z} -> pt]], 10, -1]; If[check == 0, 
+             conicname = StringJoin["{A,B,C,X(", ToString[p1], "),X(", 
+                ToString[p2], ")}"]; If[ !MemberQ[out, conicname], AppendTo[
+                out, conicname]]]; ]; , {nx, start, 
           start + Max[1, Floor[time/60]]*200}]; , time, funcind]; 
       AssociateTo[globalProperties[name], {"circumconics" -> out}]; 
       If[ !TrueQ[globalSilence], If[Length[out] > 0, 
         Print[StringJoin["Lies on circumconics: ", StringRiffle[out, 
             ", "]]]; ]]; Return[funcind]; ]
- 
-ffcrossconjugate[var_, ptx_] := Module[{local}, 
-     local = bCrossConjugate[ptx, var]; Return[NormalizeBary[local]]; ]
- 
-ffisoconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bPIsogonalConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
-      Return[NormalizeBary[local]]; ]
  
 linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] := 
     Module[{res, gr, hg, out, head, test, test2, hgroups, ptc, unproven, rc, 
@@ -239,18 +233,11 @@ intReflectionProcess[fullgroups_, pt_, prec_] :=
           If[Length[refl] > 0, AppendTo[hgroups, {el, First[refl]}]], 
          {el, Keys[checks]}]; , {set, fullgroups}]; Return[hgroups]; ]
  
-ffbarycentricproduct[pt1_, pt2_] := Module[{local}, 
-     local = (pt1 /. rule69)*(pt2 /. rule69); Return[NormalizeBary[local]]; ]
- 
-ffbarycentricquotient[pt1_, pt2_] := Module[{local}, 
-     local = (pt1 /. rule69)/(pt2 /. rule69); Return[NormalizeBary[local]]; ]
- 
-ffanticomplconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bAnticomplementaryConjugate[pt1 /. rule69, pt2 /. rule69] /. 
-        rule69; Return[NormalizeBary[local]]; ]
- 
 checkIsogonalConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc}, rc = intCheckList[[1]]; 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffisoconjugate}, 
+     ffisoconjugate[pt1_, pt2_] := Module[{local}, 
+        local = bPIsogonalConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
+         Return[NormalizeBary[local]]; ]; rc = intCheckList[[1]]; 
       ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffisoconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
@@ -277,9 +264,11 @@ coincideNorm[pt1_, pt2_, prec_:20] := Module[{p1, p2},
       Return[coincide[p1, p2, prec]]; ]
  
 checkBarycentricQuotient[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc}, 
-     ptc = N[Normalize[pt /. rule69], 35]; 
-      cx = (ffbarycentricproduct[ptc, #1] & ) /@ ETCBaryNorm; 
+    Module[{cx, prev, res, idx1, idx2, ptc, ffbarycentricquotient}, 
+     ffbarycentricquotient[pt1_, pt2_] := Module[{local}, 
+        local = (pt1 /. rule69)/(pt2 /. rule69); 
+         Return[NormalizeBary[local]]; ]; ptc = N[Normalize[pt /. rule69], 
+        35]; cx = (ffbarycentricproduct[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
       cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
@@ -302,38 +291,12 @@ checkBarycentricQuotient[pt_, name_:"X"] :=
         Print[StringJoin["= barycentric quotient X(i)/X(j) for these (i, j): \
 ", StringRiffle[res, ", "]]]; ]]; ]
  
-checkCrossConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc, i1, i2}, 
-     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-      cx = (ffcrosspoint[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
-             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
-         prev = Association[n -> cx[n]]; Continue[]]; 
-        If[coincide[cx[n], prev[[1]]], 
-         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
-          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            bCrossConjugate[KimberlingCenterCN[i2] /. rc, KimberlingCenterCN[
-                i1] /. rc] /. rc], AppendTo[res, {i2, i1}]]]; 
-        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
-      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      AssociateTo[globalProperties[name], {"cross conjugate" -> res}]; 
-      If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[StringJoin["= X(i) cross conjugate of X(j) for these {i, j}: ", 
-           StringRiffle[res, ", "]]]; ]]; ]
- 
-ffcrosspoint[pt1_, pt2_] := Module[{local}, 
-     local = bCrosspoint[pt1 /. rule69, pt2 /. rule69]; 
-      Return[NormalizeBary[local]]; ]
- 
 checkBarycentricProduct[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc}, 
-     ptc = N[Normalize[pt /. rule69], 35]; 
-      cx = (ffbarycentricquotient[ptc, #1] & ) /@ ETCBaryNorm; 
+    Module[{cx, prev, res, idx1, idx2, ptc, ffbarycentricproduct}, 
+     ffbarycentricproduct[pt1_, pt2_] := Module[{local}, 
+        local = (pt1 /. rule69)*(pt2 /. rule69); 
+         Return[NormalizeBary[local]]; ]; ptc = N[Normalize[pt /. rule69], 
+        35]; cx = (ffbarycentricquotient[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
              {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
       cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
@@ -356,59 +319,6 @@ checkBarycentricProduct[pt_, name_:"X"] :=
            "= barycentric product X(i)*X(j) for these (i, j): ", 
            StringRiffle[res, ", "]]]; ]]; ]
  
-checkAnticomplementaryConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
-     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-      cx = (ffanticomplconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
-             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
-         prev = Association[n -> cx[n]]; Continue[]]; 
-        If[coincide[cx[n], prev[[1]]], 
-         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
-          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            bAnticomplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
-              KimberlingCenterCN[i2] /. rc] /. rc], 
-           AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      AssociateTo[globalProperties[name], {"anticomplementary conjugate" -> 
-         res}]; If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[StringJoin[
-           "= X(i)-anticomplementary conjugate of X(j) for these (i,j): ", 
-           StringRiffle[res, ", "]]]; ]]; ]
- 
-ffdaoconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bDaoConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
-      Return[NormalizeBary[local]]; ]
- 
-checkDaoConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1, 
-      i2, ptc, rc}, rc = intCheckList[[1]]; 
-      ptc = N[NormalizeBary[pt /. rule69], 35]; 
-      cx = (ffdaoconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
-             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
-         prev = Association[n -> cx[n]]; Continue[]]; 
-        If[coincide[cx[n], prev[[1]]], 
-         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
-          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            bDaoConjugate[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
-                i2] /. rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
-        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
-      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      AssociateTo[globalProperties[name], {"dao conjugate" -> res}]; 
-      If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[StringJoin["= X(i)-Dao conjugate of X(j) for these {i, j}: ", 
-           StringRiffle[res, ", "]]]; ]]; ]
- 
 checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2}, 
      ptc = N[Normalize[pt /. rule69], 35]; cx = bTripolarEq[ptc] . {x, y, z}; 
       dset = (Abs[cx] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
@@ -422,65 +332,11 @@ checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2},
            Print[StringJoin["= trilinear pole of line {", ToString[p1], ",", 
              ToString[p2], "}"]]]; ]; ]; ]
  
-ffcevaconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bCevianQuotient[pt1 /. rule69, pt2 /. rule69] /. rule69; 
-      Return[NormalizeBary[local]]; ]
- 
-checkCevaConjugates[pt_, name_:"X"] := Module[{cx, prev, res, idx1, idx2, i1, 
-      i2, ptc, rc}, rc = intCheckList[[1]]; 
-      ptc = N[NormalizeBary[pt /. rule69], 35]; 
-      cx = (ffcevaconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
-             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
-         prev = Association[n -> cx[n]]; Continue[]]; 
-        If[coincide[cx[n], prev[[1]]], 
-         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
-          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            bCevianQuotient[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[
-                i2] /. rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
-        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
-      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      AssociateTo[globalProperties[name], {"ceva conjugate" -> res}]; 
-      If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[StringJoin["= X(i)-Ceva conjugate of X(j) for these {i, j}: ", 
-           StringRiffle[res, ", "]]]; ]]; ]
- 
-checkComplementaryConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc}, 
-     rc = intCheckList[[1]]; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-      cx = (ffcomplconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
-             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
-         prev = Association[n -> cx[n]]; Continue[]]; 
-        If[coincide[cx[n], prev[[1]]], 
-         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
-          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
-          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            bComplementaryConjugate[KimberlingCenterCN[i1] /. rc, 
-              KimberlingCenterCN[i2] /. rc] /. rc], 
-           AppendTo[res, {i1, i2}]; ]]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
-      AssociateTo[globalProperties[name], {"complementary conjugate" -> 
-         res}]; If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[StringJoin[
-           "= X(i)-complementary conjugate of X(j) for these (i,j): ", 
-           StringRiffle[res, ", "]]]; ]]; ]
- 
-ffcomplconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bComplementaryConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
-      Return[NormalizeBary[local]]; ]
- 
 checkVertexConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc}, rc = intCheckList[[1]]; 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffvertexconjugate}, 
+     ffvertexconjugate[pt1_, pt2_] := Module[{local}, 
+        local = bVertexConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
+         Return[NormalizeBary[local]]; ]; rc = intCheckList[[1]]; 
       ptc = N[NormalizeBary[pt /. rule69], 35]; 
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
@@ -502,10 +358,6 @@ checkVertexConjugates[pt_, name_:"X"] :=
         Print[StringJoin[
            "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
            StringRiffle[res, ", "]]]; ]]; ]
- 
-ffvertexconjugate[pt1_, pt2_] := Module[{local}, 
-     local = bVertexConjugate[pt1 /. rule69, pt2 /. rule69] /. rule69; 
-      Return[NormalizeBary[local]]; ]
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name}, 
@@ -530,12 +382,21 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
          Quiet[checkCircumconics[ptcoord, 1, 60, num, name]]; 
           Quiet[checkCurves[ptcoord, name]]; Quiet[checkTrilinearPolar[
             ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
-          Quiet[checkDaoConjugates[ptcoord, name]]; 
-          Quiet[checkCevaConjugates[ptcoord, name]]; 
+          Quiet[checkConjugates[ptcoord, bDaoConjugate, 
+            "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
+          Quiet[checkConjugates[ptcoord, bZayinConjugate, 
+            "= X(i)-Zayin conjugate of X(j) for these {i, j}: ", name]]; 
+          Quiet[checkConjugates[ptcoord, bCevianQuotient, 
+            "= X(i)-Ceva conjugate of X(j) for these {i, j}: ", name]]; 
+          Quiet[checkConjugates[ptcoord, bAnticomplementaryConjugate, 
+            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
+            name]]; Quiet[checkConjugates[ptcoord, bComplementaryConjugate, 
+            "= X(i)-complementary conjugate of X(j) for these {i, j}: ", 
+            name]]; Quiet[checkConjugates[ptcoord, bCrossConjugate, 
+            "= X(i)-cross conjugate of X(j) for these {i, j}: ", name]]; 
+          Quiet[checkConjugates[ptcoord, bWawConjugate, 
+            "= X(i)-Waw conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkVertexConjugates[ptcoord, name]]; 
-          Quiet[checkComplementaryConjugates[ptcoord, name]]; 
-          Quiet[checkAnticomplementaryConjugates[ptcoord, name]]; 
-          Quiet[checkCrossConjugates[ptcoord, name]]; 
           Quiet[checkBarycentricProduct[ptcoord, name]]; 
           Quiet[checkBarycentricQuotient[ptcoord, name]]; 
           Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
@@ -552,6 +413,34 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d},
        If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
+checkConjugates[pt_, func_, str_, name_:"X"] := 
+    Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname}, 
+     ff[pt1_, pt2_] := Module[{local}, 
+        local = func[pt1 /. rule69, pt2 /. rule69] /. rule69; 
+         Return[NormalizeBary[local]]; ]; rc = intCheckList[[1]]; 
+      ptc = N[NormalizeBary[pt /. rule69], 35]; 
+      cx = (ff[#1, ptc] & ) /@ ETCBaryNorm; 
+      cx = Union[AssociationThread[(StringJoin["C", StringTake[#1, 
+             {2, -1}]] & ) /@ Keys[cx], Values[cx]], ETCBaryNorm]; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
+      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
+      Do[If[StringTake[Keys[prev][[1]], 1] == StringTake[n, 1], 
+         prev = Association[n -> cx[n]]; Continue[]]; 
+        If[coincide[cx[n], prev[[1]]], 
+         idx1 = ToExpression[StringTake[Keys[prev][[1]], {2, -1}]]; 
+          idx2 = ToExpression[StringTake[n, {2, -1}]]; 
+          If[StringTake[n, 1] == "X", {i1, i2} = {idx1, idx2}, 
+           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+            func[KimberlingCenterCN[i1] /. rc, KimberlingCenterCN[i2] /. 
+               rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
+        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+      res = SortBy[DeleteDuplicates[res], #1[[1]] & ]; 
+      SetAttributes[fncname, HoldFirst]; fncname[x_] := 
+       {SymbolName[Unevaluated[x]], x}; AssociateTo[globalProperties[name], 
+       {ToString[First[fncname[func]]] -> res}]; If[ !TrueQ[globalSilence], 
+       If[Length[res] > 0, Print[StringJoin[str, StringRiffle[res, 
+            ", "]]]; ]]; ]
+ 
 checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
       rc}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
       crv = bCircumconicPEq[ptest]; set1 = checkPointsOnCurve[crv]; 
@@ -566,10 +455,10 @@ checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1,
            "Points which lie on circumconic with this perspector: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
-pointCheckerTransform[expr_, inname_, num_:0] := 
+pointCheckerTransform[expr_, inname_, num_:0, full_:False] := 
     Module[{pointProcesses, deg, texpr, procname}, 
-     If[ !TrueQ[globalSilence], Print[inname]]; pointChecker[expr, num, 
-       False, inname]; If[TrueQ[globalSilence], printGlobalProperties[
+     If[ !TrueQ[globalSilence], Print[inname]]; pointChecker[expr, num, full, 
+       inname]; If[TrueQ[globalSilence], printGlobalProperties[
         globalProperties, inname]]; pointProcesses = 
        Association["isotomic conjugate" -> Hold[bIsotomicConjugate[#1]], 
         "isogonal conjugate" -> Hold[bIsogonalConjugate[#1]], 
@@ -594,7 +483,7 @@ pointCheckerTransform[expr_, inname_, num_:0] :=
            False, procname]; If[TrueQ[globalSilence], printGlobalProperties[
             globalProperties, procname]]; ], {name, Keys[pointProcesses]}]; ]
  
-printGlobalProperties[glob_, name_:""] := Module[{hg, cycle}, 
+printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
       Do[If[ !MemberQ[Keys[glob[pt]], "name"], Continue[]]; Print[]; Print[]; 
         Print[pt]; Print[]; Print[glob[pt]["name"]]; Print[]; 
@@ -605,17 +494,19 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle},
            " and on these lines: ", StringRiffle[glob[pt]["lines"], ", "]]], 
          Print[StringJoin["lies on these lines: ", StringRiffle[
              glob[pt]["lines"], ", "]]]; ]; Print[]; 
-        hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
-         Print[StringJoin["= midpoint of X(i) in X(j) for these {i,j}: ", 
-            StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
-        hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
-         Print[StringJoin["= reflection of X(i) in X(j) for these {i,j}: ", 
-            StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
-        If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
-         hg = glob[pt]["harmonic"]; If[Length[hg] > 0, 
-           Print[StringJoin[
-              "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
-              StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; 
+        If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
+          If[Length[hg] > 0, Print[StringJoin[
+              "= midpoint of X(i) in X(j) for these {i,j}: ", 
+              StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], 
+               ", "]]]; ]; ]; If[MemberQ[Keys[glob[pt]], "reflections"], 
+         hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
+           Print[StringJoin["= reflection of X(i) in X(j) for these {i,j}: ", 
+              StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], 
+               ", "]]]; ]; ]; If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
+         If[MemberQ[Keys[glob[pt]], "harmonic"], hg = glob[pt]["harmonic"]; 
+            If[Length[hg] > 0, Print[StringJoin[
+                "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): \
+", StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; ]; 
           Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
          Print[StringJoin["lies on curves: ", StringRiffle[hg, ", "]]]; ]; 
         Do[If[KeyExistsQ[glob[pt], proc], Print[StringJoin["= ", proc, 
@@ -624,39 +515,34 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle},
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
            Print[StringJoin["= trilinear pole of line {", ToString[hg[[1]]], 
-              ",", ToString[hg[[2]]], "}"]]; ]; ]; 
-        hg = glob[pt]["isoconjugate"]; If[Length[hg] > 0, 
-         Print[StringJoin["= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["vertex conjugate"]; 
-        If[Length[hg] > 0, Print[StringJoin[
-            "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["dao conjugate"]; 
-        If[Length[hg] > 0, Print[StringJoin[
-            "= X(i)-Dao conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; 
-        hg = glob[pt]["complementary conjugate"]; If[Length[hg] > 0, 
-         Print[StringJoin[
-            "= X(i)-complementary conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; 
-        hg = glob[pt]["anticomplementary conjugate"]; If[Length[hg] > 0, 
-         Print[StringJoin[
-            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["cross conjugate"]; 
-        If[Length[hg] > 0, Print[StringJoin[
-            "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[hg, ", "]]]; ]; 
-        hg = glob[pt]["barycentric product"]; If[Length[hg] > 0, 
-         Print[StringJoin[
-            "= barycentric product X(i)*X(j) for these (i, j):  ", 
-            StringRiffle[hg, ", "]]]; ]; 
-        hg = glob[pt]["barycentric quotient"]; If[Length[hg] > 0, 
-         Print[StringJoin[
-            "= barycentric quotient X(i)/X(j) for these (i, j):  ", 
-            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["perspector"]; 
-        If[Length[hg] > 0, Print[StringJoin[
-            "Points which lie on circumconic with this perspector:  ", 
-            StringRiffle[hg, ", "]]]; ]; hg = glob[pt]["harmonic"]; 
-        If[Length[hg] > 0, Print[StringJoin[
-            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
-            StringRiffle[SortBy[hg, ToExpression[#1[[1]]] & ], ", "]]]; ]; , 
-       {pt, cycle}]]
+              ",", ToString[hg[[2]]], "}"]]; ]; ]; localprops = 
+         Association["isoconjugate" -> 
+           "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
+          "vertex conjugate" -> 
+           "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
+          "bDaoConjugate" -> 
+           "= X(i)-Dao conjugate of X(j) for these {i, j}: ", 
+          "bZayinConjugate" -> 
+           "= X(i)-Zayin conjugate of X(j) for these {i, j}: ", 
+          "bCevianQuotient" -> 
+           "= X(i)-Ceva conjugate of X(j) for these {i, j}: ", 
+          "bComplementaryConjugate" -> 
+           "= X(i)-complementary conjugate of X(j) for these {i, j}: ", 
+          "bAnticomplementaryConjugate" -> 
+           "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
+          "bCrossConjugate" -> 
+           "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
+          "bWawConjugate" -> 
+           "= X(i)-Waw conjugate of X(j) for these {i, j}: ", 
+          "barycentric product" -> 
+           "= barycentric product X(i)*X(j) for these (i, j): ", 
+          "barycentric quotient" -> 
+           "= barycentric quotient X(i)/X(j) for these (i, j): ", 
+          "perspector" -> 
+           "Points which lie on circumconic with this perspector:  ", 
+          "harmonic" -> 
+           "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
+        Do[hg = glob[pt][name]; If[Length[hg] > 0, 
+           Print[StringJoin[localprops[name], StringRiffle[SortBy[hg, 
+                ToExpression[#1[[1]]] & ], ", "]]]; ]; , 
+         {name, Keys[localprops]}]; , {pt, cycle}]]
