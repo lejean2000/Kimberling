@@ -875,3 +875,18 @@ bHatzipolakisMoses[{p_, q_, r_}] =
      -2*c^2*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2)*p*q + 
       b^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*p*r + 
       a^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*q*r}
+ 
+bFregierTriangle[{u_, v_, w_}] := {{SA*u, (-SA)*v + b^2*w, c^2*v - SA*w}, 
+     {(-SB)*u + a^2*w, SB*v, c^2*u - SB*w}, {(-SC)*u + a^2*v, b^2*u - SC*v, 
+      SC*w}}
+ 
+bFuhrmannTriangle[{u_, v_, w_}] := symmetrizeTriangleExprType2Bary[
+     {a^2*v*w, v*((-a^2)*w + c^2*(v + w)), w*((-a^2)*v + b^2*(v + w))}]
+ 
+bZayinConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] := 
+    Module[{eq, hh, pp1, qq1, rr1, uu1, vv1, ww1}, 
+     hh[{p_, q_, r_}, {x_, y_, z_}] := p*(y + z)^2 - r*y^2 - q*z^2 + 
+        (p - r)*x*y + (p - q)*x*z; {pp1, qq1, rr1} = bToTril[{pp, qq, rr}]; 
+      {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
+       {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
+         {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]
