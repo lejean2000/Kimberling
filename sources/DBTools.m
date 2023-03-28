@@ -515,7 +515,11 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
            Print[StringJoin["= trilinear pole of line {", ToString[hg[[1]]], 
-              ",", ToString[hg[[2]]], "}"]]; ]; ]; localprops = 
+              ",", ToString[hg[[2]]], "}"]]; ]; ]; 
+        hg = glob[pt]["perspector"]; If[Length[hg] > 0, 
+         Print[StringJoin[
+            "Points which lie on circumconic with this perspector:  ", 
+            StringRiffle[hg, ", "]]]; ]; localprops = 
          Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
           "vertex conjugate" -> 
@@ -538,8 +542,6 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
            "= barycentric product X(i)*X(j) for these (i, j): ", 
           "barycentric quotient" -> 
            "= barycentric quotient X(i)/X(j) for these (i, j): ", 
-          "perspector" -> 
-           "Points which lie on circumconic with this perspector:  ", 
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
