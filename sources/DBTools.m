@@ -70,9 +70,8 @@ coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) &&
 intVerifyPointProcess[pt_, xnum_, processexpr_] := 
     Module[{ptn, pta, pti}, Do[ptn = N[NormalizeBary[pt /. rc], 35]; 
         pta = N[NormalizeBary[KimberlingCenterCN[xnum] /. rc], 35]; 
-        pti = N[NormalizeBary[ReleaseHold[singlePointProcesses[
-               "eigentransform"] /. #1 -> pta] /. rc], 35]; 
-        If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
+        pti = N[NormalizeBary[ReleaseHold[processexpr /. #1 -> pta] /. rc], 
+          35]; If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
        {rc, intCheckList}]; Return[True]; ]
  
 xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
@@ -400,7 +399,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[checkBarycentricProduct[ptcoord, name]]; 
           Quiet[checkBarycentricQuotient[ptcoord, name]]; 
           Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
-           Quiet[pointCheckAllProcesses[ptcoord, name]], 60]; ]; ]; ]
+           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; ]; ]; ]
  
 globalSeenPoints = {}
  
