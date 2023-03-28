@@ -542,7 +542,7 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
            "Points which lie on circumconic with this perspector:  ", 
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
-        Do[hg = glob[pt][name]; If[Length[hg] > 0, 
-           Print[StringJoin[localprops[name], StringRiffle[SortBy[hg, 
+        Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
+           Print[StringJoin[localprops[name2], StringRiffle[SortBy[hg, 
                 ToExpression[#1[[1]]] & ], ", "]]]; ]; , 
-         {name, Keys[localprops]}]; , {pt, cycle}]]
+         {name2, Keys[localprops]}]; , {pt, cycle}]]
