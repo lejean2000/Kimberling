@@ -27,3 +27,5 @@ jacobianDeterminant[(f_List)?VectorQ, x_List] := Det[jacobianMatrix[f, x]] /;
  
 jacobianMatrix[(f_List)?VectorQ, x_List] := Outer[D, f, x] /; 
      Equal @@ Dimensions /@ {f, x}
+ 
+cubicnK0[{u_, v_, w_}] := symmetrizeEq[u*x*(c^2*y^2 + b^2*z^2)]
