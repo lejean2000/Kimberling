@@ -25,7 +25,7 @@ checkCurvesSymb[pt_] := Do[curve = getTriangleCurve[name];
      {name, Keys[TriangleCurves]}]
  
 checkPointinETC[pt_] := MinimalBy[Value][
-     (Total[Abs[#1 - NormalizeBary[pt]]] & ) /@ ETCBaryNorm]
+     (Total[Abs[#1 - NormalizeBary[pt /. rule69]]] & ) /@ ETCBaryNorm]
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  

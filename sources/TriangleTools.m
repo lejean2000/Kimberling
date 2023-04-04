@@ -898,3 +898,15 @@ bWawConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] :=
       {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
        {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
          {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]
+ 
+symmetrizeInternal3[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w]; 
+      partB = eq /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u, x -> y, 
+         y -> z, z -> x}; partB = partB /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, 
+         SC -> SA}; partC = partB /. {p -> q, q -> r, r -> p, u -> v, v -> w, 
+         w -> u, x -> y, y -> z, z -> x}; 
+      partC = partC /. {a -> b, b -> c, c -> a, angleA -> angleB, 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
+         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      {eq, partB, partC}]

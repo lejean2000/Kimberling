@@ -449,20 +449,21 @@ checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1,
            rc, 35]; If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
          AppendTo[out, ptoncrv]], {ptoncrv, set1}]; 
       AssociateTo[globalProperties[inname], {"perspector" -> out}]; 
-      If[Length[out] > 0, If[ !TrueQ[globalSilence], 
-         Print[StringJoin[
-           "Points which lie on circumconic with this perspector: ", 
+      If[Length[out] >= 2, If[ !TrueQ[globalSilence], 
+         Print[StringJoin["= perspector of circumconic through: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
 pointCheckerTransform[expr_, inname_, num_:0, full_:False] := 
     Module[{pointProcesses, deg, texpr, procname}, 
-     If[ !TrueQ[globalSilence], Print[inname]]; pointChecker[expr, num, full, 
-       inname]; If[TrueQ[globalSilence], printGlobalProperties[
-        globalProperties, inname]]; pointProcesses = 
-       Association["isotomic conjugate" -> Hold[bIsotomicConjugate[#1]], 
-        "isogonal conjugate" -> Hold[bIsogonalConjugate[#1]], 
-        "complement" -> Hold[bComplement[KimberlingCenterC[2], #1]], 
-        "anticomplement" -> Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
+     deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[
+        expr[[1]]]; Print[StringJoin[inname, " has degree ", ToString[deg]]]; 
+      pointChecker[expr, num, full, inname]; If[TrueQ[globalSilence], 
+       printGlobalProperties[globalProperties, inname]]; 
+      pointProcesses = Association["isotomic conjugate" -> 
+         Hold[bIsotomicConjugate[#1]], "isogonal conjugate" -> 
+         Hold[bIsogonalConjugate[#1]], "complement" -> 
+         Hold[bComplement[KimberlingCenterC[2], #1]], "anticomplement" -> 
+         Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
         "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
         "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
         "circlecevian perspector" -> Hold[bCirclecevianPerspector[#1]], 
@@ -476,11 +477,12 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
       Do[texpr = simplifyRationalBarycentrics[
           Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 
                 expr]]]]]; deg = (Max[Apply[Plus, CoefficientRules[#1][[All,
-              1]], {1}]] & )[texpr[[1]]]; If[deg <= 20, 
-         procname = StringJoin[name, " of ", inname]; 
-          If[ !TrueQ[globalSilence], Print[procname]]; pointChecker[texpr, 0, 
-           False, procname]; If[TrueQ[globalSilence], printGlobalProperties[
-            globalProperties, procname]]; ], {name, Keys[pointProcesses]}]; ]
+              1]], {1}]] & )[texpr[[1]]]; procname = StringJoin[name, " of ", 
+          inname]; Print[StringJoin[procname, " has degree ", 
+          ToString[deg]]]; If[deg <= 20 && countSummands[texpr[[1]]]/deg < 5, 
+         pointChecker[texpr, 0, False, procname]; If[TrueQ[globalSilence], 
+           printGlobalProperties[globalProperties, procname]]; ], 
+       {name, Keys[pointProcesses]}]; ]
  
 printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
@@ -515,9 +517,8 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
            Print[StringJoin["= trilinear pole of line {", ToString[hg[[1]]], 
               ",", ToString[hg[[2]]], "}"]]; ]; ]; 
-        hg = glob[pt]["perspector"]; If[Length[hg] > 0, 
-         Print[StringJoin[
-            "Points which lie on circumconic with this perspector:  ", 
+        hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
+         Print[StringJoin["= perspector of circumconic through: ", 
             StringRiffle[hg, ", "]]]; ]; localprops = 
          Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
