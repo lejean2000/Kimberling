@@ -33,4 +33,5 @@ checkPointsOnCurve[crv_] := Module[{curve},
      curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}] /. rule69; 
       dset = (Abs[curve] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
       test = Select[dset, #1 < 10^(-12) & ]; 
-      (StringJoin["X(", StringTake[#1, {2, -1}], ")"] & ) /@ Keys[test]]
+      (StringJoin[StringTake[#1, 1], "(", StringTake[#1, {2, -1}], 
+         ")"] & ) /@ Keys[test]]

@@ -910,3 +910,17 @@ symmetrizeInternal3[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
          angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
          sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       {eq, partB, partC}]
+ 
+radicalAxis[cent1_, rad1_, cent2_, rad2_] := 
+    Module[{pa1, pb1, pc1, pa2, pb2, pc2}, 
+     pa1 = Simplify[bDistance[xA, cent1]^2 - rad1^2]; 
+      pb1 = Simplify[bDistance[xB, cent1]^2 - rad1^2]; 
+      pc1 = Simplify[bDistance[xC, cent1]^2 - rad1^2]; 
+      pa2 = Simplify[bDistance[xA, cent2]^2 - rad2^2]; 
+      pb2 = Simplify[bDistance[xB, cent2]^2 - rad2^2]; 
+      pc2 = Simplify[bDistance[xC, cent2]^2 - rad2^2]; 
+      Simplify[{pa1 - pa2, pb1 - pb2, pc1 - pc2}]]
+ 
+bPointByAngles[ang1_, ang2_] := {{-a^2, SC + S*Cot[ang1], SB + S*Cot[ang2]}, 
+     {SC + S*Cot[ang2], -b^2, SA + S*Cot[ang1]}, {SB + S*Cot[ang1], 
+      SA + S*Cot[ang2], -c^2}}

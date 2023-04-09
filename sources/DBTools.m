@@ -370,8 +370,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
         Print["Point seen"]; Return[False, Module], 
        AppendTo[globalSeenPoints, {ptcoord, pt}]; ]; 
       If[num > 0, chk = {1}, chk = checkPointinETC[pt]]; 
-      If[chk[[1]] < 10^(-12), Print[StringJoin["ETC: ", Keys[chk]]], 
-       barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
+      If[ !full && chk[[1]] < 10^(-12), Print[StringJoin["ETC: ", 
+         Keys[chk]]], barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
             expr[[1]]]], name = inname]; AssociateTo[globalProperties, 
          name -> Association[]]; If[full, lines = 
@@ -403,10 +403,14 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
  
 globalSeenPoints = {}
  
-checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d}, 
+checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck}, 
      out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
         d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
-        If[Abs[d] < 10^(-12), AppendTo[out, name]]; , 
+        If[Abs[d] < 10^(-12), secondcheck = True; 
+          Do[ptest = N[NormalizeBary[pt /. rc], 35]; 
+            d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rc; 
+            If[Abs[d] > 10^(-12), secondcheck = False]; , 
+           {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
        {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
        {"curves" -> out}]; If[Length[out] > 0, 
        If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
@@ -454,12 +458,12 @@ checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1,
            StringRiffle[out, ", "]]]]; ]; ]
  
 pointCheckerTransform[expr_, inname_, num_:0, full_:False] := 
-    Module[{pointProcesses, deg, texpr, procname}, 
+    Module[{pointProcesses, deg, texpr, procname, smt}, 
      deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[
-        expr[[1]]]; Print[StringJoin[inname, " has degree ", ToString[deg]]]; 
-      pointChecker[expr, num, full, inname]; If[TrueQ[globalSilence], 
-       printGlobalProperties[globalProperties, inname]]; 
-      pointProcesses = Association["isotomic conjugate" -> 
+        expr[[1]]]; Print[]; Print[StringJoin[inname, " has degree ", 
+        ToString[deg]]]; pointChecker[expr, num, full, inname]; 
+      If[TrueQ[globalSilence], printGlobalProperties[globalProperties, 
+        inname]]; pointProcesses = Association["isotomic conjugate" -> 
          Hold[bIsotomicConjugate[#1]], "isogonal conjugate" -> 
          Hold[bIsogonalConjugate[#1]], "complement" -> 
          Hold[bComplement[KimberlingCenterC[2], #1]], "anticomplement" -> 
@@ -477,12 +481,14 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
       Do[texpr = simplifyRationalBarycentrics[
           Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 
                 expr]]]]]; deg = (Max[Apply[Plus, CoefficientRules[#1][[All,
-              1]], {1}]] & )[texpr[[1]]]; procname = StringJoin[name, " of ", 
-          inname]; Print[StringJoin[procname, " has degree ", 
-          ToString[deg]]]; If[deg <= 20 && countSummands[texpr[[1]]]/deg < 5, 
-         pointChecker[texpr, 0, False, procname]; If[TrueQ[globalSilence], 
-           printGlobalProperties[globalProperties, procname]]; ], 
-       {name, Keys[pointProcesses]}]; ]
+              1]], {1}]] & )[texpr[[1]]]; 
+        smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ 
+            FactorList[texpr[[1]]], #1 > 3 & ]]; procname = 
+         StringJoin[name, " of ", inname]; Print[]; 
+        Print[StringJoin[procname, " has degree ", ToString[deg]]]; 
+        If[deg <= 20 && smt/deg < 5, pointChecker[texpr, 0, False, procname]; 
+          If[TrueQ[globalSilence], printGlobalProperties[globalProperties, 
+            procname]]; ], {name, Keys[pointProcesses]}]; ]
  
 printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 

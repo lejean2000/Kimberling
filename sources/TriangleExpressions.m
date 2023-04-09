@@ -55,3 +55,6 @@ ggBaryToCartesian[p_] := Simplify[bToCartesian[p, {ax, ay}, {bx, by},
 homogeneousPart[poly_, vars_, deg_] := Module[{intt}, 
      SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
       intt -> 1]
+ 
+simplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+      (Simplify[#1] & ) /@ FactorList[expr]
