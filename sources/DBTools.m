@@ -563,6 +563,5 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[localprops[name2], StringRiffle[
-                SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; , 
-         {name2, Keys[localprops]}]; , {pt, cycle}]]
+           Print[colorformat[StringJoin[localprops[name2], StringRiffle[hg, 
+                ", "]]]]; ]; , {name2, Keys[localprops]}]; , {pt, cycle}]]
