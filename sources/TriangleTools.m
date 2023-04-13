@@ -924,3 +924,9 @@ radicalAxis[cent1_, rad1_, cent2_, rad2_] :=
 bPointByAngles[ang1_, ang2_] := {{-a^2, SC + S*Cot[ang1], SB + S*Cot[ang2]}, 
      {SC + S*Cot[ang2], -b^2, SA + S*Cot[ang1]}, {SB + S*Cot[ang1], 
       SA + S*Cot[ang2], -c^2}}
+ 
+bLozadaPerspector[{u_, v_, w_}] := {(-a + b + c)*u^2, (a - b + c)*v^2, 
+     (a + b - c)*w^2}
+ 
+bLozadaPerspector2nd[{u_, v_, w_}] := {(a + b - c)*(a - b + c)*u^2, 
+     (a + b - c)*(-a + b + c)*v^2, (a - b + c)*(-a + b + c)*w^2}

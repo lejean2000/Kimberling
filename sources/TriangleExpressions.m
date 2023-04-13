@@ -56,5 +56,10 @@ homogeneousPart[poly_, vars_, deg_] := Module[{intt},
      SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
       intt -> 1]
  
-simplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+intSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
       (Simplify[#1] & ) /@ FactorList[expr]
+ 
+heuristicsCheck[expr_] := Module[{deg, smt}, 
+     deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
+      smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
+         #1 > 3 & ]]; Return[deg <= 20 && smt/deg < 5]; ]
