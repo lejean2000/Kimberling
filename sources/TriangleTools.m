@@ -82,12 +82,11 @@ bToTril[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
  
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
-bPerpendicular[line_, {u_, v_, w_}] := Module[{sa, sb, sc, f, g, h, pp, p, q, 
-      r, ff, gg, hh, m}, pp = line/Total[line]; p = pp[[1]]; q = pp[[2]]; 
-      r = pp[[3]]; sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
-      sc = (b^2 - c^2 + a^2)/2; f = q - r; g = r - p; h = p - q; 
-      ff = sb*g - sc*h; gg = sc*h - sa*f; hh = sa*f - sb*g; 
-      m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
+bPerpendicular[{p_, q_, r_}, {u_, v_, w_}] := 
+    Module[{sa, sb, sc, f, g, h, ff, gg, hh, m}, sa = (b^2 + c^2 - a^2)/2; 
+      sb = (-b^2 + c^2 + a^2)/2; sc = (b^2 - c^2 + a^2)/2; f = q - r; 
+      g = r - p; h = p - q; ff = sb*g - sc*h; gg = sc*h - sa*f; 
+      hh = sa*f - sb*g; m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
       {Coefficient[m, x], Coefficient[m, y], Coefficient[m, z]}]
  
 cToBary[v1_, v2_, v3_, xy_] := 
