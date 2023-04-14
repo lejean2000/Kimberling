@@ -161,7 +161,9 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
        Print[colorformat[StringJoin["Lies on these lines: ", 
           StringRiffle[out, ", "]]]]]; If[abort && Length[out] < 3, 
        Return[out, Module]; ]; hg = {}; 
-      Do[head = Select[igroup, Length[#1] == 0 & ]; 
+      Do[If[Length[igroup] != 2, Continue[]]; 
+        If[Sort[{Length[igroup[[1]]], Length[igroup[[2]]]}] != {0, 2}, 
+         Continue[]]; head = Select[igroup, Length[#1] == 0 & ]; 
         Do[If[el == head[[1]], Continue[]]; eltest = 
            Flatten[{el, head[[1]]}]; test = Det[{{1, 1, 1}, 
              bHarmonicConjugate[KimberlingCenterCNy[eltest[[1]]] /. rc, 
@@ -218,13 +220,11 @@ intLinesProcessFullGroups[pt_, prec_] :=
         AppendTo[tplist, {name, NormalizeBary[tp]}]; , 
        {name, Keys[ETCBaryNorm]}]; tplist = SortBy[tplist, #1[[2]][[1]] & ]; 
       prev = {"0", {0, 0, 0}}; outgroups = {}; group = {}; 
-      Do[If[Abs[el[[2]][[1]] - prev[[2]][[1]]] < 10^(-prec) && 
-          Abs[el[[2]][[2]] - prev[[2]][[2]]] < 10^(-prec) && 
-          Abs[el[[2]][[3]] - prev[[2]][[3]]] < 10^(-prec), 
-         AppendTo[group, el]; If[Length[group] == 1, AppendTo[group, prev]; 
-            dump = 1], If[dump == 1, AppendTo[fullgroups, group]; 
-            AppendTo[outgroups, Take[SortBy[group, numsortexpr[#1[[1]]] & ], 
-              2]]; group = {}; dump = 0]; ]; prev = el; , {el, tplist}]; 
+      Do[If[coincide[el[[2]], prev[[2]]], AppendTo[group, el]; 
+          If[Length[group] == 1, AppendTo[group, prev]; dump = 1], 
+         If[dump == 1, AppendTo[fullgroups, group]; AppendTo[outgroups, 
+             Take[SortBy[group, numsortexpr[#1[[1]]] & ], 2]]; group = {}; 
+            dump = 0]; ]; prev = el; , {el, tplist}]; 
       outgroups = SortBy[outgroups, numsortexpr[#1[[1]][[1]]] & ]; 
       fullgroups = ((#1[[1]] & ) /@ #1 & ) /@ fullgroups; 
       Return[{outgroups, fullgroups}]; ]
