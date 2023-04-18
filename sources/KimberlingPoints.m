@@ -35,3 +35,6 @@ checkPointsOnCurve[crv_] := Module[{curve},
       test = Select[dset, #1 < 10^(-12) & ]; 
       (StringJoin[StringTake[#1, 1], "(", StringTake[#1, {2, -1}], 
          ")"] & ) /@ Keys[test]]
+ 
+checkPointinETC2[pt_] := Keys[Select[ETCBaryNorm, 
+      #1 == intnumericnorm[pt /. rule69] & ]]
