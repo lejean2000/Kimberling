@@ -42,7 +42,7 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
  
 simplifyRationalBarycentrics[expr_] := Module[{out}, 
      out = Factor[expr*PolynomialLCM @@ Denominator[expr]]; 
-      intSimplifyFactors[out/PolynomialGCD @@ out]]
+      intSimplifyFactors /@ (out/PolynomialGCD @@ out)]
  
 intSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
       (Simplify[#1] & ) /@ FactorList[expr]
