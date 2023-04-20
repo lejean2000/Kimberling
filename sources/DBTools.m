@@ -497,9 +497,9 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
            #1]], "eigentransform" -> Hold[bEigentransform[#1]], 
         "cundyParryPsi" -> Hold[cundyParryPsi[#1]], "cundyParryPhi" -> 
          Hold[cundyParryPhi[#1]]]; 
-      Do[texpr = simplifyRationalBarycentrics[
+      Do[texpr = simplifyRationalBarycentrics /@ 
           Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 
-                expr]]]]]; If[heuristicsCheck[texpr[[1]]], 
+                expr]]]]; If[heuristicsCheck[texpr[[1]]], 
          procname = StringJoin[name, " of ", inname]; 
           If[ !TrueQ[globalSilence], Print[procname]]; pointChecker[texpr, 0, 
            False, procname]; If[TrueQ[globalSilence], printGlobalProperties[

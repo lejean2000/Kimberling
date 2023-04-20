@@ -42,7 +42,10 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
  
 simplifyRationalBarycentrics[expr_] := Module[{out}, 
      out = Factor[expr*PolynomialLCM @@ Denominator[expr]]; 
-      Simplify[out/PolynomialGCD @@ out]]
+      intSimplifyFactors[out/PolynomialGCD @@ out]]
+ 
+intSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+      (Simplify[#1] & ) /@ FactorList[expr]
  
 ggCurve[expr_] := Print[StringJoin["TriangleCurve(A,B,C,", 
       ExpressionToTrad[multiCollect[expr /. Thread[{u, v, w} -> {A, B, C}] /. 
@@ -55,9 +58,6 @@ ggBaryToCartesian[p_] := Simplify[bToCartesian[p, {ax, ay}, {bx, by},
 homogeneousPart[poly_, vars_, deg_] := Module[{intt}, 
      SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
       intt -> 1]
- 
-intSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
-      (Simplify[#1] & ) /@ FactorList[expr]
  
 heuristicsCheck[expr_] := Module[{deg, smt}, 
      deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
