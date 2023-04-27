@@ -60,6 +60,7 @@ homogeneousPart[poly_, vars_, deg_] := Module[{intt},
       intt -> 1]
  
 heuristicsCheck[expr_] := Module[{deg, smt}, 
-     deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
+     If[ !PolynomialQ[expr, a] ||  !PolynomialQ[expr, b], Return[False]]; 
+      deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
          #1 > 3 & ]]; Return[deg <= 20 && smt/deg < 5]; ]
