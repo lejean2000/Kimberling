@@ -36,10 +36,11 @@ singlePointProcesses = <|"complement" ->
  
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
-      dump}, hgroups = {}; Do[fgr1 = Take[SortBy[set, numsortexpr[#1] & ], 
-          2000]; flatfg2 = Subsets[fgr1, {2}]; 
-        checks = AssociationMap[NormalizeBary[bHarmonicConjugate[
-             ETCBaryNorm[#1[[1]]], ETCBaryNorm[#1[[2]]], pt]] & , flatfg2]; 
+      dump}, hgroups = {}; Do[fgr1 = SortBy[set, numsortexpr[#1] & ]; 
+        If[Length[fgr1] > 2000, fgr1 = Take[fgr1, 2000]]; 
+        flatfg2 = Subsets[fgr1, {2}]; checks = AssociationMap[
+          NormalizeBary[bHarmonicConjugate[ETCBaryNorm[#1[[1]]], 
+             ETCBaryNorm[#1[[2]]], pt]] & , flatfg2]; 
         ingroupnbary = KeySelect[ETCBaryNorm, MemberQ[fgr1, #1] & ]; 
         un = SortBy[Union[checks, ingroupnbary], #1[[1]] & ]; hgroup = {}; 
         prev = Association["X0" -> {0, 0, 0}]; dump = 0; 
@@ -128,7 +129,8 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
        {cnc, list4}]; AssociateTo[globalProperties[name], 
        {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
        If[Length[out] > 0, Print[colorformat[StringJoin[
-            "Lies on circumconics: ", StringRiffle[out, ", "]]]]; ]]; ]
+            "Lies on these circumconics: ", StringRiffle[out, ", "]]]]; ]]; 
+      Return[out]; ]
  
 intLinesProcessFullGroups[pt_, prec_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump, as}, 
@@ -377,7 +379,7 @@ checkVertexConjugates[pt_, name_:"X"] :=
             StringRiffle[res, ", "]]]]; ]]; ]
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
-    Module[{ptcoord, pt, chk, lines, barys, symcheck, name}, 
+    Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
            rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
@@ -392,13 +394,15 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
             expr[[1]]]], name = inname]; AssociateTo[globalProperties, 
-         name -> Association[]]; If[full, lines = 
-          Quiet[linesProcessAlg[ptcoord, barys, 20, False, False, name]], 
-         lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
-             name]]; ]; If[full || Length[lines] > 3, 
+         name -> Association[]]; lines = Quiet[linesProcessAlg[ptcoord, 
+           barys, 20, False, False, name]]; numcon = 
          Quiet[checkCircumconics[ptcoord, num, name]]; 
-          Quiet[checkCurves[ptcoord, name]]; Quiet[checkTrilinearPolar[
-            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
+        If[full || Length[lines] + Length[numcon] >= 3, 
+         If[ !TrueQ[globalSilence], PrintTemporary["Starting circumconics"]]; 
+          Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
+           PrintTemporary["Starting trilinear"]]; 
+          Quiet[checkTrilinearPolar[ptcoord, name]]; 
+          Quiet[checkIsogonalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bZayinConjugate, 
@@ -414,6 +418,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[checkConjugates[ptcoord, bWawConjugate, 
             "= X(i)-Waw conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkVertexConjugates[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], PrintTemporary["Starting barycentric"]]; 
           Quiet[checkBarycentric[ptcoord, "product", name]]; 
           Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
           Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
@@ -502,21 +507,19 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
                 expr]]]]]; If[heuristicsCheck[texpr[[1]]], 
          procname = StringJoin[name, " of ", inname]; 
           If[ !TrueQ[globalSilence], Print[procname]]; pointChecker[texpr, 0, 
-           False, procname]; If[TrueQ[globalSilence], printGlobalProperties[
+           full, procname]; If[TrueQ[globalSilence], printGlobalProperties[
             globalProperties, procname]]; ], {name, Keys[pointProcesses]}]; ]
  
 printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
-      Do[If[ !MemberQ[Keys[glob[pt]], "name"], Continue[]]; Print[]; Print[]; 
-        Print[pt]; Print[]; Print[glob[pt]["name"]]; Print[]; 
+      Do[Print[]; Print[pt]; Print[]; Print[glob[pt]["name"]]; Print[]; 
         Print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        Print[]; hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
+        Print[]; Print[colorformat[StringJoin["lies on these lines: ", 
+           StringRiffle[glob[pt]["lines"], ", "]]]]; Print[]; 
+        hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
           glob[pt]["circumconics"]]; If[Length[hg] > 0, 
-         Print[colorformat[StringJoin["lies on circumconics ", 
-            StringRiffle[hg, ", "], " and on these lines: ", 
-            StringRiffle[glob[pt]["lines"], ", "]]]], 
-         Print[colorformat[StringJoin["lies on these lines: ", 
-             StringRiffle[glob[pt]["lines"], ", "]]]]; ]; Print[]; 
+         Print[colorformat[StringJoin["lies on these circumconics ", 
+             StringRiffle[hg, ", "]]]]; ]; Print[]; 
         If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
           If[Length[hg] > 0, Print[colorformat[StringJoin[
                "= midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
@@ -590,5 +593,5 @@ checkCircumconicsOld[pt_, start_:1, time_:60, excl_:0, name_:"X"] :=
               200}]}]; , time, funcind]; AssociateTo[globalProperties[name], 
        {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
        If[Length[out] > 0, Print[colorformat[StringJoin[
-            "Lies on circumconics: ", StringRiffle[out, ", "]]]]; ]]; 
+            "Lies on these circumconics: ", StringRiffle[out, ", "]]]]; ]]; 
       Return[funcind]; ]
