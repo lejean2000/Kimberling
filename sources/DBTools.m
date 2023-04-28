@@ -1,38 +1,30 @@
-pointProcessBary[expr_, rule_:rule69] := 
-    Module[{pointsBary, pti, pta, str, coords}, pointsBary = Association[]; 
-      Do[pta = ETCBaryNorm[k]; If[AnyTrue[Im[pta], #1 > 0 & ], Continue[]]; 
-        If[AnyTrue[pta, #1 === ComplexInfinity & ] || AnyTrue[pta, 
-           #1 === Infinity & ], Continue[]]; 
-        pti = intnumericnorm[evaluate[ReleaseHold[expr /. #1 -> pta]] /. 
-           rule]; If[pti[[1]] =!= Indeterminate, 
-         AppendTo[pointsBary, k -> pti]; ], {k, Keys[ETCBaryNorm]}]; 
-      Return[pointsBary]; ]
+pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary}, 
+     pointsBary = Quiet[Table[intnumericnorm[
+          expr /. Thread[{u, v, w} -> val] /. rule], {val, ETCBaryNorm}]]; 
+      Return[AssociationThread[Keys[ETCBaryNorm] -> pointsBary]]; ]
  
 intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
-singlePointProcesses = <|"complement" -> 
-      Hold[bComplement[KimberlingCenterCN[2], #1]], 
-     "anticomplement" -> Hold[bAntiComplement[KimberlingCenterCN[2], #1]], 
-     "polar conjugate" -> Hold[bPIsogonalConjugate[KimberlingCenterCN[48], 
-        #1]], "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
-     "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
-     "zosma transform" -> Hold[bZosmaTransform[#1]], 
-     "anticomplement of isogonal conjugate" -> 
-      Hold[bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
-     "anticomplement of isotomic conjugate" -> 
-      Hold[bAntiComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
-     "complement of isogonal conjugate" -> 
-      Hold[bComplement[KimberlingCenterC[2], bIsogonalConjugate[#1]]], 
-     "complement of isotomic conjugate" -> 
-      Hold[bComplement[KimberlingCenterC[2], bIsotomicConjugate[#1]]], 
-     "circlecevian perspector" -> Hold[bCirclecevianPerspector[#1]], 
-     "tcc_perspector" -> Hold[bTCCPerspector[#1]], 
-     "eigentransform" -> Hold[bEigentransform[#1]], 
-     "ortoassociate" -> Hold[bOrthoassociate[#1]], "antitomic conjugate" -> 
-      Hold[bAntitomicConjugate[#1]], "syngonal conjugate" -> 
-      Hold[bSyngonal[#1]], "1st saragossa point" -> Hold[bSaragossa1[#1]], 
-     "2nd saragossa point" -> Hold[bSaragossa2[#1]], 
-     "3rd saragossa point" -> Hold[bSaragossa3[#1]]|>
+singlePointProcesses = <|"complement" -> {v + w, u + w, u + v}, 
+     "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, 
+     "polar conjugate" -> bPIsogonalConjugate[KimberlingCenterCN[48], 
+       {u, v, w}], "cyclocevian conjugate" -> bCyclocevianConjugate[
+       {u, v, w}], "circumcircle inverse" -> bCircumcircleInverse[{u, v, w}], 
+     "anticomplement of isogonal conjugate" -> bAntiComplement[
+       KimberlingCenterC[2], bIsogonalConjugate[{u, v, w}]], 
+     "anticomplement of isotomic conjugate" -> bAntiComplement[
+       KimberlingCenterC[2], bIsotomicConjugate[{u, v, w}]], 
+     "complement of isogonal conjugate" -> bComplement[KimberlingCenterC[2], 
+       bIsogonalConjugate[{u, v, w}]], "complement of isotomic conjugate" -> 
+      bComplement[KimberlingCenterC[2], bIsotomicConjugate[{u, v, w}]], 
+     "zosma transform" -> {a*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(c*v + b*w), 
+       b*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*(c*u + a*w), 
+       c*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*(b*u + a*v)}, 
+     "eigentransform" -> bEigentransform[{u, v, w}], 
+     "circlecevian perspector" -> bCirclecevianPerspector[{u, v, w}], 
+     "ortoassociate" -> bOrthoassociate[{u, v, w}], 
+     "antitomic conjugate" -> bAntitomicConjugate[{u, v, w}], 
+     "syngonal conjugate" -> bSyngonal[{u, v, w}]|>
  
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
@@ -67,7 +59,7 @@ intPointCheck[pt_, process_, rule_:rule69] := Module[{tmp, res, ptn, ptnum},
 intVerifyPointProcess[pt_, xnum_, processexpr_] := 
     Module[{ptn, pta, pti}, Do[ptn = intnumericnorm[pt /. rc]; 
         pta = intnumericnorm[KimberlingCenterCNy[xnum] /. rc]; 
-        pti = intnumericnorm[ReleaseHold[processexpr /. #1 -> pta] /. rc]; 
+        pti = intnumericnorm[processexpr /. {u, v, w} -> pta /. rc]; 
         If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
        {rc, intCheckList}]; Return[True]; ]
  
@@ -83,14 +75,19 @@ intCheckList = {{a -> 5, b -> 6, c -> 7}, {a -> 4, b -> 11, c -> 13}}
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
      Do[If[ !TrueQ[globalSilence], PrintTemporary[proc]]; 
         res = intPointCheck[pt, singlePointProcesses[proc]]; 
-        If[StringQ[res], prop = StringJoin["= ", proc, " of ", res]; 
-          If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; 
-          AssociateTo[globalProperties[name], proc -> intaddbrackets[
-             res]]; ]; , {proc, Keys[singlePointProcesses]}]; ]
+        If[StringQ[res], prop = StringJoin["= ", proc, " of ", 
+            intaddbrackets[res]]; If[ !TrueQ[globalSilence], 
+           Print[colorformat[prop]]]; AssociateTo[globalProperties[name], 
+           proc -> intaddbrackets[res]]; ]; , 
+       {proc, Keys[singlePointProcesses]}]; ]
  
-colorformat[string_, cases_:RegularExpression["Y\\(\\d+\\)|Y\\d+"]] := 
-    Module[{pos, agg, res}, If[ !TrueQ[colorPrintOn], 
-       Return[string, Module]]; pos = StringPosition[string, cases]; 
+intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(", 
+     StringTake[pname, {2, -1}], ")"]
+ 
+colorformat[string_, cases_:RegularExpression[
+       "Y\\(\\d+\\)|Y\\d+|Y\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
+     If[ !TrueQ[colorPrintOn], Return[string, Module]]; 
+      pos = StringPosition[string, cases]; 
       agg = ({Switch[#1[[1,2]], 1, Red, 2, Brown, _, Blue], 
           #1[[1 ;; All,{1}]]} & ) /@ GatherBy[
          Tally[Flatten[Apply[Range, pos, {1}]]], Last]; 
@@ -102,9 +99,6 @@ intmark[number_, spec:{{_, _}..}] :=
        spec]]]
  
 globalProperties = <||>
- 
-intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(", 
-     StringTake[pname, {2, -1}], ")"]
  
 checkCircumconics[pt_, excl_:0, name_:"X"] := 
     Module[{ptc, list1, list2, list3, list4, p1, p2, out, check, bary20}, 
@@ -398,9 +392,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            barys, 20, False, False, name]]; numcon = 
          Quiet[checkCircumconics[ptcoord, num, name]]; 
         If[full || Length[lines] + Length[numcon] >= 3, 
-         If[ !TrueQ[globalSilence], PrintTemporary["Starting circumconics"]]; 
-          Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
-           PrintTemporary["Starting trilinear"]]; 
+         Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
+           PrintTemporary["Starting trilinear+conjugates"]]; 
           Quiet[checkTrilinearPolar[ptcoord, name]]; 
           Quiet[checkIsogonalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
@@ -510,15 +503,17 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
            full, procname]; If[TrueQ[globalSilence], printGlobalProperties[
             globalProperties, procname]]; ], {name, Keys[pointProcesses]}]; ]
  
-printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops}, 
+printGlobalProperties[glob_, name_:""] := 
+    Module[{hg, cycle, localprops, colorprint}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
+      colorprint = colorPrintOn; colorPrintOn = False; 
       Do[Print[]; Print[pt]; Print[]; Print[glob[pt]["name"]]; Print[]; 
         Print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
         Print[]; Print[colorformat[StringJoin["lies on these lines: ", 
            StringRiffle[glob[pt]["lines"], ", "]]]]; Print[]; 
         hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
           glob[pt]["circumconics"]]; If[Length[hg] > 0, 
-         Print[colorformat[StringJoin["lies on these circumconics ", 
+         Print[colorformat[StringJoin["lies on these circumconics: ", 
              StringRiffle[hg, ", "]]]]; ]; Print[]; 
         If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
           If[Length[hg] > 0, Print[colorformat[StringJoin[
@@ -572,7 +567,8 @@ printGlobalProperties[glob_, name_:""] := Module[{hg, cycle, localprops},
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
            Print[colorformat[StringJoin[localprops[name2], StringRiffle[hg, 
-                ", "]]]]; ]; , {name2, Keys[localprops]}]; , {pt, cycle}]]
+                ", "]]]]; ]; , {name2, Keys[localprops]}]; , {pt, cycle}]; 
+      colorPrintOn = colorprint; ]
  
 checkCircumconicsOld[pt_, start_:1, time_:60, excl_:0, name_:"X"] := 
     Module[{ptc, p1, p2, crv, dset, test, out, conicname, check}, 

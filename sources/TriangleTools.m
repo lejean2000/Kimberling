@@ -1,3 +1,21 @@
+bIntersectionTriangleV[pa_, pb_, pc_, qa_, qb_, qc_] := 
+    {bLineIntersection[bLine[pb, qb], bLine[pc, qc]], 
+     bLineIntersection[bLine[pc, qc], bLine[pa, qa]], 
+     bLineIntersection[bLine[pa, qa], bLine[pb, qb]]}
+ 
+bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
+     l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
+ 
+bLine[u_, v_] := Module[{m, xx, yy, zz}, 
+     m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
+         {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
+       Coefficient[m, zz]}]
+ 
+bIntersectionTriangleS[pa_, pb_, pc_, qa_, qb_, qc_] := 
+    {bLineIntersection[bLine[pb, pc], bLine[qb, qc]], 
+     bLineIntersection[bLine[pc, pa], bLine[qc, qa]], 
+     bLineIntersection[bLine[pa, pb], bLine[qa, qb]]}
+ 
 bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]], 
      c^2*po[[1]]*po[[2]]}
  
@@ -56,18 +74,10 @@ orth[p_, q_, r_] := Simplify[{1/(y^2 + z^2 - x^2), 1/(-y^2 + z^2 + x^2),
        1/(y^2 - z^2 + x^2)} /. {x -> bDistance[q, r], y -> bDistance[p, r], 
        z -> bDistance[p, q]}]
  
-bLine[u_, v_] := Module[{m, xx, yy, zz}, 
-     m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
-         {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
-       Coefficient[m, zz]}]
- 
 bLineL[{u_, v_}] := Module[{m, xx, yy, zz}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
- 
-bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
-     l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
  
 bIntersection[a_, b_, c_, d_] := Module[{l1, l2}, 
      l1 = bLine[a, b]; l2 = bLine[c, d]; bLineIntersection[l1, l2]]
@@ -457,9 +467,9 @@ ExpressionToTrad[expr_, lClearSpaces_:True] := Module[{res, sub},
       If[lClearSpaces, res = StringReplace[res, {" ".. -> ""}]]; 
       Return[res]; ]
  
-bZosmaTransform[P1_] := Module[{eq}, 
-     eq = symmetrizeInternal[(qq/b + rr/c)*Sec[angleA]]; 
-      (eq /. Thread[{pp, qq, rr} -> P1])*{a, b, c}]
+bZosmaTransform[{u_, v_, w_}] := {a*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*
+      (c*v + b*w), b*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*(c*u + a*w), 
+     c*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*(b*u + a*v)}
  
 GetKey[assoc_, index_] := First[Keys[Take[assoc, {index}]]]
  
@@ -929,3 +939,13 @@ bLozadaPerspector[{u_, v_, w_}] := {(-a + b + c)*u^2, (a - b + c)*v^2,
  
 bLozadaPerspector2nd[{u_, v_, w_}] := {(a + b - c)*(a - b + c)*u^2, 
      (a + b - c)*(-a + b + c)*v^2, (a - b + c)*(-a + b + c)*w^2}
+ 
+multiCollectFactors[expr_, vars_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+      (multiCollect[#1, vars] & ) /@ FactorList[expr]
+ 
+bOrthologyCenter[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    bLineIntersection[bPerpendicular[bLine[xb, xc], pa], 
+     bPerpendicular[bLine[xa, xc], pb]]
+ 
+bIsPerspective[a1_, b1_, c1_, a2_, b2_, c2_] := bConcurrencyMatrix[
+     bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]

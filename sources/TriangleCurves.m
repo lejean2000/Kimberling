@@ -1,5 +1,13 @@
 cubicpK[{p_, q_, r_}, {u_, v_, w_}] := symmetrizeEq[u*x*(r^2*y^2 - q^2*z^2)]
  
+cubicA1K[{p_, q_, r_}] := -((p^2 + q^2 + r^2)*x*y*z) + 
+     p*q*z*(x^2 + y^2 - z^2) + p*r*y*(x^2 - y^2 + z^2) + 
+     q*r*x*(-x^2 + y^2 + z^2)
+ 
+cubicA2K[{p_, q_, r_}] := (p + q - r)^2*x*(x - y)*y + 
+     2*(p^2 + q^2 + r^2 - 2*(p*q + p*r + q*r))*x*y*z + 
+     (-p + q + r)^2*y*(y - z)*z + (p - q + r)^2*x*z*(-x + z)
+ 
 cubicO[{u_, v_, w_}] := x*((c^2*u - 2*SB*w)*y^2 - (b^2*u - 2*SC*v)*z^2) + 
      y*((a^2*v - 2*SC*u)*z^2 - (c^2*v - 2*SA*w)*x^2) + 
      z*((b^2*w - 2*SA*v)*x^2 - (a^2*w - 2*SB*u)*y^2)
@@ -29,3 +37,9 @@ jacobianMatrix[(f_List)?VectorQ, x_List] := Outer[D, f, x] /;
      Equal @@ Dimensions /@ {f, x}
  
 cubicnK0[{u_, v_, w_}] := symmetrizeEq[u*x*(c^2*y^2 + b^2*z^2)]
+ 
+tuckerCubic[k_] := symmetrizeEq[x*(y^2 + z^2)] + 2*(1 - 1/k)*x*y*z
+ 
+curveSimplify[crv_] := multiCollect[Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+       Select[FactorList[crv], Exponent[#1[[1]], x] + Exponent[#1[[1]], y] + 
+           Exponent[#1[[1]], z] > 0 & ], {x, y, z}]
