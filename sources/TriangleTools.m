@@ -177,10 +177,8 @@ bCircle4Check[{p11_, p12_, p13_}, {p21_, p22_, p23_}, {p31_, p32_, p33_},
          ss[{p31, p32, p33}], ss[{p41, p42, p43}]}, {p11, p21, p31, p41}, 
         {p12, p22, p32, p42}, {p13, p23, p33, p43}}]]
  
-bCevianQuotient[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = symmetrizeInternal[uu*(-(uu/pp) + vv/qq + ww/rr)]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+bCevianQuotient[{u_, v_, w_}, {p_, q_, r_}] := {p*((-r)*u*v - q*u*w + p*v*w), 
+     q*((-r)*u*v + q*u*w - p*v*w), r*(r*u*v - (q*u + p*v)*w)}
  
 bCevianProduct[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[1/(rr*vv + qq*ww)]; 
@@ -197,10 +195,10 @@ bTripole[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww];
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
-bCrossConjugate[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = symmetrizeInternal[uu/(-(pp/uu) + qq/vv + rr/ww)]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+bCrossConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {p*((-q)*r*u - p*r*v + p*q*w)*(q*r*u - p*r*v + p*q*w), 
+     q*(q*r*u - p*r*v - p*q*w)*(q*r*u + p*r*v - p*q*w), 
+     r*(q*r*u - p*r*v - p*q*w)*(q*r*u - p*r*v + p*q*w)}
  
 bComplement[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[pp*(vv/qq + ww/rr)]; 
@@ -237,13 +235,10 @@ bHirstInverse[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww];
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
-bAnticomplementaryConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = (1/a)*(b^2/(qq*(a*uu + c*ww)) + c^2/(rr*(a*uu + b*vv)) - 
-          a^2/(pp*(b*vv + c*ww))) /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, 
-         uu -> uu/a, vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bAnticomplementaryConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {c^3*(p + r)*(q + r)*u*v + (p + q)*(b^3*(q + r)*u - a^3*(p + r)*v)*w, 
+     c^3*(p + r)*(q + r)*u*v + (p + q)*((-b^3)*(q + r)*u + a^3*(p + r)*v)*w, 
+     (-c^3)*(p + r)*(q + r)*u*v + (p + q)*(b^3*(q + r)*u + a^3*(p + r)*v)*w}
  
 bLineConjugate[P1_, U1_] := Module[{eq, eq2}, 
      eq = pp*(vv^2 + ww^2) - uu*(qq*vv + rr*ww) /. {pp -> pp/a, qq -> qq/b, 
@@ -251,12 +246,6 @@ bLineConjugate[P1_, U1_] := Module[{eq, eq2},
       eq2 = symmetrizeInternal[eq]; bFromTrilinear[
        eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
- 
-bAntigonalImage[P1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = pp/((b^2 + c^2 - a^2)*pp^2 - a^2*qq*rr + (b^2 - a^2)*pp*qq + 
-          (c^2 - a^2)*pp*rr) /. {pp -> pp/a, qq -> qq/b, rr -> rr/c}; 
-      eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]]
  
 bBethConjugate[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = 2*a*b*c*pp*((a^2 - b^2 + c^2)/(2*a*c) + (a^2 + b^2 - c^2)/(2*a*b))*
@@ -267,14 +256,10 @@ bBethConjugate[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww];
       bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
         MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
-bComplementaryConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = (1/a)*(b^2/(qq*(a*uu - b*vv + c*ww)) + 
-          c^2/(rr*(a*uu + b*vv - c*ww))) /. {pp -> pp/a, qq -> qq/b, 
-         rr -> rr/c, uu -> uu/a, vv -> vv/b, ww -> ww/c}; 
-      eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bComplementaryConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {(p - q - r)*u*(c^3*(p - q + r)*v + b^3*(p + q - r)*w), 
+     (p - q + r)*v*(c^3*(p - q - r)*u - a^3*(p + q - r)*w), 
+     (p + q - r)*(b^3*(p - q - r)*u - a^3*(p - q + r)*v)*w}
  
 bFivePointConicEq[{p1_, q1_, r1_}, {p2_, q2_, r2_}, {p3_, q3_, r3_}, 
      {p4_, q4_, r4_}, {p5_, q5_, r5_}] := 
@@ -390,11 +375,13 @@ bPerspector[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33},
          {m13, m23, m33}} = mx]; p = {1/(m12*m13 - m11*m23), 
         1/((-m13)*m22 + m12*m23), 1/(m13*m23 - m12*m33)}; p/Total[p]]
  
-bVertexConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = a/(c^4*pp*qq*uu*vv + rr*(b^4*pp*uu - a^4*qq*vv)*ww + 
-         b^2*c^2*pp*uu*(rr*vv + qq*ww)); eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bVertexConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {a^2*((-c^4)*p*q*u*v + (b^2*p + a^2*q)*r*(b^2*u + a^2*v)*w)*
+      (c^4*p*q*u*v + r*((-b^4)*p*u + a^4*q*v)*w + a^2*c^2*q*v*(r*u + p*w)), 
+     b^2*((-c^4)*p*q*u*v + (b^2*p + a^2*q)*r*(b^2*u + a^2*v)*w)*
+      (c^4*p*q*u*v + r*(b^4*p*u - a^4*q*v)*w + b^2*c^2*p*u*(r*v + q*w)), 
+     c^2*(c^4*p*q*u*v + r*((-b^4)*p*u + a^4*q*v)*w + a^2*c^2*q*v*(r*u + p*w))*
+      (c^4*p*q*u*v + r*(b^4*p*u - a^4*q*v)*w + b^2*c^2*p*u*(r*v + q*w))}
  
 bTrilinearProduct[{p_, q_, r_}, {u_, v_, w_}] := {b*c*p*u, c*a*q*v, a*b*r*w}
  
@@ -638,7 +625,7 @@ bHarmonicConjugateFull[{a1_, a2_, a3_}, {b1_, b2_, b3_}, {c1_, c2_, c3_}] :=
       a1*b2*c3 - 2*a2*b2*c3, a3*b2*c1 + a2*b3*c1 - 2*a3*b3*c1 - a3*b1*c2 - 
       a1*b3*c2 + 2*a3*b3*c2 + a3*b1*c3 - a3*b2*c3 + a1*b3*c3 - a2*b3*c3}
  
-NormalizeBary[v_] := Normalize[v]*Sign[v[[1]]]
+NormalizeBary[v_] := Normalize[v]*If[v[[1]] == 0, 1, Sign[v[[1]]]]
  
 bAnticevianTriangle[{u_, v_, w_}] := {{-u, v, w}, {u, -v, w}, {u, v, -w}}
  
@@ -892,21 +879,20 @@ bFregierTriangle[{u_, v_, w_}] := {{SA*u, (-SA)*v + b^2*w, c^2*v - SA*w},
 bFuhrmannTriangle[{u_, v_, w_}] := symmetrizeTriangleExprType2Bary[
      {a^2*v*w, v*((-a^2)*w + c^2*(v + w)), w*((-a^2)*v + b^2*(v + w))}]
  
-bZayinConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] := 
-    Module[{eq, hh, pp1, qq1, rr1, uu1, vv1, ww1}, 
-     hh[{p_, q_, r_}, {x_, y_, z_}] := p*(y + z)^2 - r*y^2 - q*z^2 + 
-        (p - r)*x*y + (p - q)*x*z; {pp1, qq1, rr1} = bToTril[{pp, qq, rr}]; 
-      {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
-       {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
-         {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]
+bZayinConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {a*((-b^2)*r*(c*p + a*r)*u + a*c*q^2*((-c)*u + a*w) + 
+       b*((-c^2)*p*q*u + a^2*r^2*v + a*c*(-2*q*r*u + p*r*v + p*q*w))), 
+     b*((-a^2)*r*(c*q + b*r)*v + b*c*p^2*((-c)*v + b*w) + 
+       a*(b^2*r^2*u - c^2*p*q*v + b*c*(q*r*u - 2*p*r*v + p*q*w))), 
+     c*((-a^2)*q*(c*q + b*r)*w + b*c*p^2*(c*v - b*w) + 
+       a*(c^2*q^2*u - b^2*p*r*w + b*c*(q*r*u + p*r*v - 2*p*q*w)))}
  
-bWawConjugate[{pp_, qq_, rr_}, {uu_, vv_, ww_}] := 
-    Module[{eq, hh, pp1, qq1, rr1, uu1, vv1, ww1}, 
-     hh[{p_, q_, r_}, {x_, y_, z_}] := p*(x^2*q^2*r^2 + 2*p^2*(r*y - q*z)^2 - 
-         p*q*r^2*x*y - p*q^2*r*x*z); {pp1, qq1, rr1} = bToTril[{pp, qq, rr}]; 
-      {uu1, vv1, ww1} = bToTril[{uu, vv, ww}]; bFromTrilinear[
-       {hh[{pp1, qq1, rr1}, {uu1, vv1, ww1}], hh[{qq1, rr1, pp1}, 
-         {vv1, ww1, uu1}], hh[{rr1, pp1, qq1}, {ww1, uu1, vv1}]}]]
+bWawConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {u*(2*r^2*u^2*v^2 - r*u*v*(4*q*u + p*v)*w + 
+       (2*q^2*u^2 - p*q*u*v + p^2*v^2)*w^2), 
+     v*(2*r^2*u^2*v^2 - r*u*v*(q*u + 4*p*v)*w + 
+       (q^2*u^2 - p*q*u*v + 2*p^2*v^2)*w^2), 
+     w*(r^2*u^2*v^2 - r*u*v*(q*u + p*v)*w + 2*(q*u - p*v)^2*w^2)}
  
 symmetrizeInternal3[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w]; 
       partB = eq /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u, x -> y, 
@@ -949,3 +935,18 @@ bOrthologyCenter[pa_, pb_, pc_, xa_, xb_, xc_] :=
  
 bIsPerspective[a1_, b1_, c1_, a2_, b2_, c2_] := bConcurrencyMatrix[
      bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]
+ 
+bCurveForTriangle[crv_, va_, vb_, vc_] := 
+    Module[{xa, ya, za, xb, yb, zb, xc, yc, zc, rls, a1, b1, c1}, 
+     {a1, b1, c1} = {{xa, ya, za}, {xb, yb, zb}, {xc, yc, zc}}; 
+      repl = {((xa + ya + za)*((-xc)*yb*z + xb*yc*z + xc*y*zb - x*yc*zb - 
+           xb*y*zc + x*yb*zc))/((-xc)*yb*za + xb*yc*za + xc*ya*zb - 
+          xa*yc*zb - xb*ya*zc + xa*yb*zc), 
+        ((xb + yb + zb)*((-xc)*ya*z + xa*yc*z + xc*y*za - x*yc*za - xa*y*zc + 
+           x*ya*zc))/(xc*yb*za - xb*yc*za - xc*ya*zb + xa*yc*zb + xb*ya*zc - 
+          xa*yb*zc), (((-xb)*ya*z + xa*yb*z + xb*y*za - x*yb*za - xa*y*zb + 
+           x*ya*zb)*(xc + yc + zc))/((-xc)*yb*za + xb*yc*za + xc*ya*zb - 
+          xa*yc*zb - xb*ya*zc + xa*yb*zc)}; 
+      rls = Thread[{xa, ya, za, xb, yb, zb, xc, yc, zc} -> 
+         Flatten[{va, vb, vc}]]; crv /. setupBaseTriangleBary[a1, b1, c1] /. 
+        Thread[{x, y, z} -> repl] /. rls]

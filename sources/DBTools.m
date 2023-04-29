@@ -85,7 +85,7 @@ intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(",
      StringTake[pname, {2, -1}], ")"]
  
 colorformat[string_, cases_:RegularExpression[
-       "Y\\(\\d+\\)|Y\\d+|Y\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
+       "Y\\(\\d+\\)|Y\\d+|Z\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
      If[ !TrueQ[colorPrintOn], Return[string, Module]]; 
       pos = StringPosition[string, cases]; 
       agg = ({Switch[#1[[1,2]], 1, Red, 2, Brown, _, Blue], 
@@ -569,25 +569,3 @@ printGlobalProperties[glob_, name_:""] :=
            Print[colorformat[StringJoin[localprops[name2], StringRiffle[hg, 
                 ", "]]]]; ]; , {name2, Keys[localprops]}]; , {pt, cycle}]; 
       colorPrintOn = colorprint; ]
- 
-checkCircumconicsOld[pt_, start_:1, time_:60, excl_:0, name_:"X"] := 
-    Module[{ptc, p1, p2, crv, dset, test, out, conicname, check}, 
-     TimeConstrained[out = {}; ptc = N[NormalizeBary[pt /. rule69], 35]; 
-        Do[ClearSystemCache[]; funcind = nx; 
-          crv = N[bCircumconicEq[ptc, ETCBaryNorm[nx]] /. rule69, 35]; 
-          dset = (Abs[crv] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
-          test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
-           p1 = Keys[test][[1]]; p2 = Keys[test][[2]]; 
-            If[p1 == excl || p2 == excl, Continue[]]; 
-            check = TimeConstrained[Simplify[bCircumconicEq[
-                 KimberlingCenterCNy[p1], KimberlingCenterCNy[p2]] /. 
-                Thread[{x, y, z} -> pt]], 10, -1]; If[check == 0, 
-             conicname = StringJoin["{A,B,C,", intaddbrackets[p1], ",", 
-                intaddbrackets[p2], "}"]; If[ !MemberQ[out, conicname], 
-               AppendTo[out, conicname]]]; ]; , 
-         {nx, Take[Keys[ETC], {start, start + Max[1, Floor[time/60]]*
-              200}]}]; , time, funcind]; AssociateTo[globalProperties[name], 
-       {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
-       If[Length[out] > 0, Print[colorformat[StringJoin[
-            "Lies on these circumconics: ", StringRiffle[out, ", "]]]]; ]]; 
-      Return[funcind]; ]
