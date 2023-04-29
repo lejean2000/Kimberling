@@ -950,3 +950,6 @@ bCurveForTriangle[crv_, va_, vb_, vc_] :=
       rls = Thread[{xa, ya, za, xb, yb, zb, xc, yc, zc} -> 
          Flatten[{va, vb, vc}]]; crv /. setupBaseTriangleBary[a1, b1, c1] /. 
         Thread[{x, y, z} -> repl] /. rls]
+ 
+bSteinerImage[{p_, q_, r_}] := symmetrizeInternal2[
+     p/(q^2 + r^2 - p^2 + q*r + r*p + p*q)]
