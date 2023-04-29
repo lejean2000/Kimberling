@@ -29,12 +29,16 @@ checkPointinETC[pt_] := MinimalBy[Value][
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  
-checkPointsOnCurve[crv_] := Module[{curve}, 
-     curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}] /. rule69; 
-      dset = (Abs[curve] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
-      test = Select[dset, #1 < 10^(-12) & ]; 
-      (StringJoin[StringTake[#1, 1], "(", StringTake[#1, {2, -1}], 
-         ")"] & ) /@ Keys[test]]
+checkPointsOnCurve[crv_] := Module[{curve, curve2, out}, 
+     curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}]; 
+      curve2 = curve /. rule69; 
+      test = Select[(Abs[curve2 /. Thread[{x, y, z} -> #1]] & ) /@ 
+         ETCBaryNorm, #1 < 10^(-12) & ]; 
+      out = Select[Table[{ni, N[curve /. Thread[{x, y, z} -> 
+               simplifyRationalBarycentrics[KimberlingCenterCNy[ni]]] /. 
+            intCheckList[[1]], 20]}, {ni, Keys[test]}], #1[[2]] == 0 & ]; 
+      (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
+         ")"] & ) /@ out]
  
 checkPointinETC2[pt_] := Keys[Select[ETCBaryNorm, 
       #1 == intnumericnorm[pt /. rule69] & ]]
