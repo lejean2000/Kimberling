@@ -291,42 +291,39 @@ coincideNorm[pt1_, pt2_, prec_:20] := Return[coincide[intnumericnorm[pt1],
       intnumericnorm[pt2], prec]]
  
 checkBarycentric[pt_, type_, name_:"X"] := 
-    Module[{ff, cx, prev, res, idx1, idx2, ptc, val, sgn}, 
-     ff[pt1_, pt2_] := Module[{local}, If[type == "quotient", 
-          local = intnumericnorm[(pt1 /. rule69)*(pt2 /. rule69)], 
-          local = intnumericnorm[(pt1 /. rule69)/(pt2 /. rule69)]]; 
-         Return[local]; ]; If[type == "quotient", sgn = "/", sgn = "*"]; 
+    Module[{ff, rc, cx, res, idx1, idx2, ptc, val, sgn, tuples}, 
+     If[type == "quotient", ff[pt1_, pt2_] := intnumericnorm[
+         (pt1 /. rule69)*(pt2 /. rule69)], ff[pt1_, pt2_] := 
+        intnumericnorm[(pt1 /. rule69)/(pt2 /. rule69)]]; 
       ptc = intnumericnorm[pt /. rule69]; 
       cx = (ff[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
-            "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
-           StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
-          Continue[]]; If[coincide[cx[n], prev[[1]], 15], 
-         idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
-            StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
-          idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
-          If[type == "quotient" && Simplify[Det[{{1, 1, 1}, pt, 
-                KimberlingCenterCNy[idx1]/KimberlingCenterCNy[idx2]}]] == 0, 
-           AppendTo[res, {idx1, idx2}]]; If[type == "quotient" && 
-            Simplify[Det[{{1, 1, 1}, pt, KimberlingCenterCNy[idx2]/
-                 KimberlingCenterCNy[idx1]}]] == 0, AppendTo[res, 
-            {idx2, idx1}]]; If[type == "product" && 
-            Simplify[Det[{{1, 1, 1}, pt, KimberlingCenterCNy[idx1]*
-                 KimberlingCenterCNy[idx2]}]] == 0, 
-           If[LexicographicOrder[idx1, idx2] == 1, AppendTo[res, 
-              {idx1, idx2}], AppendTo[res, {idx2, idx1}]]; ]; ]; 
-        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+      tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
+         !((StringTake[#1[[1]], 1] == "C" && StringTake[#1[[2]], 1] == 
+             "C") || (StringTake[#1[[1]], 1] != "C" && 
+            StringTake[#1[[2]], 1] != "C")) & ]; res = {}; 
+      rc = intCheckList[[1]]; Do[idx1 = If[StringTake[i[[1]], 1] == "C", 
+          StringTake[i[[1]], {2, -1}], i[[1]]]; 
+        idx2 = If[StringTake[i[[2]], 1] == "C", StringTake[i[[2]], {2, -1}], 
+          i[[2]]]; If[type == "quotient", 
+         If[coincideNorm[pt /. rc, (KimberlingCenterCNy[idx1] /. rc)/
+             (KimberlingCenterCNy[idx2] /. rc)], AppendTo[res, {idx1, idx2}], 
+           If[coincideNorm[pt /. rc, (KimberlingCenterCNy[idx2] /. rc)/(
+                KimberlingCenterCNy[idx1] /. rc)], AppendTo[res, 
+              {idx2, idx1}]]; ]; ]; If[type == "product" && 
+          coincideNorm[pt /. rc, KimberlingCenterCNy[idx2]*
+             KimberlingCenterCNy[idx1] /. rc], 
+         If[LexicographicOrder[idx1, idx2] == 1, AppendTo[res, {idx1, idx2}], 
+           AppendTo[res, {idx2, idx1}]]; ]; , {i, tuples}]; 
+      If[type == "quotient", sgn = "/", sgn = "*"]; 
       res = SortBy[DeleteDuplicates[res], numsortexpr[#1[[1]]] & ]; 
       res = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ res; 
       AssociateTo[globalProperties[name], 
        {StringJoin["barycentric ", type] -> res}]; If[ !TrueQ[globalSilence], 
        If[Length[res] > 0, Print[colorformat[StringJoin["= barycentric ", 
-            type, " X(i)", sgn, "X(j) for these (i, j): ", StringRiffle[res, 
-             ", "]]]]; ]]; ]
+             type, " X(i)", sgn, "X(j) for these (i, j): ", StringRiffle[res, 
+              ", "]]]]; ]; ]; ]
  
 checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2}, 
      ptc = N[Normalize[pt /. rule69], 35]; cx = bTripolarEq[ptc] . {x, y, z}; 
@@ -341,7 +338,7 @@ checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2},
               intnameformat[p1], ",", intnameformat[p2], "}"]]]]; ]; ]; ]
  
 checkVertexConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffvertexconjugate}, 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffvertexconjugate, tuples}, 
      ffvertexconjugate[pt1_, pt2_] := Module[{local}, 
         local = bVertexConjugate[intnumericnorm[pt1 /. rule69], 
             intnumericnorm[pt2 /. rule69]] /. rule69; 
@@ -349,9 +346,8 @@ checkVertexConjugates[pt_, name_:"X"] :=
       ptc = intnumericnorm[pt /. rule69]; 
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
+         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; res = {}; 
       Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
             "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
            StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
@@ -433,28 +429,25 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck},
            StringRiffle[out, ", "]]]]; ]; ]
  
 checkConjugates[pt_, func_, str_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname}, 
+    Module[{cx, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname, tuples}, 
      ff[pt1_, pt2_] := Module[{local}, 
         local = func[intnumericnorm[pt1 /. rule69], intnumericnorm[
              pt2 /. rule69]] /. rule69; Return[intnumericnorm[local]]; ]; 
       rc = intCheckList[[1]]; ptc = intnumericnorm[pt /. rule69]; 
       cx = (ff[#1, ptc] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
-      Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
-            "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
-           StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
-          Continue[]]; If[coincide[cx[n], prev[[1]]], 
-         idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
-            StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
-          idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
-          If[StringTake[n, 1] != "C", {i1, i2} = {idx1, idx2}, 
-           {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
-            func[KimberlingCenterCNy[i1] /. rc, KimberlingCenterCNy[i2] /. 
-               rc] /. rc], AppendTo[res, {i1, i2}]; ]]; 
-        prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
+         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+      tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
+         !((StringTake[#1[[1]], 1] == "C" && StringTake[#1[[2]], 1] == 
+             "C") || (StringTake[#1[[1]], 1] != "C" && 
+            StringTake[#1[[2]], 1] != "C")) & ]; res = {}; 
+      Do[idx1 = If[StringTake[i[[1]], 1] == "C", StringTake[i[[1]], {2, -1}], 
+          i[[1]]]; idx2 = If[StringTake[i[[2]], 1] == "C", 
+          StringTake[i[[2]], {2, -1}], i[[2]]]; 
+        If[StringTake[i[[2]], 1] != "C", {i1, i2} = {idx1, idx2}, 
+         {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+          func[KimberlingCenterCNy[i1] /. rc, KimberlingCenterCNy[i2] /. 
+             rc] /. rc], AppendTo[res, {i1, i2}]; ], {i, tuples}]; 
       res = SortBy[DeleteDuplicates[res], numsortexpr[#1[[1]]] & ]; 
       res = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ res; 
       SetAttributes[fncname, HoldFirst]; fncname[x_] := 
@@ -573,3 +566,18 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            Print[colorformat[StringJoin[printname, " ", localprops[name2], 
                StringRiffle[hg, ", "]]]]; ]; , {name2, Keys[localprops]}]; , 
        {pt, cycle}]; colorPrintOn = colorprint; ]
+ 
+addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
+     If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
+        Return[False, Module]]; If[VectorQ[bary], expr = bary[[1]], 
+       expr = bary]; idxmax = Max[1 + ToExpression[StringTake[
+           SortBy[Keys[KeySelect[ETCExtra, StringStartsQ[#1, letter] & ]], 
+            numsortexpr[#1] & ], {2, -1}]]]; 
+      dbname = StringJoin[letter, ToString[idxmax]]; 
+      pt = N[NormalizeBary[evaluate[symmetrizeInternal2[expr]] /. rule69], 
+        35]; AppendTo[ETCBaryNorm, dbname -> pt]; AppendTo[ETCExtraBary, 
+       dbname -> pt]; AppendTo[ETC, dbname -> expr]; 
+      AppendTo[ETCExtra, dbname -> expr]; AppendTo[NonETCNames, 
+       dbname -> name]; Print[dbname]; DumpSave["ETCExtra.mx", ETCExtra]; 
+      DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
+       NonETCNames]; ]
