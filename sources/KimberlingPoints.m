@@ -24,8 +24,9 @@ checkCurvesSymb[pt_] := Do[curve = getTriangleCurve[name];
       If[Simplify[curve /. Thread[{x, y, z} -> pt]] == 0, Print[name]]; , 
      {name, Keys[TriangleCurves]}]
  
-checkPointinETC[pt_] := MinimalBy[Value][
-     (Total[Abs[#1 - NormalizeBary[pt /. rule69]]] & ) /@ ETCBaryNorm]
+checkPointinETC2[pt_] := Module[{ptnum}, 
+     ptnum = intnumericnorm[evaluate[pt] /. rule69]; 
+      Keys[Select[ETCBaryNorm, #1 == ptnum & ]]]
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  
@@ -39,6 +40,3 @@ checkPointsOnCurve[crv_] := Module[{curve, curve2, out},
             intCheckList[[1]], 20]}, {ni, Keys[test]}], #1[[2]] == 0 & ]; 
       (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
          ")"] & ) /@ out]
- 
-checkPointinETC2[pt_] := Keys[Select[ETCBaryNorm, 
-      #1 == intnumericnorm[pt /. rule69] & ]]
