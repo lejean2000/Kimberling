@@ -108,8 +108,8 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
       list2 = Table[AssociationMap[intnumericnorm[
            bIsogonalConjugate[KimberlingCenterCNy[#1]] /. rule69] & , 
          list1[[i]]], {i, 1, Length[list1]}]; 
-      bary20 = (NumberForm[#1, 20] & ) /@ ETCBaryNorm; 
-      list2 = ((NumberForm[#1, 20] & ) /@ #1 & ) /@ list2; 
+      bary20 = (Round[#1, 1.*^-19] & ) /@ ETCBaryNorm; 
+      list2 = ((Round[#1, 1.*^-19] & ) /@ #1 & ) /@ list2; 
       list3 = Select[(keyIntersectionValues[bary20, #1] & ) /@ list2, 
         Length[#1] > 1 & ]; list4 = ({#1[[1]][[2]], #1[[2]][[2]]} & ) /@ 
         (Take[#1, 2] & ) /@ (SortBy[#1, numsortexpr[#1[[2]]] & ] & ) /@ 
@@ -503,44 +503,48 @@ pointCheckerTransform[expr_, inname_, num_:0, full_:False] :=
            full, procname]; If[TrueQ[globalSilence], printGlobalProperties[
             globalProperties, procname]]; ], {name, Keys[pointProcesses]}]; ]
  
-printGlobalProperties[glob_, name_:""] := 
+printGlobalProperties[glob_, name_:"", printname_:""] := 
     Module[{hg, cycle, localprops, colorprint}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
       colorprint = colorPrintOn; colorPrintOn = False; 
-      Do[Print[]; Print[pt]; Print[]; Print[glob[pt]["name"]]; Print[]; 
+      Do[If[printname == "", Print[pt], Print[printname]]; Print[]; 
+        Print[glob[pt]["name"]]; Print[]; 
         Print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        Print[]; Print[colorformat[StringJoin["lies on these lines: ", 
-           StringRiffle[glob[pt]["lines"], ", "]]]]; Print[]; 
-        hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
-          glob[pt]["circumconics"]]; If[Length[hg] > 0, 
-         Print[colorformat[StringJoin["lies on these circumconics: ", 
-             StringRiffle[hg, ", "]]]]; ]; Print[]; 
-        If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
-          If[Length[hg] > 0, Print[colorformat[StringJoin[
-               "= midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
+        Print[]; Print[colorformat[StringJoin[printname, 
+           " lies on these lines: ", StringRiffle[glob[pt]["lines"], 
+            ", "]]]]; Print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
+            "circumconics"], {}, glob[pt]["circumconics"]]; 
+        If[Length[hg] > 0, Print[colorformat[StringJoin[printname, 
+             " lies on these circumconics: ", StringRiffle[hg, ", "]]]]; ]; 
+        Print[]; If[MemberQ[Keys[glob[pt]], "midpoints"], 
+         hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
+           Print[colorformat[StringJoin[printname, 
+               " = midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
                 SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
         If[MemberQ[Keys[glob[pt]], "reflections"], 
          hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[
-               "= reflection of X(i) in X(j) for these {i,j}: ", StringRiffle[
-                SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
-        If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
+           Print[colorformat[StringJoin[printname, 
+               " = reflection of X(i) in X(j) for these {i,j}: ", 
+               StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], 
+                ", "]]]]; ]; ]; If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
          If[MemberQ[Keys[glob[pt]], "harmonic"], hg = glob[pt]["harmonic"]; 
-            If[Length[hg] > 0, Print[colorformat[StringJoin[
-                 "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): \
-", StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
+            If[Length[hg] > 0, Print[colorformat[StringJoin[printname, 
+                 " = {X(i),X(j)}-harmonic conjugate of X(k) for these \
+(i,j,k): ", StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
           Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
-         Print[colorformat[StringJoin["lies on curves: ", StringRiffle[hg, 
-              ", "]]]]; ]; Do[If[KeyExistsQ[glob[pt], proc], 
-           Print[colorformat[StringJoin["= ", proc, " of ", glob[pt][
-                proc]]]]; ]; , {proc, Keys[singlePointProcesses]}]; 
+         Print[colorformat[StringJoin[printname, " lies on these curves: ", 
+             StringRiffle[hg, ", "]]]]; ]; 
+        Do[If[KeyExistsQ[glob[pt], proc], 
+           Print[colorformat[StringJoin[printname, " = ", proc, " of ", 
+               glob[pt][proc]]]]; ]; , {proc, Keys[singlePointProcesses]}]; 
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin["= trilinear pole of line {", 
-               intnameformat[hg[[1]]], ",", intnameformat[hg[[2]]], 
-               "}"]]]; ]; ]; hg = glob[pt]["perspector"]; 
-        If[Length[hg] >= 2, Print[colorformat[StringJoin[
-             "= perspector of circumconic through: ", StringRiffle[hg, 
+           Print[colorformat[StringJoin[printname, 
+               " = trilinear pole of line {", intnameformat[hg[[1]]], ",", 
+               intnameformat[hg[[2]]], "}"]]]; ]; ]; 
+        hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
+         Print[colorformat[StringJoin[printname, 
+             " = perspector of circumconic through: ", StringRiffle[hg, 
               ", "]]]]; ]; localprops = Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
           "vertex conjugate" -> 
@@ -566,6 +570,6 @@ printGlobalProperties[glob_, name_:""] :=
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[localprops[name2], StringRiffle[hg, 
-                ", "]]]]; ]; , {name2, Keys[localprops]}]; , {pt, cycle}]; 
-      colorPrintOn = colorprint; ]
+           Print[colorformat[StringJoin[printname, " ", localprops[name2], 
+               StringRiffle[hg, ", "]]]]; ]; , {name2, Keys[localprops]}]; , 
+       {pt, cycle}]; colorPrintOn = colorprint; ]

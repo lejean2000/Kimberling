@@ -862,15 +862,10 @@ bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] :=
     Simplify[bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
       bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]]
  
-bHatzipolakisMoses[{p_, q_, r_}] = 
-    {c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*p*q + b^2*(a^2 + b^2 - c^2)*
-       (a^2 - b^2 + c^2)*p*r - 2*a^2*(-(a^2*b^2) + b^4 - a^2*c^2 - 
-        2*b^2*c^2 + c^4)*q*r, c^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*p*q - 
-      2*b^2*(a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4)*p*r + 
-      a^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*q*r, 
-     -2*c^2*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2)*p*q + 
-      b^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*p*r + 
-      a^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*q*r}
+bHatzipolakisMoses[{p_, q_, r_}] := symmetrizeInternal2[
+     -2*a^2*(b^4 + c^4 - a^2*b^2 - a^2*c^2 - 2*b^2*c^2)*q*r + 
+      b^2*(a^2 - b^2 + c^2)*(a^2 + b^2 - c^2)*p*r + c^2*(a^2 - b^2 + c^2)*
+       (a^2 + b^2 - c^2)*p*q]
  
 bFregierTriangle[{u_, v_, w_}] := {{SA*u, (-SA)*v + b^2*w, c^2*v - SA*w}, 
      {(-SB)*u + a^2*w, SB*v, c^2*u - SB*w}, {(-SC)*u + a^2*v, b^2*u - SC*v, 
@@ -953,3 +948,6 @@ bCurveForTriangle[crv_, va_, vb_, vc_] :=
  
 bSteinerImage[{p_, q_, r_}] := symmetrizeInternal2[
      p/(q^2 + r^2 - p^2 + q*r + r*p + p*q)]
+ 
+bHodpiece[{p_, q_, r_}] := symmetrizeInternal2[
+     a^2/(p*(-a^2/p + b^2/q + c^2/r))]
