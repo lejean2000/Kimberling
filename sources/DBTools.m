@@ -8,10 +8,8 @@ intnumericnorm[val_] := N[NormalizeBary[val], 35]
 singlePointProcesses = <|"complement" -> {v + w, u + w, u + v}, 
      "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, 
      "polar conjugate" -> bPIsogonalConjugate[KimberlingCenterCN[48], 
-       {u, v, w}], "cyclocevian conjugate" -> bCyclocevianConjugate[
-       {u, v, w}], "circumcircle inverse" -> bCircumcircleInverse[{u, v, w}], 
-     "anticomplement of isogonal conjugate" -> bAntiComplement[
-       KimberlingCenterC[2], bIsogonalConjugate[{u, v, w}]], 
+       {u, v, w}], "anticomplement of isogonal conjugate" -> 
+      bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[{u, v, w}]], 
      "anticomplement of isotomic conjugate" -> bAntiComplement[
        KimberlingCenterC[2], bIsotomicConjugate[{u, v, w}]], 
      "complement of isogonal conjugate" -> bComplement[KimberlingCenterC[2], 
@@ -20,7 +18,9 @@ singlePointProcesses = <|"complement" -> {v + w, u + w, u + v},
      "zosma transform" -> {a*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(c*v + b*w), 
        b*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*(c*u + a*w), 
        c*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*(b*u + a*v)}, 
+     "circumcircle inverse" -> bCircumcircleInverse[{u, v, w}], 
      "eigentransform" -> bEigentransform[{u, v, w}], 
+     "cyclocevian conjugate" -> bCyclocevianConjugate[{u, v, w}], 
      "circlecevian perspector" -> bCirclecevianPerspector[{u, v, w}], 
      "ortoassociate" -> bOrthoassociate[{u, v, w}], 
      "antitomic conjugate" -> bAntitomicConjugate[{u, v, w}], 
@@ -86,12 +86,16 @@ intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(",
  
 colorformat[string_, cases_:RegularExpression[
        "Y\\(\\d+\\)|Y\\d+|Z\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
-     If[ !TrueQ[colorPrintOn], Return[string, Module]]; 
+     If[ !TrueQ[colorPrintOn], If[TrueQ[globalNoCleanup], 
+         Return[string, Module]; , Return[cleanup[string], Module]; ]; ]; 
       pos = StringPosition[string, cases]; 
       agg = ({Switch[#1[[1,2]], 1, Red, 2, Brown, _, Blue], 
           #1[[1 ;; All,{1}]]} & ) /@ GatherBy[
          Tally[Flatten[Apply[Range, pos, {1}]]], Last]; 
       If[Length[agg] > 0, Return[intmark[string, agg]], Return[string]]; ]
+ 
+cleanup[string_] := StringReplace[string, 
+     RegularExpression["[, ]*{([Y|Z]*?[\\d, \\(\\)ABCX])*[Y|Z].*?\\}"] -> ""]
  
 intmark[number_, spec:{{_, _}..}] := 
     Row[With[{n = Characters[ToString[number]]}, 
@@ -370,7 +374,9 @@ checkVertexConjugates[pt_, name_:"X"] :=
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
-     ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+     If[KeyExistsQ[globalProperties, inname], 
+       Print["Key exists in global properties !"]; Return[False, Module]]; 
+      ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
            rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
        Print[ptcoord]; Print["expression is not symmetric"]; 
@@ -569,8 +575,10 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
  
 addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
      If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
-        Return[False, Module]]; If[VectorQ[bary], expr = bary[[1]], 
-       expr = bary]; idxmax = Max[1 + ToExpression[StringTake[
+        Return[False, Module]]; If[MemberQ[Values[NonETCNames], name], 
+       Print["Name exists !"]; Return[False, Module]]; 
+      If[VectorQ[bary], expr = bary[[1]], expr = bary]; 
+      idxmax = Max[1 + ToExpression[StringTake[
            SortBy[Keys[KeySelect[ETCExtra, StringStartsQ[#1, letter] & ]], 
             numsortexpr[#1] & ], {2, -1}]]]; 
       dbname = StringJoin[letter, ToString[idxmax]]; 

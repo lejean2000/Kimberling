@@ -19,29 +19,10 @@ bIntersectionTriangleS[pa_, pb_, pc_, qa_, qb_, qc_] :=
 bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]], 
      c^2*po[[1]]*po[[2]]}
  
-bIsotomicConjugate[P1_] := Module[{eq}, eq = symmetrizeInternal[1/pp]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
+bIsotomicConjugate[{u_, v_, w_}] := {v*w, u*w, u*v}
  
-symmetrizeInternal[eq_] := Module[{partB, partC}, 
-     Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
-         rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
-      partB = partB /. {a -> b, b -> c, c -> a, angleA -> angleB, 
-         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
-         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
-      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
-         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
-         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
-         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, 
-         SC -> SA}; {eq, partB, partC}]
- 
-bPIsogonalConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     Clear[pp, qq, rr, uu, vv, ww]; eq = qq*rr*vv*ww /. 
-        {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, vv -> vv/b, 
-         ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
- 
-bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
+bPIsogonalConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {a^3*q*r*v*w, b^3*p*r*u*w, c^3*p*q*u*v}
  
 bDistanceF[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Simplify[Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
@@ -89,6 +70,8 @@ bReverseCoordChange[p_, d_, e_, f_] :=
     Inverse[Transpose[{d/Total[d], e/Total[e], f/Total[f]}]] . (p/Total[p])
  
 bToTril[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
+ 
+bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
@@ -185,6 +168,18 @@ bCevianProduct[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww];
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
  
+symmetrizeInternal[eq_] := Module[{partB, partC}, 
+     Clear[pp, qq, rr, uu, vv, ww]; partB = eq /. {pp -> qq, qq -> rr, 
+         rr -> pp, uu -> vv, vv -> ww, ww -> uu}; 
+      partB = partB /. {a -> b, b -> c, c -> a, angleA -> angleB, 
+         angleB -> angleC, angleC -> angleA, A -> B, B -> C, C -> A, 
+         sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+      partC = partB /. {pp -> qq, qq -> rr, rr -> pp, uu -> vv, vv -> ww, 
+         ww -> uu}; partC = partC /. {a -> b, b -> c, c -> a, 
+         angleA -> angleB, angleB -> angleC, angleC -> angleA, A -> B, 
+         B -> C, C -> A, sa -> sb, sb -> sc, sc -> sa, SA -> SB, SB -> SC, 
+         SC -> SA}; {eq, partB, partC}]
+ 
 bCrosspoint[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[1/(rr*vv) + 1/(qq*ww)]; 
       eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
@@ -200,10 +195,8 @@ bCrossConjugate[{u_, v_, w_}, {p_, q_, r_}] :=
      q*(q*r*u - p*r*v - p*q*w)*(q*r*u + p*r*v - p*q*w), 
      r*(q*r*u - p*r*v - p*q*w)*(q*r*u - p*r*v + p*q*w)}
  
-bComplement[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = symmetrizeInternal[pp*(vv/qq + ww/rr)]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+bComplement[{u_, v_, w_}, {p_, q_, r_}] := {u^2*v*(r*v + q*w), 
+     v^3*(r*u + p*w), v*(q*u + p*v)*w^2}
  
 bAntiComplement[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[pp*(-(uu/pp) + vv/qq + ww/rr)]; 
@@ -218,17 +211,11 @@ bAlephConjugate[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww];
       (a^2*b^2*c^2)*bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , 
            {{pp, qq, rr}, P1}] /. MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
  
-bCrossDiff[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = qq*ww - rr*vv /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
-         vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bCrossDiff[{u_, v_, w_}, {p_, q_, r_}] := {a^2*(r*v - q*w), b^2*(p*w - r*u), 
+     c^2*(q*u - p*v)}
  
-bCrossSum[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = qq*ww + rr*vv /. {pp -> pp/a, qq -> qq/b, rr -> rr/c, uu -> uu/a, 
-         vv -> vv/b, ww -> ww/c}; eq2 = symmetrizeInternal[eq]; 
-      bFromTrilinear[eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bCrossSum[{u_, v_, w_}, {p_, q_, r_}] := {a^2*(r*v + q*w), b^2*(r*u + p*w), 
+     c^2*(q*u + p*v)}
  
 bHirstInverse[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[qq*rr*uu^2 - vv*ww*pp^2]; 
@@ -286,24 +273,19 @@ conicEqtoMtx[eq_] := {{Coefficient[eq, x^2], (1/2)*Coefficient[eq, x*y],
      {(1/2)*Coefficient[eq, x*z], (1/2)*Coefficient[eq, y*z], 
       Coefficient[eq, z^2]}}
  
-bSaragossa1[{x_, y_, z_}] := Module[{u, v, w, x1, y1, z1, pt}, 
-     x1 = x/(a*(x + y + z)); y1 = y/(b*(x + y + z)); z1 = z/(c*(x + y + z)); 
-      u = a/(x1*(b*z1 + c*y1)); v = b/(y1*(c*x1 + a*z1)); 
-      w = c/(z1*(a*y1 + b*x1)); pt = {a*u, b*v, c*w}; pt/Total[pt]]
+bSaragossa1[{u_, v_, w_}] := {a^2*v*(b^2*u + a^2*v)*w*(c^2*u + a^2*w), 
+     b^2*u*(b^2*u + a^2*v)*w*(c^2*v + b^2*w), c^2*u*v*(c^2*u + a^2*w)*
+      (c^2*v + b^2*w)}
  
-bSaragossa2[{x1_, y1_, z1_}] := Module[{u, v, w, x, y, z, pt}, 
-     x = x1/(a*(x1 + y1 + z1)); y = y1/(b*(x1 + y1 + z1)); 
-      z = z1/(c*(x1 + y1 + z1)); u = a*x*((b^2*z^2 + c^2*y^2)*x + x*y*z*b*c + 
-         a*y*z*(b*z + c*y)); v = b*y*((c^2*x^2 + a^2*z^2)*y + x*y*z*c*a + 
-         b*z*x*(c*x + a*z)); w = c*z*((a^2*y^2 + b^2*x^2)*z + x*y*z*a*b + 
-         c*x*y*(a*y + b*x)); pt = {a*u, b*v, c*w}; pt/Total[pt]]
+bSaragossa2[{u_, v_, w_}] := {a^2*u*(c^4*u*v^2 + c^2*v*(b^2*u + a^2*v)*w + 
+       b^2*(b^2*u + a^2*v)*w^2), b^2*v*(c^4*u^2*v + c^2*u*(b^2*u + a^2*v)*w + 
+       a^2*(b^2*u + a^2*v)*w^2), c^2*w*(b^4*u^2*w + b^2*u*v*(c^2*u + a^2*w) + 
+       a^2*v^2*(c^2*u + a^2*w))}
  
-bSaragossa3[{x1_, y1_, z1_}] := Module[{u, v, w, x, y, z, pt}, 
-     x = x1/(a*(x1 + y1 + z1)); y = y1/(b*(x1 + y1 + z1)); 
-      z = z1/(c*(x1 + y1 + z1)); u = a*x*((b^2*z^2 + c^2*y^2)*x + 
-         a*y*z*(b*z + c*y)); v = b*y*((c^2*x^2 + a^2*z^2)*y + 
-         b*z*x*(c*x + a*z)); w = c*z*((a^2*y^2 + b^2*x^2)*z + 
-         c*x*y*(a*y + b*x)); pt = {a*u, b*v, c*w}; pt/Total[pt]]
+bSaragossa3[{u_, v_, w_}] := {a^2*u*(c^4*u*v^2 + a^2*c^2*v^2*w + 
+       b^2*(b^2*u + a^2*v)*w^2), b^2*v*(c^4*u^2*v + b^2*c^2*u^2*w + 
+       a^2*(b^2*u + a^2*v)*w^2), c^2*w*(b^2*c^2*u^2*v + b^4*u^2*w + 
+       a^2*v^2*(c^2*u + a^2*w))}
  
 bDistanceMod[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Sqrt[Abs[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
@@ -361,10 +343,7 @@ bTripolarEq[{pp_, qq_, rr_}] := {1/pp, 1/qq, 1/rr}
  
 bCircumconicPEq[{pp_, qq_, rr_}] := pp*y*z + qq*x*z + rr*x*y
  
-bReciprocalConjugate[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = symmetrizeInternal[uu/pp]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+bReciprocalConjugate[{u_, v_, w_}, {p_, q_, r_}] := {p*v*w, q*u*w, r*u*v}
  
 bToSearchNumbers[pt_] := S*(pt/(Total[pt]*{a, b, c})) /. 
      {a -> 6, b -> 9, c -> 13}
@@ -389,12 +368,15 @@ bCirclecevianPerspector[{p_, q_, r_}] := symmetrizeInternal[
      a^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
       (c^2*p^2*q + c^2*p*q^2 + 2*c^2*p*q*r + b^2*p*r^2 + a^2*q*r^2)]
  
-bTCCPerspector[P1_] := Module[{eq, eq2}, 
-     eq = a^2*(b^4/qq^2 + c^4/rr^2 - a^4/pp^2); eq2 = symmetrizeInternal[eq]; 
-      eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}]]
+bTCCPerspector[{u_, v_, w_}] := 
+    {a^2*((-c^4)*u^2*v^2 + ((-b^4)*u^2 + a^4*v^2)*w^2), 
+     b^2*((-c^4)*u^2*v^2 + (b^4*u^2 - a^4*v^2)*w^2), 
+     c^2*(c^4*u^2*v^2 - (b^4*u^2 + a^4*v^2)*w^2)}
  
-bEigentransform[P1_] := Module[{eq, eq2}, bCevianQuotient[P1, 
-      bIsogonalConjugate[P1]]]
+bEigentransform[{u_, v_, w_}] := 
+    {a^2*v*w*((-c^2)*u^2*v^2 + ((-b^2)*u^2 + a^2*v^2)*w^2), 
+     b^2*u*w*((-c^2)*u^2*v^2 + (b^2*u^2 - a^2*v^2)*w^2), 
+     c^2*u*v*(c^2*u^2*v^2 - (b^2*u^2 + a^2*v^2)*w^2)}
  
 bAntitomicConjugate[P1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = symmetrizeInternal[pp*(qq^2 - pp*rr)*(rr^2 - pp*qq)]; 
