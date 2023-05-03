@@ -63,7 +63,8 @@ intVerifyPointProcess[pt_, xnum_, processexpr_] :=
         If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
        {rc, intCheckList}]; Return[True]; ]
  
-xnum[str_] := ToExpression[StringTake[str, {2, -1}]]
+xnum[str_] := If[NumericQ[ToExpression[StringTake[str, 1]]], 
+     ToExpression[str], ToExpression[StringTake[str, {2, -1}]]]
  
 KimberlingCenterCNy[key_] := If[StringTake[key, 1] == "X", 
      KimberlingCenterCN[ToExpression[StringTake[key, {2, -1}]]], 
@@ -164,13 +165,13 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
              el[[2]]] /. rc2, ptcoord /. rc2], 10, -1]; 
         If[TrueQ[Simplify[test] == 0] && TrueQ[Simplify[test2] == 0], 
          AppendTo[out, el], AppendTo[unproven, el]]; , {el, gr}]; 
-      If[Length[out] >= 2, sout = SortBy[out, 
-          StringJoin[numsortexpr[#1[[1]]], numsortexpr[#1[[2]]]] & ]; 
-        outname = StringJoin[intaddbrackets[sout[[1]][[1]]], 
-          intaddbrackets[sout[[1]][[2]]], "\:2229", intaddbrackets[
-           sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; 
-        AssociateTo[globalProperties[name], {"name" -> outname}]; 
-        If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; ]; 
+      If[Length[out] >= 2, sout = SortBy[out, xnumforsort[#1[[1]]]*
+            xnumforsort[#1[[2]]] & ]; outname = StringJoin[
+          intaddbrackets[sout[[1]][[1]]], intaddbrackets[sout[[1]][[2]]], 
+          "\:2229", intaddbrackets[sout[[2]][[1]]], intaddbrackets[
+           sout[[2]][[2]]]]; AssociateTo[globalProperties[name], 
+         {"name" -> outname}]; If[ !TrueQ[globalSilence], 
+         Print[colorformat[outname]]]; ]; 
       barys = ExpressionToTrad[Simplify[printexpr]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
@@ -233,6 +234,9 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
         Print[colorformat[StringJoin[
             "= reflection of X(i) in X(j) for these {i,j}: ", 
             StringRiffle[hg, ", "]]]]; ]]; Return[out]; ]
+ 
+xnumforsort[str_] := If[NumericQ[ToExpression[StringTake[str, 1]]], 
+     ToExpression[str], 50000 + ToExpression[StringTake[str, {2, -1}]]]
  
 intnameformat[pname_] := If[StringTake[pname, 1] == "X", 
      StringTake[pname, {2, -1}], pname]
@@ -506,43 +510,42 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
     Module[{hg, cycle, localprops, colorprint}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
       colorprint = colorPrintOn; colorPrintOn = False; 
-      Do[If[printname == "", Print[pt], Print[printname]]; Print[]; 
-        Print[glob[pt]["name"]]; Print[]; 
-        Print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        Print[]; Print[colorformat[StringJoin[printname, 
+      Do[If[printname == "", print[pt], print[printname]]; print[]; 
+        print[glob[pt]["name"]]; print[]; 
+        print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
+        print[]; print[]; print[colorformat[StringJoin[printname, 
            " lies on these lines: ", StringRiffle[glob[pt]["lines"], 
-            ", "]]]]; Print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
+            ", "]]]]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
             "circumconics"], {}, glob[pt]["circumconics"]]; 
-        If[Length[hg] > 0, Print[colorformat[StringJoin[printname, 
+        If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
              " lies on these circumconics: ", StringRiffle[hg, ", "]]]]; ]; 
-        Print[]; If[MemberQ[Keys[glob[pt]], "midpoints"], 
-         hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[printname, 
+        If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
+          If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
                 SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
         If[MemberQ[Keys[glob[pt]], "reflections"], 
          hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[printname, 
+           print[colorformat[StringJoin[printname, 
                " = reflection of X(i) in X(j) for these {i,j}: ", 
                StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], 
                 ", "]]]]; ]; ]; If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
          If[MemberQ[Keys[glob[pt]], "harmonic"], hg = glob[pt]["harmonic"]; 
-            If[Length[hg] > 0, Print[colorformat[StringJoin[printname, 
+            If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                  " = {X(i),X(j)}-harmonic conjugate of X(k) for these \
 (i,j,k): ", StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
           Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
-         Print[colorformat[StringJoin[printname, " lies on these curves: ", 
+         print[colorformat[StringJoin[printname, " lies on these curves: ", 
              StringRiffle[hg, ", "]]]]; ]; 
         Do[If[KeyExistsQ[glob[pt], proc], 
-           Print[colorformat[StringJoin[printname, " = ", proc, " of ", 
+           print[colorformat[StringJoin[printname, " = ", proc, " of ", 
                glob[pt][proc]]]]; ]; , {proc, Keys[singlePointProcesses]}]; 
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[printname, 
+           print[colorformat[StringJoin[printname, 
                " = trilinear pole of line {", intnameformat[hg[[1]]], ",", 
                intnameformat[hg[[2]]], "}"]]]; ]; ]; 
         hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
-         Print[colorformat[StringJoin[printname, 
+         print[colorformat[StringJoin[printname, 
              " = perspector of circumconic through: ", StringRiffle[hg, 
               ", "]]]]; ]; localprops = Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
@@ -569,9 +572,15 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
-           Print[colorformat[StringJoin[printname, " ", localprops[name2], 
-               StringRiffle[hg, ", "]]]]; ]; , {name2, Keys[localprops]}]; , 
-       {pt, cycle}]; colorPrintOn = colorprint; ]
+           print[colorformat[StringJoin[printname, " ", localprops[name2], 
+               StringRiffle[hg, ", "]]]]; ]; , {name2, Keys[localprops]}]; 
+        If[KeyExistsQ[glob[pt], "others"], hg = glob[pt]["others"]; 
+          Do[print[colorformat[StringJoin[printname, " = ", prop]]]; , 
+           {prop, hg}]]; , {pt, cycle}]; colorPrintOn = colorprint; ]
+ 
+print[string_] := If[ !MemberQ[Names["Global`*"], "globalOutputStream"] || 
+      globalOutputStream === False, Print[string], 
+     WriteString[globalOutputStream, StringJoin[string, "\n\n"]]]
  
 addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
      If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
@@ -586,6 +595,6 @@ addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname},
         35]; AppendTo[ETCBaryNorm, dbname -> pt]; AppendTo[ETCExtraBary, 
        dbname -> pt]; AppendTo[ETC, dbname -> expr]; 
       AppendTo[ETCExtra, dbname -> expr]; AppendTo[NonETCNames, 
-       dbname -> name]; Print[dbname]; DumpSave["ETCExtra.mx", ETCExtra]; 
+       dbname -> name]; DumpSave["ETCExtra.mx", ETCExtra]; 
       DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
-       NonETCNames]; ]
+       NonETCNames]; Return[dbname]; ]
