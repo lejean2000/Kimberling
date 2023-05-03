@@ -1,3 +1,9 @@
+defined[s_] := ToExpression[StringJoin["ValueQ[", s, "]"]] || 
+     Head[ToExpression[s]] =!= Symbol || 
+     ToExpression[StringJoin["Attributes[", s, "]"]] =!= {} || 
+     ToExpression[StringJoin["DownValues[", s, "]"]] =!= {} || 
+     ToExpression[StringJoin["SubValues[", s, "]"]] =!= {}
+ 
 KimberlingCenter[k_, XPA_, XPB_, XPC_] := Module[{bary}, 
      bary = KimberlingCenterCN[k]; (bary/Total[bary]) . {XPA, XPB, XPC} /. 
        {a -> EuclideanDistance[XPB, XPC], b -> EuclideanDistance[XPA, XPC], 

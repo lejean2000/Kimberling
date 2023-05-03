@@ -933,3 +933,6 @@ bSteinerImage[{p_, q_, r_}] := symmetrizeInternal2[
  
 bHodpiece[{p_, q_, r_}] := symmetrizeInternal2[
      a^2/(p*(-a^2/p + b^2/q + c^2/r))]
+ 
+bXAntipodeInCircumconic[{p_, q_, r_}, {f_, g_, h_}, {u_, v_, w_}] := 
+    q*r*u^2*(h*p*v + f*r*v + f*q*w)*(f*r*v + g*p*w + f*q*w)
