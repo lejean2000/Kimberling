@@ -397,7 +397,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
          name -> Association[]]; lines = Quiet[linesProcessAlg[ptcoord, 
            barys, 20, False, False, name]]; numcon = 
          Quiet[checkCircumconics[ptcoord, num, name]]; 
-        If[full || Length[lines] + Length[numcon] >= 3, 
+        If[full || Length[lines] + Length[numcon] >= 6, 
          Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
            PrintTemporary["Starting trilinear+conjugates"]]; 
           Quiet[checkTrilinearPolar[ptcoord, name]]; 
