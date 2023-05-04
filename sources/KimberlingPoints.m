@@ -35,7 +35,8 @@ checkPointinETC2[pt_] := Module[{ptnum, set},
       set = Keys[Select[ETCBaryNorm, #1 == ptnum & ]]; 
       If[Length[set] > 0, 
        If[AllTrue[(coincideNorm[KimberlingCenterCNy[set[[1]]] /. #1, 
-             pt /. #1] & ) /@ intCheckList, #1 & ], Return[set]]; ]; ]
+             pt /. #1] & ) /@ intCheckList, #1 & ], Return[set], 
+         Return[{}]]; ]; ]
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  

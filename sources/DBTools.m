@@ -119,11 +119,11 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
         Length[#1] > 1 & ]; list4 = ({#1[[1]][[2]], #1[[2]][[2]]} & ) /@ 
         (Take[#1, 2] & ) /@ (SortBy[#1, numsortexpr[#1[[2]]] & ] & ) /@ 
           list3; list4 = SortBy[list4, numsortexpr[#1[[1]]] & ]; 
-      Do[p1 = cnc[[1]]; p2 = cnc[[2]]; If[p1 == excl || p2 == excl, 
-         Continue[]]; check = TimeConstrained[Simplify[
-           bCircumconicEq[KimberlingCenterCNy[p1], KimberlingCenterCNy[
-              p2]] /. Thread[{x, y, z} -> pt]], 10, -1]; 
-        If[check == 0, AppendTo[out, StringJoin["{A,B,C,", 
+      Print[list4]; Do[p1 = cnc[[1]]; p2 = cnc[[2]]; 
+        If[p1 == excl || p2 == excl, Continue[]]; 
+        check = TimeConstrained[Simplify[bCircumconicEq[KimberlingCenterCNy[
+              p1], KimberlingCenterCNy[p2]] /. Thread[{x, y, z} -> pt]], 10, 
+          -1]; If[check == 0, AppendTo[out, StringJoin["{A,B,C,", 
             intaddbrackets[p1], ",", intaddbrackets[p2], "}"]]; ]; , 
        {cnc, list4}]; AssociateTo[globalProperties[name], 
        {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
@@ -389,7 +389,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
             globalSeenPoints]] <= 10^(-20), Print[inname]; 
         Print["Point seen"]; Return[False, Module], 
        AppendTo[globalSeenPoints, {ptcoord, pt}]; ]; 
-      If[num != 0, chk = 0, chk = checkPointinETC2[pt]]; 
+      If[num != 0, chk = 0, chk = checkPointinETC2[ptcoord]]; 
       If[Length[chk] > 0, Print[colorformat[StringJoin["ETC: ", chk]]], 
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
