@@ -95,6 +95,8 @@ colorformat[string_, cases_:RegularExpression[
          Tally[Flatten[Apply[Range, pos, {1}]]], Last]; 
       If[Length[agg] > 0, Return[intmark[string, agg]], Return[string]]; ]
  
+globalNoCleanup = True
+ 
 cleanup[string_] := StringReplace[string, 
      RegularExpression["[, ]*{([Y|Z]*?[\\d, \\(\\)ABCX])*[Y|Z].*?\\}"] -> ""]
  
@@ -119,12 +121,12 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
         Length[#1] > 1 & ]; list4 = ({#1[[1]][[2]], #1[[2]][[2]]} & ) /@ 
         (Take[#1, 2] & ) /@ (SortBy[#1, numsortexpr[#1[[2]]] & ] & ) /@ 
           list3; list4 = SortBy[list4, numsortexpr[#1[[1]]] & ]; 
-      Print[list4]; Do[p1 = cnc[[1]]; p2 = cnc[[2]]; 
-        If[p1 == excl || p2 == excl, Continue[]]; 
-        check = TimeConstrained[Simplify[bCircumconicEq[KimberlingCenterCNy[
-              p1], KimberlingCenterCNy[p2]] /. Thread[{x, y, z} -> pt]], 10, 
-          -1]; If[check == 0, AppendTo[out, StringJoin["{A,B,C,", 
-            intaddbrackets[p1], ",", intaddbrackets[p2], "}"]]; ]; , 
+      Do[p1 = cnc[[1]]; p2 = cnc[[2]]; If[p1 == excl || p2 == excl, 
+         Continue[]]; check = TimeConstrained[Simplify[
+           bCircumconicEq[KimberlingCenterCNy[p1], KimberlingCenterCNy[
+              p2]] /. Thread[{x, y, z} -> pt]], 10, -1]; 
+        If[check == 0, AppendTo[out, StringJoin["{{A, B, C, ", 
+            intaddbrackets[p1], ", ", intaddbrackets[p2], "}}"]]; ]; , 
        {cnc, list4}]; AssociateTo[globalProperties[name], 
        {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
        If[Length[out] > 0, Print[colorformat[StringJoin[
@@ -518,9 +520,10 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
             ", "]]]]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
             "circumconics"], {}, glob[pt]["circumconics"]]; 
         If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
-             " lies on these circumconics: ", StringRiffle[hg, ", "]]]]; ]; 
-        If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
-          If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
+             " intersection, other than A, B, C, of circumconics ", 
+             StringRiffle[hg, ", "]]]]; ]; If[MemberQ[Keys[glob[pt]], 
+          "midpoints"], hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
+           print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
                 SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
         If[MemberQ[Keys[glob[pt]], "reflections"], 
@@ -581,6 +584,8 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
 print[string_] := If[ !MemberQ[Names["Global`*"], "globalOutputStream"] || 
       globalOutputStream === False, Print[string], 
      WriteString[globalOutputStream, StringJoin[string, "\n\n"]]]
+ 
+globalOutputStream = False
  
 addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
      If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
