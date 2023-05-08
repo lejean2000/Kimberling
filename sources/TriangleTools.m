@@ -932,3 +932,24 @@ bXAntipodeInCircumconic[{p_, q_, r_}, {x_, y_, z_}, {u_, v_, w_}] :=
  
 bCircleInvervse[circ_, pt_] := bLineIntersection[bPolar[circ, pt], 
      bLine[bConicCenter[circ], pt]]
+ 
+bAubertCenterSimplify[aa_, bb_, cc_, dd_] := Module[{l1, l2}, 
+     l1 = Simplify[Simplify[bAubertLine[aa, bb, cc, dd]] /. Abs -> RealAbs]; 
+      l2 = Simplify[Simplify[bAubertLine[aa, bb, dd, cc]] /. Abs -> RealAbs]; 
+      simplifyRationalBarycentrics[bLineIntersection[l1, l2]]]
+ 
+bVuCirclesPoint[{p_, q_, r_}, {u_, v_, w_}] := symmetrizeInternal2[
+     a^2*((-p)*v*w*(p + q + r) + q*r*u*(u + v + w)) + 
+      b^2*p*u*(r*(u + v) - (p + q)*w) + c^2*p*u*((-(p + r))*v + q*(u + w))]
+ 
+bVuCirclesPoint2[{p_, q_, r_}, {u_, v_, w_}] := symmetrizeInternal2[
+     q*r*(a^2*(q*r*u*(u + v + w) - p*v*w*(p + q + r)) - 
+       b^2*p*u*(w*(p + q) - r*(u + v)) - c^2*p*u*(v*(p + r) - q*(u + w)))]
+ 
+bAnticevianIntersectionConicCenter[{u_, v_, w_}, {p_, q_, r_}] := 
+    symmetrizeInternal3[p*v*w*((-q^2)*u*(2*r*u + p*w) + 
+       p*v*((-r^2)*u + p^2*w) - 2*q*r*u*(r*u + p*(v + w)))]
+ 
+bAnticevianIntersectionConicPerspector[{u_, v_, w_}, {p_, q_, r_}] := 
+    symmetrizeInternal3[p*(2*q*r*u + 2*p*r*v + p*q*w)*
+      (p*r*v + 2*q*(r*u + p*w))]
