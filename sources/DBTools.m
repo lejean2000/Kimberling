@@ -98,7 +98,7 @@ colorformat[string_, cases_:RegularExpression[
 globalNoCleanup = True
  
 cleanup[string_] := StringReplace[string, 
-     RegularExpression["[, ]*{([Y|Z]*?[\\d, \\(\\)ABCX])*[Y|Z].*?\\}"] -> ""]
+     RegularExpression["[, ]*{+([Y|Z]*?[\\d, \\(\\)ABCX])*[Y|Z].*?}+"] -> ""]
  
 intmark[number_, spec:{{_, _}..}] := 
     Row[With[{n = Characters[ToString[number]]}, 
@@ -520,7 +520,7 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
             ", "]]]]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
             "circumconics"], {}, glob[pt]["circumconics"]]; 
         If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
-             " intersection, other than A, B, C, of circumconics ", 
+             " = intersection, other than A, B, C, of circumconics ", 
              StringRiffle[hg, ", "]]]]; ]; If[MemberQ[Keys[glob[pt]], 
           "midpoints"], hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
