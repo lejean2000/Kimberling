@@ -953,3 +953,12 @@ bAnticevianIntersectionConicCenter[{u_, v_, w_}, {p_, q_, r_}] :=
 bAnticevianIntersectionConicPerspector[{u_, v_, w_}, {p_, q_, r_}] := 
     symmetrizeInternal3[p*(2*q*r*u + 2*p*r*v + p*q*w)*
       (p*r*v + 2*q*(r*u + p*w))]
+ 
+bParallelsConicCenter[{u_, v_, w_}] := symmetrizeInternal3[
+     u*(u^2 - 2*v*w - u*(v + w))]
+ 
+bParallelsConicPerspector[{u_, v_, w_}] := symmetrizeInternal3[
+     u*(2*v*w + u*(2*v + w))*(2*v*w + u*(v + 2*w))]
+ 
+bInverseInConic[ptP_, mx_] := bLineIntersection[bPolar[mx, ptP], 
+     bLine[ptP, bConicCenter[mx]]]

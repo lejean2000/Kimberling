@@ -54,3 +54,5 @@ checkPointsOnCurve[crv_] := Module[{curve, curve2, out},
             intCheckList[[1]], 20]}, {ni, Keys[test]}], #1[[2]] == 0 & ]; 
       (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
          ")"] & ) /@ out]
+ 
+X = KimberlingCenterCN
