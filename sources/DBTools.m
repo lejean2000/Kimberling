@@ -397,9 +397,9 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
             expr[[1]]]], name = inname]; AssociateTo[globalProperties, 
          name -> Association[]]; lines = Quiet[linesProcessAlg[ptcoord, 
-           barys, 20, False, False, name]]; numcon = 
-         Quiet[checkCircumconics[ptcoord, num, name]]; 
-        If[full || Length[lines] + Length[numcon] >= 6, 
+           barys, 20, False, False, name]]; PrintTemporary[
+         "Starting circumconics"]; numcon = Quiet[checkCircumconics[ptcoord, 
+           num, name]]; If[full || Length[lines] + Length[numcon] >= 6, 
          Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
            PrintTemporary["Starting trilinear+conjugates"]]; 
           Quiet[checkTrilinearPolar[ptcoord, name]]; 
@@ -428,11 +428,13 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
  
 globalSeenPoints = {}
  
-checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck}, 
-     out = {}; Do[ptest = N[NormalizeBary[(evaluate /. rule69)[pt]], 35]; 
-        d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rule69; 
+checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
+      normcoef}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 
+        35]; Do[monitorvar = name; crv = getTriangleCurve[name] /. rule69; 
+        normcoef = Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
+        d = crv/normcoef /. Thread[{x, y, z} -> ptest]; 
         If[Abs[d] < 10^(-12), secondcheck = True; 
-          Do[ptest = N[NormalizeBary[pt /. rc], 35]; 
+          Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
             d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rc; 
             If[Abs[d] > 10^(-12), secondcheck = False]; , 
            {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
@@ -470,15 +472,8 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
             StringRiffle[res, ", "]]]]; ]]; ]
  
 checkPerspector[pt_, inname_:"X"] := Module[{out, ptcheck, crv, set1, rc, 
-      ptnamenew, ptest}, out = {}; crv = bCircumconicPEq[pt]; 
-      set1 = checkPointsOnCurve[crv]; rc = intCheckList[[1]]; 
-      Do[ptest = intnumericnorm[evaluate[pt] /. rc]; 
-        crv = bCircumconicPEq[ptest]; ptnamenew = StringJoin[
-          StringTake[ptoncrv, 1], StringTake[ptoncrv, {3, -2}]]; 
-        ptcheck = N[KimberlingCenterCNy[ptnamenew] /. rc, 35]; 
-        If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
-         AppendTo[out, ptnamenew]], {ptoncrv, set1}]; 
-      out = intaddbrackets /@ SortBy[out, numsortexpr[#1] & ]; 
+      ptnamenew, ptest}, crv = bCircumconicPEq[pt]; 
+      set1 = checkPointsOnCurve[crv]; out = SortBy[set1, numsortexpr[#1] & ]; 
       If[Length[out] >= 2, out = Take[out, 2]; If[ !TrueQ[globalSilence], 
          Print[colorformat[StringJoin[
             "= perspector of circumconic {{A, B, C, ", StringRiffle[out, 
@@ -486,15 +481,10 @@ checkPerspector[pt_, inname_:"X"] := Module[{out, ptcheck, crv, set1, rc,
        {"perspector" -> out}]; ]
  
 checkConicCenter[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
-      rc, ptnamenew}, out = {}; crv = bCircumconicPEq[
-        pt*bAntiComplement[X[2], pt]]; set1 = checkPointsOnCurve[crv]; 
-      rc = intCheckList[[1]]; 
-      Do[ptnamenew = StringJoin[StringTake[ptoncrv, 1], StringTake[ptoncrv, 
-           {3, -2}]]; ptcheck = N[KimberlingCenterCNy[ptnamenew] /. rc, 35]; 
-        If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
-         AppendTo[out, ptnamenew]], {ptoncrv, set1}]; 
-      out = intaddbrackets /@ SortBy[out, numsortexpr[#1] & ]; 
-      If[Length[out] >= 2, out = Take[out, 2]; If[ !TrueQ[globalSilence], 
+      rc, ptnamenew}, crv = bCircumconicPEq[pt*bAntiComplement[X[2], pt]]; 
+      set1 = checkPointsOnCurve[crv]; Print[set1]; 
+      out = SortBy[set1, numsortexpr[#1] & ]; If[Length[out] >= 2, 
+       out = Take[out, 2]; If[ !TrueQ[globalSilence], 
          Print[colorformat[StringJoin["= center of circumconic {{A, B, C, ", 
             StringRiffle[out, ", "], "}}"]]]]; ]; 
       AssociateTo[globalProperties[inname], {"conic center" -> out}]; ]

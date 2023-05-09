@@ -538,12 +538,20 @@ bExsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2},
       rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, Q2]; 
       rad1*(O2/Total[O2]) - rad2*(O1/Total[O1])]
  
+bExsimilicenter2[O1_, P1_, O2_, P2_] := Module[{rad1, rad2}, 
+     rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, P2]; 
+      rad1*(O2/Total[O2]) - rad2*(O1/Total[O1])]
+ 
 bInsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2}, 
      O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
       rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, Q2]; 
       rad1*(O2/Total[O2]) + rad2*(O1/Total[O1])]
  
-bInsimilicenter2[O1_, O2_, rad1_, rad2_] := rad1*(O2/Total[O2]) + 
+bInsimilicenter2[O1_, P1_, O2_, P2_] := Module[{rad1, rad2}, 
+     rad1 = bDistance[O1, P1]; rad2 = bDistance[O2, P2]; 
+      rad1*(O2/Total[O2]) + rad2*(O1/Total[O1])]
+ 
+bInsimilicenter3[O1_, O2_, rad1_, rad2_] := rad1*(O2/Total[O2]) + 
      rad2*(O1/Total[O1])
  
 bPedalTriangle[{u_, v_, w_}] := {{0, a^2*v + SC*u, a^2*w + SB*u}, 
@@ -962,3 +970,7 @@ bParallelsConicPerspector[{u_, v_, w_}] := symmetrizeInternal3[
  
 bInverseInConic[ptP_, mx_] := bLineIntersection[bPolar[mx, ptP], 
      bLine[ptP, bConicCenter[mx]]]
+ 
+bDC[{u_, v_, w_}] := symmetrizeInternal2[v*(w/(b*v + c*w))]
+ 
+bCD[{p_, q_, r_}] := symmetrizeInternal2[b*(c/(-a/p + b/q + c/r))]
