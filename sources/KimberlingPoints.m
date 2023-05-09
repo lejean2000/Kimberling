@@ -44,14 +44,15 @@ checkPointinETC69[pt_] := Module[{ptnum, set},
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  
-checkPointsOnCurve[crv_] := Module[{curve, curve2, out}, 
+checkPointsOnCurve[crv_] := Module[{curve, curve2, out, normcoef}, 
      curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}]; 
-      curve2 = curve /. rule69; 
-      test = Select[(Abs[curve2 /. Thread[{x, y, z} -> #1]] & ) /@ 
+      curve2 = curve /. rule69; normcoef = 
+       Max[Flatten[Abs[CoefficientList[curve2, {x, y, z}]]]]; 
+      test = Select[(Abs[curve2/normcoef /. Thread[{x, y, z} -> #1]] & ) /@ 
          ETCBaryNorm, #1 < 10^(-12) & ]; 
       out = Select[Table[{ni, N[curve /. Thread[{x, y, z} -> 
-               simplifyRationalBarycentrics[KimberlingCenterCNy[ni]]] /. 
-            intCheckList[[1]], 20]}, {ni, Keys[test]}], #1[[2]] == 0 & ]; 
+               KimberlingCenterCNy[ni]] /. intCheckList[[1]], 20]}, 
+         {ni, Keys[test]}], #1[[2]] == 0 & ]; 
       (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
          ")"] & ) /@ out]
  

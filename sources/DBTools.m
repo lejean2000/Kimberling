@@ -335,7 +335,7 @@ checkBarycentric[pt_, type_, name_:"X"] :=
              type, " X(i)", sgn, "X(j) for these (i, j): ", StringRiffle[res, 
               ", "]]]]; ]; ]; ]
  
-checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2}, 
+checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2, dset, test}, 
      ptc = N[Normalize[pt /. rule69], 35]; cx = bTripolarEq[ptc] . {x, y, z}; 
       dset = (Abs[cx] /. Thread[{x, y, z} -> #1] & ) /@ ETCBaryNorm; 
       test = Select[dset, #1 < 10^(-10) & ]; If[Length[test] > 1, 
@@ -422,7 +422,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           If[ !TrueQ[globalSilence], PrintTemporary["Starting barycentric"]]; 
           Quiet[checkBarycentric[ptcoord, "product", name]]; 
           Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
-          Quiet[checkPerspector[ptcoord, name]]; TimeConstrained[
+          Quiet[checkPerspector[ptcoord, name]]; 
+          Quiet[checkConicCenter[ptcoord, name]]; TimeConstrained[
            Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; ]; ]; ]
  
 globalSeenPoints = {}
@@ -468,21 +469,35 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
        If[Length[res] > 0, Print[colorformat[StringJoin[str, 
             StringRiffle[res, ", "]]]]; ]]; ]
  
-checkPerspector[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
-      rc, ptnamenew}, out = {}; ptest = intnumericnorm[
-        evaluate[pt] /. rule69]; crv = bCircumconicPEq[ptest]; 
+checkPerspector[pt_, inname_:"X"] := Module[{out, ptcheck, crv, set1, rc, 
+      ptnamenew, ptest}, out = {}; crv = bCircumconicPEq[pt]; 
       set1 = checkPointsOnCurve[crv]; rc = intCheckList[[1]]; 
       Do[ptest = intnumericnorm[evaluate[pt] /. rc]; 
         crv = bCircumconicPEq[ptest]; ptnamenew = StringJoin[
           StringTake[ptoncrv, 1], StringTake[ptoncrv, {3, -2}]]; 
         ptcheck = N[KimberlingCenterCNy[ptnamenew] /. rc, 35]; 
         If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
-         AppendTo[out, ptoncrv]], {ptoncrv, set1}]; 
-      AssociateTo[globalProperties[inname], {"perspector" -> out}]; 
-      If[Length[out] >= 2, If[ !TrueQ[globalSilence], 
+         AppendTo[out, ptnamenew]], {ptoncrv, set1}]; 
+      out = intaddbrackets /@ SortBy[out, numsortexpr[#1] & ]; 
+      If[Length[out] >= 2, out = Take[out, 2]; If[ !TrueQ[globalSilence], 
          Print[colorformat[StringJoin[
-            "= perspector of circumconic through: ", StringRiffle[out, 
-             ", "]]]]]; ]; ]
+            "= perspector of circumconic {{A, B, C, ", StringRiffle[out, 
+             ", "], "}}"]]]]; ]; AssociateTo[globalProperties[inname], 
+       {"perspector" -> out}]; ]
+ 
+checkConicCenter[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
+      rc, ptnamenew}, out = {}; crv = bCircumconicPEq[
+        pt*bAntiComplement[X[2], pt]]; set1 = checkPointsOnCurve[crv]; 
+      rc = intCheckList[[1]]; 
+      Do[ptnamenew = StringJoin[StringTake[ptoncrv, 1], StringTake[ptoncrv, 
+           {3, -2}]]; ptcheck = N[KimberlingCenterCNy[ptnamenew] /. rc, 35]; 
+        If[(crv /. Thread[{x, y, z} -> ptcheck]) < 10^(-15), 
+         AppendTo[out, ptnamenew]], {ptoncrv, set1}]; 
+      out = intaddbrackets /@ SortBy[out, numsortexpr[#1] & ]; 
+      If[Length[out] >= 2, out = Take[out, 2]; If[ !TrueQ[globalSilence], 
+         Print[colorformat[StringJoin["= center of circumconic {{A, B, C, ", 
+            StringRiffle[out, ", "], "}}"]]]]; ]; 
+      AssociateTo[globalProperties[inname], {"conic center" -> out}]; ]
  
 pointCheckerTransform[expr_, inname_, num_:0, full_:False] := 
     Module[{pointProcesses, texpr, procname}, 
@@ -548,9 +563,13 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
                " = trilinear pole of line {", intnameformat[hg[[1]]], ",", 
                intnameformat[hg[[2]]], "}"]]]; ]; ]; 
         hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
-         print[colorformat[StringJoin[printname, 
-             " = perspector of circumconic through: ", StringRiffle[hg, 
-              ", "]]]]; ]; localprops = Association["isoconjugate" -> 
+         print[colorformat[StringJoin[printname, StringJoin[
+              " = perspector of circumconic {{A, B, C, ", StringRiffle[hg, 
+               ", "], "}}"]]]]; ]; hg = glob[pt]["conic center"]; 
+        If[Length[hg] >= 2, print[colorformat[StringJoin[printname, 
+             StringJoin[" = center of circumconic {{A, B, C, ", 
+              StringRiffle[hg, ", "], "}}"]]]]; ]; localprops = 
+         Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
           "vertex conjugate" -> 
            "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
