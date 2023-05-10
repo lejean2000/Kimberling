@@ -237,8 +237,9 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
             "= reflection of X(i) in X(j) for these {i,j}: ", 
             StringRiffle[hg, ", "]]]]; ]]; Return[out]; ]
  
-xnumforsort[str_] := If[NumericQ[ToExpression[StringTake[str, 1]]], 
-     ToExpression[str], 50000 + ToExpression[StringTake[str, {2, -1}]]]
+xnumforsort[str_] := If[StringTake[str, 1] == "X", 
+     ToExpression[StringTake[str, {2, -1}]], 
+     50000 + ToExpression[StringTake[str, {2, -1}]]]
  
 intnameformat[pname_] := If[StringTake[pname, 1] == "X", 
      StringTake[pname, {2, -1}], pname]
@@ -397,9 +398,10 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
             expr[[1]]]], name = inname]; AssociateTo[globalProperties, 
          name -> Association[]]; lines = Quiet[linesProcessAlg[ptcoord, 
-           barys, 20, False, False, name]]; PrintTemporary[
-         "Starting circumconics"]; numcon = Quiet[checkCircumconics[ptcoord, 
-           num, name]]; If[full || Length[lines] + Length[numcon] >= 6, 
+           barys, 20, False, False, name]]; If[ !TrueQ[globalSilence], 
+         PrintTemporary["Starting circumconics"]]; 
+        numcon = Quiet[checkCircumconics[ptcoord, num, name]]; 
+        If[full || Length[lines] + Length[numcon] >= 3, 
          Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
            PrintTemporary["Starting trilinear+conjugates"]]; 
           Quiet[checkTrilinearPolar[ptcoord, name]]; 
@@ -482,9 +484,8 @@ checkPerspector[pt_, inname_:"X"] := Module[{out, ptcheck, crv, set1, rc,
  
 checkConicCenter[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1, 
       rc, ptnamenew}, crv = bCircumconicPEq[pt*bAntiComplement[X[2], pt]]; 
-      set1 = checkPointsOnCurve[crv]; Print[set1]; 
-      out = SortBy[set1, numsortexpr[#1] & ]; If[Length[out] >= 2, 
-       out = Take[out, 2]; If[ !TrueQ[globalSilence], 
+      set1 = checkPointsOnCurve[crv]; out = SortBy[set1, numsortexpr[#1] & ]; 
+      If[Length[out] >= 2, out = Take[out, 2]; If[ !TrueQ[globalSilence], 
          Print[colorformat[StringJoin["= center of circumconic {{A, B, C, ", 
             StringRiffle[out, ", "], "}}"]]]]; ]; 
       AssociateTo[globalProperties[inname], {"conic center" -> out}]; ]
