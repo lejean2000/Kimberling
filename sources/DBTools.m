@@ -88,7 +88,7 @@ intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(",
 colorformat[string_, cases_:RegularExpression[
        "Y\\(\\d+\\)|Y\\d+|Z\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
      If[ !TrueQ[colorPrintOn], If[TrueQ[globalNoCleanup], 
-         Return[string, Module]; , Return[cleanup[string], Module]; ]; ]; 
+         Return[string, Module], Return[cleanup[string], Module]; ]; ]; 
       pos = StringPosition[string, cases]; 
       agg = ({Switch[#1[[1,2]], 1, Red, 2, Brown, _, Blue], 
           #1[[1 ;; All,{1}]]} & ) /@ GatherBy[
@@ -591,9 +591,11 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
           Do[print[colorformat[StringJoin[printname, " = ", prop]]]; , 
            {prop, hg}]]; , {pt, cycle}]; colorPrintOn = colorprint; ]
  
-print[string_] := If[ !MemberQ[Names["Global`*"], "globalOutputStream"] || 
-      globalOutputStream === False, Print[string], 
-     WriteString[globalOutputStream, StringJoin[string, "\n\n"]]]
+print[string_] := If[StringContainsQ[string, "KeyAbsent"], 
+     Return["", Module], 
+     If[ !MemberQ[Names["Global`*"], "globalOutputStream"] || 
+        globalOutputStream === False, Print[string], 
+       WriteString[globalOutputStream, StringJoin[string, "\n\n"]]]; ]
  
 globalOutputStream = False
  

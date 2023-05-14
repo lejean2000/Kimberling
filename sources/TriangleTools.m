@@ -844,10 +844,15 @@ bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] :=
     Simplify[bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
       bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]]
  
-bHatzipolakisMoses[{p_, q_, r_}] := symmetrizeInternal2[
-     -2*a^2*(b^4 + c^4 - a^2*b^2 - a^2*c^2 - 2*b^2*c^2)*q*r + 
-      b^2*(a^2 - b^2 + c^2)*(a^2 + b^2 - c^2)*p*r + c^2*(a^2 - b^2 + c^2)*
-       (a^2 + b^2 - c^2)*p*q]
+bHatzipolakisMoses[{p_, q_, r_}] := 
+    {c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*p*q + b^2*(a^2 + b^2 - c^2)*
+       (a^2 - b^2 + c^2)*p*r - 2*a^2*((-a^2)*b^2 + b^4 - a^2*c^2 - 
+        2*b^2*c^2 + c^4)*q*r, c^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*p*q - 
+      2*b^2*(a^4 - a^2*b^2 - 2*a^2*c^2 - b^2*c^2 + c^4)*p*r + 
+      a^2*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*q*r, 
+     -2*c^2*(a^4 - 2*a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2)*p*q + 
+      b^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*p*r + 
+      a^2*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*q*r}
  
 bFregierTriangle[{u_, v_, w_}] := {{SA*u, (-SA)*v + b^2*w, c^2*v - SA*w}, 
      {(-SB)*u + a^2*w, SB*v, c^2*u - SB*w}, {(-SC)*u + a^2*v, b^2*u - SC*v, 
@@ -931,12 +936,13 @@ bCurveForTriangle[crv_, va_, vb_, vc_] :=
 bSteinerImage[{p_, q_, r_}] := symmetrizeInternal2[
      p/(q^2 + r^2 - p^2 + q*r + r*p + p*q)]
  
-bHodpiece[{p_, q_, r_}] := symmetrizeInternal2[
-     a^2/(p*(-a^2/p + b^2/q + c^2/r))]
+bHodpiece[{p_, q_, r_}] := {a^2/(p*(-(a^2/p) + b^2/q + c^2/r)), 
+     b^2/(q*(a^2/p - b^2/q + c^2/r)), c^2/((a^2/p + b^2/q - c^2/r)*r)}
  
 bXAntipodeInCircumconic[{p_, q_, r_}, {x_, y_, z_}, {u_, v_, w_}] := 
-    symmetrizeInternal3[q*r*u^2*(r*v*x + q*w*x + p*w*y)*
-      (r*v*x + q*w*x + p*v*z)]
+    {q*r*u^2*(r*v*x + q*w*x + p*w*y)*(r*v*x + q*w*x + p*v*z), 
+     p*r*v^2*(q*w*x + r*u*y + p*w*y)*(r*u*y + p*w*y + q*u*z), 
+     p*q*w^2*(r*v*x + q*u*z + p*v*z)*(r*u*y + q*u*z + p*v*z)}
  
 bCircleInvervse[circ_, pt_] := bLineIntersection[bPolar[circ, pt], 
      bLine[bConicCenter[circ], pt]]
@@ -946,27 +952,42 @@ bAubertCenterSimplify[aa_, bb_, cc_, dd_] := Module[{l1, l2},
       l2 = Simplify[Simplify[bAubertLine[aa, bb, dd, cc]] /. Abs -> RealAbs]; 
       simplifyRationalBarycentrics[bLineIntersection[l1, l2]]]
  
-bVuCirclesPoint[{p_, q_, r_}, {u_, v_, w_}] := symmetrizeInternal2[
-     a^2*((-p)*v*w*(p + q + r) + q*r*u*(u + v + w)) + 
-      b^2*p*u*(r*(u + v) - (p + q)*w) + c^2*p*u*((-(p + r))*v + q*(u + w))]
+bVuCirclesPoint[{p_, q_, r_}, {u_, v_, w_}] := 
+    {b^2*p*u*(r*(u + v) - (p + q)*w) + c^2*p*u*((-p - r)*v + q*(u + w)) + 
+      a^2*((-p)*(p + q + r)*v*w + q*r*u*(u + v + w)), 
+     a^2*q*v*(r*(u + v) + (-p - q)*w) + c^2*q*v*(-((q + r)*u) + p*(v + w)) + 
+      b^2*((-q)*(p + q + r)*u*w + p*r*v*(u + v + w)), 
+     a^2*r*w*(-((p + r)*v) + q*(u + w)) + b^2*r*w*((-q - r)*u + p*(v + w)) + 
+      c^2*((-r)*(p + q + r)*u*v + p*q*w*(u + v + w))}
  
-bVuCirclesPoint2[{p_, q_, r_}, {u_, v_, w_}] := symmetrizeInternal2[
-     q*r*(a^2*(q*r*u*(u + v + w) - p*v*w*(p + q + r)) - 
-       b^2*p*u*(w*(p + q) - r*(u + v)) - c^2*p*u*(v*(p + r) - q*(u + w)))]
+bVuCirclesPoint2[{p_, q_, r_}, {u_, v_, w_}] := 
+    {q*r*((-b^2)*p*u*((-r)*(u + v) + (p + q)*w) - 
+       c^2*p*u*((p + r)*v - q*(u + w)) + a^2*((-p)*(p + q + r)*v*w + 
+         q*r*u*(u + v + w))), p*r*((-a^2)*q*v*((-r)*(u + v) + (p + q)*w) - 
+       c^2*q*v*((q + r)*u - p*(v + w)) + b^2*((-q)*(p + q + r)*u*w + 
+         p*r*v*(u + v + w))), p*q*((-a^2)*r*w*((p + r)*v - q*(u + w)) - 
+       b^2*r*w*((q + r)*u - p*(v + w)) + c^2*((-r)*(p + q + r)*u*v + 
+         p*q*w*(u + v + w)))}
  
 bAnticevianIntersectionConicCenter[{u_, v_, w_}, {p_, q_, r_}] := 
-    symmetrizeInternal3[p*v*w*((-q^2)*u*(2*r*u + p*w) + 
-       p*v*((-r^2)*u + p^2*w) - 2*q*r*u*(r*u + p*(v + w)))]
+    {p*v*w*((-q^2)*u*(2*r*u + p*w) + p*v*((-r^2)*u + p^2*w) - 
+       2*q*r*u*(r*u + p*(v + w))), q*u*w*((-r^2)*v*(q*u + 2*p*v) + 
+       q*(q^2*u - p^2*v)*w - 2*p*r*v*(p*v + q*(u + w))), 
+     r*u*v*(-2*p*q*w*(r*(u + v) + q*w) - p^2*w*(r*v + 2*q*w) + 
+       r*u*(r^2*v - q^2*w))}
  
 bAnticevianIntersectionConicPerspector[{u_, v_, w_}, {p_, q_, r_}] := 
-    symmetrizeInternal3[p*(2*q*r*u + 2*p*r*v + p*q*w)*
-      (p*r*v + 2*q*(r*u + p*w))]
+    {p*(2*q*r*u + 2*p*r*v + p*q*w)*(p*r*v + 2*q*(r*u + p*w)), 
+     q*(2*r*(q*u + p*v) + p*q*w)*(q*r*u + 2*p*r*v + 2*p*q*w), 
+     r*(2*q*r*u + p*r*v + 2*p*q*w)*(q*r*u + 2*p*(r*v + q*w))}
  
-bParallelsConicCenter[{u_, v_, w_}] := symmetrizeInternal3[
-     u*(u^2 - 2*v*w - u*(v + w))]
+bParallelsConicCenter[{u_, v_, w_}] := {u*(u^2 - 2*v*w - u*(v + w)), 
+     v*(v^2 - 2*u*w - v*(u + w)), w*(-2*u*v - (u + v)*w + w^2)}
  
-bParallelsConicPerspector[{u_, v_, w_}] := symmetrizeInternal3[
-     u*(2*v*w + u*(2*v + w))*(2*v*w + u*(v + 2*w))]
+bParallelsConicPerspector[{u_, v_, w_}] := 
+    {u*(2*v*w + u*(2*v + w))*(2*v*w + u*(v + 2*w)), 
+     v*(2*u*w + v*(2*u + w))*(2*u*w + v*(u + 2*w)), 
+     w*(2*u*v + (2*u + v)*w)*(2*u*v + (u + 2*v)*w)}
  
 bInverseInConic[ptP_, mx_] := bLineIntersection[bPolar[mx, ptP], 
      bLine[ptP, bConicCenter[mx]]]
@@ -974,3 +995,17 @@ bInverseInConic[ptP_, mx_] := bLineIntersection[bPolar[mx, ptP],
 bDC[{u_, v_, w_}] := symmetrizeInternal2[v*(w/(b*v + c*w))]
  
 bCD[{p_, q_, r_}] := symmetrizeInternal2[b*(c/(-a/p + b/q + c/r))]
+ 
+bPolluxPoint[h_, k_] := {(b - c)*(a*h + (b + c)*k), 
+     (-a + c)*(b*h + (a + c)*k), (a - b)*(c*h + (a + b)*k)}
+ 
+bAreLinePerpendicular[{x1_, y1_, z1_}, {x2_, y2_, z2_}] := 
+    a^2*x1*x2 + b^2*y1*y2 + c^2*z1*z2 - SA*(y1*z2 + y2*z1) - 
+     SB*(z1*x2 + z2*x1) - SC*(x1*y2 + x2*y1)
+ 
+bCircleOnDiameter[U1_, U2_] := curveSimplify[
+     evaluate[bAreLinePerpendicular[bLine[{x, y, z}, U1], 
+       bLine[{x, y, z}, U2]]]]
+ 
+laHireRadicalCenter[func_] := Module[{e}, e = symmetrizeInternal2[func]; 
+      radicalCenter[xA, e[[1]], xB, e[[2]], xC, e[[3]]]]
