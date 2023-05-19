@@ -51,10 +51,6 @@ bDistance[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q];
         b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - c^2*(sp[[1]] - sq[[1]])*
          (sp[[2]] - sq[[2]])]]
  
-orth[p_, q_, r_] := Simplify[{1/(y^2 + z^2 - x^2), 1/(-y^2 + z^2 + x^2), 
-       1/(y^2 - z^2 + x^2)} /. {x -> bDistance[q, r], y -> bDistance[p, r], 
-       z -> bDistance[p, q]}]
- 
 bLineL[{u_, v_}] := Module[{m, xx, yy, zz}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
@@ -177,8 +173,8 @@ bCrossConjugate[{u_, v_, w_}, {p_, q_, r_}] :=
      q*(q*r*u - p*r*v - p*q*w)*(q*r*u + p*r*v - p*q*w), 
      r*(q*r*u - p*r*v - p*q*w)*(q*r*u - p*r*v + p*q*w)}
  
-bComplement[{u_, v_, w_}, {p_, q_, r_}] := {u^2*v*(r*v + q*w), 
-     v^3*(r*u + p*w), v*(q*u + p*v)*w^2}
+bComplement[{u_, v_, w_}, {p_, q_, r_}] := {u^2*(r*v + q*w), v^2*(r*u + p*w), 
+     w^2*(q*u + p*v)}
  
 bAntiComplement[{u_, v_, w_}, {p_, q_, r_}] := {u*(r*u*v + q*u*w - p*v*w), 
      v*(r*u*v - q*u*w + p*v*w), w*((-r)*u*v + q*u*w + p*v*w)}
@@ -209,22 +205,18 @@ bCrossDiff[{u_, v_, w_}, {p_, q_, r_}] := {a^2*(r*v - q*w), b^2*(p*w - r*u),
 bCrossSum[{u_, v_, w_}, {p_, q_, r_}] := {a^2*(r*v + q*w), b^2*(r*u + p*w), 
      c^2*(q*u + p*v)}
  
-bHirstInverse[P1_, U1_] := Module[{eq}, Clear[pp, qq, rr, uu, vv, ww]; 
-      eq = symmetrizeInternal[qq*rr*uu^2 - vv*ww*pp^2]; 
-      eq /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-       MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]
+bHirstInverse[{u_, v_, w_}, {p_, q_, r_}] := {(-q)*r*u^2 + p^2*v*w, 
+     (-p)*r*v^2 + q^2*u*w, r^2*u*v - p*q*w^2}
  
 bAnticomplementaryConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
     {c^3*(p + r)*(q + r)*u*v + (p + q)*(b^3*(q + r)*u - a^3*(p + r)*v)*w, 
      c^3*(p + r)*(q + r)*u*v + (p + q)*((-b^3)*(q + r)*u + a^3*(p + r)*v)*w, 
      (-c^3)*(p + r)*(q + r)*u*v + (p + q)*(b^3*(q + r)*u + a^3*(p + r)*v)*w}
  
-bLineConjugate[P1_, U1_] := Module[{eq, eq2}, 
-     eq = pp*(vv^2 + ww^2) - uu*(qq*vv + rr*ww) /. {pp -> pp/a, qq -> qq/b, 
-         rr -> rr/c, uu -> uu/a, vv -> vv/b, ww -> ww/c}; 
-      eq2 = symmetrizeInternal[eq]; bFromTrilinear[
-       eq2 /. MapThread[#1 -> #2 & , {{pp, qq, rr}, P1}] /. 
-        MapThread[#1 -> #2 & , {{uu, vv, ww}, U1}]]]
+bLineConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
+    {a^2*(c^2*q*(q*u - p*v) + b^2*r*(r*u - p*w)), 
+     b^2*(c^2*p*((-q)*u + p*v) + a^2*r*(r*v - q*w)), 
+     c^2*(b^2*p*((-r)*u + p*w) + a^2*q*((-r)*v + q*w))}
  
 bBethConjugate[P1_, U1_] := Module[{eq, eq2}, Clear[pp, qq, rr, uu, vv, ww]; 
       eq = 2*a*b*c*pp*((a^2 - b^2 + c^2)/(2*a*c) + (a^2 + b^2 - c^2)/(2*a*b))*
@@ -356,9 +348,13 @@ bVertexConjugate[{u_, v_, w_}, {p_, q_, r_}] :=
  
 bTrilinearProduct[{p_, q_, r_}, {u_, v_, w_}] := {b*c*p*u, c*a*q*v, a*b*r*w}
  
-bCirclecevianPerspector[{p_, q_, r_}] := symmetrizeInternal[
-     a^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
-      (c^2*p^2*q + c^2*p*q^2 + 2*c^2*p*q*r + b^2*p*r^2 + a^2*q*r^2)]
+bCirclecevianPerspector[{p_, q_, r_}] := 
+    {a^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
+      (c^2*p^2*q + c^2*p*q^2 + 2*c^2*p*q*r + b^2*p*r^2 + a^2*q*r^2), 
+     b^2*(c^2*p^2*q + b^2*p^2*r + 2*a^2*p*q*r + a^2*q^2*r + a^2*q*r^2)*
+      (c^2*p^2*q + c^2*p*q^2 + 2*c^2*p*q*r + b^2*p*r^2 + a^2*q*r^2), 
+     c^2*(c^2*p*q^2 + b^2*p^2*r + 2*b^2*p*q*r + a^2*q^2*r + b^2*p*r^2)*
+      (c^2*p^2*q + b^2*p^2*r + 2*a^2*p*q*r + a^2*q^2*r + a^2*q*r^2)}
  
 bTCCPerspector[{u_, v_, w_}] := 
     {a^2*((-c^4)*u^2*v^2 + ((-b^4)*u^2 + a^4*v^2)*w^2), 
@@ -454,13 +450,17 @@ symmetrizeABC[expr_] := Module[{coordx, coordy, coordz},
        coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
        coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]
  
-bOrthopole[l_] := Module[{eq, eq2}, 
-     eq = ((-a^2)*uu + SC*vv + SB*ww)*(SB*SC*uu - SB*b^2*vv - SC*c^2*ww); 
-      eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{uu, vv, ww} -> l]]
+bOrthopole[{u_, v_, w_}] := {(a^2*u - SC*v - SB*w)*(SB*SC*u - b^2*SB*v - 
+       c^2*SC*w), ((-SC)*u + b^2*v - SA*w)*((-a^2)*SA*u + SA*SC*v - 
+       c^2*SC*w), ((-SB)*u - SA*v + c^2*w)*((-a^2)*SA*u - b^2*SB*v + SA*SB*w)}
  
-bSyngonal[pt_] := Module[{eq, eq2}, 
-     eq = (qq + rr - pp)/(2*a^2*qq*rr - (qq + rr - pp)*(b^2*rr + c^2*qq)); 
-      eq2 = symmetrizeInternal[eq]; eq2 /. Thread[{pp, qq, rr} -> pt]]
+bSyngonal[{u_, v_, w_}] := {(-2*c^2*u*v + b^2*u*(u + v - w) + 
+       a^2*v*(u + v - w))*(u - v - w)*(-2*b^2*u*w + c^2*u*(u - v + w) + 
+       a^2*w*(u - v + w)), (-2*c^2*u*v + b^2*u*(u + v - w) + 
+       a^2*v*(u + v - w))*(u - v + w)*(2*a^2*v*w + b^2*(u - v - w)*w - 
+       c^2*v*(-u + v + w)), (u + v - w)*(-2*b^2*u*w + c^2*u*(u - v + w) + 
+       a^2*w*(u - v + w))*(2*a^2*v*w + b^2*(u - v - w)*w - 
+       c^2*v*(-u + v + w))}
  
 bCircleEqRad[cent_, rad_] := Module[{u1, v1, w1}, 
      {u1, v1, w1} = cent/Total[cent]; SA*(x - u1*(x + y + z))^2 + 
@@ -528,10 +528,11 @@ bPolar[mx_, {u_, v_, w_}] := Module[{mxm},
      If[ !MatrixQ[mx], mxm = conicEqtoMtx[mx], mxm = mx]; 
       First /@ (mxm . {{u}, {v}, {w}})]
  
-bCyclocevianConjugate[P1_] := Module[{}, Clear[pp, qq, rr, uu, vv, ww]; 
-      symmetrizeInternal[1/(c^2*pp*qq*(pp + rr)*(qq + rr) - 
-          (pp + qq)*rr*(a^2*qq*(pp + rr) - b^2*pp*(qq + rr)))] /. 
-       Thread[{pp, qq, rr} -> P1]]
+bCyclocevianConjugate[{u_, v_, w_}] := 
+    {1/(c^2*u*v*(u + w)*(v + w) - (u + v)*w*(a^2*v*(u + w) - b^2*u*(v + w))), 
+     1/(a^2*v*(u + v)*w*(u + w) - u*(v + w)*(b^2*(u + v)*w - c^2*v*(u + w))), 
+     1/(b^2*u*(u + v)*w*(v + w) - v*(u + w)*((-a^2)*(u + v)*w + 
+         c^2*u*(v + w)))}
  
 bExsimilicenter[P1_, P2_, P3_, Q1_, Q2_, Q3_] := Module[{rad1, rad2, O1, O2}, 
      O1 = bCircleCenter[P1, P2, P3]; O2 = bCircleCenter[Q1, Q2, Q3]; 
@@ -652,8 +653,10 @@ bLineFromEq[lineq_] := {lineq /. Thread[{x, y, z} -> {1, 0, 0}],
      lineq /. Thread[{x, y, z} -> {0, 1, 0}], 
      lineq /. Thread[{x, y, z} -> {0, 0, 1}]}
  
-bCollingsTransform[{u_, v_, w_}] := symmetrizeInternal2[
-     1/((-b^2)*(u + v - w)*w + c^2*v*(u - v + w))]
+bCollingsTransform[{u_, v_, w_}] := 
+    {1/((-b^2)*(u + v - w)*w + c^2*v*(u - v + w)), 
+     1/(a^2*(u + v - w)*w - c^2*u*(-u + v + w)), 
+     1/((-a^2)*v*(u - v + w) + b^2*u*(-u + v + w))}
  
 symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w]; 
       partB = eq /. {p -> q, q -> r, r -> p, u -> v, v -> w, w -> u}; 
@@ -933,8 +936,9 @@ bCurveForTriangle[crv_, va_, vb_, vc_] :=
          Flatten[{va, vb, vc}]]; crv /. setupBaseTriangleBary[a1, b1, c1] /. 
         Thread[{x, y, z} -> repl] /. rls]
  
-bSteinerImage[{p_, q_, r_}] := symmetrizeInternal2[
-     p/(q^2 + r^2 - p^2 + q*r + r*p + p*q)]
+bSteinerImage[{p_, q_, r_}] := {p/(-p^2 + p*q + q^2 + p*r + q*r + r^2), 
+     q/(p^2 + p*q - q^2 + p*r + q*r + r^2), 
+     r/(p^2 + p*q + q^2 + p*r + q*r - r^2)}
  
 bHodpiece[{p_, q_, r_}] := {a^2/(p*(-(a^2/p) + b^2/q + c^2/r)), 
      b^2/(q*(a^2/p - b^2/q + c^2/r)), c^2/((a^2/p + b^2/q - c^2/r)*r)}
@@ -992,9 +996,12 @@ bParallelsConicPerspector[{u_, v_, w_}] :=
 bInverseInConic[ptP_, mx_] := bLineIntersection[bPolar[mx, ptP], 
      bLine[ptP, bConicCenter[mx]]]
  
-bDC[{u_, v_, w_}] := symmetrizeInternal2[v*(w/(b*v + c*w))]
+bDC[{u_, v_, w_}] := {(v*w)/(b*v + c*w), (u*w)/(a*u + c*w), (u*v)/(a*u + b*v)}
  
-bCD[{p_, q_, r_}] := symmetrizeInternal2[b*(c/(-a/p + b/q + c/r))]
+bCD[{p_, q_, r_}] := {b*c*((-c)*p*q + b*p*r - a*q*r)*
+      ((-c)*p*q + b*p*r + a*q*r), a*c*((-c)*p*q - b*p*r + a*q*r)*
+      ((-c)*p*q + b*p*r + a*q*r), a*b*((-c)*p*q - b*p*r + a*q*r)*
+      (c*p*q - b*p*r + a*q*r)}
  
 bPolluxPoint[h_, k_] := {(b - c)*(a*h + (b + c)*k), 
      (-a + c)*(b*h + (a + c)*k), (a - b)*(c*h + (a + b)*k)}
@@ -1009,3 +1016,10 @@ bCircleOnDiameter[U1_, U2_] := curveSimplify[
  
 laHireRadicalCenter[func_] := Module[{e}, e = symmetrizeInternal2[func]; 
       radicalCenter[xA, e[[1]], xB, e[[2]], xC, e[[3]]]]
+ 
+bSecondCircumconcevianTangentialPerspector[{u_, v_, w_}, {p_, q_, r_}] := 
+    {-2*q*r*u^2 + p^2*v*w - p*u*(r*v + q*w), -2*p*r*v^2 + q^2*u*w - 
+      q*v*(r*u + p*w), r^2*u*v - r*(q*u + p*v)*w - 2*p*q*w^2}
+ 
+bVuCevianTangentialPerspector[{u_, v_, w_}] := {a^2*v*(u + v)*w*(u + w), 
+     b^2*u*(u + v)*w*(v + w), c^2*u*v*(u + w)*(v + w)}
