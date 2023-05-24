@@ -71,7 +71,7 @@ KimberlingCenterCNy[key_] := If[StringTake[key, 1] == "X",
      evaluate[symmetrizeInternal[ETC[key] /. 
         Thread[{A -> angleA, B -> angleB, C -> angleC}]]]]
  
-intCheckList = {{a -> 5, b -> 6, c -> 7}, {a -> 4, b -> 11, c -> 13}}
+intCheckList = {{a -> 5, b -> 6, c -> 8}, {a -> 4, b -> 11, c -> 13}}
  
 pointCheckAllProcesses[pt_, name_:"X"] := Module[{res, prop}, 
      Do[If[ !TrueQ[globalSilence], PrintTemporary[proc]]; 
@@ -122,16 +122,15 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
         (Take[#1, 2] & ) /@ (SortBy[#1, numsortexpr[#1[[2]]] & ] & ) /@ 
           list3; list4 = SortBy[list4, numsortexpr[#1[[1]]] & ]; 
       Do[p1 = cnc[[1]]; p2 = cnc[[2]]; If[p1 == excl || p2 == excl, 
-         Continue[]]; check = TimeConstrained[Simplify[
-           bCircumconicEq[KimberlingCenterCNy[p1], KimberlingCenterCNy[
-              p2]] /. Thread[{x, y, z} -> pt]], 10, -1]; 
-        If[check == 0, AppendTo[out, StringJoin["{{A, B, C, ", 
-            intaddbrackets[p1], ", ", intaddbrackets[p2], "}}"]]; ]; , 
-       {cnc, list4}]; AssociateTo[globalProperties[name], 
-       {"circumconics" -> out}]; If[ !TrueQ[globalSilence], 
-       If[Length[out] > 0, Print[colorformat[StringJoin[
-            "Lies on these circumconics: ", StringRiffle[out, ", "]]]]; ]]; 
-      Return[out]; ]
+         Continue[]]; check = checkPointOnCurveNum[bCircumconicEq[
+           KimberlingCenterCNy[p1], KimberlingCenterCNy[p2]], pt]; 
+        If[check, AppendTo[out, StringJoin["{{A, B, C, ", intaddbrackets[p1], 
+            ", ", intaddbrackets[p2], "}}"]]; ]; , {cnc, list4}]; 
+      AssociateTo[globalProperties[name], {"circumconics" -> out}]; 
+      If[ !TrueQ[globalSilence], If[Length[out] > 0, 
+        Print[colorformat[StringJoin[
+            "= intersection, other than A, B, C, of circumconics: ", 
+            StringRiffle[out, ", "]]]]; ]]; Return[out]; ]
  
 intLinesProcessFullGroups[pt_, prec_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump, as}, 

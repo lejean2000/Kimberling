@@ -63,4 +63,5 @@ heuristicsCheck[expr_, degree_:16, ratio_:5] := Module[{deg, smt},
      If[ !PolynomialQ[expr, a] ||  !PolynomialQ[expr, b], Return[False]]; 
       deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
-         #1 > 3 & ]]; Return[deg <= degree && smt/deg < ratio]; ]
+         #1 > 3 & ]]; Return[deg <= 5 || (deg <= degree && 
+         smt/deg < ratio)]; ]
