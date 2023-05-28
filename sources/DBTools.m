@@ -7,14 +7,16 @@ intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
 singlePointProcesses = <|"complement" -> {v + w, u + w, u + v}, 
      "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, 
-     "polar conjugate" -> bPIsogonalConjugate[KimberlingCenterCN[48], 
-       {u, v, w}], "anticomplement of isogonal conjugate" -> 
-      bAntiComplement[KimberlingCenterC[2], bIsogonalConjugate[{u, v, w}]], 
-     "anticomplement of isotomic conjugate" -> bAntiComplement[
-       KimberlingCenterC[2], bIsotomicConjugate[{u, v, w}]], 
-     "complement of isogonal conjugate" -> bComplement[KimberlingCenterC[2], 
-       bIsogonalConjugate[{u, v, w}]], "complement of isotomic conjugate" -> 
-      bComplement[KimberlingCenterC[2], bIsotomicConjugate[{u, v, w}]], 
+     "polar conjugate" -> {(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*v*w, 
+       -((a^2 - b^2 - c^2)*(a^2 + b^2 - c^2)*u*w), 
+       -((a^2 - b^2 - c^2)*(a^2 - b^2 + c^2)*u*v)}, 
+     "anticomplement of isogonal conjugate" -> {c^2*u*v + b^2*u*w - a^2*v*w, 
+       c^2*u*v - b^2*u*w + a^2*v*w, -(c^2*u*v) + b^2*u*w + a^2*v*w}, 
+     "anticomplement of isotomic conjugate" -> {-(v*w) + u*(v + w), 
+       u*(v - w) + v*w, -(u*(v - w)) + v*w}, 
+     "complement of isogonal conjugate" -> {u*(c^2*v + b^2*w), 
+       v*(c^2*u + a^2*w), (b^2*u + a^2*v)*w}, 
+     "complement of isotomic conjugate" -> {u*(v + w), v*(u + w), (u + v)*w}, 
      "zosma transform" -> {a*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*(c*v + b*w), 
        b*(a^2 + b^2 - c^2)*(-a^2 + b^2 + c^2)*(c*u + a*w), 
        c*(a^2 - b^2 + c^2)*(-a^2 + b^2 + c^2)*(b*u + a*v)}, 
@@ -400,11 +402,11 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            barys, 20, False, False, name]]; If[ !TrueQ[globalSilence], 
          PrintTemporary["Starting circumconics"]]; 
         numcon = Quiet[checkCircumconics[ptcoord, num, name]]; 
-        If[full || Length[lines] + Length[numcon] >= 3, 
-         Quiet[checkCurves[ptcoord, name]]; If[ !TrueQ[globalSilence], 
-           PrintTemporary["Starting trilinear+conjugates"]]; 
-          Quiet[checkTrilinearPolar[ptcoord, name]]; 
-          Quiet[checkIsogonalConjugates[ptcoord, name]]; 
+        If[full || Length[lines] + Length[numcon] >= 
+           pointCheckerMinProperties, Quiet[checkCurves[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], PrintTemporary[
+            "Starting trilinear+conjugates"]]; Quiet[checkTrilinearPolar[
+            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bZayinConjugate, 
@@ -428,6 +430,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; ]; ]; ]
  
 globalSeenPoints = {}
+ 
+pointCheckerMinProperties = 3
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
       normcoef}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 

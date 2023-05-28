@@ -59,9 +59,17 @@ homogeneousPart[poly_, vars_, deg_] := Module[{intt},
      SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
       intt -> 1]
  
-heuristicsCheck[expr_, degree_:16, ratio_:5] := Module[{deg, smt}, 
+heuristicsCheck[expr_, degree_:16, ratio_:5] := Module[{deg, smt, coefsum}, 
      If[ !PolynomialQ[expr, a] ||  !PolynomialQ[expr, b], Return[False]]; 
       deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
-         #1 > 3 & ]]; Return[deg <= 5 || (deg <= degree && 
-         smt/deg < ratio)]; ]
+         #1 > 3 & ]]; coefsum = Total[Total /@ Total /@ 
+          Abs[CoefficientList[expr, {a, b, c}]]]; 
+      Return[deg <= 5 || (deg <= degree && smt/deg < ratio && 
+         coefsum < 200)]; ]
+ 
+partialSReplace[expr_] := Module[{exp}, exp = multiCollect[expr, S]; 
+      exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
+           S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
+         S^6 -> evaluate[S^6]]; exp = simplifyRationalBarycentrics[
+        symmetrizeInternal[exp]]; multiCollect[exp[[1]], S]]
