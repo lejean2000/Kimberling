@@ -73,3 +73,6 @@ partialSReplace[expr_] := Module[{exp}, exp = multiCollect[expr, S];
            S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
          S^6 -> evaluate[S^6]]; exp = simplifyRationalBarycentrics[
         symmetrizeInternal[exp]]; multiCollect[exp[[1]], S]]
+ 
+fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]], 
+      #1 =!= ComplexInfinity && #1 > 0 & ]]

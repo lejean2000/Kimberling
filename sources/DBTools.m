@@ -182,7 +182,8 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
            #1[[2]]]} & ) /@ out; AssociateTo[globalProperties[name], 
        {"lines" -> out}]; If[ !TrueQ[globalSilence], 
        Print[colorformat[StringJoin["Lies on these lines: ", 
-          StringRiffle[out, ", "]]]]]; If[abort && Length[out] < 3, 
+          StringRiffle[out, ", "]]]]]; 
+      If[abort && Length[out] < pointCheckerMinProperties, 
        Return[out, Module]; ]; harm = intHarmonicProcess[res[[2]], ptc, 
         prec]; harm = (SortBy[#1, Length] & ) /@ harm; 
       ff2[in_] := ({in[[1]], #1} & ) /@ Take[in, {2, -1}]; 
@@ -244,6 +245,8 @@ xnumforsort[str_] := If[StringTake[str, 1] == "X",
  
 intnameformat[pname_] := If[StringTake[pname, 1] == "X", 
      StringTake[pname, {2, -1}], pname]
+ 
+pointCheckerMinProperties = 3
  
 intMidpointProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
@@ -382,7 +385,7 @@ checkVertexConjugates[pt_, name_:"X"] :=
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
-     If[KeyExistsQ[globalProperties, inname], 
+     If[inname != "X" && KeyExistsQ[globalProperties, inname], 
        Print["Key exists in global properties !"]; Return[False, Module]]; 
       ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
@@ -399,7 +402,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
         If[StringLength[inname] == 0, name = ToString[ExpressionToTrad[
             expr[[1]]]], name = inname]; AssociateTo[globalProperties, 
          name -> Association[]]; lines = Quiet[linesProcessAlg[ptcoord, 
-           barys, 20, False, False, name]]; If[ !TrueQ[globalSilence], 
+           barys, 20, False, True, name]]; If[ !TrueQ[globalSilence], 
          PrintTemporary["Starting circumconics"]]; 
         numcon = Quiet[checkCircumconics[ptcoord, num, name]]; 
         If[full || Length[lines] + Length[numcon] >= 
@@ -430,8 +433,6 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; ]; ]; ]
  
 globalSeenPoints = {}
- 
-pointCheckerMinProperties = 3
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
       normcoef}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 
@@ -618,3 +619,16 @@ addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname},
        dbname -> name]; DumpSave["ETCExtra.mx", ETCExtra]; 
       DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
        NonETCNames]; Return[dbname]; ]
+ 
+quickChecker[expr_, num_:0] := Module[{ptcoord, pt, chk, lines, barys, 
+      symcheck, name, numcon}, ptcoord = evaluate[expr]; 
+      pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+      symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
+           rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
+       Print[ptcoord]; Print["expression is not symmetric"]; 
+        Return[False, Module]; ]; If[num != 0, chk = 0, 
+       chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
+       Print[colorformat[StringJoin["ETC: ", chk]]], 
+       barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
+        lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, "X"]]; 
+        numcon = Quiet[checkCircumconics[ptcoord, num, name]]; ]; ]

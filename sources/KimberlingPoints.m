@@ -64,3 +64,9 @@ checkPointOnCurveNum[crv_, pt_, rules_:intCheckList] :=
         test = Abs[curve2/normcoef /. Thread[{x, y, z} -> N[pt /. r, 35]]]; 
         If[test > 1/10^15, Return[False, Module]]; , {r, rules}]; 
       Return[True]; ]
+ 
+checkPointsOnCurveNamed[crvname_] := Module[{srch}, 
+     srch = Select[Keys[TriangleCurves], StringContainsQ[#1, crvname] & ]; 
+      If[Length[srch] > 1, Print["Which curve?"]; Print[srch]]; 
+      If[Length[srch] == 0, Print["No such curve"]]; Print[srch]; 
+      Return[checkPointsOnCurve[TriangleCurves[First[srch]]]]; ]

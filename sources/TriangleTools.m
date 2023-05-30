@@ -922,7 +922,7 @@ bIsPerspective[a1_, b1_, c1_, a2_, b2_, c2_] := bConcurrencyMatrix[
      bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]
  
 bCurveForTriangle[crv_, va_, vb_, vc_] := 
-    Module[{xa, ya, za, xb, yb, zb, xc, yc, zc, rls, a1, b1, c1}, 
+    Module[{xa, ya, za, xb, yb, zb, xc, yc, zc, rls, a1, b1, c1, repl}, 
      {a1, b1, c1} = {{xa, ya, za}, {xb, yb, zb}, {xc, yc, zc}}; 
       repl = {((xa + ya + za)*((-xc)*yb*z + xb*yc*z + xc*y*zb - x*yc*zb - 
            xb*y*zc + x*yb*zc))/((-xc)*yb*za + xb*yc*za + xc*ya*zb - 
@@ -1023,3 +1023,7 @@ bSecondCircumconcevianTangentialPerspector[{u_, v_, w_}, {p_, q_, r_}] :=
  
 bVuCevianTangentialPerspector[{u_, v_, w_}] := {a^2*v*(u + v)*w*(u + w), 
      b^2*u*(u + v)*w*(v + w), c^2*u*v*(u + w)*(v + w)}
+ 
+bCircumconcevianTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{q*r*u, (-q)*(r*v + q*w), (-r)*(r*v + q*w)}, {(-p)*(r*u + p*w), p*r*v, 
+      (-r)*(r*u + p*w)}, {(-p)*(q*u + p*v), (-q)*(q*u + p*v), p*q*w}}
