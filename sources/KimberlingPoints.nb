@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     19746,        531]
-NotebookOptionsPosition[     18583,        505]
-NotebookOutlinePosition[     19101,        525]
-CellTagsIndexPosition[     19058,        522]
+NotebookDataLength[     20044,        546]
+NotebookOptionsPosition[     18844,        519]
+NotebookOutlinePosition[     19399,        540]
+CellTagsIndexPosition[     19356,        537]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -29,7 +29,8 @@ Cell[BoxData[
    3.83992070302919*^9, 3.8399207092031746`*^9}, {3.8416249776934814`*^9, 
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
- CellLabel->"In[1]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+ CellLabel->
+  "In[153]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -136,9 +137,17 @@ Cell[BoxData[{
     RowBox[{"TriangleCurves", "[", "name", "]"}], "//", "evaluate"}]}], 
   ";"}], "\n", 
  RowBox[{
-  RowBox[{"KimberlingCenterCN", "=", "X"}], ";"}]}], "Code",
+  RowBox[{"KimberlingCenterCN", "=", "X"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"XNy", "[", "k_", "]"}], ":=", 
+   FractionBox[
+    RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], 
+    RowBox[{"Total", "[", 
+     RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], "]"}]]}], ";"}]}], "Code",
  InitializationCell->False,
- CellLabel->"In[2]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+ CellLabel->
+  "In[1020]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -153,7 +162,8 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Can", " ", "also", " ", "be", " ", "just", " ", "Abs"}], "->", 
     "RealAbs"}], " ", "*)"}]}]], "Input",
- CellLabel->"In[9]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+ CellLabel->
+  "In[162]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 
 Cell[BoxData[
  RowBox[{
@@ -167,7 +177,8 @@ Cell[BoxData[
  CellChangeTimes->{{3.8659359365025496`*^9, 3.8659359467166414`*^9}, {
   3.877578389921321*^9, 3.877578397215644*^9}, {3.8779284662523875`*^9, 
   3.877928467254416*^9}},
- CellLabel->"In[10]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+ CellLabel->
+  "In[163]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[
  RowBox[{
@@ -183,7 +194,8 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"b", "+", "c"}], ">", "a"}]}]}], ";"}]], "Input",
  CellChangeTimes->{{3.883556220339327*^9, 3.883556251713106*^9}},
- CellLabel->"In[11]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+ CellLabel->
+  "In[164]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -400,7 +412,8 @@ Cell[BoxData[{
       RowBox[{"Return", "[", "True", "]"}], ";"}]}], "\[IndentingNewLine]", 
     "]"}]}], ";"}]}], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
- CellLabel->"In[12]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ CellLabel->
+  "In[165]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -485,7 +498,8 @@ Cell[BoxData[{
          RowBox[{"#", "==", "ptnum"}], "&"}]}], "]"}], "]"}]}]}], 
    "\[IndentingNewLine]", "]"}]}]}], "Input",
  Background->RGBColor[0.9, 1, 1],
- CellLabel->"In[16]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+ CellLabel->
+  "In[169]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
 
 Cell[BoxData[
  RowBox[{
@@ -499,13 +513,14 @@ Cell[BoxData[
       "getvalue", ",", "ruleAbsSquare", ",", " ", "rule69", ",", " ", 
       "checkCurvesSymb", ",", "checkPointinETC2", ",", "checkPointinETC69", 
       ",", "rulesSimplify", ",", "checkPointsOnCurve", ",", "X", ",", 
-      "checkPointOnCurveNum", ",", "checkPointsOnCurveNamed"}], "}"}]}], 
-   "]"}]}]], "Input",
- CellLabel->"In[18]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+      "checkPointOnCurveNum", ",", "checkPointsOnCurveNamed", ",", "XNy"}], 
+     "}"}]}], "]"}]}]], "Input",ExpressionUUID->"58364175-8417-42fc-be84-\
+aa24791f6f0c"]
 },
 Evaluator->"New Kernel",
-WindowSize->{1093.8, 604.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1105.2, 615.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 DockedCells->{},
 TaggingRules-><|"TryRealOnly" -> False|>,
 Magnification:>0.9 Inherited,
@@ -524,15 +539,15 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 660, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1221, 33, 3814, 107, 307, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1226, 34, 4057, 115, 342, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[5038, 142, 467, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
-Cell[5508, 157, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
-Cell[6019, 171, 526, 14, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[6548, 187, 8045, 215, 654, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[14596, 404, 3241, 83, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[17840, 489, 739, 14, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[5286, 151, 472, 14, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+Cell[5761, 167, 512, 13, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+Cell[6276, 182, 530, 15, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+Cell[6809, 199, 8049, 216, 654, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[14861, 417, 3245, 84, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[18109, 503, 731, 14, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

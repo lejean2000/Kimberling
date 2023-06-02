@@ -1027,3 +1027,18 @@ bVuCevianTangentialPerspector[{u_, v_, w_}] := {a^2*v*(u + v)*w*(u + w),
 bCircumconcevianTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
     {{q*r*u, (-q)*(r*v + q*w), (-r)*(r*v + q*w)}, {(-p)*(r*u + p*w), p*r*v, 
       (-r)*(r*u + p*w)}, {(-p)*(q*u + p*v), (-q)*(q*u + p*v), p*q*w}}
+ 
+bMiquelAssociate[{u_, v_, w_}] := 
+    {(a^2*((c^2*u*v)/(u + v) + (b^2*u*w)/(u + w) - (a^2*v*w)/(v + w)))/
+      (v + w), (b^2*((c^2*u*v)/(u + v) - (b^2*u*w)/(u + w) + 
+        (a^2*v*w)/(v + w)))/(u + w), 
+     (c^2*(-((c^2*u*v)/(u + v)) + (b^2*u*w)/(u + w) + (a^2*v*w)/(v + w)))/
+      (u + v)}
+ 
+bHaimovTriangle[{u_, v_, w_}] := 
+    {{b^2*u*(u + v) + c^2*u*(u + w) - a^2*(u + v)*(u + w), 
+      b^2*(u + v)*(u + v + w), c^2*(u + w)*(u + v + w)}, 
+     {a^2*(u + v)*(u + v + w), a^2*v*(u + v) + c^2*v*(v + w) - 
+       b^2*(u + v)*(v + w), c^2*(v + w)*(u + v + w)}, 
+     {a^2*(u + w)*(u + v + w), b^2*(v + w)*(u + v + w), 
+      a^2*w*(u + w) + b^2*w*(v + w) - c^2*(u + w)*(v + w)}}
