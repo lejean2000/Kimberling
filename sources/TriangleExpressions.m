@@ -70,8 +70,10 @@ heuristicsCheck[expr_, degree_:16, ratio_:5] := Module[{deg, smt, coefsum},
  
 partialSReplace[expr_] := Module[{exp}, exp = multiCollect[expr, S]; 
       exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
-           S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
-         S^6 -> evaluate[S^6]]; exp = simplifyRationalBarycentrics[
+               S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
+             S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
+           S^8 -> evaluate[S^8] /. S^9 -> S*evaluate[S^8] /. 
+         S^10 -> evaluate[S^10]]; exp = simplifyRationalBarycentrics[
         symmetrizeInternal[exp]]; multiCollect[exp[[1]], S]]
  
 fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]], 

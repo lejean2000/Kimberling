@@ -350,7 +350,7 @@ checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2, dset, test},
          AssociateTo[globalProperties[name], {"trilinear polar" -> 
              {p1, p2}}]; If[ !TrueQ[globalSilence], 
            Print[colorformat[StringJoin["= trilinear pole of line {", 
-              intnameformat[p1], ",", intnameformat[p2], "}"]]]]; ]; ]; ]
+              intnameformat[p1], ", ", intnameformat[p2], "}"]]]]; ]; ]; ]
  
 checkVertexConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, ptc, rc, ffvertexconjugate, tuples}, 
@@ -555,7 +555,7 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
          hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
-               " = trilinear pole of line {", intnameformat[hg[[1]]], ",", 
+               " = trilinear pole of line {", intnameformat[hg[[1]]], ", ", 
                intnameformat[hg[[2]]], "}"]]]; ]; ]; 
         hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
          print[colorformat[StringJoin[printname, StringJoin[

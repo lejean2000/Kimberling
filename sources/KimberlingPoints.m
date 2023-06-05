@@ -54,6 +54,7 @@ checkPointsOnCurve[crv_] := Module[{curve, curve2, out, normcoef},
       out = Select[Table[{ni, N[curve /. Thread[{x, y, z} -> 
                KimberlingCenterCNy[ni]] /. intCheckList[[1]], 20]}, 
          {ni, Keys[test]}], #1[[2]] == 0 & ]; 
+      out = SortBy[out, numsortexpr[#1[[1]]] & ]; 
       (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
          ")"] & ) /@ out]
  
