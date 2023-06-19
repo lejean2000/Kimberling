@@ -59,16 +59,18 @@ homogeneousPart[poly_, vars_, deg_] := Module[{intt},
      SeriesCoefficient[poly /. Thread[vars -> intt*vars], {intt, 0, deg}] /. 
       intt -> 1]
  
-heuristicsCheck[expr_, degree_:16, ratio_:5] := Module[{deg, smt, coefsum}, 
+heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] := 
+    Module[{deg, smt, coefsum}, 
      If[ !PolynomialQ[expr, a] ||  !PolynomialQ[expr, b], Return[False]]; 
       deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
-         #1 > 3 & ]]; coefsum = Total[Total /@ Total /@ 
-          Abs[CoefficientList[expr, {a, b, c}]]]; 
+         #1 > 3 & ]]; coefsum = Total[Flatten[
+         Abs[(CoefficientList[#1, {a, b, c}] & ) /@ FactorList[expr]]]]; 
       Return[deg <= 5 || (deg <= degree && smt/deg < ratio && 
-         coefsum < 200)]; ]
+         coefsum < cfsum)]; ]
  
-partialSReplace[expr_] := Module[{exp}, exp = multiCollect[expr, S]; 
+partialSReplace[expr_] := Module[{exp}, 
+     exp = multiCollect[expr /. \[CapitalDelta] -> S/2, S]; 
       exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
                S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
              S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
@@ -78,3 +80,6 @@ partialSReplace[expr_] := Module[{exp}, exp = multiCollect[expr, S];
  
 fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]], 
       #1 =!= ComplexInfinity && #1 > 0 & ]]
+ 
+partialSAconvert[ex_] := simplifyRationalBarycentrics[
+     ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC]]

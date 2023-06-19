@@ -670,20 +670,13 @@ symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
       {eq, partB, partC}]
  
 symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] := 
-    Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
-     partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
-      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
+    Module[{partB1, partB2, partB3, partC1, partC2, partC3, repl}, 
+     repl = {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, SA -> SB, 
+        SB -> SC, SC -> SA, u -> v, v -> w, w -> u, A -> B, B -> C, C -> A}; 
+      partB1 = v3 /. repl; partB2 = v1 /. repl; partB3 = v2 /. repl; 
+      partC1 = partB3 /. repl; partC2 = partB1 /. repl; 
+      partC3 = partB2 /. repl; {{v1, v2, v3}, {partB1, partB2, partB3}, 
+       {partC1, partC2, partC3}}]
  
 bToCartesianN[p_] := N[bToCartesian[p, {31/3, (4*Sqrt[35])/3}, {0, 0}, 
        {6, 0}] /. rule69, 20]
@@ -1042,3 +1035,39 @@ bHaimovTriangle[{u_, v_, w_}] :=
        b^2*(u + v)*(v + w), c^2*(v + w)*(u + v + w)}, 
      {a^2*(u + w)*(u + v + w), b^2*(v + w)*(u + v + w), 
       a^2*w*(u + w) + b^2*w*(v + w) - c^2*(u + w)*(v + w)}}
+ 
+bTripolarCentroid[{p_, q_, r_}] := {p*(-2*p + q + r)*(r - q), 
+     q*(r - p)*(-p + 2*q - r), (q - p)*(p + q - 2*r)*r}
+ 
+bCurveForTriangleNoReplace[crv_, va_, vb_, vc_] := 
+    Module[{xa, ya, za, xb, yb, zb, xc, yc, zc, rls, repl}, 
+     repl = {((xa + ya + za)*((-xc)*yb*z + xb*yc*z + xc*y*zb - x*yc*zb - 
+           xb*y*zc + x*yb*zc))/((-xc)*yb*za + xb*yc*za + xc*ya*zb - 
+          xa*yc*zb - xb*ya*zc + xa*yb*zc), 
+        ((xb + yb + zb)*((-xc)*ya*z + xa*yc*z + xc*y*za - x*yc*za - xa*y*zc + 
+           x*ya*zc))/(xc*yb*za - xb*yc*za - xc*ya*zb + xa*yc*zb + xb*ya*zc - 
+          xa*yb*zc), (((-xb)*ya*z + xa*yb*z + xb*y*za - x*yb*za - xa*y*zb + 
+           x*ya*zb)*(xc + yc + zc))/((-xc)*yb*za + xb*yc*za + xc*ya*zb - 
+          xa*yc*zb - xb*ya*zc + xa*yb*zc)}; 
+      rls = Thread[{xa, ya, za, xb, yb, zb, xc, yc, zc} -> 
+         Flatten[{va, vb, vc}]]; crv /. Thread[{x, y, z} -> repl] /. rls]
+ 
+bTrianglePerspector[a1_, b1_, c1_, a2_, b2_, c2_] := 
+    bLineIntersection[bLine[a1, a2], bLine[b1, b2]]
+ 
+bTangentialTriangle[crv_, a1_, b1_, c1_] := Module[{ta, tb, tc, a2, b2, c2}, 
+     ta = simplifyRationalBarycentrics[bPolar[crv, a1]]; 
+      tb = simplifyRationalBarycentrics[bPolar[crv, b1]]; 
+      tc = simplifyRationalBarycentrics[bPolar[crv, c1]]; 
+      a2 = simplifyRationalBarycentrics[bLineIntersection[tb, tc]]; 
+      b2 = simplifyRationalBarycentrics[bLineIntersection[tc, ta]]; 
+      c2 = simplifyRationalBarycentrics[bLineIntersection[ta, tb]]; 
+      {a2, b2, c2}]
+ 
+bobillierTransversal[pp_, q1_, q2_, q3_] := Module[{h1, h2, h3, m1, m2, m3}, 
+     h1 = bPerpendicular[bLine[pp, q1], pp]; 
+      h2 = bPerpendicular[bLine[pp, q2], pp]; 
+      h3 = bPerpendicular[bLine[pp, q3], pp]; 
+      m1 = bLineIntersection[bLine[q2, q3], h1]; 
+      m2 = bLineIntersection[bLine[q1, q3], h2]; 
+      m3 = bLineIntersection[bLine[q1, q2], h3]; bLine[m1, m2]]
