@@ -155,7 +155,7 @@ keyIntersectionValues[list1_, list2_] := Module[{reverse, res, ress},
  
 linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] := 
     Module[{res, gr, hg, out, head, test, test2, hgroups, ptc, unproven, rc, 
-      rc2, eltest, sout, barys, outname, harm, ff2}, 
+      rc2, eltest, sout, barys, outname, harm, ff2, outforsort}, 
      rc = intCheckList[[1]]; rc2 = intCheckList[[2]]; 
       ptc = intnumericnorm[evaluate[ptcoord] /. rule69]; 
       res = intLinesProcessFullGroups[ptc, prec]; gr = res[[1]]; out = {}; 
@@ -168,13 +168,14 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
              el[[2]]] /. rc2, ptcoord /. rc2], 10, -1]; 
         If[TrueQ[Simplify[test] == 0] && TrueQ[Simplify[test2] == 0], 
          AppendTo[out, el], AppendTo[unproven, el]]; , {el, gr}]; 
-      If[Length[out] >= 2, sout = SortBy[out, xnumforsort[#1[[1]]]*
-            xnumforsort[#1[[2]]] & ]; outname = StringJoin[
-          intaddbrackets[sout[[1]][[1]]], intaddbrackets[sout[[1]][[2]]], 
-          "\:2229", intaddbrackets[sout[[2]][[1]]], intaddbrackets[
-           sout[[2]][[2]]]]; AssociateTo[globalProperties[name], 
-         {"name" -> outname}]; If[ !TrueQ[globalSilence], 
-         Print[colorformat[outname]]]; ]; 
+      If[Length[out] >= 2, outforsort = Select[out, 
+          StringTake[#1[[1]], 1] == "X" && StringTake[#1[[2]], 1] == "X" & ]; 
+        sout = SortBy[outforsort, xnumforsort[#1[[1]]]*xnumforsort[
+             #1[[2]]] & ]; outname = StringJoin[intaddbrackets[
+           sout[[1]][[1]]], intaddbrackets[sout[[1]][[2]]], "\:2229", 
+          intaddbrackets[sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; 
+        AssociateTo[globalProperties[name], {"name" -> outname}]; 
+        If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; ]; 
       barys = ExpressionToTrad[Simplify[printexpr]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
@@ -241,7 +242,7 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
  
 xnumforsort[str_] := If[StringTake[str, 1] == "X", 
      ToExpression[StringTake[str, {2, -1}]], 
-     50000 + ToExpression[StringTake[str, {2, -1}]]]
+     100000 + ToExpression[StringTake[str, {2, -1}]]]
  
 intnameformat[pname_] := If[StringTake[pname, 1] == "X", 
      StringTake[pname, {2, -1}], pname]
@@ -446,7 +447,7 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv,
            {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
        {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
        {"curves" -> out}]; If[Length[out] > 0, 
-       If[ !TrueQ[globalSilence], Print[StringJoin["Lies on curves: ", 
+       If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
 checkConjugates[pt_, func_, str_, name_:"X"] := 
