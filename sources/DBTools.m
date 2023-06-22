@@ -171,9 +171,10 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
       If[Length[out] >= 2, outforsort = Select[out, 
           StringTake[#1[[1]], 1] == "X" && StringTake[#1[[2]], 1] == "X" & ]; 
         sout = SortBy[outforsort, xnumforsort[#1[[1]]]*xnumforsort[
-             #1[[2]]] & ]; outname = StringJoin[intaddbrackets[
-           sout[[1]][[1]]], intaddbrackets[sout[[1]][[2]]], "\:2229", 
-          intaddbrackets[sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; 
+             #1[[2]]] & ]; If[Length[sout] < 2, outname = "(unnamed)", 
+         outname = StringJoin[intaddbrackets[sout[[1]][[1]]], 
+            intaddbrackets[sout[[1]][[2]]], "\:2229", intaddbrackets[
+             sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; ]; 
         AssociateTo[globalProperties[name], {"name" -> outname}]; 
         If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; ]; 
       barys = ExpressionToTrad[Simplify[printexpr]]; 

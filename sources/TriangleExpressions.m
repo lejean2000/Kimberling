@@ -83,3 +83,21 @@ fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]],
  
 partialSAconvert[ex_] := simplifyRationalBarycentrics[
      ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC]]
+ 
+leastBaryFromIntersections[testset_] := 
+    Module[{results, tt, out, mon, min, deg}, 
+     min = 100; Monitor[results = {}; 
+        Do[AbortProtect[CheckAbort[mon = {nx1, nx2}; If[nx1[[1]] >= nx2[[1]], 
+               Continue[]]; tt = TimeConstrained[partialSReplace[
+                 Expand[Simplify[bLineIntersection[bLine[partialSAconvert[
+                       KimberlingCenterC[nx1[[1]]]], partialSAconvert[
+                       KimberlingCenterC[nx1[[2]]]]], bLine[partialSAconvert[
+                       KimberlingCenterC[nx2[[1]]]], partialSAconvert[
+                       KimberlingCenterC[nx2[[2]]]]]][[1]]]]], 5, -1]; 
+              If[tt == -1, Continue[]]; deg = polynomialDegree[tt[[1]]]; 
+              AppendTo[results, {nx1, nx2, tt, deg}]; If[deg < min, 
+               Print["New min:"]; min = deg; Print[{nx1, nx2, deg}]]; , 
+             Return[SortBy[results, #1[[4]] & ], Module]]; ]; , 
+         {nx1, testset}, {nx2, testset}], mon]; 
+      out = SortBy[results, #1[[4]] & ]; Print[out[[1]]]; 
+      Print[ExpressionToTrad[out[[1]][[3]]]]; Return[out]; ]
