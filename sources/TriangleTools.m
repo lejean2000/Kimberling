@@ -637,7 +637,8 @@ bVuPole[{p_, q_, r_}, {u_, v_, w_}] :=
      p*q*(c^2*(p*q*w*(u + v + w) - r*u*v*(p + q + r)) - 
        a^2*r*w*(v*(r + p) - q*(w + u)) - b^2*r*w*(u*(r + q) - p*(w + v)))}
  
-bPole[mtx_, ln_] := Adjugate[mtx] . ln
+bPole[mx_, ln_] := Module[{mtx}, If[ !MatrixQ[mx], mtx = conicEqtoMtx[mx], 
+       mtx = mx]; Adjugate[mtx] . ln]
  
 centralCircle[l_] := Module[{expr, eq}, expr = symmetrizeInternal[l]; 
       eq = (expr[[1]]*x + expr[[2]]*y + expr[[3]]*z)*(a*x + b*y + c*z) + 
@@ -1022,11 +1023,12 @@ bCircumconcevianTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
       (-r)*(r*u + p*w)}, {(-p)*(q*u + p*v), (-q)*(q*u + p*v), p*q*w}}
  
 bMiquelAssociate[{u_, v_, w_}] := 
-    {(a^2*((c^2*u*v)/(u + v) + (b^2*u*w)/(u + w) - (a^2*v*w)/(v + w)))/
-      (v + w), (b^2*((c^2*u*v)/(u + v) - (b^2*u*w)/(u + w) + 
-        (a^2*v*w)/(v + w)))/(u + w), 
-     (c^2*(-((c^2*u*v)/(u + v)) + (b^2*u*w)/(u + w) + (a^2*v*w)/(v + w)))/
-      (u + v)}
+    {a^2*(u + v)*(u + w)*((-c^2)*u*v*(u + w)*(v + w) + 
+       (u + v)*w*(a^2*v*(u + w) - b^2*u*(v + w))), 
+     b^2*(u + v)*(v + w)*((-c^2)*u*v*(u + w)*(v + w) - 
+       (u + v)*w*(a^2*v*(u + w) - b^2*u*(v + w))), 
+     c^2*(u + w)*(v + w)*(c^2*u*v*(u + w)*(v + w) - 
+       (u + v)*w*(a^2*v*(u + w) + b^2*u*(v + w)))}
  
 bHaimovTriangle[{u_, v_, w_}] := 
     {{b^2*u*(u + v) + c^2*u*(u + w) - a^2*(u + v)*(u + w), 
@@ -1071,3 +1073,9 @@ bobillierTransversal[pp_, q1_, q2_, q3_] := Module[{h1, h2, h3, m1, m2, m3},
       m1 = bLineIntersection[bLine[q2, q3], h1]; 
       m2 = bLineIntersection[bLine[q1, q3], h2]; 
       m3 = bLineIntersection[bLine[q1, q2], h3]; bLine[m1, m2]]
+ 
+multiCollectFactorsABC[pt_] := {multiCollectFactors[pt[[1]], a], 
+     multiCollectFactors[pt[[2]], b], multiCollectFactors[pt[[3]], c]}
+ 
+multiCollectABC[pt_] := {multiCollect[pt[[1]], a], multiCollect[pt[[2]], b], 
+     multiCollect[pt[[3]], c]}

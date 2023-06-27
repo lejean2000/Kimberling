@@ -14,9 +14,10 @@ KimberlingCenterCN = X
 X[k_] := evaluate[symmetrizeInternal[ETC[StringJoin["X", ToString[k]]]] /. 
       Thread[{A -> angleA, B -> angleB, C -> angleC}]]
  
-KimberlingCenterC[k_] := symmetrizeInternal[
-      ETC[StringJoin["X", ToString[k]]]] /. 
-     Thread[{A -> angleA, B -> angleB, C -> angleC}]
+KimberlingCenterC[k_] := Module[{ptname}, 
+     If[NumericQ[k], ptname = StringJoin["X", ToString[k]], ptname = k]; 
+      Return[symmetrizeInternal[ETC[ptname]] /. 
+        Thread[{A -> angleA, B -> angleB, C -> angleC}]]; ]
  
 getTriangleCurve[name_] := evaluate[TriangleCurves[name]]
  

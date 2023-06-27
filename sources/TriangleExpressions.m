@@ -101,3 +101,7 @@ leastBaryFromIntersections[testset_] :=
          {nx1, testset}, {nx2, testset}], mon]; 
       out = SortBy[results, #1[[4]] & ]; Print[out[[1]]]; 
       Print[ExpressionToTrad[out[[1]][[3]]]]; Return[out]; ]
+ 
+replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
+     expr /. Thread[{u, v, w} -> KimberlingCenterC[nu]] /. 
+      Thread[{p, q, r} -> KimberlingCenterC[np]]]
