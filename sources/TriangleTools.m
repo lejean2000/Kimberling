@@ -1079,3 +1079,7 @@ multiCollectFactorsABC[pt_] := {multiCollectFactors[pt[[1]], a],
  
 multiCollectABC[pt_] := {multiCollect[pt[[1]], a], multiCollect[pt[[2]], b], 
      multiCollect[pt[[3]], c]}
+ 
+bPCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{0, p*v + q*(v + w), p*w + r*(v + w)}, {q*u + p*(u + w), 0, 
+      q*w + r*(u + w)}, {r*u + p*(u + v), r*v + q*(u + v), 0}}

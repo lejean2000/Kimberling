@@ -73,4 +73,5 @@ checkPointsOnCurveNamed[crvname_] := Module[{srch},
       If[Length[srch] == 0, Print["No such curve"]]; Print[srch]; 
       Return[checkPointsOnCurve[TriangleCurves[First[srch]]]]; ]
  
-XNy[k_] := KimberlingCenterCNy[k]/Total[KimberlingCenterCNy[k]]
+XNy[k_] := Module[{k2}, If[NumberQ[k], k2 = StringJoin["X", ToString[k]], 
+       k2 = k]; KimberlingCenterCNy[k2]/Total[KimberlingCenterCNy[k2]]]

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     20773,        560]
-NotebookOptionsPosition[     19610,        534]
-NotebookOutlinePosition[     20128,        554]
-CellTagsIndexPosition[     20085,        551]
+NotebookDataLength[     21183,        571]
+NotebookOptionsPosition[     20020,        545]
+NotebookOutlinePosition[     20538,        565]
+CellTagsIndexPosition[     20495,        562]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -29,7 +29,7 @@ Cell[BoxData[
    3.83992070302919*^9, 3.8399207092031746`*^9}, {3.8416249776934814`*^9, 
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
- CellLabel->"In[9]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+ CellLabel->"In[66]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -151,14 +151,25 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"KimberlingCenterCN", "=", "X"}], ";"}], "\n", 
  RowBox[{
-  RowBox[{
-   RowBox[{"XNy", "[", "k_", "]"}], ":=", 
-   FractionBox[
-    RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], 
-    RowBox[{"Total", "[", 
-     RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], "]"}]]}], ";"}]}], "Code",
- InitializationCell->
-  False,ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+  RowBox[{"XNy", "[", "k_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "k2", "}"}], ",", "\n", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"NumberQ", "[", "k", "]"}], ",", 
+       RowBox[{"k2", "=", 
+        RowBox[{"\"\<X\>\"", "<>", 
+         RowBox[{"ToString", "[", "k", "]"}]}]}], ",", 
+       RowBox[{"k2", "=", "k"}]}], "]"}], ";", "\n", 
+     FractionBox[
+      RowBox[{"KimberlingCenterCNy", "[", "k2", "]"}], 
+      RowBox[{"Total", "[", 
+       RowBox[{"KimberlingCenterCNy", "[", "k2", "]"}], "]"}]]}]}], "\n", 
+   "]"}]}]}], "Code",
+ InitializationCell->False,
+ CellLabel->"In[67]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -173,7 +184,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Can", " ", "also", " ", "be", " ", "just", " ", "Abs"}], "->", 
     "RealAbs"}], " ", "*)"}]}]], "Input",
- CellLabel->"In[18]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+ CellLabel->"In[75]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 
 Cell[BoxData[
  RowBox[{
@@ -187,7 +198,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.8659359365025496`*^9, 3.8659359467166414`*^9}, {
   3.877578389921321*^9, 3.877578397215644*^9}, {3.8779284662523875`*^9, 
   3.877928467254416*^9}},
- CellLabel->"In[19]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+ CellLabel->"In[76]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[
  RowBox[{
@@ -203,7 +214,7 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"b", "+", "c"}], ">", "a"}]}]}], ";"}]], "Input",
  CellChangeTimes->{{3.883556220339327*^9, 3.883556251713106*^9}},
- CellLabel->"In[20]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+ CellLabel->"In[77]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -428,7 +439,7 @@ Cell[BoxData[{
       RowBox[{"Return", "[", "True", "]"}], ";"}]}], "\[IndentingNewLine]", 
     "]"}]}], ";"}]}], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
- CellLabel->"In[21]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ CellLabel->"In[78]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -513,8 +524,8 @@ Cell[BoxData[{
          RowBox[{
           RowBox[{"#", "==", "ptnum"}], "&"}]}], "]"}], "]"}]}]}], 
     "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
- Background->RGBColor[
-  0.9, 1, 1],ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+ Background->RGBColor[0.9, 1, 1],
+ CellLabel->"In[82]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
 
 Cell[BoxData[
  RowBox[{
@@ -530,7 +541,7 @@ Cell[BoxData[
       ",", "rulesSimplify", ",", "checkPointsOnCurve", ",", "X", ",", 
       "checkPointOnCurveNum", ",", "checkPointsOnCurveNamed", ",", "XNy"}], 
      "}"}]}], "]"}]}]], "Input",
- CellLabel->"In[27]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+ CellLabel->"In[84]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
 Evaluator->"New Kernel",
 WindowSize->{1093.8, 604.8},
@@ -553,15 +564,15 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 660, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1221, 33, 4532, 127, 422, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 661, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1222, 33, 4920, 138, 485, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[5756, 162, 468, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
-Cell[6227, 177, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
-Cell[6738, 191, 526, 14, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[7267, 207, 8324, 223, 671, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[15594, 432, 3256, 84, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[18853, 518, 753, 14, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[6145, 173, 468, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+Cell[6616, 188, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+Cell[7127, 202, 526, 14, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+Cell[7656, 218, 8324, 223, 671, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[15983, 443, 3277, 84, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[19263, 529, 753, 14, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

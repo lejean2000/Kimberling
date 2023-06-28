@@ -105,3 +105,6 @@ leastBaryFromIntersections[testset_] :=
 replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
      expr /. Thread[{u, v, w} -> KimberlingCenterC[nu]] /. 
       Thread[{p, q, r} -> KimberlingCenterC[np]]]
+ 
+intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+      (FullSimplify[#1] & ) /@ FactorList[expr]
