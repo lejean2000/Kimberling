@@ -182,9 +182,9 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
          barys]]]; out = ({intnameformat[#1[[1]]], intnameformat[
            #1[[2]]]} & ) /@ out; AssociateTo[globalProperties[name], 
-       {"lines" -> out}]; If[ !TrueQ[globalSilence], 
-       Print[colorformat[StringJoin["Lies on these lines: ", 
-          StringRiffle[out, ", "]]]]]; 
+       {"lines" -> out}]; checkLinearCombinations[ptcoord, out, name]; 
+      If[ !TrueQ[globalSilence], Print[colorformat[StringJoin[
+          "Lies on these lines: ", StringRiffle[out, ", "]]]]]; 
       If[abort && Length[out] < pointCheckerMinProperties, 
        Return[out, Module]; ]; harm = intHarmonicProcess[res[[2]], ptc, 
         prec]; harm = (SortBy[#1, Length] & ) /@ harm; 
@@ -223,7 +223,7 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
       AssociateTo[globalProperties[name], {"midpoints" -> hg}]; 
       If[ !TrueQ[globalSilence], If[Length[hg] > 0, 
         Print[colorformat[StringJoin[
-            "= midpoint of X(i) in X(j) for these {i,j}: ", 
+            "= midpoint of X(i) and X(j) for these {i,j}: ", 
             StringRiffle[hg, ", "]]]]; ]]; hg = {}; 
       Do[eltest = igroup; test = Det[{{1, 1, 1}, bReflectionPP[
             KimberlingCenterCNy[eltest[[1]]] /. rc, 
@@ -247,6 +247,34 @@ xnumforsort[str_] := If[StringTake[str, 1] == "X",
  
 intnameformat[pname_] := If[StringTake[pname, 1] == "X", 
      StringTake[pname, {2, -1}], pname]
+ 
+checkLinearCombinations[pt_, ptpairset_, inname_:"X"] := 
+    Module[{out, pt1, pt2, summ, sol, coef, numerator, denominator, p1, p2}, 
+     out = {}; Do[pt1 = evaluate[KimberlingCenterC[
+           If[MemberQ[{"Y", "Z"}, StringTake[pair[[1]], 1]], pair[[1]], 
+            StringJoin["X", pair[[1]]]]]]; 
+        If[ !RationalExpressionQ[pt1[[1]], {a, b, c}], Continue[]]; 
+        pt1 = simplifyRationalBarycentrics[pt1]; 
+        If[Simplify[Total[pt1]] == 0, Continue[]]; 
+        pt2 = evaluate[KimberlingCenterC[If[MemberQ[{"Y", "Z"}, 
+             StringTake[pair[[2]], 1]], pair[[2]], StringJoin["X", 
+             pair[[2]]]]]]; If[ !RationalExpressionQ[pt2[[1]], {a, b, c}], 
+         Continue[]]; pt2 = simplifyRationalBarycentrics[pt2]; 
+        If[Simplify[Total[pt2]] == 0, Continue[]]; 
+        summ = simplifyRationalBarycentrics[(pt1/Total[pt1])*t + 
+           pt2/Total[pt2]]; sol = Solve[summ[[1]] == pt[[1]], t]; 
+        If[Length[sol] > 0 && NumberQ[t /. sol[[1]]], coef = t /. sol[[1]]; 
+          p1 = StringJoin["X[", ToString[pair[[1]]], "]"]; 
+          p2 = StringJoin["X[", ToString[pair[[2]]], "]"]; 
+          numerator = If[Numerator[coef] != 1, StringJoin[
+             ToString[Numerator[coef]], "*"], ""]; denominator = 
+           If[Denominator[coef] != 1, StringJoin[ToString[Denominator[coef]], 
+             "*"], ""]; AppendTo[out, StringJoin[numerator, p1, "+", 
+            denominator, p2]]; ], {pair, ptpairset}]; 
+      AssociateTo[globalProperties[inname], {"linear combinations" -> out}]; 
+      If[Length[out] > 0, If[ !TrueQ[globalSilence], 
+         Print[StringJoin["linear combinations: ", StringRiffle[out, 
+            ", "]]]]; ]; ]
  
 pointCheckerMinProperties = 3
  
@@ -364,7 +392,8 @@ checkVertexConjugates[pt_, name_:"X"] :=
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
          Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; res = {}; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 && Im[#1[[2]]] == 0 && 
+           Im[#1[[3]]] == 0 & ], #1[[1]] & ]; res = {}; 
       Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
             "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
            StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
@@ -412,10 +441,9 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           If[ !TrueQ[globalSilence], PrintTemporary[
             "Starting trilinear+conjugates"]]; Quiet[checkTrilinearPolar[
             ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
+          Quiet[checkReciprocalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
-          Quiet[checkConjugates[ptcoord, bZayinConjugate, 
-            "= X(i)-Zayin conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bCevianQuotient, 
             "= X(i)-Ceva conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bAnticomplementaryConjugate, 
@@ -424,15 +452,14 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
             "= X(i)-complementary conjugate of X(j) for these {i, j}: ", 
             name]]; Quiet[checkConjugates[ptcoord, bCrossConjugate, 
             "= X(i)-cross conjugate of X(j) for these {i, j}: ", name]]; 
-          Quiet[checkConjugates[ptcoord, bWawConjugate, 
-            "= X(i)-Waw conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkVertexConjugates[ptcoord, name]]; 
           If[ !TrueQ[globalSilence], PrintTemporary["Starting barycentric"]]; 
           Quiet[checkBarycentric[ptcoord, "product", name]]; 
           Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
           Quiet[checkPerspector[ptcoord, name]]; 
           Quiet[checkConicCenter[ptcoord, name]]; TimeConstrained[
-           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; ]; ]; ]
+           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
+          If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; ]
  
 globalSeenPoints = {}
  
@@ -450,6 +477,37 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv,
        {"curves" -> out}]; If[Length[out] > 0, 
        If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; ]
+ 
+checkReciprocalConjugates[pt_, name_:"X"] := 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffreciprocalconjugate, 
+      tuples}, ffreciprocalconjugate[pt1_, pt2_] := Module[{local}, 
+        local = bReciprocalConjugate[intnumericnorm[pt1 /. rule69], 
+            intnumericnorm[pt2 /. rule69]] /. rule69; 
+         Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
+      ptc = intnumericnorm[pt /. rule69]; 
+      cx = (ffreciprocalconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
+      cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
+         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 && Im[#1[[2]]] == 0 && 
+           Im[#1[[3]]] == 0 & ], #1[[1]] & ]; res = {}; 
+      Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
+            "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
+           StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
+          Continue[]; ]; If[coincide[cx[n], prev[[1]], 15], 
+         idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
+            StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
+          idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
+          If[coincideNorm[pt /. rc, bReciprocalConjugate[KimberlingCenterCNy[
+               idx1], KimberlingCenterCNy[idx2]] /. rc], AppendTo[res, 
+            {idx1, idx2}]]; ]; prev = Association[n -> cx[n]]; , 
+       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], 
+        numsortexpr[#1[[1]]] & ]; 
+      res = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ res; 
+      AssociateTo[globalProperties[name], {"reciprocal conjugate" -> res}]; 
+      If[ !TrueQ[globalSilence], If[Length[res] > 0, 
+        Print[colorformat[StringJoin[
+            "= X(i)-reciprocal conjugate of X(j) for these {i, j}: ", 
+            StringRiffle[res, ", "]]]]; ]]; ]
  
 checkConjugates[pt_, func_, str_, name_:"X"] := 
     Module[{cx, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname, tuples}, 
@@ -527,16 +585,20 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
       Do[If[printname == "", print[pt], print[printname]]; print[]; 
         print[glob[pt]["name"]]; print[]; 
         print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        print[]; print[]; print[colorformat[StringJoin[printname, 
-           " lies on these lines: ", StringRiffle[glob[pt]["lines"], 
-            ", "]]]]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
-            "circumconics"], {}, glob[pt]["circumconics"]]; 
+        print[]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
+            "linear combinations"], {}, glob[pt]["linear combinations"]]; 
         If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
+             " linear combinations: ", StringRiffle[hg, ", "]]]]; print[]; ]; 
+        print[colorformat[StringJoin[printname, " lies on these lines: ", 
+           StringRiffle[glob[pt]["lines"], ", "]]]]; print[]; 
+        hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
+          glob[pt]["circumconics"]]; If[Length[hg] > 0, 
+         print[colorformat[StringJoin[printname, 
              " = intersection, other than A, B, C, of circumconics ", 
              StringRiffle[hg, ", "]]]]; ]; If[MemberQ[Keys[glob[pt]], 
           "midpoints"], hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
-               " = midpoint of X(i) in X(j) for these {i,j}: ", StringRiffle[
+               " = midpoint of X(i) and X(j) for these {i,j}: ", StringRiffle[
                 SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
         If[MemberQ[Keys[glob[pt]], "reflections"], 
          hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
@@ -572,8 +634,6 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
           "bDaoConjugate" -> 
            "= X(i)-Dao conjugate of X(j) for these {i, j}: ", 
-          "bZayinConjugate" -> 
-           "= X(i)-Zayin conjugate of X(j) for these {i, j}: ", 
           "bCevianQuotient" -> 
            "= X(i)-Ceva conjugate of X(j) for these {i, j}: ", 
           "bComplementaryConjugate" -> 
@@ -582,8 +642,8 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
           "bCrossConjugate" -> 
            "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
-          "bWawConjugate" -> 
-           "= X(i)-Waw conjugate of X(j) for these {i, j}: ", 
+          "reciprocal conjugate" -> 
+           "= X(i)-reciprocal conjugate of X(j) for these {i, j}: ", 
           "barycentric product" -> 
            "= barycentric product X(i)*X(j) for these (i, j): ", 
           "barycentric quotient" -> 

@@ -108,3 +108,16 @@ replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
  
 intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
       (FullSimplify[#1] & ) /@ FactorList[expr]
+ 
+massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5] := 
+    Module[{out, etc, testexpr, check}, 
+     Quiet[Monitor[out = {}; etc = {}; Do[nprg = nx; 
+           If[ !MemberQ[Keys[ETC], StringJoin["X", ToString[nx]]], 
+            Continue[]]; If[ !PolynomialQ[KimberlingCenterCN[nx][[1]], 
+              {a, b, c}], Continue[]]; testexpr = TimeConstrained[
+             simplifyRationalBarycentrics[replacer[expr, nx]], 10, -1]; 
+           If[testexpr == -1, Continue[]]; check = checkPointinETC2[
+             testexpr]; If[Length[check] > 0, AppendTo[etc, {nx, check}], 
+            If[heuristicsCheck[evaluate[testexpr[[1]]], deg, ratio], 
+             AppendTo[out, nx]]]; , {nx, nmin, nmax}], nprg]]; Print[out]; 
+      Print[etc]; ]

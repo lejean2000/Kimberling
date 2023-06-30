@@ -327,7 +327,7 @@ bTripolarEq[{pp_, qq_, rr_}] := {1/pp, 1/qq, 1/rr}
  
 bCircumconicPEq[{pp_, qq_, rr_}] := pp*y*z + qq*x*z + rr*x*y
  
-bReciprocalConjugate[{u_, v_, w_}, {p_, q_, r_}] := {p*v*w, q*u*w, r*u*v}
+bReciprocalConjugate[{p_, q_, r_}, {u_, v_, w_}] := {p*v*w, q*u*w, r*u*v}
  
 bToSearchNumbers[pt_] := S*(pt/(Total[pt]*{a, b, c})) /. 
      {a -> 6, b -> 9, c -> 13}
