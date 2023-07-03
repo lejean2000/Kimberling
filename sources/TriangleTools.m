@@ -1083,3 +1083,21 @@ multiCollectABC[pt_] := {multiCollect[pt[[1]], a], multiCollect[pt[[2]], b],
 bPCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
     {{0, p*v + q*(v + w), p*w + r*(v + w)}, {q*u + p*(u + w), 0, 
       q*w + r*(u + w)}, {r*u + p*(u + v), r*v + q*(u + v), 0}}
+ 
+bIsParallelogic[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    Simplify[bConcurrencyMatrix[bParallelLine[pa, bLine[xb, xc]], 
+      bParallelLine[pb, bLine[xa, xc]], bParallelLine[pc, bLine[xa, xb]]]]
+ 
+bParallelogicCenter[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    bLineIntersection[bParallelLine[pa, bLine[xb, xc]], 
+     bParallelLine[pb, bLine[xa, xc]]]
+ 
+bTangentialTriangle2[crv_, a1_, b1_, c1_] := Module[{ta, tb, tc, a2, b2, c2}, 
+     ta = bLineFromEq[simplifyRationalBarycentrics[bImplicitTangent[crv, 
+          a1]]]; tb = bLineFromEq[simplifyRationalBarycentrics[
+         bImplicitTangent[crv, b1]]]; 
+      tc = bLineFromEq[simplifyRationalBarycentrics[bImplicitTangent[crv, 
+          c1]]]; a2 = simplifyRationalBarycentrics[bLineIntersection[tb, 
+         tc]]; b2 = simplifyRationalBarycentrics[bLineIntersection[tc, ta]]; 
+      c2 = simplifyRationalBarycentrics[bLineIntersection[ta, tb]]; 
+      {a2, b2, c2}]
