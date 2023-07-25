@@ -19,7 +19,9 @@ KimberlingCenterC[k_] := Module[{ptname},
       Return[symmetrizeInternal[ETC[ptname]] /. 
         Thread[{A -> angleA, B -> angleB, C -> angleC}]]; ]
  
-getTriangleCurve[name_] := evaluate[TriangleCurves[name]]
+getTriangleCurve[name_, in_:TriangleCurves] := 
+    Module[{tmp}, tmp = Select[Keys[in], StringStartsQ[#1, name] & ]; 
+      Print[tmp]; Return[evaluate[in[tmp[[1]]]]]; ]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]

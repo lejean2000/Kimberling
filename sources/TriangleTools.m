@@ -1101,3 +1101,44 @@ bTangentialTriangle2[crv_, a1_, b1_, c1_] := Module[{ta, tb, tc, a2, b2, c2},
          tc]]; b2 = simplifyRationalBarycentrics[bLineIntersection[tc, ta]]; 
       c2 = simplifyRationalBarycentrics[bLineIntersection[ta, tb]]; 
       {a2, b2, c2}]
+ 
+bPedalGeneral[pp_, p1_, p2_, p3_] := Module[{h1, h2, h3}, 
+     h1 = Simplify[bLineIntersection[bPerpendicular[bLine[p2, p3], pp], 
+         bLine[p2, p3]]]; h2 = Simplify[bLineIntersection[
+         bPerpendicular[bLine[p1, p3], pp], bLine[p1, p3]]]; 
+      h3 = Simplify[bLineIntersection[bPerpendicular[bLine[p1, p2], pp], 
+         bLine[p1, p2]]]; {h1, h2, h3}]
+ 
+bReflectionLL[{p_, q_, r_}, {l_, m_, n_}] := 
+    {b^2*(m^2*p - m*n*p + l*n*q + l^2*(q - r) + l*m*(-2*q + r)) + 
+      c^2*(n^2*p + l*n*(q - 2*r) + l^2*(-q + r) + m*((-n)*p + l*r)) - 
+      a^2*((-m)*n*p + l^2*(p - q - r) + l*(n*q + m*r)), 
+     a^2*(m*n*p + l^2*q - l*n*q + m^2*(p - r) + l*m*(-2*p + r)) + 
+      c^2*(n*(-l + n)*q + m*n*(p - 2*r) + l*m*r + m^2*(-p + r)) + 
+      b^2*(l*n*q + m^2*(p - q + r) - m*(n*p + l*r)), 
+     a^2*(m*n*p + n^2*(p - q) + l*n*(-2*p + q) + l^2*r - l*m*r) + 
+      b^2*(m*n*(p - 2*q) + l*n*q + n^2*(-p + q) - l*m*r + m^2*r) + 
+      c^2*(n*((-l)*q + n*(p + q - r)) + m*((-n)*p + l*r))}
+ 
+bSideReflectionTriangle[x1_, x2_, x3_, y1_, y2_, y3_] := 
+    Module[{l1, l2, l3, pa, pb, pc}, 
+     l1 = simplifyRationalBarycentrics[bReflectionLL[bLine[x2, x3], 
+         bLine[y2, y3]]]; l2 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[x1, x3], bLine[y1, y3]]]; 
+      l3 = simplifyRationalBarycentrics[bReflectionLL[bLine[x1, x2], 
+         bLine[y1, y2]]]; pa = simplifyRationalBarycentrics[
+        bLineIntersection[l2, l3]]; pb = simplifyRationalBarycentrics[
+        bLineIntersection[l1, l3]]; pc = simplifyRationalBarycentrics[
+        bLineIntersection[l1, l2]]; {pa, pb, pc}]
+ 
+polarCurve[crv_, pt_] := pt . Grad[crv, {x, y, z}]
+ 
+bPAntipedal[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{p*(r*v + q*(u + v))*(q*w + r*(u + w)), (-q)*(r*v + q*(u + v))*
+       (p*w + r*(v + w)), (-r)*(q*w + r*(u + w))*(p*v + q*(v + w))}, 
+     {p*(r*u + p*(u + v))*(q*w + r*(u + w)), (-q)*(r*u + p*(u + v))*
+       (p*w + r*(v + w)), r*(q*u + p*(u + w))*(p*w + r*(v + w))}, 
+     {p*(r*v + q*(u + v))*(q*u + p*(u + w)), q*(r*u + p*(u + v))*
+       (p*v + q*(v + w)), (-r)*(q*u + p*(u + w))*(p*v + q*(v + w))}}
+ 
+mixedPolarLine[cubic_, ptP_, ptQ_] := bPolar[polarCurve[cubic, ptQ], ptP]

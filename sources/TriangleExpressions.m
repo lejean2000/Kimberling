@@ -117,7 +117,42 @@ massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5] :=
               {a, b, c}], Continue[]]; testexpr = TimeConstrained[
              simplifyRationalBarycentrics[replacer[expr, nx]], 10, -1]; 
            If[testexpr == -1, Continue[]]; check = checkPointinETC2[
-             testexpr]; If[Length[check] > 0, AppendTo[etc, {nx, check}], 
+             testexpr]; If[Length[check] > 0, AppendTo[etc, 
+             {nx, check[[1]]}], If[heuristicsCheck[evaluate[testexpr[[1]]], 
+              deg, ratio], AppendTo[out, nx]]]; , {nx, nmin, nmax}], nprg]]; 
+      Print[out]; Print[colorformat[ToString[etc]]]; ]
+ 
+massHeuristicsFarey[expr_, fset_, deg_:16, ratio_:4.5] := 
+    Module[{out, etc, testexpr, check}, 
+     Quiet[Monitor[out = {}; etc = {}; Do[nprg = tvar; 
+           testexpr = TimeConstrained[simplifyRationalBarycentrics[
+              expr /. t -> tvar], 10, -1]; If[testexpr == -1, Continue[]]; 
+           check = checkPointinETC2[testexpr]; If[Length[check] > 0, 
+            AppendTo[etc, {ExpressionToTrad[tvar], check[[1]]}], 
             If[heuristicsCheck[evaluate[testexpr[[1]]], deg, ratio], 
-             AppendTo[out, nx]]]; , {nx, nmin, nmax}], nprg]]; Print[out]; 
-      Print[etc]; ]
+             AppendTo[out, tvar]]]; , {tvar, fset}], nprg]]; Print[out]; 
+      Print[colorformat[ToString[etc]]]; ]
+ 
+rplux = {u -> x, v -> y, w -> z}
+ 
+setHeuristics[expr_, set_] := Module[{seti, etc, check, ptcoord, out}, 
+     etc = {}; out = {}; seti = 
+       (StringReplace[#1, {"(" -> "", ")" -> ""}] & ) /@ set; 
+      Monitor[Do[AbortProtect[CheckAbort[ptcoord = TimeConstrained[
+             simplifyRationalBarycentrics[expr /. Thread[{u, v, w} -> 
+                 KimberlingCenterC[ptn]]], 10, -1]; If[ptcoord == -1, 
+            Print[StringJoin[ptn, " timeout"]]; Continue[]]; 
+           check = checkPointinETC2[ptcoord]; If[Length[check] > 0, 
+            AppendTo[etc, {ptn, check[[1]]}], If[heuristicsCheck[evaluate[
+                ptcoord[[1]]], 16, 5], AppendTo[out, ptn]]; ], 
+          Return[{etc, out}, Module]; ]], {ptn, seti}], ptn]; 
+      Return[{etc, out}, Module]; ]
+ 
+removeXYZ[set_] := Module[{out, el1, el2}, 
+     out = {}; Do[{el1, el2} = ptn; If[StringStartsQ[ptn[[1]], "Y"] || 
+          StringStartsQ[ptn[[1]], "Z"], el1 = NonETCNames[ptn[[1]]]]; 
+        If[StringStartsQ[ptn[[2]], "Y"] || StringStartsQ[ptn[[2]], "Z"], 
+         el2 = NonETCNames[ptn[[2]]]]; {el1, el2} = 
+         (StringReplace[#1, {"X" -> "", "IsotConjg" -> "it", 
+             "IsogConj" -> "ig"}] & ) /@ {el1, el2}; 
+        AppendTo[out, {el1, el2}]; , {ptn, set}]; Return[out]; ]

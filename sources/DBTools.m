@@ -5,15 +5,12 @@ pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary},
  
 intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
-singlePointProcesses = <|"complement" -> {v + w, u + w, u + v}, 
-     "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, 
-     "polar conjugate" -> {(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*v*w, 
-       -((a^2 - b^2 - c^2)*(a^2 + b^2 - c^2)*u*w), 
-       -((a^2 - b^2 - c^2)*(a^2 - b^2 + c^2)*u*v)}, 
+singlePointProcesses = Association["complement" -> {v + w, u + w, u + v}, 
+     "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, Null, 
      "anticomplement of isogonal conjugate" -> {c^2*u*v + b^2*u*w - a^2*v*w, 
-       c^2*u*v - b^2*u*w + a^2*v*w, -(c^2*u*v) + b^2*u*w + a^2*v*w}, 
-     "anticomplement of isotomic conjugate" -> {-(v*w) + u*(v + w), 
-       u*(v - w) + v*w, -(u*(v - w)) + v*w}, 
+       c^2*u*v - b^2*u*w + a^2*v*w, (-c^2)*u*v + b^2*u*w + a^2*v*w}, 
+     "anticomplement of isotomic conjugate" -> {(-v)*w + u*(v + w), 
+       u*(v - w) + v*w, (-u)*(v - w) + v*w}, 
      "complement of isogonal conjugate" -> {u*(c^2*v + b^2*w), 
        v*(c^2*u + a^2*w), (b^2*u + a^2*v)*w}, 
      "complement of isotomic conjugate" -> {u*(v + w), v*(u + w), (u + v)*w}, 
@@ -26,7 +23,7 @@ singlePointProcesses = <|"complement" -> {v + w, u + w, u + v},
      "circlecevian perspector" -> bCirclecevianPerspector[{u, v, w}], 
      "ortoassociate" -> bOrthoassociate[{u, v, w}], 
      "antitomic conjugate" -> bAntitomicConjugate[{u, v, w}], 
-     "syngonal conjugate" -> bSyngonal[{u, v, w}]|>
+     "syngonal conjugate" -> bSyngonal[{u, v, w}]]
  
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
@@ -262,19 +259,25 @@ checkLinearCombinations[pt_, ptpairset_, inname_:"X"] :=
          Continue[]]; pt2 = simplifyRationalBarycentrics[pt2]; 
         If[Simplify[Total[pt2]] == 0, Continue[]]; 
         summ = simplifyRationalBarycentrics[(pt1/Total[pt1])*t + 
-           pt2/Total[pt2]]; sol = Solve[summ[[1]] == pt[[1]], t]; 
+           pt2/Total[pt2]]; sol = TimeConstrained[
+          Simplify[Solve[summ[[1]] == pt[[1]], t]], 5, {}]; 
         If[Length[sol] > 0 && NumberQ[t /. sol[[1]]], coef = t /. sol[[1]]; 
-          p1 = StringJoin["X[", ToString[pair[[1]]], "]"]; 
-          p2 = StringJoin["X[", ToString[pair[[2]]], "]"]; 
-          numerator = If[Numerator[coef] != 1, StringJoin[
-             ToString[Numerator[coef]], "*"], ""]; denominator = 
-           If[Denominator[coef] != 1, StringJoin[ToString[Denominator[coef]], 
-             "*"], ""]; AppendTo[out, StringJoin[numerator, p1, "+", 
-            denominator, p2]]; ], {pair, ptpairset}]; 
-      AssociateTo[globalProperties[inname], {"linear combinations" -> out}]; 
-      If[Length[out] > 0, If[ !TrueQ[globalSilence], 
-         Print[StringJoin["linear combinations: ", StringRiffle[out, 
-            ", "]]]]; ]; ]
+          pair = ToString /@ pair; If[MemberQ[{"Y", "Z"}, 
+            StringTake[pair[[1]], 1]], p1 = StringJoin[StringTake[pair[[1]], 
+              1], "[", StringTake[pair[[1]], {2, -1}], "]"], 
+           p1 = StringJoin["X[", pair[[1]], "]"]; ]; 
+          If[MemberQ[{"Y", "Z"}, StringTake[pair[[2]], 1]], 
+           p2 = StringJoin[StringTake[pair[[2]], 1], "[", 
+             StringTake[pair[[2]], {2, -1}], "]"], 
+           p2 = StringJoin["X[", pair[[2]], "]"]; ]; numerator = 
+           If[Numerator[coef] != 1, StringJoin[ToString[Numerator[coef]], 
+             "*"], ""]; denominator = If[Denominator[coef] != 1, 
+            StringJoin[ToString[Denominator[coef]], "*"], ""]; 
+          AppendTo[out, StringJoin[numerator, p1, "+", denominator, p2]]; ], 
+       {pair, ptpairset}]; AssociateTo[globalProperties[inname], 
+       {"linear combinations" -> out}]; If[Length[out] > 0, 
+       If[ !TrueQ[globalSilence], Print[StringJoin["linear combinations: ", 
+           StringRiffle[out, ", "]]]]; ]; ]
  
 pointCheckerMinProperties = 3
  
@@ -336,14 +339,14 @@ coincideNorm[pt1_, pt2_, prec_:20] := Return[coincide[intnumericnorm[pt1],
       intnumericnorm[pt2], prec]]
  
 checkBarycentric[pt_, type_, name_:"X"] := 
-    Module[{ff, rc, cx, res, idx1, idx2, ptc, val, sgn, tuples}, 
+    Module[{ff, rc, cx, res, idx1, idx2, ptc, val, sgn, tuples, etcbary}, 
      If[type == "quotient", ff[pt1_, pt2_] := intnumericnorm[
          (pt1 /. rule69)*(pt2 /. rule69)], ff[pt1_, pt2_] := 
         intnumericnorm[(pt1 /. rule69)/(pt2 /. rule69)]]; 
-      ptc = intnumericnorm[pt /. rule69]; 
-      cx = (ff[ptc, #1] & ) /@ ETCBaryNorm; 
+      etcbary = KeyDrop[ETCBaryNorm, globalExcludedNum]; 
+      ptc = intnumericnorm[pt /. rule69]; cx = (ff[ptc, #1] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+         Values[cx]], etcbary]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
       tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
          !((StringTake[#1[[1]], 1] == "C" && StringTake[#1[[2]], 1] == 
              "C") || (StringTake[#1[[1]], 1] != "C" && 
@@ -418,7 +421,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      If[inname != "X" && KeyExistsQ[globalProperties, inname], 
        Print["Key exists in global properties !"]; Return[False, Module]]; 
-      ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+      globalExcludedNum = addxtoname[num]; ptcoord = evaluate[expr]; 
+      pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
            rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
        Print[ptcoord]; Print["expression is not symmetric"]; 
@@ -441,7 +445,6 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           If[ !TrueQ[globalSilence], PrintTemporary[
             "Starting trilinear+conjugates"]]; Quiet[checkTrilinearPolar[
             ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
-          Quiet[checkReciprocalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bCevianQuotient, 
@@ -461,6 +464,9 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
           If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; ]
  
+addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]], 
+     StringJoin["X", ToString[str]], str]
+ 
 globalSeenPoints = {}
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
@@ -478,46 +484,16 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv,
        If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; ]
  
-checkReciprocalConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffreciprocalconjugate, 
-      tuples}, ffreciprocalconjugate[pt1_, pt2_] := Module[{local}, 
-        local = bReciprocalConjugate[intnumericnorm[pt1 /. rule69], 
-            intnumericnorm[pt2 /. rule69]] /. rule69; 
-         Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
-      ptc = intnumericnorm[pt /. rule69]; 
-      cx = (ffreciprocalconjugate[#1, ptc] & ) /@ ETCBaryNorm; 
-      cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 && Im[#1[[2]]] == 0 && 
-           Im[#1[[3]]] == 0 & ], #1[[1]] & ]; res = {}; 
-      Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
-            "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
-           StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
-          Continue[]; ]; If[coincide[cx[n], prev[[1]], 15], 
-         idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
-            StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
-          idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
-          If[coincideNorm[pt /. rc, bReciprocalConjugate[KimberlingCenterCNy[
-               idx1], KimberlingCenterCNy[idx2]] /. rc], AppendTo[res, 
-            {idx1, idx2}]]; ]; prev = Association[n -> cx[n]]; , 
-       {n, Keys[cx]}]; res = SortBy[DeleteDuplicates[res], 
-        numsortexpr[#1[[1]]] & ]; 
-      res = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ res; 
-      AssociateTo[globalProperties[name], {"reciprocal conjugate" -> res}]; 
-      If[ !TrueQ[globalSilence], If[Length[res] > 0, 
-        Print[colorformat[StringJoin[
-            "= X(i)-reciprocal conjugate of X(j) for these {i, j}: ", 
-            StringRiffle[res, ", "]]]]; ]]; ]
- 
 checkConjugates[pt_, func_, str_, name_:"X"] := 
-    Module[{cx, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname, tuples}, 
-     ff[pt1_, pt2_] := Module[{local}, 
+    Module[{cx, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname, tuples, 
+      etcbary}, ff[pt1_, pt2_] := Module[{local}, 
         local = func[intnumericnorm[pt1 /. rule69], intnumericnorm[
              pt2 /. rule69]] /. rule69; Return[intnumericnorm[local]]; ]; 
+      etcbary = KeyDrop[ETCBaryNorm, globalExcludedNum]; 
       rc = intCheckList[[1]]; ptc = intnumericnorm[pt /. rule69]; 
-      cx = (ff[#1, ptc] & ) /@ ETCBaryNorm; 
+      cx = (ff[#1, ptc] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+         Values[cx]], etcbary]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
       tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
          !((StringTake[#1[[1]], 1] == "C" && StringTake[#1[[2]], 1] == 
              "C") || (StringTake[#1[[1]], 1] != "C" && 
@@ -582,10 +558,11 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
     Module[{hg, cycle, localprops, colorprint}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
       colorprint = colorPrintOn; colorPrintOn = False; 
-      Do[If[printname == "", print[pt], print[printname]]; print[]; 
-        print[glob[pt]["name"]]; print[]; 
+      Do[print[StringJoin[printname, " = ", glob[pt]["name"]]]; print[]; 
         print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        print[]; print[]; hg = If[ !MemberQ[Keys[glob[pt]], 
+        print[]; print[]; If[MemberQ[Keys[glob[pt]], "descr"], 
+         print[StringReplace[glob[pt]["descr"], "This point" -> printname]]; 
+          print[]; ]; hg = If[ !MemberQ[Keys[glob[pt]], 
             "linear combinations"], {}, glob[pt]["linear combinations"]]; 
         If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
              " linear combinations: ", StringRiffle[hg, ", "]]]]; print[]; ]; 
@@ -642,8 +619,6 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
           "bCrossConjugate" -> 
            "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
-          "reciprocal conjugate" -> 
-           "= X(i)-reciprocal conjugate of X(j) for these {i, j}: ", 
           "barycentric product" -> 
            "= barycentric product X(i)*X(j) for these (i, j): ", 
           "barycentric quotient" -> 
@@ -667,10 +642,10 @@ globalOutputStream = False
  
 addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
      If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
-        Return[False, Module]]; If[MemberQ[Values[NonETCNames], name], 
-       Print["Name exists !"]; Return[False, Module]]; 
-      If[VectorQ[bary], expr = bary[[1]], expr = bary]; 
-      idxmax = Max[1 + ToExpression[StringTake[
+        Return[False, Module]]; If[name != "unnamed" && 
+        MemberQ[Values[NonETCNames], name], Print["Name exists !"]; 
+        Return[False, Module]]; If[VectorQ[bary], expr = bary[[1]], 
+       expr = bary]; idxmax = Max[1 + ToExpression[StringTake[
            SortBy[Keys[KeySelect[ETCExtra, StringStartsQ[#1, letter] & ]], 
             numsortexpr[#1] & ], {2, -1}]]]; 
       dbname = StringJoin[letter, ToString[idxmax]]; 
