@@ -1142,3 +1142,10 @@ bPAntipedal[{u_, v_, w_}, {p_, q_, r_}] :=
        (p*v + q*(v + w)), (-r)*(q*u + p*(u + w))*(p*v + q*(v + w))}}
  
 mixedPolarLine[cubic_, ptP_, ptQ_] := bPolar[polarCurve[cubic, ptQ], ptP]
+ 
+bCrossCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{u*(r*v + q*w), q*v*w, r*v*w}, {p*u*w, v*(r*u + p*w), r*u*w}, 
+     {p*u*v, q*u*v, (q*u + p*v)*w}}
+ 
+bExsimilicenter3[O1_, rad1_, O2_, rad2_] := rad1*(O2/Total[O2]) - 
+     rad2*(O1/Total[O1])

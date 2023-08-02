@@ -140,7 +140,8 @@ setHeuristics[expr_, set_] := Module[{seti, etc, check, ptcoord, out},
        (StringReplace[#1, {"(" -> "", ")" -> ""}] & ) /@ set; 
       Monitor[Do[AbortProtect[CheckAbort[ptcoord = TimeConstrained[
              simplifyRationalBarycentrics[expr /. Thread[{u, v, w} -> 
-                 KimberlingCenterC[ptn]]], 10, -1]; If[ptcoord == -1, 
+                 simplifyRationalBarycentrics[evaluate[KimberlingCenterC[
+                    ptn]]]]], 8, -1]; If[ptcoord == -1, 
             Print[StringJoin[ptn, " timeout"]]; Continue[]]; 
            check = checkPointinETC2[ptcoord]; If[Length[check] > 0, 
             AppendTo[etc, {ptn, check[[1]]}], If[heuristicsCheck[evaluate[

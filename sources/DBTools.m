@@ -5,12 +5,12 @@ pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary},
  
 intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
-singlePointProcesses = Association["complement" -> {v + w, u + w, u + v}, 
-     "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, Null, 
+singlePointProcesses = <|"complement" -> {v + w, u + w, u + v}, 
+     "anticomplement" -> {-u + v + w, u - v + w, u + v - w}, 
      "anticomplement of isogonal conjugate" -> {c^2*u*v + b^2*u*w - a^2*v*w, 
-       c^2*u*v - b^2*u*w + a^2*v*w, (-c^2)*u*v + b^2*u*w + a^2*v*w}, 
-     "anticomplement of isotomic conjugate" -> {(-v)*w + u*(v + w), 
-       u*(v - w) + v*w, (-u)*(v - w) + v*w}, 
+       c^2*u*v - b^2*u*w + a^2*v*w, -(c^2*u*v) + b^2*u*w + a^2*v*w}, 
+     "anticomplement of isotomic conjugate" -> {-(v*w) + u*(v + w), 
+       u*(v - w) + v*w, -(u*(v - w)) + v*w}, 
      "complement of isogonal conjugate" -> {u*(c^2*v + b^2*w), 
        v*(c^2*u + a^2*w), (b^2*u + a^2*v)*w}, 
      "complement of isotomic conjugate" -> {u*(v + w), v*(u + w), (u + v)*w}, 
@@ -23,7 +23,7 @@ singlePointProcesses = Association["complement" -> {v + w, u + w, u + v},
      "circlecevian perspector" -> bCirclecevianPerspector[{u, v, w}], 
      "ortoassociate" -> bOrthoassociate[{u, v, w}], 
      "antitomic conjugate" -> bAntitomicConjugate[{u, v, w}], 
-     "syngonal conjugate" -> bSyngonal[{u, v, w}]]
+     "syngonal conjugate" -> bSyngonal[{u, v, w}]|>
  
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
@@ -165,15 +165,16 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_] :=
              el[[2]]] /. rc2, ptcoord /. rc2], 10, -1]; 
         If[TrueQ[Simplify[test] == 0] && TrueQ[Simplify[test2] == 0], 
          AppendTo[out, el], AppendTo[unproven, el]]; , {el, gr}]; 
-      If[Length[out] >= 2, outforsort = Select[out, 
-          StringTake[#1[[1]], 1] == "X" && StringTake[#1[[2]], 1] == "X" & ]; 
+      outname = "(unnamed)"; If[Length[out] >= 2, 
+       outforsort = Select[out, StringTake[#1[[1]], 1] == "X" && 
+            StringTake[#1[[2]], 1] == "X" & ]; 
         sout = SortBy[outforsort, xnumforsort[#1[[1]]]*xnumforsort[
-             #1[[2]]] & ]; If[Length[sout] < 2, outname = "(unnamed)", 
+             #1[[2]]] & ]; If[Length[sout] >= 2, 
          outname = StringJoin[intaddbrackets[sout[[1]][[1]]], 
             intaddbrackets[sout[[1]][[2]]], "\:2229", intaddbrackets[
-             sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; ]; 
-        AssociateTo[globalProperties[name], {"name" -> outname}]; 
-        If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; ]; 
+             sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; ]; ]; 
+      AssociateTo[globalProperties[name], {"name" -> outname}]; 
+      If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; 
       barys = ExpressionToTrad[Simplify[printexpr]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
@@ -276,8 +277,8 @@ checkLinearCombinations[pt_, ptpairset_, inname_:"X"] :=
           AppendTo[out, StringJoin[numerator, p1, "+", denominator, p2]]; ], 
        {pair, ptpairset}]; AssociateTo[globalProperties[inname], 
        {"linear combinations" -> out}]; If[Length[out] > 0, 
-       If[ !TrueQ[globalSilence], Print[StringJoin["linear combinations: ", 
-           StringRiffle[out, ", "]]]]; ]; ]
+       If[ !TrueQ[globalSilence], Print[colorformat[StringJoin[
+            "linear combinations: ", StringRiffle[out, ", "]]]]]; ]; ]
  
 pointCheckerMinProperties = 3
  
@@ -420,9 +421,9 @@ checkVertexConjugates[pt_, name_:"X"] :=
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      If[inname != "X" && KeyExistsQ[globalProperties, inname], 
-       Print["Key exists in global properties !"]; Return[False, Module]]; 
-      globalExcludedNum = addxtoname[num]; ptcoord = evaluate[expr]; 
-      pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
+       Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
+        Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
+      ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
       symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
            rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
        Print[ptcoord]; Print["expression is not symmetric"]; 
@@ -442,9 +443,10 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
         numcon = Quiet[checkCircumconics[ptcoord, num, name]]; 
         If[full || Length[lines] + Length[numcon] >= 
            pointCheckerMinProperties, Quiet[checkCurves[ptcoord, name]]; 
-          If[ !TrueQ[globalSilence], PrintTemporary[
-            "Starting trilinear+conjugates"]]; Quiet[checkTrilinearPolar[
-            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
+          Quiet[checkInverse[ptcoord, name]]; If[ !TrueQ[globalSilence], 
+           PrintTemporary["Starting trilinear+conjugates"]]; 
+          Quiet[checkTrilinearPolar[ptcoord, name]]; 
+          Quiet[checkIsogonalConjugates[ptcoord, name]]; 
           Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bCevianQuotient, 
@@ -462,7 +464,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[checkPerspector[ptcoord, name]]; 
           Quiet[checkConicCenter[ptcoord, name]]; TimeConstrained[
            Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
-          If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; ]
+          If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; 
+      Return[True]; ]
  
 addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]], 
      StringJoin["X", ToString[str]], str]
@@ -470,19 +473,39 @@ addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]],
 globalSeenPoints = {}
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
-      normcoef}, out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 
-        35]; Do[monitorvar = name; crv = getTriangleCurve[name] /. rule69; 
-        normcoef = Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
+      normcoef, curves, circset}, out = {}; 
+      ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
+      curves = TriangleCurves; circset = KeySelect[CentralCircles, 
+         !StringContainsQ[#1, "A-"] &&  !StringContainsQ[#1, "B-"] && 
+           !StringContainsQ[#1, "C-"] &&  !StringContainsQ[#1, "-A"] && 
+           !StringContainsQ[#1, "-B"] &&  !StringContainsQ[#1, "-C"] & ]; 
+      AppendTo[curves, circset]; Do[monitorvar = name; 
+        crv = curves[name] /. rule69; normcoef = 
+         Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
         d = crv/normcoef /. Thread[{x, y, z} -> ptest]; 
         If[Abs[d] < 10^(-12), secondcheck = True; 
           Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
-            d = getTriangleCurve[name] /. Thread[{x, y, z} -> ptest] /. rc; 
+            d = curves[name] /. Thread[{x, y, z} -> ptest] /. rc; 
             If[Abs[d] > 10^(-12), secondcheck = False]; , 
            {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
-       {name, Keys[TriangleCurves]}]; AssociateTo[globalProperties[inname], 
+       {name, Keys[curves]}]; AssociateTo[globalProperties[inname], 
        {"curves" -> out}]; If[Length[out] > 0, 
        If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; ]
+ 
+checkInverse[pt_, inname_:"X"] := Module[{out, ptest, circset, ptc, check, 
+      secondcheck, d}, out = {}; If[Total[pt /. rule69] != 0, 
+       circset = KeySelect[CentralCircles,  !StringContainsQ[#1, "A-"] && 
+             !StringContainsQ[#1, "B-"] &&  !StringContainsQ[#1, "C-"] && 
+             !StringContainsQ[#1, "-A"] &&  !StringContainsQ[#1, "-B"] && 
+             !StringContainsQ[#1, "-C"] & ]; 
+        Do[ptc = bInverseInConic[pt, circset[cnc]]; 
+          check = checkPointinETC2[ptc]; If[Length[check] > 0, 
+           AppendTo[out, StringJoin["inverse of ", intaddbrackets[check[[
+                1]]], " in ", cnc]]; ]; , {cnc, Keys[circset]}]; ]; 
+      AssociateTo[globalProperties[inname], {"inverses" -> out}]; 
+      If[ !TrueQ[globalSilence], 
+       (Print[colorformat[StringJoin["= ", #1]]] & ) /@ out]; ]
  
 checkConjugates[pt_, func_, str_, name_:"X"] := 
     Module[{cx, res, idx1, idx2, i1, i2, ptc, rc, ff, fncname, tuples, 
@@ -568,13 +591,8 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
              " linear combinations: ", StringRiffle[hg, ", "]]]]; print[]; ]; 
         print[colorformat[StringJoin[printname, " lies on these lines: ", 
            StringRiffle[glob[pt]["lines"], ", "]]]]; print[]; 
-        hg = If[ !MemberQ[Keys[glob[pt]], "circumconics"], {}, 
-          glob[pt]["circumconics"]]; If[Length[hg] > 0, 
-         print[colorformat[StringJoin[printname, 
-             " = intersection, other than A, B, C, of circumconics ", 
-             StringRiffle[hg, ", "]]]]; ]; If[MemberQ[Keys[glob[pt]], 
-          "midpoints"], hg = glob[pt]["midpoints"]; If[Length[hg] > 0, 
-           print[colorformat[StringJoin[printname, 
+        If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
+          If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) and X(j) for these {i,j}: ", StringRiffle[
                 SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
         If[MemberQ[Keys[glob[pt]], "reflections"], 
@@ -589,8 +607,9 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
 (i,j,k): ", StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
           Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
          print[colorformat[StringJoin[printname, " lies on these curves: ", 
-             StringRiffle[hg, ", "]]]]; ]; 
-        Do[If[KeyExistsQ[glob[pt], proc], 
+             StringRiffle[hg, ", "]]]]; ]; hg = glob[pt]["inverses"]; 
+        If[Length[hg] > 0, (print[colorformat[StringJoin[printname, " = ", 
+               #1]]] & ) /@ hg; ]; Do[If[KeyExistsQ[glob[pt], proc], 
            print[colorformat[StringJoin[printname, " = ", proc, " of ", 
                glob[pt][proc]]]]; ]; , {proc, Keys[singlePointProcesses]}]; 
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
@@ -619,18 +638,21 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
           "bCrossConjugate" -> 
            "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
+          "others" -> " = ", "circumconics" -> 
+           " = intersection, other than A, B, C, of circumconics ", 
           "barycentric product" -> 
            "= barycentric product X(i)*X(j) for these (i, j): ", 
           "barycentric quotient" -> 
            "= barycentric quotient X(i)/X(j) for these (i, j): ", 
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
-        Do[hg = glob[pt][name2]; If[Length[hg] > 0, 
+        Do[hg = glob[pt][name2]; If[Length[hg] > 0 && name2 != "others", 
            print[colorformat[StringJoin[printname, " ", localprops[name2], 
-               StringRiffle[hg, ", "]]]]; ]; , {name2, Keys[localprops]}]; 
-        If[KeyExistsQ[glob[pt], "others"], hg = glob[pt]["others"]; 
-          Do[print[colorformat[StringJoin[printname, " = ", prop]]]; , 
-           {prop, hg}]]; , {pt, cycle}]; colorPrintOn = colorprint; ]
+               StringRiffle[hg, ", "]]]]; ]; If[Length[hg] > 0 && 
+            name2 == "others", Do[print[colorformat[StringJoin[printname, 
+               localprops[name2], prop]]], {prop, hg}]]; , 
+         {name2, Keys[localprops]}]; , {pt, cycle}]; 
+      colorPrintOn = colorprint; ]
  
 print[string_] := If[StringContainsQ[string, "KeyAbsent"], 
      Return["", Module], 
