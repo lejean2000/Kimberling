@@ -1149,3 +1149,39 @@ bCrossCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
  
 bExsimilicenter3[O1_, rad1_, O2_, rad2_] := rad1*(O2/Total[O2]) - 
      rad2*(O1/Total[O1])
+ 
+bCircumconcevianM4[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    simplifyRationalBarycentrics[
+     {u/(u^2/(a1*b1) + (v/a2 - w/a3)*(v/b2 - w/b3)), 
+      v/(v^2/(a2*b2) + (u/a1 - w/a3)*(u/b1 - w/b3)), 
+      w/(w^2/(a3*b3) + (u/a1 - v/a2)*(u/b1 - v/b2))}]
+ 
+bCevianTriangleGeneral[xp_, xa_, xb_, xc_] := Module[{la, lb, lc}, 
+     la = bLine[xb, xc]; lb = bLine[xc, xa]; lc = bLine[xa, xb]; 
+      {bLineIntersection[bLine[xp, xa], la], bLineIntersection[bLine[xp, xb], 
+        lb], bLineIntersection[bLine[xp, xc], lc]}]
+ 
+sym = symmetrizeInternal
+ 
+sym2 = symmetrizeInternal2
+ 
+sym3 = symmetrizeInternal3
+ 
+bCubicPolar[crv_, pt_] := bPolar[polarCurve[crv, pt], pt]
+ 
+bTripoleEqGeneral[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}, 
+     {p_, q_, r_}] := {3*p^2*u1*u2*u3 + q^2*(u3*v1*v2 + u2*v1*v3 + 
+        u1*v2*v3) + q*r*(u3*v2*w1 + u2*v3*w1 + u3*v1*w2 + u1*v3*w2 + 
+        u2*v1*w3 + u1*v2*w3) + r^2*(u3*w1*w2 + u2*w1*w3 + u1*w2*w3) + 
+      2*p*(q*(u2*u3*v1 + u1*u3*v2 + u1*u2*v3) + 
+        r*(u2*u3*w1 + u1*u3*w2 + u1*u2*w3)), 3*q^2*v1*v2*v3 + 
+      p^2*(u2*u3*v1 + u1*u3*v2 + u1*u2*v3) + 
+      2*p*q*(u3*v1*v2 + u2*v1*v3 + u1*v2*v3) + 
+      p*r*(u3*v2*w1 + u2*v3*w1 + u3*v1*w2 + u1*v3*w2 + u2*v1*w3 + u1*v2*w3) + 
+      2*q*r*(v2*v3*w1 + v1*v3*w2 + v1*v2*w3) + 
+      r^2*(v3*w1*w2 + v2*w1*w3 + v1*w2*w3), 3*r^2*w1*w2*w3 + 
+      p^2*(u2*u3*w1 + u1*u3*w2 + u1*u2*w3) + 
+      p*q*(u3*v2*w1 + u2*v3*w1 + u3*v1*w2 + u1*v3*w2 + u2*v1*w3 + u1*v2*w3) + 
+      q^2*(v2*v3*w1 + v1*v3*w2 + v1*v2*w3) + 
+      2*p*r*(u3*w1*w2 + u2*w1*w3 + u1*w2*w3) + 
+      2*q*r*(v3*w1*w2 + v2*w1*w3 + v1*w2*w3)}

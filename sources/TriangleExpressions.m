@@ -17,7 +17,7 @@ conwaySimplify[poly_] := PolynomialReduce[poly,
      evaluate[{SW, SA, SB, SC, sp, sa, sb, sc}], {a, b, c}]
  
 evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW, 
-      qR, qjJ, qangleA, qangleB, qangleC, qangleW}, 
+      qR, qjJ, qangleA, qangleB, qangleC, qangleW, qTT, qJJ}, 
      Clear[sp, sa, sb, sc, S, r, SA, SB, SC, SW, R, jJ, angleA, angleB, 
        angleC, angleW, \[Omega], e, \[Tau], jJ, J, dD, \[CapitalDelta]]; 
       qsp = (a + b + c)/2; qsa = (b + c - a)/2; qsb = (a - b + c)/2; 
@@ -29,6 +29,14 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
       qangleW = ArcCot[Cot[qangleA] + Cot[qangleB] + Cot[qangleC]]; 
       qjJ = (1/(a*b*c))*Sqrt[a^6 + b^6 + c^6 - a^4*b^2 - a^2*b^4 - a^4*c^2 - 
           a^2*c^4 - c^4*b^2 - c^2*b^4 + 3*a^2*b^2*c^2]; 
+      qTT = Sqrt[a^4 - a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2 + c^4]; 
+      qJJ = Sqrt[-2*a^8 + 3*a^6*b^2 - 2*a^4*b^4 + 3*a^2*b^6 - 2*b^8 + 
+         3*a^6*c^2 - 2*a^4*b^2*c^2 - 2*a^2*b^4*c^2 + 3*b^6*c^2 - 2*a^4*c^4 - 
+         2*a^2*b^2*c^4 - 2*b^4*c^4 + 3*a^2*c^6 + 3*b^2*c^6 - 2*c^8 + 
+         2*a^2*b^2*c^2*J^2*Sqrt[a^4 - a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2 + 
+            c^4]]; qOH = Sqrt[(-a^6 + a^4*(b^2 + c^2) - 
+          (b^2 - c^2)^2*(b^2 + c^2) + a^2*(b^4 - 3*b^2*c^2 + c^4))/
+         (a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2))]; 
       Return[expr /. {sp -> (a + b + c)/2, sa -> (b + c - a)/2, 
          sb -> (a - b + c)/2, sc -> (a + b - c)/2, s -> qsp, S -> qS, 
          r -> qS/(2*qsp), \[CapitalDelta] -> qS/2, SA -> qSA, SB -> qSB, 
@@ -37,8 +45,8 @@ evaluate[expr_] := Module[{qsp, qsa, qsb, qsc, qS, qr, qSA, qSB, qSC, qSW,
          C -> qangleC, \[Omega] -> qangleW, 
          e -> Sqrt[(a^4 - a^2*b^2 + b^4 - a^2*c^2 - b^2*c^2 + c^4)/
             (a^2*b^2 + a^2*c^2 + b^2*c^2)], \[Tau] -> 
-          Sqrt[(1/2)*(3 + Sqrt[5])], jJ -> qjJ, J -> qjJ, 
-         dD -> 4*qS*Sqrt[qR*(4*qR + qr)]}]]
+          Sqrt[(1/2)*(3 + Sqrt[5])], dD -> 4*qS*Sqrt[qR*(4*qR + qr)], 
+         OH -> qOH, jJ -> qjJ, J -> qjJ}]]
  
 simplifyRationalBarycentrics[expr_] := Module[{out}, 
      out = Factor[expr*PolynomialLCM @@ Denominator[expr]]; 
@@ -75,14 +83,14 @@ partialSReplace[expr_] := Module[{exp},
                S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
              S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
            S^8 -> evaluate[S^8] /. S^9 -> S*evaluate[S^8] /. 
-         S^10 -> evaluate[S^10]]; exp = simplifyRationalBarycentrics[
-        symmetrizeInternal[exp]]; multiCollect[exp[[1]], S]]
+         S^10 -> evaluate[S^10]]; exp = symmetrizeInternal[exp]; 
+      multiCollect[exp[[1]], S]]
  
 fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]], 
       #1 =!= ComplexInfinity && #1 > 0 & ]]
  
-partialSAconvert[ex_] := simplifyRationalBarycentrics[
-     ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC]]
+partialSAconvert[ex_] := ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. 
+     SC -> evaluate[SC]
  
 leastBaryFromIntersections[testset_] := 
     Module[{results, tt, out, mon, min, deg}, 
@@ -103,8 +111,10 @@ leastBaryFromIntersections[testset_] :=
       Print[ExpressionToTrad[out[[1]][[3]]]]; Return[out]; ]
  
 replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
-     expr /. Thread[{u, v, w} -> KimberlingCenterC[nu]] /. 
-      Thread[{p, q, r} -> KimberlingCenterC[np]]]
+     expr /. Thread[{u, v, w} -> simplifyRationalBarycentrics[
+          evaluate[KimberlingCenterC[nu]]]] /. 
+      Thread[{p, q, r} -> simplifyRationalBarycentrics[
+         evaluate[KimberlingCenterC[np]]]]]
  
 intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
       (FullSimplify[#1] & ) /@ FactorList[expr]
@@ -120,7 +130,7 @@ massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5] :=
              testexpr]; If[Length[check] > 0, AppendTo[etc, 
              {nx, check[[1]]}], If[heuristicsCheck[evaluate[testexpr[[1]]], 
               deg, ratio], AppendTo[out, nx]]]; , {nx, nmin, nmax}], nprg]]; 
-      Print[out]; Print[colorformat[ToString[etc]]]; ]
+      Print[out]; Print[colorformat[ToString[etc]]]; Return[{out, etc}]; ]
  
 massHeuristicsFarey[expr_, fset_, deg_:16, ratio_:4.5] := 
     Module[{out, etc, testexpr, check}, 
@@ -157,3 +167,13 @@ removeXYZ[set_] := Module[{out, el1, el2},
          (StringReplace[#1, {"X" -> "", "IsotConjg" -> "it", 
              "IsogConj" -> "ig"}] & ) /@ {el1, el2}; 
         AppendTo[out, {el1, el2}]; , {ptn, set}]; Return[out]; ]
+ 
+setToAssociation[set_] := AssociationThread[
+     (StringJoin["X(", ToString[#1[[1]]], ")"] & ) /@ set, 
+     (intaddbrackets[#1[[2]]] & ) /@ DeleteDuplicatesBy[set, #1[[2]] & ]]
+ 
+replacerExpr[expr_, nu_, np_:0] := 
+    expr /. Thread[{u, v, w} -> simplifyRationalBarycentrics[
+         evaluate[KimberlingCenterC[nu]]]] /. 
+     Thread[{p, q, r} -> simplifyRationalBarycentrics[
+        evaluate[KimberlingCenterC[np]]]]

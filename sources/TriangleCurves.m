@@ -36,7 +36,8 @@ jacobianDeterminant[(f_List)?VectorQ, x_List] := Det[jacobianMatrix[f, x]] /;
 jacobianMatrix[(f_List)?VectorQ, x_List] := Outer[D, f, x] /; 
      Equal @@ Dimensions /@ {f, x}
  
-cubicnK0[{u_, v_, w_}] := symmetrizeEq[u*x*(c^2*y^2 + b^2*z^2)]
+cubicnK0[{u_, v_, w_}, {p_, q_, r_}, k_:0] := 
+    symmetrizeEq[u*x*(r*y^2 + q*z^2)] + k*x*y*z
  
 tuckerCubic[k_] := symmetrizeEq[x*(y^2 + z^2)] + 2*(1 - 1/k)*x*y*z
  

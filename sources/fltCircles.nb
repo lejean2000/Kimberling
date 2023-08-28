@@ -1,0 +1,204 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7719,        196]
+NotebookOptionsPosition[      7082,        179]
+NotebookOutlinePosition[      7486,        195]
+CellTagsIndexPosition[      7443,        192]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",ExpressionU\
+UID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fltCentralCircles", "=", 
+   RowBox[{"KeySelect", "[", 
+    RowBox[{"CentralCircles", ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<A-\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<B-\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<C-\>\""}], "]"}], "]"}], "&&", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<-A\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<-B\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<-C\>\""}], "]"}], "]"}]}], 
+      "\[IndentingNewLine]", "&"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fltCentralCircles", "=", 
+   RowBox[{"KeyDrop", "[", 
+    RowBox[{"fltCentralCircles", ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Inner Soddy Circle\>\"", ",", "\"\<Inner Vecten Circle\>\"", ",", 
+       "\"\<Kenmotu Circle\>\"", ",", "\"\<Lucas Central Circle\>\"", ",", 
+       "\"\<Outer Soddy Circle\>\"", ",", "\"\<Inner Soddy Circle\>\"", ",", 
+       "\"\<Outer Napoleon Circle\>\"", ",", "\"\<Inner Napoleon Circle\>\"", 
+       ",", "\"\<Lucas Circles Radical Circle\>\"", ",", 
+       "\"\<Lucas Inner Circle\>\"", ",", "\"\<Outer Vecten Circle\>\"", ",", 
+       "\"\<Inner Vecten Circle\>\""}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fltCentralCircles", "=", 
+   RowBox[{"KeyDrop", "[", 
+    RowBox[{"fltCentralCircles", ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Adams Circle\>\"", ",", "\"\<Apollonius Circle\>\"", ",", 
+       "\"\<Third Brocard Circle\>\"", ",", "\"\<Dou Circle\>\"", ",", 
+       "\"\<Euler Gergonne Soddy Circle\>\"", ",", 
+       "\"\<Extangents Circle\>\"", ",", "\"\<GEOS Circle\>\"", ",", 
+       "\"\<Half Altitude Circle\>\"", ",", "\"\<Hexyl Circle\>\"", ",", 
+       "\"\<Incentral Circle\>\"", ",", "\"\<Intangents Circle\>\"", ",", 
+       "\"\<Lester Circle\>\"", ",", "\"\<MacBeath Circle\>\"", ",", 
+       "\"\<Mandart Circle\>\"", ",", "\"\<McCay Circles Radical Circle\>\"", 
+       ",", "\"\<Mixtilinear Circle\>\"", ",", "\"\<First Neuberg Circle\>\"",
+        ",", "\"\<Second Neuberg Circle\>\"", ",", 
+       "\"\<Neuberg Circles Radical Circle\>\"", ",", "\"\<Parry Circle\>\"", 
+       ",", "\"\<Reflection Circle\>\"", ",", "\"\<Second Steiner Circle\>\"",
+        ",", "\"\<Sine Triple Angle Circle\>\"", ",", 
+       "\"\<Stammler Circles Radical Circle\>\"", ",", 
+       "\"\<Stevanovic Circle\>\"", ",", "\"\<Symmedial Circle\>\"", ",", 
+       "\"\<Tangential Circle\>\"", ",", "\"\<Taylor Circle\>\"", ",", 
+       "\"\<Third Lemoine Circle\>\"", ",", "\"\<VanLamoen Circle\>\"", ",", 
+       "\"\<Yff Contact Circle\>\"", ",", "\"\<Yiu Circle\>\"", ",", 
+       "\"\<First Evans Circle\>\"", ",", "\"\<Second Evans Circle\>\"", ",", 
+       "\"\<Evans Conic\>\"", ",", "\"\<Thomson-Gibert-Moses hyperbola \>\"", 
+       ",", "\"\<First Johnson Yff Circle\>\"", ",", 
+       "\"\<Second Johnson Yff Circle\>\""}], "}"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellLabel->
+  "In[1076]:=",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fltCircumCircles", "=", 
+   RowBox[{"Association", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"AppendTo", "[", "\[IndentingNewLine]", 
+       RowBox[{"fltCircumCircles", ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"intaddbrackets", "[", "ptn", "]"}], "->", 
+         RowBox[{"curveSimplify", "[", 
+          RowBox[{"bCircumconicPEq", "[", 
+           RowBox[{"simplifyRationalBarycentrics", "[", 
+            RowBox[{"KimberlingCenterCNy", "[", "ptn", "]"}], "]"}], "]"}], 
+          "]"}]}]}], "]"}], ";"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"ptn", ",", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{"Keys", "[", 
+          RowBox[{"Take", "[", 
+           RowBox[{"ETC", ",", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", "145"}], "}"}]}], "]"}], "]"}], ",", 
+         RowBox[{
+          RowBox[{"PolynomialQ", "[", 
+           RowBox[{
+            RowBox[{"evaluate", "[", 
+             RowBox[{"ETC", "[", "#", "]"}], "]"}], ",", "a"}], "]"}], 
+          "&"}]}], "]"}]}], "}"}]}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"fltInCircles", "=", 
+   RowBox[{"Association", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"fltInCircles", ",", 
+       RowBox[{
+        RowBox[{"intaddbrackets", "[", "ptn", "]"}], "->", 
+        RowBox[{"curveSimplify", "[", 
+         RowBox[{"bInconicEq", "[", 
+          RowBox[{"simplifyRationalBarycentrics", "[", 
+           RowBox[{"KimberlingCenterCNy", "[", "ptn", "]"}], "]"}], "]"}], 
+         "]"}]}]}], "]"}], ";"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"ptn", ",", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Keys", "[", 
+         RowBox[{"Take", "[", 
+          RowBox[{"ETC", ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "145"}], "}"}]}], "]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"PolynomialQ", "[", 
+          RowBox[{
+           RowBox[{"evaluate", "[", 
+            RowBox[{"ETC", "[", "#", "]"}], "]"}], ",", "a"}], "]"}], "&"}]}],
+        "]"}]}], "}"}]}], "]"}], ";"}]}], "Input",ExpressionUUID->"44281663-\
+949a-4d3f-8911-3c7ba99aa28f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"DeleteFile", "[", "\"\<fltCircles.m\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Save", "[", 
+  RowBox[{"\"\<fltCircles.m\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "fltInCircles", ",", "fltCircumCircles", ",", "fltCentralCircles"}], 
+    "}"}]}], "]"}]}], "Input",
+ Background->RGBColor[
+  0.94, 0.88, 0.94],ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
+},
+WindowSize->{1093.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a813cf8d-5bd2-4c56-a801-bd5633c2c4a7"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 180, 4, 28, "Input",ExpressionUUID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
+Cell[741, 26, 3602, 71, 314, "Input",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+Cell[4346, 99, 2314, 65, 181, "Input",ExpressionUUID->"44281663-949a-4d3f-8911-3c7ba99aa28f"],
+Cell[6663, 166, 415, 11, 64, "Input",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
+}
+]
+*)
+

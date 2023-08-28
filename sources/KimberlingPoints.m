@@ -11,17 +11,18 @@ KimberlingCenter[k_, XPA_, XPB_, XPC_] := Module[{bary},
  
 KimberlingCenterCN = X
  
-X[k_] := evaluate[symmetrizeInternal[ETC[StringJoin["X", ToString[k]]]] /. 
-      Thread[{A -> angleA, B -> angleB, C -> angleC}]]
+X[k_] := evaluate[symmetrizeInternal[ETCFull[StringJoin["X", 
+         ToString[k]]]] /. Thread[{A -> angleA, B -> angleB, C -> angleC}]]
  
 KimberlingCenterC[k_] := Module[{ptname}, 
      If[NumericQ[k], ptname = StringJoin["X", ToString[k]], ptname = k]; 
-      Return[symmetrizeInternal[ETC[ptname]] /. 
+      Return[symmetrizeInternal[ETCFull[ptname]] /. 
         Thread[{A -> angleA, B -> angleB, C -> angleC}]]; ]
  
 getTriangleCurve[name_, in_:TriangleCurves] := 
-    Module[{tmp}, tmp = Select[Keys[in], StringStartsQ[#1, name] & ]; 
-      Print[tmp]; Return[evaluate[in[tmp[[1]]]]]; ]
+    Module[{tmp}, tmp = Select[Keys[in], StringContainsQ[ToLowerCase[#1], 
+          ToLowerCase[name]] & ]; Print[tmp]; 
+      Return[evaluate[in[tmp[[1]]]]]; ]
  
 getvalue[ass_, key_] := If[KeyExistsQ[ass, key], ass[key], 
      {Indeterminate, Indeterminate, Indeterminate}]
@@ -54,8 +55,8 @@ checkPointsOnCurve[crv_] := Module[{curve, curve2, out, normcoef},
        Max[Flatten[Abs[CoefficientList[curve2, {x, y, z}]]]]; 
       test = Select[(Abs[curve2/normcoef /. Thread[{x, y, z} -> #1]] & ) /@ 
          ETCBaryNorm, #1 < 10^(-12) & ]; 
-      out = Select[Table[{ni, N[curve /. Thread[{x, y, z} -> 
-               KimberlingCenterCNy[ni]] /. intCheckList[[1]], 20]}, 
+      out = Select[Table[{ni, N[Simplify[curve /. Thread[{x, y, z} -> 
+                KimberlingCenterCNy[ni]] /. intCheckList[[1]]], 20]}, 
          {ni, Keys[test]}], #1[[2]] == 0 & ]; 
       out = SortBy[out, numsortexpr[#1[[1]]] & ]; 
       (StringJoin[StringTake[#1[[1]], 1], "(", StringTake[#1[[1]], {2, -1}], 
