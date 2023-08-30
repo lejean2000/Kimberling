@@ -188,7 +188,7 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
              sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; ]; ]; 
       AssociateTo[globalProperties[name], {"name" -> outname}]; 
       If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; 
-      barys = ExpressionToTrad[Simplify[printexpr]]; 
+      barys = ExpressionToTrad[FullSimplify[printexpr]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
          barys]]]; out = ({intnameformat[#1[[1]]], intnameformat[
@@ -558,7 +558,7 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
  
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
       outin}, out = {}; outci = {}; outin = {}; If[ !globalCheckAllPoles, 
-       Do[plr = TimeConstrained[simplifyRationalBarycentrics[
+       Do[mon = circ; plr = TimeConstrained[simplifyRationalBarycentrics[
              bPolar[fltCentralCircles[circ], pt]], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
             plr . {x, y, z}]; If[Length[set] >= 2, 
@@ -645,11 +645,12 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
       Do[print[StringJoin[printname, " = ", glob[pt]["name"]]]; print[]; 
         print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
         print[]; print[]; If[MemberQ[Keys[glob[pt]], "descr"], 
-         print[StringReplace[glob[pt]["descr"], "This point" -> printname]]; 
-          print[]; ]; hg = If[ !MemberQ[Keys[glob[pt]], 
-            "linear combinations"], {}, glob[pt]["linear combinations"]]; 
-        If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
-             " linear combinations: ", StringRiffle[hg, ", "]]]]; print[]; ]; 
+         print[StringJoin["DESCR: ", StringReplace[glob[pt]["descr"], 
+             "This point" -> printname]]]; print[]; ]; 
+        hg = If[ !MemberQ[Keys[glob[pt]], "linear combinations"], {}, 
+          glob[pt]["linear combinations"]]; If[Length[hg] > 0, 
+         print[colorformat[StringJoin[printname, " linear combinations: ", 
+             StringRiffle[hg, ", "]]]]; print[]; ]; 
         print[colorformat[StringJoin[printname, " lies on these lines: ", 
            StringRiffle[glob[pt]["lines"], ", "]]]]; print[]; 
         If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 

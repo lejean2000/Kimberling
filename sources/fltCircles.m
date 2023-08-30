@@ -5096,36 +5096,36 @@ fltCircumCircles = <|"X(1)" -> c*x*y + b*x*z + a*y*z,
        (-3*a^2 + (b - c)^2 + 2*a*(b + c))*y*z, 
      "X(145)" -> (a + b - 3*c)*x*y + (a - 3*b + c)*x*z + (-3*a + b + c)*y*z|>
  
-fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y + 
+fltCentralCircles = <|"anticomplementary circle" -> a^2*x^2 + a^2*x*y + 
        b^2*x*y + c^2*x*y + b^2*y^2 + a^2*x*z + b^2*x*z + c^2*x*z + a^2*y*z + 
-       b^2*y*z + c^2*y*z + c^2*z^2, "Bevan Circle" -> 
+       b^2*y*z + c^2*y*z + c^2*z^2, "Bevan circle" -> 
       b*c*x^2 + a*c*x*y + b*c*x*y + c^2*x*y + a*c*y^2 + a*b*x*z + b^2*x*z + 
        b*c*x*z + a^2*y*z + a*b*y*z + a*c*y*z + a*b*z^2, 
-     "First Brocard Circle" -> b^2*c^2*x^2 - c^4*x*y + a^2*c^2*y^2 - 
-       b^4*x*z - a^4*y*z + a^2*b^2*z^2, "Second Brocard Circle" -> 
+     "1st Brocard circle" -> b^2*c^2*x^2 - c^4*x*y + a^2*c^2*y^2 - b^4*x*z - 
+       a^4*y*z + a^2*b^2*z^2, "2nd Brocard circle" -> 
       a^2*b^2*c^2*x^2 + a^2*b^2*c^2*x*y - a^2*c^4*x*y - b^2*c^4*x*y + 
        a^2*b^2*c^2*y^2 - a^2*b^4*x*z + a^2*b^2*c^2*x*z - b^4*c^2*x*z - 
        a^4*b^2*y*z - a^4*c^2*y*z + a^2*b^2*c^2*y*z + a^2*b^2*c^2*z^2, 
-     "Circumcircle" -> c^2*x*y + b^2*x*z + a^2*y*z, 
-     "Conway Circle" -> a*b*x^2 + a*c*x^2 + 2*a*b*x*y + a*c*x*y + b*c*x*y + 
+     "circumcircle" -> c^2*x*y + b^2*x*z + a^2*y*z, 
+     "Conway circle" -> a*b*x^2 + a*c*x^2 + 2*a*b*x*y + a*c*x*y + b*c*x*y + 
        c^2*x*y + a*b*y^2 + b*c*y^2 + a*b*x*z + b^2*x*z + 2*a*c*x*z + 
        b*c*x*z + a^2*y*z + a*b*y*z + a*c*y*z + 2*b*c*y*z + a*c*z^2 + b*c*z^2, 
-     "Cosine Circle" -> 2*a^2*b^2*c^2*x^2 - 2*b^4*c^2*x^2 - 2*b^2*c^4*x^2 - 
+     "cosine circle" -> 2*a^2*b^2*c^2*x^2 - 2*b^4*c^2*x^2 - 2*b^2*c^4*x^2 - 
        a^4*c^2*x*y + 6*a^2*b^2*c^2*x*y - b^4*c^2*x*y + c^6*x*y - 
        2*a^4*c^2*y^2 + 2*a^2*b^2*c^2*y^2 - 2*a^2*c^4*y^2 - a^4*b^2*x*z + 
        b^6*x*z + 6*a^2*b^2*c^2*x*z - b^2*c^4*x*z + a^6*y*z - a^2*b^4*y*z + 
        6*a^2*b^2*c^2*y*z - a^2*c^4*y*z - 2*a^4*b^2*z^2 - 2*a^2*b^4*z^2 + 
-       2*a^2*b^2*c^2*z^2, "DeLongchamps Circle" -> 2*a^2*x^2 + 2*a^2*x*y + 
+       2*a^2*b^2*c^2*z^2, "DeLongchamps circle" -> 2*a^2*x^2 + 2*a^2*x*y + 
        2*b^2*x*y - 2*c^2*x*y + 2*b^2*y^2 + 2*a^2*x*z - 2*b^2*x*z + 
        2*c^2*x*z - 2*a^2*y*z + 2*b^2*y*z + 2*c^2*y*z + 2*c^2*z^2, 
-     "First DrozFarny Circle" -> a^6*x^2 - 3*a^4*b^2*x^2 + 3*a^2*b^4*x^2 - 
+     "1st DrozFarny circle" -> a^6*x^2 - 3*a^4*b^2*x^2 + 3*a^2*b^4*x^2 - 
        b^6*x^2 - 3*a^4*c^2*x^2 + b^4*c^2*x^2 + 3*a^2*c^4*x^2 + b^2*c^4*x^2 - 
        c^6*x^2 - 4*a^2*b^2*c^2*x*y - a^6*y^2 + 3*a^4*b^2*y^2 - 
        3*a^2*b^4*y^2 + b^6*y^2 + a^4*c^2*y^2 - 3*b^4*c^2*y^2 + a^2*c^4*y^2 + 
        3*b^2*c^4*y^2 - c^6*y^2 - 4*a^2*b^2*c^2*x*z - 4*a^2*b^2*c^2*y*z - 
        a^6*z^2 + a^4*b^2*z^2 + a^2*b^4*z^2 - b^6*z^2 + 3*a^4*c^2*z^2 + 
        3*b^4*c^2*z^2 - 3*a^2*c^4*z^2 - 3*b^2*c^4*z^2 + c^6*z^2, 
-     "Second DrozFarny Circle" -> a^6*x^2 - a^4*b^2*x^2 - a^2*b^4*x^2 + 
+     "2nd DrozFarny circle" -> a^6*x^2 - a^4*b^2*x^2 - a^2*b^4*x^2 + 
        b^6*x^2 - a^4*c^2*x^2 + 2*a^2*b^2*c^2*x^2 - b^4*c^2*x^2 - 
        a^2*c^4*x^2 - b^2*c^4*x^2 + c^6*x^2 + 2*a^6*x*y - 2*a^4*b^2*x*y - 
        2*a^2*b^4*x*y + 2*b^6*x*y - 4*a^4*c^2*x*y + 8*a^2*b^2*c^2*x*y - 
@@ -5138,20 +5138,20 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        2*a^4*c^2*y*z + 8*a^2*b^2*c^2*y*z - 2*b^4*c^2*y*z - 4*a^2*c^4*y*z - 
        2*b^2*c^4*y*z + 2*c^6*y*z + a^6*z^2 - a^4*b^2*z^2 - a^2*b^4*z^2 + 
        b^6*z^2 - a^4*c^2*z^2 + 2*a^2*b^2*c^2*z^2 - b^4*c^2*z^2 - 
-       a^2*c^4*z^2 - b^2*c^4*z^2 + c^6*z^2, "Excircles Radical Circle" -> 
+       a^2*c^4*z^2 - b^2*c^4*z^2 + c^6*z^2, "excircles-radical circle" -> 
       a^2*x^2 - b^2*x^2 + 2*b*c*x^2 - c^2*x^2 + 2*a*c*x*y + 2*b*c*x*y + 
        2*c^2*x*y - a^2*y^2 + b^2*y^2 + 2*a*c*y^2 - c^2*y^2 + 2*a*b*x*z + 
        2*b^2*x*z + 2*b*c*x*z + 2*a^2*y*z + 2*a*b*y*z + 2*a*c*y*z - a^2*z^2 + 
-       2*a*b*z^2 - b^2*z^2 + c^2*z^2, "First Lemoine Circle" -> 
+       2*a*b*z^2 - b^2*z^2 + c^2*z^2, "1st Lemoine circle" -> 
       b^4*c^2*x^2 + b^2*c^4*x^2 - 2*a^2*b^2*c^2*x*y - a^2*c^4*x*y - 
        b^2*c^4*x*y - c^6*x*y + a^4*c^2*y^2 + a^2*c^4*y^2 - a^2*b^4*x*z - 
        b^6*x*z - 2*a^2*b^2*c^2*x*z - b^4*c^2*x*z - a^6*y*z - a^4*b^2*y*z - 
        a^4*c^2*y*z - 2*a^2*b^2*c^2*y*z + a^4*b^2*z^2 + a^2*b^4*z^2, 
-     "Fuhrmann Circle" -> a^3*x^2 - a*b^2*x^2 - a*c^2*x^2 + a^3*x*y - 
+     "Fuhrmann circle" -> a^3*x^2 - a*b^2*x^2 - a*c^2*x^2 + a^3*x*y - 
        a^2*b*x*y - a*b^2*x*y + b^3*x*y + c^3*x*y - a^2*b*y^2 + b^3*y^2 - 
        b*c^2*y^2 + a^3*x*z + b^3*x*z - a^2*c*x*z - a*c^2*x*z + c^3*x*z + 
        a^3*y*z + b^3*y*z - b^2*c*y*z - b*c^2*y*z + c^3*y*z - a^2*c*z^2 - 
-       b^2*c*z^2 + c^3*z^2, "Gallatly Circle" -> a^6*b^2*c^2*x^2 - 
+       b^2*c*z^2 + c^3*z^2, "Gallatly circle" -> a^6*b^2*c^2*x^2 - 
        a^2*b^6*c^2*x^2 - 4*a^2*b^4*c^4*x^2 - 2*b^6*c^4*x^2 - 
        a^2*b^2*c^6*x^2 - 2*b^4*c^6*x^2 + 4*a^4*b^4*c^2*x*y - 2*a^6*c^4*x*y + 
        4*a^4*b^2*c^4*x*y + 4*a^2*b^4*c^4*x*y - 2*b^6*c^4*x*y + 
@@ -5163,16 +5163,38 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        6*a^6*b^2*c^2*y*z + 4*a^4*b^4*c^2*y*z + 2*a^6*c^4*y*z + 
        4*a^4*b^2*c^4*y*z + 4*a^2*b^4*c^4*y*z - 2*a^4*c^6*y*z - 
        2*a^6*b^4*z^2 - 2*a^4*b^6*z^2 - a^6*b^2*c^2*z^2 - 4*a^4*b^4*c^2*z^2 - 
-       a^2*b^6*c^2*z^2 + a^2*b^2*c^6*z^2, "Half Moses Circle" -> 
-      3*a^6*b^2*c^2*x^2 - 2*a^4*b^4*c^2*x^2 - 5*a^2*b^6*c^2*x^2 - 
-       2*a^4*b^2*c^4*x^2 - 18*a^2*b^4*c^4*x^2 - 8*b^6*c^4*x^2 - 
-       5*a^2*b^2*c^6*x^2 - 8*b^4*c^6*x^2 - 2*a^6*b^2*c^2*x*y + 
-       12*a^4*b^4*c^2*x*y - 2*a^2*b^6*c^2*x*y - 8*a^6*c^4*x*y + 
-       12*a^4*b^2*c^4*x*y + 12*a^2*b^4*c^4*x*y - 8*b^6*c^4*x*y + 
-       8*a^4*c^6*x*y + 22*a^2*b^2*c^6*x*y + 8*b^4*c^6*x*y - 
-       5*a^6*b^2*c^2*y^2 - 2*a^4*b^4*c^2*y^2 + 3*a^2*b^6*c^2*y^2 - 
-       8*a^6*c^4*y^2 - 18*a^4*b^2*c^4*y^2 - 2*a^2*b^4*c^4*y^2 - 
-       8*a^4*c^6*y^2 - 5*a^2*b^2*c^6*y^2 - 8*a^6*b^4*x*z + 8*a^4*b^6*x*z - 
+       a^2*b^6*c^2*z^2 + a^2*b^2*c^6*z^2, "half-altitude circle" -> 
+      5*a^8*x^2 - 8*a^6*b^2*x^2 - 6*a^4*b^4*x^2 + 16*a^2*b^6*x^2 - 
+       7*b^8*x^2 - 8*a^6*c^2*x^2 + 28*a^4*b^2*c^2*x^2 - 16*a^2*b^4*c^2*x^2 - 
+       4*b^6*c^2*x^2 - 6*a^4*c^4*x^2 - 16*a^2*b^2*c^4*x^2 + 22*b^4*c^4*x^2 + 
+       16*a^2*c^6*x^2 - 4*b^2*c^6*x^2 - 7*c^8*x^2 - 2*a^8*x*y + 
+       8*a^6*b^2*x*y - 12*a^4*b^4*x*y + 8*a^2*b^6*x*y - 2*b^8*x*y + 
+       4*a^6*c^2*x*y - 4*a^4*b^2*c^2*x*y - 4*a^2*b^4*c^2*x*y + 
+       4*b^6*c^2*x*y - 4*a^2*c^6*x*y - 4*b^2*c^6*x*y + 2*c^8*x*y - 
+       7*a^8*y^2 + 16*a^6*b^2*y^2 - 6*a^4*b^4*y^2 - 8*a^2*b^6*y^2 + 
+       5*b^8*y^2 - 4*a^6*c^2*y^2 - 16*a^4*b^2*c^2*y^2 + 28*a^2*b^4*c^2*y^2 - 
+       8*b^6*c^2*y^2 + 22*a^4*c^4*y^2 - 16*a^2*b^2*c^4*y^2 - 6*b^4*c^4*y^2 - 
+       4*a^2*c^6*y^2 + 16*b^2*c^6*y^2 - 7*c^8*y^2 - 2*a^8*x*z + 
+       4*a^6*b^2*x*z - 4*a^2*b^6*x*z + 2*b^8*x*z + 8*a^6*c^2*x*z - 
+       4*a^4*b^2*c^2*x*z - 4*b^6*c^2*x*z - 12*a^4*c^4*x*z - 
+       4*a^2*b^2*c^4*x*z + 8*a^2*c^6*x*z + 4*b^2*c^6*x*z - 2*c^8*x*z + 
+       2*a^8*y*z - 4*a^6*b^2*y*z + 4*a^2*b^6*y*z - 2*b^8*y*z - 
+       4*a^6*c^2*y*z - 4*a^2*b^4*c^2*y*z + 8*b^6*c^2*y*z - 
+       4*a^2*b^2*c^4*y*z - 12*b^4*c^4*y*z + 4*a^2*c^6*y*z + 8*b^2*c^6*y*z - 
+       2*c^8*y*z - 7*a^8*z^2 - 4*a^6*b^2*z^2 + 22*a^4*b^4*z^2 - 
+       4*a^2*b^6*z^2 - 7*b^8*z^2 + 16*a^6*c^2*z^2 - 16*a^4*b^2*c^2*z^2 - 
+       16*a^2*b^4*c^2*z^2 + 16*b^6*c^2*z^2 - 6*a^4*c^4*z^2 + 
+       28*a^2*b^2*c^4*z^2 - 6*b^4*c^4*z^2 - 8*a^2*c^6*z^2 - 8*b^2*c^6*z^2 + 
+       5*c^8*z^2, "half Moses circle" -> 3*a^6*b^2*c^2*x^2 - 
+       2*a^4*b^4*c^2*x^2 - 5*a^2*b^6*c^2*x^2 - 2*a^4*b^2*c^4*x^2 - 
+       18*a^2*b^4*c^4*x^2 - 8*b^6*c^4*x^2 - 5*a^2*b^2*c^6*x^2 - 
+       8*b^4*c^6*x^2 - 2*a^6*b^2*c^2*x*y + 12*a^4*b^4*c^2*x*y - 
+       2*a^2*b^6*c^2*x*y - 8*a^6*c^4*x*y + 12*a^4*b^2*c^4*x*y + 
+       12*a^2*b^4*c^4*x*y - 8*b^6*c^4*x*y + 8*a^4*c^6*x*y + 
+       22*a^2*b^2*c^6*x*y + 8*b^4*c^6*x*y - 5*a^6*b^2*c^2*y^2 - 
+       2*a^4*b^4*c^2*y^2 + 3*a^2*b^6*c^2*y^2 - 8*a^6*c^4*y^2 - 
+       18*a^4*b^2*c^4*y^2 - 2*a^2*b^4*c^4*y^2 - 8*a^4*c^6*y^2 - 
+       5*a^2*b^2*c^6*y^2 - 8*a^6*b^4*x*z + 8*a^4*b^6*x*z - 
        2*a^6*b^2*c^2*x*z + 12*a^4*b^4*c^2*x*z + 22*a^2*b^6*c^2*x*z + 
        12*a^4*b^2*c^4*x*z + 12*a^2*b^4*c^4*x*z + 8*b^6*c^4*x*z - 
        2*a^2*b^2*c^6*x*z - 8*b^4*c^6*x*z + 8*a^6*b^4*y*z - 8*a^4*b^6*y*z + 
@@ -5181,12 +5203,12 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        8*a^4*c^6*y*z - 2*a^2*b^2*c^6*y*z - 8*a^6*b^4*z^2 - 8*a^4*b^6*z^2 - 
        5*a^6*b^2*c^2*z^2 - 18*a^4*b^4*c^2*z^2 - 5*a^2*b^6*c^2*z^2 - 
        2*a^4*b^2*c^4*z^2 - 2*a^2*b^4*c^4*z^2 + 3*a^2*b^2*c^6*z^2, 
-     "Incircle" -> a^2*x^2 - 2*a*b*x^2 + b^2*x^2 - 2*a*c*x^2 + 2*b*c*x^2 + 
+     "incircle" -> a^2*x^2 - 2*a*b*x^2 + b^2*x^2 - 2*a*c*x^2 + 2*b*c*x^2 + 
        c^2*x^2 + 2*a^2*x*y - 4*a*b*x*y + 2*b^2*x*y - 2*c^2*x*y + a^2*y^2 - 
        2*a*b*y^2 + b^2*y^2 + 2*a*c*y^2 - 2*b*c*y^2 + c^2*y^2 + 2*a^2*x*z - 
        2*b^2*x*z - 4*a*c*x*z + 2*c^2*x*z - 2*a^2*y*z + 2*b^2*y*z - 
        4*b*c*y*z + 2*c^2*y*z + a^2*z^2 + 2*a*b*z^2 + b^2*z^2 - 2*a*c*z^2 - 
-       2*b*c*z^2 + c^2*z^2, "Johnson Triangle Circumcircle" -> 
+       2*b*c*z^2 + c^2*z^2, "circumcircle of the Johnson triangle" -> 
       a^6*x^2 - 2*a^4*b^2*x^2 + a^2*b^4*x^2 - 2*a^4*c^2*x^2 + 
        a^2*b^2*c^2*x^2 + a^2*c^4*x^2 + a^6*x*y - a^4*b^2*x*y - a^2*b^4*x*y + 
        b^6*x*y - a^4*c^2*x*y - b^4*c^2*x*y - a^2*c^4*x*y - b^2*c^4*x*y + 
@@ -5196,56 +5218,191 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        c^6*x*z + a^6*y*z - a^4*b^2*y*z - a^2*b^4*y*z + b^6*y*z - 
        a^4*c^2*y*z - b^4*c^2*y*z - a^2*c^4*y*z - b^2*c^4*y*z + c^6*y*z + 
        a^4*c^2*z^2 + a^2*b^2*c^2*z^2 + b^4*c^2*z^2 - 2*a^2*c^4*z^2 - 
-       2*b^2*c^4*z^2 + c^6*z^2, "Longuet Higgins Circle" -> 
-      b^2*x^2 + 2*b*c*x^2 + c^2*x^2 + a^2*x*y + b^2*x*y + 2*a*c*x*y + 
-       2*b*c*x*y + c^2*x*y + a^2*y^2 + 2*a*c*y^2 + c^2*y^2 + a^2*x*z + 
-       2*a*b*x*z + b^2*x*z + 2*b*c*x*z + c^2*x*z + a^2*y*z + 2*a*b*y*z + 
-       b^2*y*z + 2*a*c*y*z + c^2*y*z + a^2*z^2 + 2*a*b*z^2 + b^2*z^2, 
-     "Mixtilinear Incircles Radical Circle" -> 4*a^2*b^2*c^2*x^2 - 
-       4*a*b^3*c^2*x^2 - 4*a*b^2*c^3*x^2 + a^4*c^2*x*y - 4*a^3*b*c^2*x*y + 
-       6*a^2*b^2*c^2*x*y - 4*a*b^3*c^2*x*y + b^4*c^2*x*y - 2*a^2*c^4*x*y + 
-       4*a*b*c^4*x*y - 2*b^2*c^4*x*y + c^6*x*y - 4*a^3*b*c^2*y^2 + 
-       4*a^2*b^2*c^2*y^2 - 4*a^2*b*c^3*y^2 + a^4*b^2*x*z - 2*a^2*b^4*x*z + 
-       b^6*x*z - 4*a^3*b^2*c*x*z + 4*a*b^4*c*x*z + 6*a^2*b^2*c^2*x*z - 
-       2*b^4*c^2*x*z - 4*a*b^2*c^3*x*z + b^2*c^4*x*z + a^6*y*z - 
-       2*a^4*b^2*y*z + a^2*b^4*y*z + 4*a^4*b*c*y*z - 4*a^2*b^3*c*y*z - 
-       2*a^4*c^2*y*z + 6*a^2*b^2*c^2*y*z - 4*a^2*b*c^3*y*z + a^2*c^4*y*z - 
-       4*a^3*b^2*c*z^2 - 4*a^2*b^3*c*z^2 + 4*a^2*b^2*c^2*z^2, 
-     "Moses Circle" -> a^2*b^2*c^2*x^2 - 2*b^4*c^2*x^2 - 2*b^2*c^4*x^2 - 
-       2*a^4*c^2*x*y + 6*a^2*b^2*c^2*x*y - 2*b^4*c^2*x*y + 2*a^2*c^4*x*y + 
-       2*b^2*c^4*x*y - 2*a^4*c^2*y^2 + a^2*b^2*c^2*y^2 - 2*a^2*c^4*y^2 - 
-       2*a^4*b^2*x*z + 2*a^2*b^4*x*z + 6*a^2*b^2*c^2*x*z + 2*b^4*c^2*x*z - 
-       2*b^2*c^4*x*z + 2*a^4*b^2*y*z - 2*a^2*b^4*y*z + 2*a^4*c^2*y*z + 
-       6*a^2*b^2*c^2*y*z - 2*a^2*c^4*y*z - 2*a^4*b^2*z^2 - 2*a^2*b^4*z^2 + 
-       a^2*b^2*c^2*z^2, "Moses Longuet Higgins Circle" -> 
+       2*b^2*c^4*z^2 + c^6*z^2, "1st Johnson-Yff circle" -> 
+      a^9*x^2 - a^8*b*x^2 - 3*a^7*b^2*x^2 + 3*a^6*b^3*x^2 + 3*a^5*b^4*x^2 - 
+       3*a^4*b^5*x^2 - a^3*b^6*x^2 + a^2*b^7*x^2 - a^8*c*x^2 + 
+       2*a^7*b*c*x^2 - a^6*b^2*c*x^2 - 2*a^5*b^3*c*x^2 + 5*a^4*b^4*c*x^2 - 
+       2*a^3*b^5*c*x^2 - 3*a^2*b^6*c*x^2 + 2*a*b^7*c*x^2 - 3*a^7*c^2*x^2 - 
+       a^6*b*c^2*x^2 + 9*a^5*b^2*c^2*x^2 - a^4*b^3*c^2*x^2 - 
+       6*a^3*b^4*c^2*x^2 + 2*a^2*b^5*c^2*x^2 + 3*a^6*c^3*x^2 - 
+       2*a^5*b*c^3*x^2 - a^4*b^2*c^3*x^2 + 6*a^3*b^3*c^3*x^2 - 
+       4*a^2*b^4*c^3*x^2 - 2*a*b^5*c^3*x^2 + 3*a^5*c^4*x^2 + 
+       5*a^4*b*c^4*x^2 - 6*a^3*b^2*c^4*x^2 - 4*a^2*b^3*c^4*x^2 - 
+       3*a^4*c^5*x^2 - 2*a^3*b*c^5*x^2 + 2*a^2*b^2*c^5*x^2 - 
+       2*a*b^3*c^5*x^2 - a^3*c^6*x^2 - 3*a^2*b*c^6*x^2 + a^2*c^7*x^2 + 
+       2*a*b*c^7*x^2 + a^9*x*y - a^8*b*x*y - 2*a^7*b^2*x*y + 2*a^6*b^3*x*y + 
+       2*a^3*b^6*x*y - 2*a^2*b^7*x*y - a*b^8*x*y + b^9*x*y - a^8*c*x*y + 
+       4*a^7*b*c*x*y - 4*a^6*b^2*c*x*y - 4*a^5*b^3*c*x*y + 10*a^4*b^4*c*x*y - 
+       4*a^3*b^5*c*x*y - 4*a^2*b^6*c*x*y + 4*a*b^7*c*x*y - b^8*c*x*y - 
+       2*a^7*c^2*x*y - 2*a^6*b*c^2*x*y + 8*a^5*b^2*c^2*x*y - 
+       4*a^4*b^3*c^2*x*y - 4*a^3*b^4*c^2*x*y + 8*a^2*b^5*c^2*x*y - 
+       2*a*b^6*c^2*x*y - 2*b^7*c^2*x*y + 2*a^6*c^3*x*y - 6*a^5*b*c^3*x*y - 
+       4*a^4*b^2*c^3*x*y + 16*a^3*b^3*c^3*x*y - 4*a^2*b^4*c^3*x*y - 
+       6*a*b^5*c^3*x*y + 2*b^6*c^3*x*y + 6*a^4*b*c^4*x*y - 
+       4*a^3*b^2*c^4*x*y - 4*a^2*b^3*c^4*x*y + 6*a*b^4*c^4*x*y + 
+       10*a^2*b^2*c^5*x*y + 2*a^3*c^6*x*y - 2*a^2*b*c^6*x*y - 
+       2*a*b^2*c^6*x*y + 2*b^3*c^6*x*y - 2*a^2*c^7*x*y + 2*a*b*c^7*x*y - 
+       2*b^2*c^7*x*y - a*c^8*x*y - b*c^8*x*y + c^9*x*y + a^7*b^2*y^2 - 
+       a^6*b^3*y^2 - 3*a^5*b^4*y^2 + 3*a^4*b^5*y^2 + 3*a^3*b^6*y^2 - 
+       3*a^2*b^7*y^2 - a*b^8*y^2 + b^9*y^2 + 2*a^7*b*c*y^2 - 
+       3*a^6*b^2*c*y^2 - 2*a^5*b^3*c*y^2 + 5*a^4*b^4*c*y^2 - 
+       2*a^3*b^5*c*y^2 - a^2*b^6*c*y^2 + 2*a*b^7*c*y^2 - b^8*c*y^2 + 
+       2*a^5*b^2*c^2*y^2 - 6*a^4*b^3*c^2*y^2 - a^3*b^4*c^2*y^2 + 
+       9*a^2*b^5*c^2*y^2 - a*b^6*c^2*y^2 - 3*b^7*c^2*y^2 - 2*a^5*b*c^3*y^2 - 
+       4*a^4*b^2*c^3*y^2 + 6*a^3*b^3*c^3*y^2 - a^2*b^4*c^3*y^2 - 
+       2*a*b^5*c^3*y^2 + 3*b^6*c^3*y^2 - 4*a^3*b^2*c^4*y^2 - 
+       6*a^2*b^3*c^4*y^2 + 5*a*b^4*c^4*y^2 + 3*b^5*c^4*y^2 - 
+       2*a^3*b*c^5*y^2 + 2*a^2*b^2*c^5*y^2 - 2*a*b^3*c^5*y^2 - 
+       3*b^4*c^5*y^2 - 3*a*b^2*c^6*y^2 - b^3*c^6*y^2 + 2*a*b*c^7*y^2 + 
+       b^2*c^7*y^2 + a^9*x*z - a^8*b*x*z - 2*a^7*b^2*x*z + 2*a^6*b^3*x*z + 
+       2*a^3*b^6*x*z - 2*a^2*b^7*x*z - a*b^8*x*z + b^9*x*z - a^8*c*x*z + 
+       4*a^7*b*c*x*z - 2*a^6*b^2*c*x*z - 6*a^5*b^3*c*x*z + 6*a^4*b^4*c*x*z - 
+       2*a^2*b^6*c*x*z + 2*a*b^7*c*x*z - b^8*c*x*z - 2*a^7*c^2*x*z - 
+       4*a^6*b*c^2*x*z + 8*a^5*b^2*c^2*x*z - 4*a^4*b^3*c^2*x*z - 
+       4*a^3*b^4*c^2*x*z + 10*a^2*b^5*c^2*x*z - 2*a*b^6*c^2*x*z - 
+       2*b^7*c^2*x*z + 2*a^6*c^3*x*z - 4*a^5*b*c^3*x*z - 4*a^4*b^2*c^3*x*z + 
+       16*a^3*b^3*c^3*x*z - 4*a^2*b^4*c^3*x*z + 2*b^6*c^3*x*z + 
+       10*a^4*b*c^4*x*z - 4*a^3*b^2*c^4*x*z - 4*a^2*b^3*c^4*x*z + 
+       6*a*b^4*c^4*x*z - 4*a^3*b*c^5*x*z + 8*a^2*b^2*c^5*x*z - 
+       6*a*b^3*c^5*x*z + 2*a^3*c^6*x*z - 4*a^2*b*c^6*x*z - 2*a*b^2*c^6*x*z + 
+       2*b^3*c^6*x*z - 2*a^2*c^7*x*z + 4*a*b*c^7*x*z - 2*b^2*c^7*x*z - 
+       a*c^8*x*z - b*c^8*x*z + c^9*x*z + a^9*y*z - a^8*b*y*z - 
+       2*a^7*b^2*y*z + 2*a^6*b^3*y*z + 2*a^3*b^6*y*z - 2*a^2*b^7*y*z - 
+       a*b^8*y*z + b^9*y*z - a^8*c*y*z + 2*a^7*b*c*y*z - 2*a^6*b^2*c*y*z + 
+       6*a^4*b^4*c*y*z - 6*a^3*b^5*c*y*z - 2*a^2*b^6*c*y*z + 4*a*b^7*c*y*z - 
+       b^8*c*y*z - 2*a^7*c^2*y*z - 2*a^6*b*c^2*y*z + 10*a^5*b^2*c^2*y*z - 
+       4*a^4*b^3*c^2*y*z - 4*a^3*b^4*c^2*y*z + 8*a^2*b^5*c^2*y*z - 
+       4*a*b^6*c^2*y*z - 2*b^7*c^2*y*z + 2*a^6*c^3*y*z - 4*a^4*b^2*c^3*y*z + 
+       16*a^3*b^3*c^3*y*z - 4*a^2*b^4*c^3*y*z - 4*a*b^5*c^3*y*z + 
+       2*b^6*c^3*y*z + 6*a^4*b*c^4*y*z - 4*a^3*b^2*c^4*y*z - 
+       4*a^2*b^3*c^4*y*z + 10*a*b^4*c^4*y*z - 6*a^3*b*c^5*y*z + 
+       8*a^2*b^2*c^5*y*z - 4*a*b^3*c^5*y*z + 2*a^3*c^6*y*z - 
+       2*a^2*b*c^6*y*z - 4*a*b^2*c^6*y*z + 2*b^3*c^6*y*z - 2*a^2*c^7*y*z + 
+       4*a*b*c^7*y*z - 2*b^2*c^7*y*z - a*c^8*y*z - b*c^8*y*z + c^9*y*z + 
+       2*a^7*b*c*z^2 - 2*a^5*b^3*c*z^2 - 2*a^3*b^5*c*z^2 + 2*a*b^7*c*z^2 + 
+       a^7*c^2*z^2 - 3*a^6*b*c^2*z^2 + 2*a^5*b^2*c^2*z^2 - 
+       4*a^4*b^3*c^2*z^2 - 4*a^3*b^4*c^2*z^2 + 2*a^2*b^5*c^2*z^2 - 
+       3*a*b^6*c^2*z^2 + b^7*c^2*z^2 - a^6*c^3*z^2 - 2*a^5*b*c^3*z^2 - 
+       6*a^4*b^2*c^3*z^2 + 6*a^3*b^3*c^3*z^2 - 6*a^2*b^4*c^3*z^2 - 
+       2*a*b^5*c^3*z^2 - b^6*c^3*z^2 - 3*a^5*c^4*z^2 + 5*a^4*b*c^4*z^2 - 
+       a^3*b^2*c^4*z^2 - a^2*b^3*c^4*z^2 + 5*a*b^4*c^4*z^2 - 3*b^5*c^4*z^2 + 
+       3*a^4*c^5*z^2 - 2*a^3*b*c^5*z^2 + 9*a^2*b^2*c^5*z^2 - 
+       2*a*b^3*c^5*z^2 + 3*b^4*c^5*z^2 + 3*a^3*c^6*z^2 - a^2*b*c^6*z^2 - 
+       a*b^2*c^6*z^2 + 3*b^3*c^6*z^2 - 3*a^2*c^7*z^2 + 2*a*b*c^7*z^2 - 
+       3*b^2*c^7*z^2 - a*c^8*z^2 - b*c^8*z^2 + c^9*z^2, 
+     "2nd Johnson-Yff circle" -> a^8*x^2 - 2*a^7*b*x^2 - a^6*b^2*x^2 + 
+       4*a^5*b^3*x^2 - a^4*b^4*x^2 - 2*a^3*b^5*x^2 + a^2*b^6*x^2 - 
+       2*a^7*c*x^2 + 6*a^6*b*c*x^2 - 2*a^5*b^2*c*x^2 - 8*a^4*b^3*c*x^2 + 
+       6*a^3*b^4*c*x^2 + 2*a^2*b^5*c*x^2 - 2*a*b^6*c*x^2 - a^6*c^2*x^2 - 
+       2*a^5*b*c^2*x^2 + 5*a^4*b^2*c^2*x^2 + 2*a^3*b^3*c^2*x^2 - 
+       6*a^2*b^4*c^2*x^2 + 2*a*b^5*c^2*x^2 + 4*a^5*c^3*x^2 - 
+       8*a^4*b*c^3*x^2 + 2*a^3*b^2*c^3*x^2 + 2*a^2*b^3*c^3*x^2 - 
+       a^4*c^4*x^2 + 6*a^3*b*c^4*x^2 - 6*a^2*b^2*c^4*x^2 - 2*a^3*c^5*x^2 + 
+       2*a^2*b*c^5*x^2 + 2*a*b^2*c^5*x^2 + a^2*c^6*x^2 - 2*a*b*c^6*x^2 + 
+       a^8*x*y - 2*a^7*b*x*y + 2*a^5*b^3*x*y - 2*a^4*b^4*x*y + 
+       2*a^3*b^5*x*y - 2*a*b^7*x*y + b^8*x*y - 2*a^7*c*x*y + 4*a^6*b*c*x*y - 
+       2*a^4*b^3*c*x*y - 2*a^3*b^4*c*x*y + 4*a*b^6*c*x*y - 2*b^7*c*x*y - 
+       2*a^5*b*c^2*x*y - 2*a^4*b^2*c^2*x*y + 8*a^3*b^3*c^2*x*y - 
+       2*a^2*b^4*c^2*x*y - 2*a*b^5*c^2*x*y + 2*a^5*c^3*x*y + 
+       2*a^4*b*c^3*x*y - 4*a^3*b^2*c^3*x*y - 4*a^2*b^3*c^3*x*y + 
+       2*a*b^4*c^3*x*y + 2*b^5*c^3*x*y - 2*a^4*c^4*x*y - 2*a^3*b*c^4*x*y + 
+       10*a^2*b^2*c^4*x*y - 2*a*b^3*c^4*x*y - 2*b^4*c^4*x*y + 2*a^3*c^5*x*y - 
+       4*a^2*b*c^5*x*y - 4*a*b^2*c^5*x*y + 2*b^3*c^5*x*y + 6*a*b*c^6*x*y - 
+       2*a*c^7*x*y - 2*b*c^7*x*y + c^8*x*y + a^6*b^2*y^2 - 2*a^5*b^3*y^2 - 
+       a^4*b^4*y^2 + 4*a^3*b^5*y^2 - a^2*b^6*y^2 - 2*a*b^7*y^2 + b^8*y^2 - 
+       2*a^6*b*c*y^2 + 2*a^5*b^2*c*y^2 + 6*a^4*b^3*c*y^2 - 8*a^3*b^4*c*y^2 - 
+       2*a^2*b^5*c*y^2 + 6*a*b^6*c*y^2 - 2*b^7*c*y^2 + 2*a^5*b*c^2*y^2 - 
+       6*a^4*b^2*c^2*y^2 + 2*a^3*b^3*c^2*y^2 + 5*a^2*b^4*c^2*y^2 - 
+       2*a*b^5*c^2*y^2 - b^6*c^2*y^2 + 2*a^3*b^2*c^3*y^2 + 
+       2*a^2*b^3*c^3*y^2 - 8*a*b^4*c^3*y^2 + 4*b^5*c^3*y^2 - 
+       6*a^2*b^2*c^4*y^2 + 6*a*b^3*c^4*y^2 - b^4*c^4*y^2 + 2*a^2*b*c^5*y^2 + 
+       2*a*b^2*c^5*y^2 - 2*b^3*c^5*y^2 - 2*a*b*c^6*y^2 + b^2*c^6*y^2 + 
+       a^8*x*z - 2*a^7*b*x*z + 2*a^5*b^3*x*z - 2*a^4*b^4*x*z + 
+       2*a^3*b^5*x*z - 2*a*b^7*x*z + b^8*x*z - 2*a^7*c*x*z + 4*a^6*b*c*x*z - 
+       2*a^5*b^2*c*x*z + 2*a^4*b^3*c*x*z - 2*a^3*b^4*c*x*z - 
+       4*a^2*b^5*c*x*z + 6*a*b^6*c*x*z - 2*b^7*c*x*z - 2*a^4*b^2*c^2*x*z - 
+       4*a^3*b^3*c^2*x*z + 10*a^2*b^4*c^2*x*z - 4*a*b^5*c^2*x*z + 
+       2*a^5*c^3*x*z - 2*a^4*b*c^3*x*z + 8*a^3*b^2*c^3*x*z - 
+       4*a^2*b^3*c^3*x*z - 2*a*b^4*c^3*x*z + 2*b^5*c^3*x*z - 2*a^4*c^4*x*z - 
+       2*a^3*b*c^4*x*z - 2*a^2*b^2*c^4*x*z + 2*a*b^3*c^4*x*z - 
+       2*b^4*c^4*x*z + 2*a^3*c^5*x*z - 2*a*b^2*c^5*x*z + 2*b^3*c^5*x*z + 
+       4*a*b*c^6*x*z - 2*a*c^7*x*z - 2*b*c^7*x*z + c^8*x*z + a^8*y*z - 
+       2*a^7*b*y*z + 2*a^5*b^3*y*z - 2*a^4*b^4*y*z + 2*a^3*b^5*y*z - 
+       2*a*b^7*y*z + b^8*y*z - 2*a^7*c*y*z + 6*a^6*b*c*y*z - 
+       4*a^5*b^2*c*y*z - 2*a^4*b^3*c*y*z + 2*a^3*b^4*c*y*z - 
+       2*a^2*b^5*c*y*z + 4*a*b^6*c*y*z - 2*b^7*c*y*z - 4*a^5*b*c^2*y*z + 
+       10*a^4*b^2*c^2*y*z - 4*a^3*b^3*c^2*y*z - 2*a^2*b^4*c^2*y*z + 
+       2*a^5*c^3*y*z - 2*a^4*b*c^3*y*z - 4*a^3*b^2*c^3*y*z + 
+       8*a^2*b^3*c^3*y*z - 2*a*b^4*c^3*y*z + 2*b^5*c^3*y*z - 2*a^4*c^4*y*z + 
+       2*a^3*b*c^4*y*z - 2*a^2*b^2*c^4*y*z - 2*a*b^3*c^4*y*z - 
+       2*b^4*c^4*y*z + 2*a^3*c^5*y*z - 2*a^2*b*c^5*y*z + 2*b^3*c^5*y*z + 
+       4*a*b*c^6*y*z - 2*a*c^7*y*z - 2*b*c^7*y*z + c^8*y*z - 2*a^6*b*c*z^2 + 
+       2*a^5*b^2*c*z^2 + 2*a^2*b^5*c*z^2 - 2*a*b^6*c*z^2 + a^6*c^2*z^2 + 
+       2*a^5*b*c^2*z^2 - 6*a^4*b^2*c^2*z^2 + 2*a^3*b^3*c^2*z^2 - 
+       6*a^2*b^4*c^2*z^2 + 2*a*b^5*c^2*z^2 + b^6*c^2*z^2 - 2*a^5*c^3*z^2 + 
+       6*a^4*b*c^3*z^2 + 2*a^3*b^2*c^3*z^2 + 2*a^2*b^3*c^3*z^2 + 
+       6*a*b^4*c^3*z^2 - 2*b^5*c^3*z^2 - a^4*c^4*z^2 - 8*a^3*b*c^4*z^2 + 
+       5*a^2*b^2*c^4*z^2 - 8*a*b^3*c^4*z^2 - b^4*c^4*z^2 + 4*a^3*c^5*z^2 - 
+       2*a^2*b*c^5*z^2 - 2*a*b^2*c^5*z^2 + 4*b^3*c^5*z^2 - a^2*c^6*z^2 + 
+       6*a*b*c^6*z^2 - b^2*c^6*z^2 - 2*a*c^7*z^2 - 2*b*c^7*z^2 + c^8*z^2, 
+     "Longuet-Higgins circle" -> b^2*x^2 + 2*b*c*x^2 + c^2*x^2 + a^2*x*y + 
+       b^2*x*y + 2*a*c*x*y + 2*b*c*x*y + c^2*x*y + a^2*y^2 + 2*a*c*y^2 + 
+       c^2*y^2 + a^2*x*z + 2*a*b*x*z + b^2*x*z + 2*b*c*x*z + c^2*x*z + 
+       a^2*y*z + 2*a*b*y*z + b^2*y*z + 2*a*c*y*z + c^2*y*z + a^2*z^2 + 
+       2*a*b*z^2 + b^2*z^2, "mixtilinear incircles radical circle" -> 
+      4*a^2*b^2*c^2*x^2 - 4*a*b^3*c^2*x^2 - 4*a*b^2*c^3*x^2 + a^4*c^2*x*y - 
+       4*a^3*b*c^2*x*y + 6*a^2*b^2*c^2*x*y - 4*a*b^3*c^2*x*y + b^4*c^2*x*y - 
+       2*a^2*c^4*x*y + 4*a*b*c^4*x*y - 2*b^2*c^4*x*y + c^6*x*y - 
+       4*a^3*b*c^2*y^2 + 4*a^2*b^2*c^2*y^2 - 4*a^2*b*c^3*y^2 + a^4*b^2*x*z - 
+       2*a^2*b^4*x*z + b^6*x*z - 4*a^3*b^2*c*x*z + 4*a*b^4*c*x*z + 
+       6*a^2*b^2*c^2*x*z - 2*b^4*c^2*x*z - 4*a*b^2*c^3*x*z + b^2*c^4*x*z + 
+       a^6*y*z - 2*a^4*b^2*y*z + a^2*b^4*y*z + 4*a^4*b*c*y*z - 
+       4*a^2*b^3*c*y*z - 2*a^4*c^2*y*z + 6*a^2*b^2*c^2*y*z - 
+       4*a^2*b*c^3*y*z + a^2*c^4*y*z - 4*a^3*b^2*c*z^2 - 4*a^2*b^3*c*z^2 + 
+       4*a^2*b^2*c^2*z^2, "Moses circle" -> a^2*b^2*c^2*x^2 - 2*b^4*c^2*x^2 - 
+       2*b^2*c^4*x^2 - 2*a^4*c^2*x*y + 6*a^2*b^2*c^2*x*y - 2*b^4*c^2*x*y + 
+       2*a^2*c^4*x*y + 2*b^2*c^4*x*y - 2*a^4*c^2*y^2 + a^2*b^2*c^2*y^2 - 
+       2*a^2*c^4*y^2 - 2*a^4*b^2*x*z + 2*a^2*b^4*x*z + 6*a^2*b^2*c^2*x*z + 
+       2*b^4*c^2*x*z - 2*b^2*c^4*x*z + 2*a^4*b^2*y*z - 2*a^2*b^4*y*z + 
+       2*a^4*c^2*y*z + 6*a^2*b^2*c^2*y*z - 2*a^2*c^4*y*z - 2*a^4*b^2*z^2 - 
+       2*a^2*b^4*z^2 + a^2*b^2*c^2*z^2, "Moses-Longuet-Higgins circle" -> 
       a^2*x^2 - 2*a*b*x^2 + b^2*x^2 - 2*a*c*x^2 + 2*b*c*x^2 + c^2*x^2 + 
        2*a^2*x*y - 4*a*b*x*y + 2*b^2*x*y + c^2*x*y + a^2*y^2 - 2*a*b*y^2 + 
        b^2*y^2 + 2*a*c*y^2 - 2*b*c*y^2 + c^2*y^2 + 2*a^2*x*z + b^2*x*z - 
        4*a*c*x*z + 2*c^2*x*z + a^2*y*z + 2*b^2*y*z - 4*b*c*y*z + 2*c^2*y*z + 
        a^2*z^2 + 2*a*b*z^2 + b^2*z^2 - 2*a*c*z^2 - 2*b*c*z^2 + c^2*z^2, 
-     "Nine Point Circle" -> a^2*x^2 - b^2*x^2 - c^2*x^2 + 2*c^2*x*y - 
+     "nine-point circle" -> a^2*x^2 - b^2*x^2 - c^2*x^2 + 2*c^2*x*y - 
        a^2*y^2 + b^2*y^2 - c^2*y^2 + 2*b^2*x*z + 2*a^2*y*z - a^2*z^2 - 
-       b^2*z^2 + c^2*z^2, "Orthocentroidal Circle" -> 
+       b^2*z^2 + c^2*z^2, "orthocentroidal circle" -> 
       a^2*x^2 - b^2*x^2 - c^2*x^2 + c^2*x*y - a^2*y^2 + b^2*y^2 - c^2*y^2 + 
        b^2*x*z + a^2*y*z - a^2*z^2 - b^2*z^2 + c^2*z^2, 
-     "Orthoptic Circle of the Steiner Inellipse" -> a^2*x^2 - b^2*x^2 - 
+     "orthoptic circle of the Steiner Inellipse" -> a^2*x^2 - b^2*x^2 - 
        c^2*x^2 + 4*c^2*x*y - a^2*y^2 + b^2*y^2 - c^2*y^2 + 4*b^2*x*z + 
-       4*a^2*y*z - a^2*z^2 - b^2*z^2 + c^2*z^2, "Polar Circle" -> 
-      a^2*x^2 - b^2*x^2 - c^2*x^2 - a^2*y^2 + b^2*y^2 - c^2*y^2 - a^2*z^2 - 
-       b^2*z^2 + c^2*z^2, "Spieker Circle" -> 3*a^2*x^2 - 2*a*b*x^2 - 
-       5*b^2*x^2 - 2*a*c*x^2 + 6*b*c*x^2 - 5*c^2*x^2 - 2*a^2*x*y - 
-       4*a*b*x*y - 2*b^2*x*y + 4*a*c*x*y + 4*b*c*x*y + 6*c^2*x*y - 
-       5*a^2*y^2 - 2*a*b*y^2 + 3*b^2*y^2 + 6*a*c*y^2 - 2*b*c*y^2 - 
-       5*c^2*y^2 - 2*a^2*x*z + 4*a*b*x*z + 6*b^2*x*z - 4*a*c*x*z + 
-       4*b*c*x*z - 2*c^2*x*z + 6*a^2*y*z + 4*a*b*y*z - 2*b^2*y*z + 
-       4*a*c*y*z - 4*b*c*y*z - 2*c^2*y*z - 5*a^2*z^2 + 6*a*b*z^2 - 
-       5*b^2*z^2 - 2*a*c*z^2 - 2*b*c*z^2 + 3*c^2*z^2, 
-     "Stammler Circle" -> 3*a^2*b^2*c^2*x^2 - a^4*c^2*x*y + 
+       4*a^2*y*z - a^2*z^2 - b^2*z^2 + c^2*z^2, "Parry circle" -> 
+      2*a^2*b^4*c^2*x^2 - b^6*c^2*x^2 - 2*a^2*b^2*c^4*x^2 + b^2*c^6*x^2 + 
+       a^6*c^2*x*y + a^4*b^2*c^2*x*y - a^2*b^4*c^2*x*y - b^6*c^2*x*y - 
+       3*a^4*c^4*x*y + 3*b^4*c^4*x*y + 2*a^2*c^6*x*y - 2*b^2*c^6*x*y + 
+       a^6*c^2*y^2 - 2*a^4*b^2*c^2*y^2 + 2*a^2*b^2*c^4*y^2 - a^2*c^6*y^2 - 
+       a^6*b^2*x*z + 3*a^4*b^4*x*z - 2*a^2*b^6*x*z - a^4*b^2*c^2*x*z + 
+       2*b^6*c^2*x*z + a^2*b^2*c^4*x*z - 3*b^4*c^4*x*z + b^2*c^6*x*z + 
+       2*a^6*b^2*y*z - 3*a^4*b^4*y*z + a^2*b^6*y*z - 2*a^6*c^2*y*z + 
+       a^2*b^4*c^2*y*z + 3*a^4*c^4*y*z - a^2*b^2*c^4*y*z - a^2*c^6*y*z - 
+       a^6*b^2*z^2 + a^2*b^6*z^2 + 2*a^4*b^2*c^2*z^2 - 2*a^2*b^4*c^2*z^2, 
+     "polar circle" -> a^2*x^2 - b^2*x^2 - c^2*x^2 - a^2*y^2 + b^2*y^2 - 
+       c^2*y^2 - a^2*z^2 - b^2*z^2 + c^2*z^2, "Spieker circle" -> 
+      3*a^2*x^2 - 2*a*b*x^2 - 5*b^2*x^2 - 2*a*c*x^2 + 6*b*c*x^2 - 5*c^2*x^2 - 
+       2*a^2*x*y - 4*a*b*x*y - 2*b^2*x*y + 4*a*c*x*y + 4*b*c*x*y + 
+       6*c^2*x*y - 5*a^2*y^2 - 2*a*b*y^2 + 3*b^2*y^2 + 6*a*c*y^2 - 
+       2*b*c*y^2 - 5*c^2*y^2 - 2*a^2*x*z + 4*a*b*x*z + 6*b^2*x*z - 
+       4*a*c*x*z + 4*b*c*x*z - 2*c^2*x*z + 6*a^2*y*z + 4*a*b*y*z - 
+       2*b^2*y*z + 4*a*c*y*z - 4*b*c*y*z - 2*c^2*y*z - 5*a^2*z^2 + 
+       6*a*b*z^2 - 5*b^2*z^2 - 2*a*c*z^2 - 2*b*c*z^2 + 3*c^2*z^2, 
+     "Stammler circle" -> 3*a^2*b^2*c^2*x^2 - a^4*c^2*x*y + 
        8*a^2*b^2*c^2*x*y - b^4*c^2*x*y + 2*a^2*c^4*x*y + 2*b^2*c^4*x*y - 
        c^6*x*y + 3*a^2*b^2*c^2*y^2 - a^4*b^2*x*z + 2*a^2*b^4*x*z - b^6*x*z + 
        8*a^2*b^2*c^2*x*z + 2*b^4*c^2*x*z - b^2*c^4*x*z - a^6*y*z + 
        2*a^4*b^2*y*z - a^2*b^4*y*z + 2*a^4*c^2*y*z + 8*a^2*b^2*c^2*y*z - 
-       a^2*c^4*y*z + 3*a^2*b^2*c^2*z^2, "Steiner Circle" -> 
+       a^2*c^4*y*z + 3*a^2*b^2*c^2*z^2, "Steiner circle" -> 
       a^6*x^2 - 3*a^4*b^2*x^2 + 3*a^2*b^4*x^2 - b^6*x^2 - 3*a^4*c^2*x^2 - 
        6*a^2*b^2*c^2*x^2 + b^4*c^2*x^2 + 3*a^2*c^4*x^2 + b^2*c^4*x^2 - 
        c^6*x^2 + 2*a^4*c^2*x*y - 20*a^2*b^2*c^2*x*y + 2*b^4*c^2*x*y - 
@@ -5257,35 +5414,67 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        2*a^2*b^4*y*z - 4*a^4*c^2*y*z - 20*a^2*b^2*c^2*y*z + 2*a^2*c^4*y*z - 
        a^6*z^2 + a^4*b^2*z^2 + a^2*b^4*z^2 - b^6*z^2 + 3*a^4*c^2*z^2 - 
        6*a^2*b^2*c^2*z^2 + 3*b^4*c^2*z^2 - 3*a^2*c^4*z^2 - 3*b^2*c^4*z^2 + 
-       c^6*z^2, "Brocard Inellipse" -> b^4*c^4*x^2 - 2*a^2*b^2*c^4*x*y + 
-       a^4*c^4*y^2 - 2*a^2*b^4*c^2*x*z - 2*a^4*b^2*c^2*y*z + a^4*b^4*z^2, 
-     "De Longchamps Ellipse" -> a*b^2*c^2*x^2 - b^3*c^2*x^2 - b^2*c^3*x^2 + 
+       c^6*z^2, "Stevanovic circle" -> a^3*b*c*x^2 - a*b^3*c*x^2 - 
+       a^2*b*c^2*x^2 + b^3*c^2*x^2 - a*b*c^3*x^2 + b*c^4*x^2 + a^4*c*x*y - 
+       a^2*b^2*c*x*y + a^2*b*c^2*x*y - 2*a*b^2*c^2*x*y + b^3*c^2*x*y - 
+       a^2*c^3*x*y - 2*a*b*c^3*x*y + 2*b^2*c^3*x*y + 2*a*c^4*x*y - 
+       b*c^4*x*y + a^4*c*y^2 - a^3*b*c*y^2 - a^2*b^2*c*y^2 + a*b^3*c*y^2 + 
+       a^2*c^3*y^2 - a*b*c^3*y^2 + a^3*b^2*x*z + 2*a^2*b^3*x*z - a*b^4*x*z - 
+       2*a^2*b^2*c*x*z - 2*a*b^3*c*x*z + 2*b^4*c*x*z - a^2*b*c^2*x*z + 
+       a*b^2*c^2*x*z - b^3*c^2*x*z + b*c^4*x*z + 2*a^4*b*y*z - a^3*b^2*y*z + 
+       a*b^4*y*z - a^4*c*y*z - 2*a^3*b*c*y*z + a^2*b^2*c*y*z + 
+       2*a^3*c^2*y*z - 2*a^2*b*c^2*y*z - a*b^2*c^2*y*z + a^2*c^3*y*z + 
+       a^3*b^2*z^2 + a*b^4*z^2 - a^3*b*c*z^2 - a*b^3*c*z^2 - a*b^2*c^2*z^2 + 
+       a*b*c^3*z^2, "symmedial circle" -> a^4*b^2*c^2*x^2 - a^2*b^4*c^2*x^2 - 
+       b^6*c^2*x^2 - a^2*b^2*c^4*x^2 - b^4*c^4*x^2 - b^2*c^6*x^2 - 
+       a^6*c^2*x*y + 2*a^4*b^2*c^2*x*y + 2*a^2*b^4*c^2*x*y - b^6*c^2*x*y + 
+       a^4*c^4*x*y + 2*a^2*b^2*c^4*x*y + b^4*c^4*x*y + a^2*c^6*x*y + 
+       b^2*c^6*x*y - a^6*c^2*y^2 - a^4*b^2*c^2*y^2 + a^2*b^4*c^2*y^2 - 
+       a^4*c^4*y^2 - a^2*b^2*c^4*y^2 - a^2*c^6*y^2 - a^6*b^2*x*z + 
+       a^4*b^4*x*z + a^2*b^6*x*z + 2*a^4*b^2*c^2*x*z + 2*a^2*b^4*c^2*x*z + 
+       b^6*c^2*x*z + 2*a^2*b^2*c^4*x*z + b^4*c^4*x*z - b^2*c^6*x*z + 
+       a^6*b^2*y*z + a^4*b^4*y*z - a^2*b^6*y*z + a^6*c^2*y*z + 
+       2*a^4*b^2*c^2*y*z + 2*a^2*b^4*c^2*y*z + a^4*c^4*y*z + 
+       2*a^2*b^2*c^4*y*z - a^2*c^6*y*z - a^6*b^2*z^2 - a^4*b^4*z^2 - 
+       a^2*b^6*z^2 - a^4*b^2*c^2*z^2 - a^2*b^4*c^2*z^2 + a^2*b^2*c^4*z^2, 
+     "tangential circle" -> a^4*b^2*c^2*x^2 - a^2*b^4*c^2*x^2 - 
+       a^2*b^2*c^4*x^2 + a^6*c^2*x*y - a^4*b^2*c^2*x*y - a^2*b^4*c^2*x*y + 
+       b^6*c^2*x*y - a^4*c^4*x*y - b^4*c^4*x*y - a^2*c^6*x*y - b^2*c^6*x*y + 
+       c^8*x*y - a^4*b^2*c^2*y^2 + a^2*b^4*c^2*y^2 - a^2*b^2*c^4*y^2 + 
+       a^6*b^2*x*z - a^4*b^4*x*z - a^2*b^6*x*z + b^8*x*z - a^4*b^2*c^2*x*z - 
+       b^6*c^2*x*z - a^2*b^2*c^4*x*z - b^4*c^4*x*z + b^2*c^6*x*z + a^8*y*z - 
+       a^6*b^2*y*z - a^4*b^4*y*z + a^2*b^6*y*z - a^6*c^2*y*z - 
+       a^2*b^4*c^2*y*z - a^4*c^4*y*z - a^2*b^2*c^4*y*z + a^2*c^6*y*z - 
+       a^4*b^2*c^2*z^2 - a^2*b^4*c^2*z^2 + a^2*b^2*c^4*z^2, 
+     "Brocard inellipse" -> b^4*c^4*x^2 - 2*a^2*b^2*c^4*x*y + a^4*c^4*y^2 - 
+       2*a^2*b^4*c^2*x*z - 2*a^4*b^2*c^2*y*z + a^4*b^4*z^2, 
+     "DeLongchamps ellipse" -> a*b^2*c^2*x^2 - b^3*c^2*x^2 - b^2*c^3*x^2 + 
        2*a*b*c^3*x*y - a^3*c^2*y^2 + a^2*b*c^2*y^2 - a^2*c^3*y^2 + 
        2*a*b^3*c*x*z + 2*a^3*b*c*y*z - a^3*b^2*z^2 - a^2*b^3*z^2 + 
-       a^2*b^2*c*z^2, "Excentral Hexyl Ellipse" -> 
+       a^2*b^2*c*z^2, "excentral-hexyl ellipse" -> 
       a^2*b^2*c*x^2 - b^4*c*x^2 + a^2*b*c^2*x^2 + b^3*c^2*x^2 + b^2*c^3*x^2 - 
        b*c^4*x^2 + 2*a^2*b*c^2*x*y + 2*a*b^2*c^2*x*y + 2*a*b*c^3*x*y - 
        a^4*c*y^2 + a^2*b^2*c*y^2 + a^3*c^2*y^2 + a*b^2*c^2*y^2 + 
        a^2*c^3*y^2 - a*c^4*y^2 + 2*a^2*b^2*c*x*z + 2*a*b^3*c*x*z + 
        2*a*b^2*c^2*x*z + 2*a^3*b*c*y*z + 2*a^2*b^2*c*y*z + 2*a^2*b*c^2*y*z - 
        a^4*b*z^2 + a^3*b^2*z^2 + a^2*b^3*z^2 - a*b^4*z^2 + a^2*b*c^2*z^2 + 
-       a*b^2*c^2*z^2, "Feuerbach Hyperbola" -> a^2*c*x*y - b^2*c*x*y - 
+       a*b^2*c^2*z^2, "Feuerbach hyperbola" -> a^2*c*x*y - b^2*c*x*y - 
        a*c^2*x*y + b*c^2*x*y - a^2*b*x*z + a*b^2*x*z - b^2*c*x*z + 
        b*c^2*x*z - a^2*b*y*z + a*b^2*y*z + a^2*c*y*z - a*c^2*y*z, 
-     "Jerabek Hyperbola" -> (a^2 - b^2)*c^2*(a^2 + b^2 - c^2)*x*y + 
+     "Jerabek hyperbola" -> (a^2 - b^2)*c^2*(a^2 + b^2 - c^2)*x*y + 
        b^2*(-a^2 + c^2)*(a^2 - b^2 + c^2)*x*z + a^2*(b^2 - c^2)*
-        (-a^2 + b^2 + c^2)*y*z, "Johnson Circumconic" -> 
+        (-a^2 + b^2 + c^2)*y*z, "Johnson circumconic" -> 
       a^6*c^2*x*y - a^4*b^2*c^2*x*y - a^2*b^4*c^2*x*y + b^6*c^2*x*y - 
        2*a^4*c^4*x*y - 2*b^4*c^4*x*y + a^2*c^6*x*y + b^2*c^6*x*y + 
        a^6*b^2*x*z - 2*a^4*b^4*x*z + a^2*b^6*x*z - a^4*b^2*c^2*x*z + 
        b^6*c^2*x*z - a^2*b^2*c^4*x*z - 2*b^4*c^4*x*z + b^2*c^6*x*z + 
        a^6*b^2*y*z - 2*a^4*b^4*y*z + a^2*b^6*y*z + a^6*c^2*y*z - 
        a^2*b^4*c^2*y*z - 2*a^4*c^4*y*z - a^2*b^2*c^4*y*z + a^2*c^6*y*z, 
-     "Kiepert Hyperbola" -> a^2*x*y - b^2*x*y - a^2*x*z + c^2*x*z + b^2*y*z - 
-       c^2*y*z, "Kiepert Parabola" -> (b^2 - c^2)^2*x^2 - 
+     "Kiepert hyperbola" -> a^2*x*y - b^2*x*y - a^2*x*z + c^2*x*z + b^2*y*z - 
+       c^2*y*z, "Kiepert parabola" -> (b^2 - c^2)^2*x^2 - 
        2*(b^2 - c^2)*(-a^2 + c^2)*x*y + (-a^2 + c^2)^2*y^2 - 
        2*(a^2 - b^2)*(b^2 - c^2)*x*z - 2*(a^2 - b^2)*(-a^2 + c^2)*y*z + 
-       (a^2 - b^2)^2*z^2, "Lemoine Inellipse" -> 
+       (a^2 - b^2)^2*z^2, "Lemoine inellipse" -> 
       (2*a^2 + 2*b^2 - c^2)^2*(a^2 - 2*(b^2 + c^2))^2*
         (-2*a^4 - 2*b^4 + 2*b^2*c^2 + 4*c^4 + a^2*(5*b^2 + 2*c^2))^2*x^2 + 
        2*(-2*(a^2 + b^2) + c^2)*(2*a^2 - b^2 + 2*c^2)^3*
@@ -5299,10 +5488,10 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
         (a^2 - 2*(b^2 + c^2))*(-2*a^4 - 2*b^4 + 2*b^2*c^2 + 4*c^4 + 
          a^2*(5*b^2 + 2*c^2))*y*z + (-2*(a^2 + b^2) + c^2)^2*
         (2*a^2 - b^2 + 2*c^2)^2*(-2*a^4 + 2*a^2*b^2 + 4*b^4 + 
-          (5*a^2 + 2*b^2)*c^2 - 2*c^4)^2*z^2, "MacBeath Circumconic" -> 
+          (5*a^2 + 2*b^2)*c^2 - 2*c^4)^2*z^2, "MacBeath circumconic" -> 
       a^2*c^2*x*y + b^2*c^2*x*y - c^4*x*y + a^2*b^2*x*z - b^4*x*z + 
        b^2*c^2*x*z - a^4*y*z + a^2*b^2*y*z + a^2*c^2*y*z, 
-     "MacBeath Inconic" -> a^8*b^4*c^4*(a^4 - 2*a^2*b^2 + b^4 - c^4)^2*
+     "MacBeath inconic" -> a^8*b^4*c^4*(a^4 - 2*a^2*b^2 + b^4 - c^4)^2*
         (a^4 - b^4 - 2*a^2*c^2 + c^4)^2*x^2 - 2*a^6*b^6*c^4*
         ((a^2 - b^2)^2 - c^4)^2*(a^4 - b^4 - 2*a^2*c^2 + c^4)*
         (-a^4 + b^4 - 2*b^2*c^2 + c^4)*x*y + a^4*b^8*c^4*
@@ -5312,23 +5501,23 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        2*a^4*b^6*c^6*(a^4 - 2*a^2*b^2 + b^4 - c^4)*(a^4 - b^4 - 2*a^2*c^2 + 
          c^4)*(-a^4 + (b^2 - c^2)^2)^2*y*z + a^4*b^4*c^8*
         (a^4 - b^4 - 2*a^2*c^2 + c^4)^2*(-a^4 + b^4 - 2*b^2*c^2 + c^4)^2*z^2, 
-     "Mandart Inellipse" -> (a + b - c)^2*(a - b + c)^2*x^2 - 
+     "Mandart inellipse" -> (a + b - c)^2*(a - b + c)^2*x^2 - 
        2*(a + b - c)^2*(a - b + c)*(-a + b + c)*x*y + 
        (a + b - c)^2*(-a + b + c)^2*y^2 - 2*(a + b - c)*(a - b + c)*
         (-a + b + c)^2*yz - 2*(a + b - c)*(a - b + c)^2*(-a + b + c)*x*z + 
-       (a - b + c)^2*(-a + b + c)^2*z^2, "Orthic Inconic" -> 
+       (a - b + c)^2*(-a + b + c)^2*z^2, "Orthic inconic" -> 
       a^4*x^2 - 2*a^2*b^2*x^2 + b^4*x^2 - 2*a^2*c^2*x^2 + 2*b^2*c^2*x^2 + 
        c^4*x^2 + 2*a^4*x*y - 4*a^2*b^2*x*y + 2*b^4*x*y - 2*c^4*x*y + 
        a^4*y^2 - 2*a^2*b^2*y^2 + b^4*y^2 + 2*a^2*c^2*y^2 - 2*b^2*c^2*y^2 + 
        c^4*y^2 + 2*a^4*x*z - 2*b^4*x*z - 4*a^2*c^2*x*z + 2*c^4*x*z - 
        2*a^4*y*z + 2*b^4*y*z - 4*b^2*c^2*y*z + 2*c^4*y*z + a^4*z^2 + 
        2*a^2*b^2*z^2 + b^4*z^2 - 2*a^2*c^2*z^2 - 2*b^2*c^2*z^2 + c^4*z^2, 
-     "Stammler Hyperbola" -> b^4*c^2*x^2 - b^2*c^4*x^2 - a^4*c^2*y^2 + 
-       a^2*c^4*y^2 + a^4*b^2*z^2 - a^2*b^4*z^2, "Steiner Circumellipse" -> 
-      x*y + x*z + y*z, "Steiner Inellipse" -> x^2 - 2*x*y + y^2 - 2*x*z - 
-       2*y*z + z^2, "Yff Parabola" -> (b - c)^2*x^2 - 
+     "Stammler hyperbola" -> b^4*c^2*x^2 - b^2*c^4*x^2 - a^4*c^2*y^2 + 
+       a^2*c^4*y^2 + a^4*b^2*z^2 - a^2*b^4*z^2, "Steiner circumellipse" -> 
+      x*y + x*z + y*z, "Steiner inellipse" -> x^2 - 2*x*y + y^2 - 2*x*z - 
+       2*y*z + z^2, "Yff parabola" -> (b - c)^2*x^2 - 
        2*(b - c)*(-a + c)*x*y + (-a + c)^2*y^2 - 2*(a - b)*(b - c)*x*z - 
-       2*(a - b)*(-a + c)*y*z + (a - b)^2*z^2, "Yff Hyperbola" -> 
+       2*(a - b)*(-a + c)*y*z + (a - b)^2*z^2, "Yff hyperbola" -> 
       a^8*x^2 - 2*a^6*b^2*x^2 + a^4*b^4*x^2 - 2*a^6*c^2*x^2 + 
        3*a^4*b^2*c^2*x^2 - a^2*b^4*c^2*x^2 + a^4*c^4*x^2 - a^2*b^2*c^4*x^2 + 
        2*a^6*b^2*x*y - 4*a^4*b^4*x*y + 2*a^2*b^6*x*y - a^6*c^2*x*y + 
@@ -5344,9 +5533,9 @@ fltCentralCircles = <|"Anticomplementary Circle" -> a^2*x^2 + a^2*x*y +
        a^2*b^2*c^4*y*z - 4*b^4*c^4*y*z - a^2*c^6*y*z + 2*b^2*c^6*y*z - 
        a^4*b^2*c^2*z^2 - a^2*b^4*c^2*z^2 + a^4*c^4*z^2 + 3*a^2*b^2*c^4*z^2 + 
        b^4*c^4*z^2 - 2*a^2*c^6*z^2 - 2*b^2*c^6*z^2 + c^8*z^2, 
-     "First Neuberg Ellipse" -> a^2*x*y - b^2*x*y - c^2*x*y - a^2*x*z - 
+     "1st Neuberg ellipse" -> a^2*x*y - b^2*x*y - c^2*x*y - a^2*x*z - 
        b^2*x*z + c^2*x*z - a^2*y*z + b^2*y*z - c^2*y*z, 
-     "Second Neuberg Ellipse" -> a^2*x*y - b^2*x*y + c^2*x*y - a^2*x*z + 
+     "2nd Neuberg ellipse" -> a^2*x*y - b^2*x*y + c^2*x*y - a^2*x*z + 
        b^2*x*z + c^2*x*z + a^2*y*z + b^2*y*z - c^2*y*z, 
      "Wallace hyperbola " -> c^2*(x^2 - y^2) + a^2*(y^2 - z^2) + 
        b^2*(-x^2 + z^2)|>

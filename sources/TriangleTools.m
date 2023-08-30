@@ -1185,3 +1185,12 @@ bTripoleEqGeneral[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_},
       q^2*(v2*v3*w1 + v1*v3*w2 + v1*v2*w3) + 
       2*p*r*(u3*w1*w2 + u2*w1*w3 + u1*w2*w3) + 
       2*q*r*(v3*w1*w2 + v2*w1*w3 + v1*w2*w3)}
+ 
+bInfinityPoint[{p_, q_, r_}] := {q - r, r - p, p - q}
+ 
+bAngle[p1_, p2_, p3_] := Module[{l1, l2, k}, 
+     l1 = simplifyRationalBarycentrics[bLine[p1, p2]]; 
+      l2 = simplifyRationalBarycentrics[bLine[p2, p3]]; 
+      k = Simplify[Det[{{1, 1, 1}, l1, l2}]]; 
+      Return[{Cot[A], Cot[B], Cot[C]} . (bInfinityPoint[l1]*
+          bInfinityPoint[l2])/k]; ]
