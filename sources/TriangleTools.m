@@ -1194,3 +1194,9 @@ bAngle[p1_, p2_, p3_] := Module[{l1, l2, k},
       k = Simplify[Det[{{1, 1, 1}, l1, l2}]]; 
       Return[{Cot[A], Cot[B], Cot[C]} . (bInfinityPoint[l1]*
           bInfinityPoint[l2])/k]; ]
+ 
+bPsiInvolution[{u_, v_, w_}] := {a^2*(u^2 - v^2 + v*w - w^2) - 
+      u*(b^2*(u + v - 2*w) + c^2*(u - 2*v + w)), (-a^2)*v*(u + v - 2*w) - 
+      c^2*v*(-2*u + v + w) - b^2*(u^2 - v^2 - u*w + w^2), 
+     (-a^2)*w*(u - 2*v + w) - b^2*w*(-2*u + v + w) - 
+      c^2*(u^2 - u*v + v^2 - w^2)}

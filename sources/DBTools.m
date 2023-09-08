@@ -476,7 +476,7 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           Quiet[checkVertexConjugates[ptcoord, name]]; 
           Quiet[checkInconics[ptcoord, num, name]]; 
           If[ !TrueQ[globalSilence], PrintTemporary["Starting poles"]]; 
-          Quiet[checkPoles[ptcoord, num]]; If[ !TrueQ[globalSilence], 
+          Quiet[checkPoles[ptcoord, name]]; If[ !TrueQ[globalSilence], 
            PrintTemporary["Starting barycentric"]]; 
           Quiet[checkBarycentric[ptcoord, "product", name]]; 
           Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
@@ -578,7 +578,8 @@ checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci,
             prop = StringJoin["= pole of line ", ToString[fltset], 
               " with respect to the ", circ]; AppendTo[out, prop]; 
             If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
-         {circ, Keys[fltCentralCircles]}]; ]; If[globalCheckAllPoles, 
+         {circ, Keys[fltCentralCircles]}]; ]; Print[out]; 
+      If[globalCheckAllPoles, 
        Do[plr = TimeConstrained[simplifyRationalBarycentrics[
              bPolar[fltCircumCircles[circ], pt]], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
@@ -724,15 +725,16 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
         Do[hg = glob[pt][name2]; If[ListQ[hg] && Length[hg] > 0 && 
             name2 != "others" && name2 != "poles", 
            print[colorformat[StringJoin[printname, " ", localprops[name2], 
-               StringRiffle[hg, ", "]]]]; ]; 
-          If[ListQ[hg] && Length[hg] > 0 && name2 == "poles", 
-           Do[print[colorformat[StringJoin[printname, prop]]], {prop, hg}]; 
-            hg = glob[pt]["polesci"]; print[colorformat[StringJoin[printname, 
-               " = pole of line X(i)X(j) wrt the circumconic with perspector \
-X(k) for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; 
-            hg = glob[pt]["polesin"]; print[colorformat[StringJoin[printname, 
-               " = pole of line X(i)X(j) wrt the inconic with perspector X(k) \
-for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; ]; 
+               StringRiffle[hg, ", "]]]]; ]; If[name2 == "poles", 
+           If[Length[hg] > 0, Do[print[colorformat[StringJoin[printname, 
+                  prop]]], {prop, hg}]; ]; hg = glob[pt]["polesci"]; 
+            If[ListQ[hg] && Length[hg] > 0, print[colorformat[StringJoin[
+                 printname, " = pole of line X(i)X(j) wrt the circumconic \
+with perspector X(k) for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; ]; 
+            hg = glob[pt]["polesin"]; If[ListQ[hg] && Length[hg] > 0, 
+             print[colorformat[StringJoin[printname, " = pole of line \
+X(i)X(j) wrt the inconic with perspector X(k) for these {i,j,k}: ", 
+                 StringRiffle[hg, ", "]]]]; ]; ]; 
           If[ListQ[hg] && Length[hg] > 0 && name2 == "others", 
            Do[print[colorformat[StringJoin[printname, localprops[name2], 
                prop]]], {prop, hg}]]; , {name2, Keys[localprops]}]; , 
