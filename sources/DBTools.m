@@ -1,7 +1,8 @@
-pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary}, 
-     pointsBary = Quiet[Table[intnumericnorm[
-          expr /. Thread[{u, v, w} -> val] /. rule], {val, ETCBaryNorm}]]; 
-      Return[AssociationThread[Keys[ETCBaryNorm] -> pointsBary]]; ]
+pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary, etcbary}, 
+     etcbary = KeyDrop[ETCBaryNorm, globalExcludedNum]; 
+      pointsBary = Quiet[Table[intnumericnorm[
+          expr /. Thread[{u, v, w} -> val] /. rule], {val, etcbary}]]; 
+      Return[AssociationThread[Keys[etcbary] -> pointsBary]]; ]
  
 intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
@@ -322,17 +323,17 @@ intReflectionProcess[fullgroups_, pt_, prec_] :=
          {el, Keys[checks]}]; , {set, fullgroups}]; Return[hgroups]; ]
  
 checkIsogonalConjugates[pt_, name_:"X"] := 
-    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffisoconjugate}, 
+    Module[{cx, prev, res, idx1, idx2, ptc, rc, ffisoconjugate, etcbary}, 
      ffisoconjugate[pt1_, pt2_] := Module[{local}, 
         local = bPIsogonalConjugate[intnumericnorm[pt1 /. rule69], 
             intnumericnorm[pt2 /. rule69]] /. rule69; 
-         Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
+         Return[intnumericnorm[local]]; ]; etcbary = KeyDrop[ETCBaryNorm, 
+        globalExcludedNum]; rc = intCheckList[[1]]; 
       ptc = intnumericnorm[pt /. rule69]; 
-      cx = (ffisoconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
+      cx = (ffisoconjugate[ptc, #1] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], ETCBaryNorm]; 
-      cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], #1[[1]] & ]; 
-      prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
+         Values[cx]], etcbary]; cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], 
+        #1[[1]] & ]; prev = Association["X0" -> {-1, -1, -1}]; res = {}; 
       Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
             "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
            StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
@@ -440,11 +441,9 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
      If[inname != "X" && KeyExistsQ[globalProperties, inname], 
        Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
         Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
-      ptcoord = evaluate[expr]; pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
-      symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
-           rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
-       Print[ptcoord]; Print["expression is not symmetric"]; 
-        Return[False, Module]; ]; If[Length[globalSeenPoints] > 0 && 
+      ptcoord = evaluate[expr]; If[ !checkCentralExpression[ptcoord], 
+       Return[False, Module]; ]; pt = intnumericnorm[ptcoord /. rule69]; 
+      If[Length[globalSeenPoints] > 0 && 
         First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
             globalSeenPoints]] <= 10^(-20), Print[inname]; 
         Print["Point seen"]; Return[False, Module], 
@@ -490,6 +489,18 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
 addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]], 
      StringJoin["X", ToString[str]], str]
  
+checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3}, 
+     ptn = intnumericnorm[ptc /. rule69]; symcheck = 
+       ptn - intnumericnorm[symmetrizeInternal2[ptc[[1]]] /. rule69]; 
+      symcheck2 = Abs[ptc[[1]]] - Abs[ptc[[1]] /. 
+           Thread[{b -> c, c -> b}]] /. rule69; 
+      symcheck3 = ptn - intnumericnorm[
+         ptc /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]; 
+      If[AnyTrue[symcheck, #1 != 0 & ] || symcheck2 != 0 || 
+        AnyTrue[symcheck3, #1 != 0 & ], Print[ptc]; 
+        Print["expression is not symmetric"]; Return[False]; ]; 
+      Return[True]; ]
+ 
 globalSeenPoints = {}
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
@@ -520,7 +531,8 @@ checkInverse[pt_, inname_:"X"] := Module[{out, ptest, circset, ptc, check,
              !StringContainsQ[#1, "-A"] &&  !StringContainsQ[#1, "-B"] && 
              !StringContainsQ[#1, "-C"] & ]; 
         Do[ptc = bInverseInConic[pt, circset[cnc]]; 
-          check = checkPointinETC2[ptc]; If[Length[check] > 0, 
+          check = checkPointinETC2[ptc]; If[Length[check] > 0 && 
+            check[[1]] != globalExcludedNum, 
            AppendTo[out, StringJoin["inverse of ", intaddbrackets[check[[
                 1]]], " in ", cnc]]; ]; , {cnc, Keys[circset]}]; ]; 
       AssociateTo[globalProperties[inname], {"inverses" -> out}]; 
@@ -754,15 +766,11 @@ addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname},
 quickChecker[expr_, num_:0, curvescheck_:True] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
-      pt = N[NormalizeBary[ptcoord /. rule69], 35]; 
-      symcheck = pt - N[NormalizeBary[symmetrizeInternal2[ptcoord[[1]]] /. 
-           rule69], 35]; If[AnyTrue[symcheck, #1 != 0 & ], 
-       Print[ptcoord]; Print["expression is not symmetric"]; 
-        Return[False, Module]; ]; If[num != 0, chk = 0, 
-       chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
-       Print[colorformat[StringJoin["ETC: ", chk]]], 
+      If[ !checkCentralExpression[ptcoord], Return[False, Module]; ]; 
+      If[num != 0, chk = 0, chk = checkPointinETC2[ptcoord]]; 
+      If[Length[chk] > 0, Print[colorformat[StringJoin["ETC: ", chk]]], 
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
             "X", True]]]; If[curvescheck, numcon = 
           Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
-      Return[lines + numcon]; ]
+      Return[{lines, numcon}]; ]
