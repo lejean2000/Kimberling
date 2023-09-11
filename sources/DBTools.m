@@ -578,8 +578,7 @@ checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci,
             prop = StringJoin["= pole of line ", ToString[fltset], 
               " with respect to the ", circ]; AppendTo[out, prop]; 
             If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
-         {circ, Keys[fltCentralCircles]}]; ]; Print[out]; 
-      If[globalCheckAllPoles, 
+         {circ, Keys[fltCentralCircles]}]; ]; If[globalCheckAllPoles, 
        Do[plr = TimeConstrained[simplifyRationalBarycentrics[
              bPolar[fltCircumCircles[circ], pt]], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[

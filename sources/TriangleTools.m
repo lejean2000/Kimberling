@@ -133,8 +133,8 @@ symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3,
          sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
-bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
-    b1*c2 - c1*b2 + c1*a2 - a1*c2 + a1*b2 - b1*a2 == 0
+bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := b1*c2 - c1*b2 + c1*a2 - 
+     a1*c2 + a1*b2 - b1*a2
  
 bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
  
