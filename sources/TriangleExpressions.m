@@ -187,3 +187,6 @@ replacerExprNoeval[expr_, nu_, np_:0] :=
     expr /. Thread[{u, v, w} -> simplifyRationalBarycentrics[
          KimberlingCenterC[nu]]] /. 
      Thread[{p, q, r} -> simplifyRationalBarycentrics[KimberlingCenterC[np]]]
+ 
+toUVW[expr_] := expr /. Thread[{x, y, z} -> {u, v, w}] /. 
+      Thread[{l, m, n} -> {u, v, w}] /. Thread[{p, q, r} -> {u, v, w}]

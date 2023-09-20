@@ -1200,3 +1200,20 @@ bPsiInvolution[{u_, v_, w_}] := {a^2*(u^2 - v^2 + v*w - w^2) -
       c^2*v*(-2*u + v + w) - b^2*(u^2 - v^2 - u*w + w^2), 
      (-a^2)*w*(u - 2*v + w) - b^2*w*(-2*u + v + w) - 
       c^2*(u^2 - u*v + v^2 - w^2)}
+ 
+prmCircumcircle = {a^2/((b - c)*(a + (a + b + c)*t)), 
+     b^2/((-a + c)*(b + (a + b + c)*t)), c^2/((a - b)*(c + (a + b + c)*t))}
+ 
+bBicevianPerspector[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] := 
+    {(u1*u3*w2*(u3*v2 - u2*v3)*(v3*w1 - v1*w3))/
+      (u1*v3*w2*(u3*v2*w1 + u2*v1*w3) - u3*v1*(u3*v1*w2^2 + u2*v2*w1*w3)), 
+     (v2*v3*w1*(u1*v3 - u3*v1)*(u3*w2 - u2*w3))/
+      (u1*v3*w2*(u3*v2*w1 - u2*v1*w3) + u3*v1*((-u3)*v1*w2^2 + u2*v2*w1*w3)), 
+     (w1*w2*w3*(u1*v3 - u3*v1)*(u3*v2 - u2*v3))/
+      (u1*v3*w2*(u3*v2*w1 - u2*v1*w3) + u3*v1*(u3*v1*w2^2 - u2*v2*w1*w3))}
+ 
+bHT[{u_, v_, w_}, {p_, q_, r_}] := q*r*(p/u + q/v - r/w)*(p/u - q/v + r/w) - 
+     p^2*(-(p/u) + q/v + r/w)^2
+ 
+bKT[{u_, v_, w_}, {p_, q_, r_}] := (-p^2)*(q/u + r/v - p/w)*
+      (r/u - p/v + q/w) + q*r*(-(q/u) + r/v + p/w)*(-(r/u) + p/v + q/w)

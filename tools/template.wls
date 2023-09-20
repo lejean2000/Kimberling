@@ -2,7 +2,11 @@
 (* ::Package:: *)
 
 ClearAll["Global`*"];
-Get["../sources/init.wls"];
+
+If[$OperatingSystem == "Windows",
+Get["../sources/initwin.wls"],
+Get["../sources/init.wls"]
+];
 
 Get["../db/ETCExtra.mx"];
 Get["../db/ETCExtraBary.mx"];
@@ -68,8 +72,8 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
   pointCheckerMinProperties = 1;
   start = ptnum;
   Do[
-   ptdescr = ""
-   ptnametop = ""
+   ptdescr = "";
+   ptnametop = "";
 
    ptcoord = TimeConstrained[replacer[prcoordexpr,nx]//simplifyRationalBarycentrics,10,-1];
 
@@ -79,9 +83,9 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
    
 
    ptnametop = StringReplace[topname, "XX" -> intaddbrackets["X"<>ToString[nx]]];
-   If[StringLength[ptnametop]>0, Print["======="<>ptnametop<>"=======1"]];
+   If[StringLength[ptnametop]>0, Print[];Print["======="<>ptnametop<>"=======1"]];
    ptdescr = StringReplace[ptnamein, "XX" -> intaddbrackets["X"<>ToString[nx]]];
-   If[StringLength[ptdescr]>0, Print["======="<>ptdescr<>"=======2"]];
+   If[StringLength[ptdescr]>0, Print[];Print["======="<>ptdescr<>"=======2"]];
    
    ptchk = quickChecker[ptcoord,0,False];
    
@@ -101,7 +105,7 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
    
    start = start + 1;
    
-   Print["======="<>ToString[ptchk]<>"======="]; Print[];
+   Print["======="<>ToString[ptchk]<>"======="];
    ];
    ,
    {nx, set}
