@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" -> 
       {1/2, -(b^2/(a^2 + b^2 - c^2)), -(c^2/(a^2 - b^2 + c^2))}, 
      "1st Altintas-isodynamic" -> {(-(Sqrt[3]*S*(S^2 + SB*SC)) - 
@@ -77,7 +79,7 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
       {-b^2 - c^2 + 2*S, b^2, c^2}, "1st anti-Kenmotu-free-vertices" -> 
       {-2*a^4 + 3*a^2*b^2 - b^4 + 3*a^2*c^2 + 2*b^2*c^2 - c^4 + 2*b^2*S + 
         2*c^2*S, b^2*(a^2 - b^2 + c^2 - 2*S), c^2*(a^2 + b^2 - c^2 - 2*S)}, 
-     "2nd anti- Kenmotu-free-vertices" -> {2*a^4 - 3*a^2*b^2 + b^4 - 
+     "2nd anti-Kenmotu-free-vertices" -> {2*a^4 - 3*a^2*b^2 + b^4 - 
         3*a^2*c^2 - 2*b^2*c^2 + c^4 + 2*b^2*S + 2*c^2*S, 
        -(b^2*(a^2 - b^2 + c^2 + 2*S)), -(c^2*(a^2 + b^2 - c^2 + 2*S))}, 
      "anti-Lucas(+1) homothetic" -> 
@@ -900,17 +902,17 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "3rd Parry" -> {(a^2*(a^4 - 3*a^2*b^2 + 2*b^4 - 3*a^2*c^2 + b^2*c^2 + 
           2*c^4))/(b*c*(2*a^2 - b^2 - c^2)), b*c, b*c}, 
      "Pelletier" -> {a*(b - c)*(-a + b + c), b*(a - c)*(a - b + c), 
-       (-a + b)*(a + b - c)*c}, "1st Przyby&lstrok;owski-Bollin" -> 
+       (-a + b)*(a + b - c)*c}, "1st Przyby\[LSlash]owski-Bollin" -> 
       {a^2*(S + Sqrt[3]*SA), b*(Sqrt[3]*b*SB + 
          S*(b + 2*Sqrt[Sqrt[3]*S + SW])), 
        c*(Sqrt[3]*c*SC + S*(c + 2*Sqrt[Sqrt[3]*S + SW]))}, 
-     "2nd Przyby&lstrok;owski-Bollin" -> {a^2*(S + Sqrt[3]*SA), 
+     "2nd Przyby\[LSlash]owski-Bollin" -> {a^2*(S + Sqrt[3]*SA), 
        b*(Sqrt[3]*b*SB + S*(b - 2*Sqrt[Sqrt[3]*S + SW])), 
        c*(Sqrt[3]*c*SC + S*(c - 2*Sqrt[Sqrt[3]*S + SW]))}, 
-     "3rd Przyby&lstrok;owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
+     "3rd Przyby\[LSlash]owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
        b*(-(b*S) + Sqrt[3]*b*SB - 2*S*Sqrt[-(Sqrt[3]*S) + SW]), 
        c*(-(c*S) + Sqrt[3]*c*SC - 2*S*Sqrt[-(Sqrt[3]*S) + SW])}, 
-     "4th Przyby&lstrok;owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
+     "4th Przyby\[LSlash]owski-Bollin" -> {a^2*(-S + Sqrt[3]*SA), 
        b*(-(b*S) + Sqrt[3]*b*SB + 2*S*Sqrt[-(Sqrt[3]*S) + SW]), 
        c*(-(c*S) + Sqrt[3]*c*SC + 2*S*Sqrt[-(Sqrt[3]*S) + SW])}, 
      "reflection" -> {-a^2, a^2 + b^2 - c^2, a^2 - b^2 + c^2}, 
@@ -1077,6 +1079,10 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
        (a^2 - b^2 + 2*c^2)/(2*a^2 - b^2 + c^2)}, 
      "1st Zaniah" -> {2*a, a + b - c, a - b + c}, 
      "2nd Zaniah" -> {2*a, a - b + c, a + b - c}, 
+     "Moses-Miyamoto"->{-2 a^3+3 a^2 (b+c)-(b-c)^2 (b+c),b (a^2+(b-c)^2-2 a (b+c)),c (a^2+(b-c)^2-2 a (b+c))},
+     "1st Moses-Miyamoto-Apollonius triangle"->{-2 a (a+b-c) (a-b+c),(a+b-c) (a^2-b^2+2 b c-c^2-2 S),(a-b+c) (a^2-b^2+2 b c-c^2-2 S)},
+     "2nd Moses-Miyamoto-Apollonius triangle"->{-2 a (a+b-c) (a-b+c),(a+b-c) (a^2-b^2+2 b c-c^2+2 S),(a-b+c) (a^2-b^2+2 b c-c^2+2 S)},
+     "anti-excenters-incenter reflections"->{(2 a^2)/(S^2-2 SB SC),1/SB,1/SC},
      "Gemini 1" -> {a, b + c, b + c}, "Gemini 2" -> {-a, b + c, b + c}, 
      "Gemini 3" -> {a, a + b, a + c}, "Gemini 4" -> {-a, a + b, a + c}, 
      "Gemini 5" -> {a, a - b, a - c}, "Gemini 6" -> {a, -a + b, -a + c}, 
@@ -1204,4 +1210,15 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "Gemini 107" -> {-1, 2, 2}, "Gemini 108" -> 
       {3*a - b - c, 2*a - 2*b - 2*c, 2*a - 2*b - 2*c}, 
      "Gemini 109" -> {1, 2, 2}, "Gemini 110" -> {2, 1, 1}, 
-     "Gemini 111" -> {-3, 1, 1}|>
+     "Gemini 111" -> {-3, 1, 1},
+     "1st Vijay-Paasche-Hutson"->{-b c+4 R^2,b (c+2 R),c (b+2 R)},
+     "2nd Vijay-Paasche-Hutson"->{8 R^3-a S,-b (a c-4 R^2),-c (a b-4 R^2)},
+     "3rd Vijay-Paasche-Hutson" ->{-a (b c-4 R^2),4 R^2 (b+2 R),4 R^2 (c+2 R)},
+     "4th Vijay-Paasche-Hutson"->{a (2 a b c+(b+c) S),S (a b+S),S (a c+S)},
+     "5th Vijay-Paasche-Hutson"->{2 a^6 b c+2 b c (b^2-c^2)^2 (b c+S)+a^5 (b+c) (4 b c+S)-2 a^3 (b+c) (b^2+c^2) (4 b c+S)+2 a^4 b c (-2 b^2+b c-2 c^2+S)+a (b+c) (4 b c (b^2-c^2)^2+(b^4-18 b^2 c^2+c^4) S)+2 a^2 b c (b^4-2 b^3 c+c^4-2 c^2 S-2 b^2 (9 c^2+S)-2 b (c^3+8 c S)),-4 b S (2 b c+S) (2 a b c+(a+c) S),-4 c S (2 b c+S) (2 a b c+(a+b) S)},
+     "6th Vijay-Paasche-Hutson"->{a S (2 a b c+(b+c) S),(2 a b+S) (a c+S) (2 b c+S),(a b+S) (2 a c+S) (2 b c+S)},
+     "7th Vijay-Paasche-Hutson"->{S (a^2 b c-S^2),a b (a c+S) (2 b c+S),a c (a b+S) (2 b c+S)},
+     "8th Vijay-Paasche-Hutson" ->{4 R (c+3 R)+b (c+4 R),b (c+2 R),c (b+2 R)},
+     "9th Vijay-Paasche-Hutson"->{a (2 a b c+(b+c) S),-(a b+S) (2 b c+S),-(a c+S) (2 b c+S)},
+     "10th Vijay-Paasche-Hutson"->{-a^8+4 a^6 (b^2+c^2)-(b^4-c^4)^2-a^4 (6 b^4+8 b^2 c^2+6 c^4)+4 a^2 (b^6+b^4 c^2+16 b^3 c^3+b^2 c^4+c^6)+32 a b^2 c^2 (b+c) S,4 b c S (a^4+b^4+8 a b^2 c-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S),4 b c S (a^4+b^4+8 a b c^2-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S)}
+     |>;

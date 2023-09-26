@@ -5096,11 +5096,18 @@ fltCircumCircles = <|"X(1)" -> c*x*y + b*x*z + a*y*z,
        (-3*a^2 + (b - c)^2 + 2*a*(b + c))*y*z, 
      "X(145)" -> (a + b - 3*c)*x*y + (a - 3*b + c)*x*z + (-3*a + b + c)*y*z|>
  
-fltCentralCircles = <|"anticomplementary circle" -> a^2*x^2 + a^2*x*y + 
-       b^2*x*y + c^2*x*y + b^2*y^2 + a^2*x*z + b^2*x*z + c^2*x*z + a^2*y*z + 
-       b^2*y*z + c^2*y*z + c^2*z^2, "Bevan circle" -> 
-      b*c*x^2 + a*c*x*y + b*c*x*y + c^2*x*y + a*c*y^2 + a*b*x*z + b^2*x*z + 
-       b*c*x*z + a^2*y*z + a*b*y*z + a*c*y*z + a*b*z^2, 
+fltCentralCircles = <|"1st Yff-Moses hyperbola" -> 
+      2*a*(a - b)*(a - c)*(b + c)*x^2 - (a^3*b - 6*a^2*b^2 + a*b^3 + a^3*c + 
+         3*a^2*b*c + 3*a*b^2*c + b^3*c + a^2*c^2 - 6*a*b*c^2 + b^2*c^2)*x*y - 
+       2*(a - b)*b*(b - c)*(a + c)*y^2 - (a^3*b + a^2*b^2 + a^3*c + 
+         3*a^2*b*c - 6*a*b^2*c - 6*a^2*c^2 + 3*a*b*c^2 + b^2*c^2 + a*c^3 + 
+         b*c^3)*x*z - (a^2*b^2 + a*b^3 - 6*a^2*b*c + 3*a*b^2*c + b^3*c + 
+         a^2*c^2 + 3*a*b*c^2 - 6*b^2*c^2 + a*c^3 + b*c^3)*y*z + 
+       2*(a + b)*(a - c)*(b - c)*c*z^2, "anticomplementary circle" -> 
+      a^2*x^2 + a^2*x*y + b^2*x*y + c^2*x*y + b^2*y^2 + a^2*x*z + b^2*x*z + 
+       c^2*x*z + a^2*y*z + b^2*y*z + c^2*y*z + c^2*z^2, 
+     "Bevan circle" -> b*c*x^2 + a*c*x*y + b*c*x*y + c^2*x*y + a*c*y^2 + 
+       a*b*x*z + b^2*x*z + b*c*x*z + a^2*y*z + a*b*y*z + a*c*y*z + a*b*z^2, 
      "1st Brocard circle" -> b^2*c^2*x^2 - c^4*x*y + a^2*c^2*y^2 - b^4*x*z - 
        a^4*y*z + a^2*b^2*z^2, "2nd Brocard circle" -> 
       a^2*b^2*c^2*x^2 + a^2*b^2*c^2*x*y - a^2*c^4*x*y - b^2*c^4*x*y + 

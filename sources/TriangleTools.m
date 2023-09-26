@@ -1217,3 +1217,11 @@ bHT[{u_, v_, w_}, {p_, q_, r_}] := q*r*(p/u + q/v - r/w)*(p/u - q/v + r/w) -
  
 bKT[{u_, v_, w_}, {p_, q_, r_}] := (-p^2)*(q/u + r/v - p/w)*
       (r/u - p/v + q/w) + q*r*(-(q/u) + r/v + p/w)*(-(r/u) + p/v + q/w)
+ 
+bNinePointConic[va_, vb_, vc_, vd_] := Module[{p1, p2, p3, p4, p5}, 
+     p1 = simplifyRationalBarycentrics[bMidpoint[va, vb]]; 
+      p2 = simplifyRationalBarycentrics[bMidpoint[va, vc]]; 
+      p3 = simplifyRationalBarycentrics[bMidpoint[vc, vb]]; 
+      p4 = simplifyRationalBarycentrics[bMidpoint[vd, vb]]; 
+      p5 = simplifyRationalBarycentrics[bMidpoint[vd, va]]; 
+      bFivePointConicEq[p1, p2, p3, p4, p5]]

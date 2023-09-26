@@ -87,7 +87,9 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
    ptdescr = StringReplace[ptnamein, "XX" -> intaddbrackets["X"<>ToString[nx]]];
    If[StringLength[ptdescr]>0, Print[];Print["======="<>ptdescr<>"=======2"]];
    
-   ptchk = quickChecker[ptcoord,0,False];
+   Print[];Print[nx];Print[];
+   
+   ptchk = TimeConstrained[quickChecker[ptcoord,0,False],30,-1];
    
    If[
    Total[ptchk]>=pointCheckerMinProperties,

@@ -747,12 +747,13 @@ print[string_] := If[StringContainsQ[string, "KeyAbsent"],
  
 globalOutputStream = False
  
-addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname}, 
-     If[ !MemberQ[{"Y", "Z"}, letter], Print["Invalid letter"]; 
-        Return[False, Module]]; If[name != "unnamed" && 
-        MemberQ[Values[NonETCNames], name], Print["Name exists !"]; 
-        Return[False, Module]]; If[VectorQ[bary], expr = bary[[1]], 
-       expr = bary]; idxmax = Max[1 + ToExpression[StringTake[
+addExtraPoint[bary_, letter_, name_, writeout_:True] := 
+    Module[{expr, pt, idxmax, dbname}, If[ !MemberQ[{"Y", "Z"}, letter], 
+       Print["Invalid letter"]; Return[False, Module]]; 
+      If[name != "unnamed" && MemberQ[Values[NonETCNames], name], 
+       Print["Name exists !"]; Return[False, Module]]; 
+      If[VectorQ[bary], expr = bary[[1]], expr = bary]; 
+      idxmax = Max[1 + ToExpression[StringTake[
            SortBy[Keys[KeySelect[ETCExtra, StringStartsQ[#1, letter] & ]], 
             numsortexpr[#1] & ], {2, -1}]]]; 
       dbname = StringJoin[letter, ToString[idxmax]]; 
@@ -760,9 +761,9 @@ addExtraPoint[bary_, letter_, name_] := Module[{expr, pt, idxmax, dbname},
         35]; AppendTo[ETCBaryNorm, dbname -> pt]; AppendTo[ETCExtraBary, 
        dbname -> pt]; AppendTo[ETC, dbname -> expr]; 
       AppendTo[ETCExtra, dbname -> expr]; AppendTo[NonETCNames, 
-       dbname -> name]; DumpSave["ETCExtra.mx", ETCExtra]; 
-      DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
-       NonETCNames]; Return[dbname]; ]
+       dbname -> name]; If[writeout, DumpSave["ETCExtra.mx", ETCExtra]; 
+        DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
+         NonETCNames]; ]; Return[dbname]; ]
  
 quickChecker[expr_, num_:0, curvescheck_:True] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    238734,       5839]
-NotebookOptionsPosition[    234731,       5785]
-NotebookOutlinePosition[    235415,       5807]
-CellTagsIndexPosition[    235372,       5804]
+NotebookDataLength[    238842,       5840]
+NotebookOptionsPosition[    234864,       5787]
+NotebookOutlinePosition[    235523,       5808]
+CellTagsIndexPosition[    235480,       5805]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -5638,7 +5638,8 @@ Cell[BoxData[
  RowBox[{
   RowBox[{
    RowBox[{"addExtraPoint", "[", 
-    RowBox[{"bary_", ",", "letter_", ",", "name_"}], "]"}], ":=", 
+    RowBox[{"bary_", ",", "letter_", ",", "name_", ",", 
+     RowBox[{"writeout_", ":", "True"}]}], "]"}], ":=", 
    RowBox[{"Module", "[", 
     RowBox[{
      RowBox[{"{", 
@@ -5737,21 +5738,22 @@ Cell[BoxData[
         RowBox[{"dbname", "->", "expr"}]}], "]"}], ";", "\[IndentingNewLine]", 
       RowBox[{"AppendTo", "[", 
        RowBox[{"NonETCNames", ",", 
-        RowBox[{"dbname", "->", "name"}]}], "]"}], ";", "\[IndentingNewLine]",
-       "\[IndentingNewLine]", 
-      RowBox[{"DumpSave", "[", 
-       RowBox[{"\"\<ETCExtra.mx\>\"", ",", "ETCExtra"}], "]"}], ";", 
-      "\[IndentingNewLine]", 
-      RowBox[{"DumpSave", "[", 
-       RowBox[{"\"\<ETCExtraBary.mx\>\"", ",", "ETCExtraBary"}], "]"}], ";", 
-      "\[IndentingNewLine]", 
-      RowBox[{"DumpSave", "[", 
-       RowBox[{"\"\<NonETCNames.mx\>\"", ",", "NonETCNames"}], "]"}], ";", 
-      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"dbname", "->", "name"}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{"writeout", ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"DumpSave", "[", 
+          RowBox[{"\"\<ETCExtra.mx\>\"", ",", "ETCExtra"}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"DumpSave", "[", 
+          RowBox[{"\"\<ETCExtraBary.mx\>\"", ",", "ETCExtraBary"}], "]"}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"DumpSave", "[", 
+          RowBox[{"\"\<NonETCNames.mx\>\"", ",", "NonETCNames"}], "]"}], 
+         ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
       RowBox[{"Return", "[", "dbname", "]"}], ";"}]}], "\[IndentingNewLine]", 
-    "]"}]}], ";"}]], "Input",
- CellLabel->
-  "In[425]:=",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-659bf901b269"],
+    "]"}]}], ";"}]], "Input",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-\
+659bf901b269"],
 
 Cell[BoxData[
  RowBox[{
@@ -5783,7 +5785,6 @@ Cell[BoxData[
  CellLabel->
   "In[426]:=",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 },
-Evaluator->"New Kernel",
 WindowSize->{1093.8, 604.8},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 TaggingRules-><|"TryRealOnly" -> False|>,
@@ -5839,8 +5840,8 @@ Cell[182384, 4590, 12503, 282, 1352, "Input",ExpressionUUID->"b0c868e7-77ab-45f4
 Cell[194890, 4874, 3280, 80, 409, "Input",ExpressionUUID->"a7b08756-0b30-4d61-9399-d90bc975de49"],
 Cell[198173, 4956, 6035, 135, 638, "Input",ExpressionUUID->"34e0d12b-8113-4dd3-9ab5-6c2b35676c93"],
 Cell[204211, 5093, 24205, 541, 2826, "Input",ExpressionUUID->"d3bc0e6f-728d-432e-9704-a9cc59a0a8a1"],
-Cell[228419, 5636, 4690, 117, 447, "Input",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-659bf901b269"],
-Cell[233112, 5755, 1615, 28, 162, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+Cell[228419, 5636, 4823, 119, 447, "Input",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-659bf901b269"],
+Cell[233245, 5757, 1615, 28, 162, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)
