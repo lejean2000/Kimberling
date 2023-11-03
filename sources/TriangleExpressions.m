@@ -103,10 +103,10 @@ leastBaryFromIntersections[testset_] :=
                        KimberlingCenterC[nx2[[1]]]], partialSAconvert[
                        KimberlingCenterC[nx2[[2]]]]]][[1]]]]], 5, -1]; 
               If[tt == -1, Continue[]]; deg = polynomialDegree[tt[[1]]]; 
-              AppendTo[results, {nx1, nx2, tt, deg}]; If[deg < min, 
-               Print["New min:"]; min = deg; Print[{nx1, nx2, deg}]]; , 
-             Return[SortBy[results, #1[[4]] & ], Module]]; ]; , 
-         {nx1, testset}, {nx2, testset}], mon]; 
+              If[deg > 0, AppendTo[results, {nx1, nx2, tt, deg}]; 
+                If[deg < min, Print["New min:"]; min = deg; Print[{nx1, nx2, 
+                    deg}]]; ]; , Return[SortBy[results, #1[[4]] & ], 
+              Module]]; ]; , {nx1, testset}, {nx2, testset}], mon]; 
       out = SortBy[results, #1[[4]] & ]; Print[out[[1]]]; 
       Print[ExpressionToTrad[out[[1]][[3]]]]; Return[out]; ]
  
@@ -190,3 +190,18 @@ replacerExprNoeval[expr_, nu_, np_:0] :=
  
 toUVW[expr_] := expr /. Thread[{x, y, z} -> {u, v, w}] /. 
       Thread[{l, m, n} -> {u, v, w}] /. Thread[{p, q, r} -> {u, v, w}]
+ 
+massHeuristicsSet[expr_, set_, deg_:16, ratio_:4.5] := 
+    Module[{out, etc, testexpr, check, mset}, mset = setRemoveBrackets[set]; 
+      Quiet[Monitor[out = {}; etc = {}; 
+         Do[nprg = nx; If[ !PolynomialQ[KimberlingCenterCN[nx][[1]], 
+              {a, b, c}], Continue[]]; testexpr = TimeConstrained[
+             simplifyRationalBarycentrics[replacer[expr, nx, nx]], 10, -1]; 
+           If[testexpr == -1, Continue[]]; check = checkPointinETC2[
+             testexpr]; If[Length[check] > 0, AppendTo[etc, 
+             {nx, check[[1]]}], If[heuristicsCheck[evaluate[testexpr[[1]]], 
+              deg, ratio], AppendTo[out, nx]]]; , {nx, mset}], nprg]]; 
+      Print[out]; Print[colorformat[ToString[etc]]]; Return[{out, etc}]; ]
+ 
+setRemoveBrackets[set_] := (StringReplace[#1, {")" -> "", "(" -> ""}] & ) /@ 
+     set

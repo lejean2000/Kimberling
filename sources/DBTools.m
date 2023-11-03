@@ -437,7 +437,7 @@ checkVertexConjugates[pt_, name_:"X"] :=
             StringRiffle[res, ", "]]]]; ]]; ]
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
-    Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
+    Module[{abstime, ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      If[inname != "X" && KeyExistsQ[globalProperties, inname], 
        Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
         Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
@@ -569,18 +569,17 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
             StringRiffle[res, ", "]]]]; ]]; ]
  
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
-      outin}, out = {}; outci = {}; outin = {}; If[ !globalCheckAllPoles, 
-       Do[mon = circ; plr = TimeConstrained[simplifyRationalBarycentrics[
-             bPolar[fltCentralCircles[circ], pt]], 5, -1]; 
+      outin, conics}, out = {}; outci = {}; outin = {}; 
+      conics = Join[fltCentralCircles, fltDuals]; If[ !globalCheckAllPoles, 
+       Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
             plr . {x, y, z}]; If[Length[set] >= 2, 
            fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
             prop = StringJoin["= pole of line ", ToString[fltset], 
               " with respect to the ", circ]; AppendTo[out, prop]; 
             If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
-         {circ, Keys[fltCentralCircles]}]; ]; If[globalCheckAllPoles, 
-       Do[plr = TimeConstrained[simplifyRationalBarycentrics[
-             bPolar[fltCircumCircles[circ], pt]], 5, -1]; 
+         {circ, Keys[conics]}]; ]; If[globalCheckAllPoles, 
+       Do[plr = TimeConstrained[bPolar[fltCircumCircles[circ], pt], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
             plr . {x, y, z}]; If[Length[set] >= 2, 
            fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
@@ -590,12 +589,11 @@ checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci,
           Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
 circumconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outci, 
                ", "]]]]; ]]; Do[plr = TimeConstrained[
-            simplifyRationalBarycentrics[bPolar[fltInCircles[circ], pt]], 5, 
-            -1]; If[plr == -1, Continue[]]; set = checkPointsOnCurve[
-            plr . {x, y, z}]; If[Length[set] >= 2, 
-           fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
-            AppendTo[outin, Join[fltset, {ToString[intnameformat2[
-                 circ]]}]]; ]; , {circ, Keys[fltInCircles]}]; 
+            bPolar[fltInCircles[circ], pt], 5, -1]; If[plr == -1, 
+           Continue[]]; set = checkPointsOnCurve[plr . {x, y, z}]; 
+          If[Length[set] >= 2, fltset = (intnameformat2[#1] & ) /@ 
+              Take[set, 2]; AppendTo[outin, Join[fltset, {ToString[
+                intnameformat2[circ]]}]]; ]; , {circ, Keys[fltInCircles]}]; 
         If[ !TrueQ[globalSilence], If[Length[outin] > 0, 
           Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
 inconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outin, 
@@ -725,7 +723,7 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
             name2 != "others" && name2 != "poles", 
            print[colorformat[StringJoin[printname, " ", localprops[name2], 
                StringRiffle[hg, ", "]]]]; ]; If[name2 == "poles", 
-           If[Length[hg] > 0, Do[print[colorformat[StringJoin[printname, 
+           If[Length[hg] > 0, Do[print[colorformat[StringJoin[printname, " ", 
                   prop]]], {prop, hg}]; ]; hg = glob[pt]["polesci"]; 
             If[ListQ[hg] && Length[hg] > 0, print[colorformat[StringJoin[
                  printname, " = pole of line X(i)X(j) wrt the circumconic \

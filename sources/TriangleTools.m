@@ -673,9 +673,9 @@ symmetrizeInternal2[eq_] := Module[{partB, partC}, Clear[p, q, r, u, v, w];
 symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] := 
     Module[{partB1, partB2, partB3, partC1, partC2, partC3, repl}, 
      repl = {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, SA -> SB, 
-        SB -> SC, SC -> SA, u -> v, v -> w, w -> u, A -> B, B -> C, C -> A}; 
-      partB1 = v3 /. repl; partB2 = v1 /. repl; partB3 = v2 /. repl; 
-      partC1 = partB3 /. repl; partC2 = partB1 /. repl; 
+        SB -> SC, SC -> SA, u -> v, v -> w, w -> u, p -> q, q -> r, r -> p, 
+        A -> B, B -> C, C -> A}; partB1 = v3 /. repl; partB2 = v1 /. repl; 
+      partB3 = v2 /. repl; partC1 = partB3 /. repl; partC2 = partB1 /. repl; 
       partC3 = partB2 /. repl; {{v1, v2, v3}, {partB1, partB2, partB3}, 
        {partC1, partC2, partC3}}]
  
@@ -1225,3 +1225,23 @@ bNinePointConic[va_, vb_, vc_, vd_] := Module[{p1, p2, p3, p4, p5},
       p4 = simplifyRationalBarycentrics[bMidpoint[vd, vb]]; 
       p5 = simplifyRationalBarycentrics[bMidpoint[vd, va]]; 
       bFivePointConicEq[p1, p2, p3, p4, p5]]
+ 
+bOrionTransform[{u_, v_, w_}] := 
+    {u*(c^2*u^2*v*(v + w) + b^2*u^2*w*(v + w) - a^2*v*w*(u^2 + v*w)), 
+     v*(c^2*u*v^2*(u + w) + a^2*v^2*w*(u + w) - b^2*u*w*(v^2 + u*w)), 
+     w*(b^2*u*(u + v)*w^2 + a^2*v*(u + v)*w^2 - c^2*u*v*(u*v + w^2))}
+ 
+bAntipedal[pp_, ref_:{xA, xB, xC}] := Module[{lna, lnb, lnc, ha, hb, hc}, 
+     lna = simplifyRationalBarycentrics[bPerpendicular[bLine[ref[[1]], pp], 
+         ref[[1]]]]; lnb = simplifyRationalBarycentrics[
+        bPerpendicular[bLine[ref[[2]], pp], ref[[2]]]]; 
+      lnc = simplifyRationalBarycentrics[bPerpendicular[bLine[ref[[3]], pp], 
+         ref[[3]]]]; ha = simplifyRationalBarycentrics[Cross[lnb, lnc]]; 
+      hb = simplifyRationalBarycentrics[Cross[lnc, lna]]; 
+      hc = simplifyRationalBarycentrics[Cross[lna, lnb]]; 
+      Return[{ha, hb, hc}]; ]
+ 
+bBicevianChordal[{u_, v_, w_}, {p_, q_, r_}] := 
+    symmetrizeTriangleExprType2Bary[{p*u*(r^2*v^2 + q*r*v*w + q^2*w^2), 
+      (-q)*v*(r^2*u*v + 2*r*(q*u + p*v)*w + p*q*w^2), 
+      (-r)*w*(p*r*v^2 + q^2*u*w + 2*q*v*(r*u + p*w))}]

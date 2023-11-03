@@ -64,7 +64,7 @@ checkPointsOnCurve[crv_] := Module[{curve, curve2, out, normcoef},
  
 checkPointOnCurveNum[crv_, pt_, rules_:intCheckList] := 
     Module[{curve2, normcoef, test}, 
-     Do[curve2 = curveSimplify[crv /. r]; normcoef = 
+     Do[curve2 = crv /. r; normcoef = 
          Max[Flatten[Abs[CoefficientList[curve2, {x, y, z}]]]]; 
         test = Abs[curve2/normcoef /. Thread[{x, y, z} -> N[pt /. r, 35]]]; 
         If[test > 1/10^15, Return[False, Module]]; , {r, rules}]; 
