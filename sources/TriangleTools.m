@@ -38,10 +38,9 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
-     pp = KimberlingCenterC[k] /. {a -> bDistanceF[e, f], 
-         b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
-      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
-       Transpose[pp/Total[pp]]]
+     pp = X[k] /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
+         c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
+         f/Total[f]}] . Transpose[pp/Total[pp]]]
  
 setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
      b -> bDistance[x, z], c -> bDistance[x, y]}
@@ -369,12 +368,13 @@ bEigentransform[{u_, v_, w_}] :=
 bAntitomicConjugate[{u_, v_, w_}] := {u*(v^2 - u*w)*((-u)*v + w^2), 
      v*(u^2 - v*w)*((-u)*v + w^2), w*(v^2 - u*w)*(u^2 - v*w)}
  
-bReflectionPL[ptU_, lnL_] := Module[{tot, pp, qq, rr, uu, vv, ww, mtxv, ssa, 
-      ssb, ssc}, {uu, vv, ww} = ptU/Total[ptU]; {pp, qq, rr} = 
-       lnL/Total[lnL]; ssa = (b^2 + c^2 - a^2)/2; ssb = (-b^2 + c^2 + a^2)/2; 
-      ssc = (b^2 - c^2 + a^2)/2; mtxv = {ssb*(pp - rr) - ssc*(qq - pp), 
-        ssc*(qq - pp) - ssa*(rr - qq), ssa*(rr - qq) - ssb*(pp - rr)}; 
-      {uu, vv, ww} - 2*({pp, qq, rr} . {uu, vv, ww}/{pp, qq, rr} . mtxv)*mtxv]
+bReflectionPL[ptU_, {pp_, qq_, rr_}] := 
+    Module[{tot, uu, vv, ww, mtxv, ssa, ssb, ssc}, 
+     {uu, vv, ww} = ptU/Total[ptU]; ssa = (b^2 + c^2 - a^2)/2; 
+      ssb = (-b^2 + c^2 + a^2)/2; ssc = (b^2 - c^2 + a^2)/2; 
+      mtxv = {ssb*(pp - rr) - ssc*(qq - pp), ssc*(qq - pp) - ssa*(rr - qq), 
+        ssa*(rr - qq) - ssb*(pp - rr)}; {uu, vv, ww} - 
+       2*({pp, qq, rr} . {uu, vv, ww}/{pp, qq, rr} . mtxv)*mtxv]
  
 bTripolarEqGeneral[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}, 
      {u_, v_, w_}] := 
@@ -1212,11 +1212,12 @@ bBicevianPerspector[{u1_, v1_, w1_}, {u2_, v2_, w2_}, {u3_, v3_, w3_}] :=
      (w1*w2*w3*(u1*v3 - u3*v1)*(u3*v2 - u2*v3))/
       (u1*v3*w2*(u3*v2*w1 - u2*v1*w3) + u3*v1*(u3*v1*w2^2 - u2*v2*w1*w3))}
  
-bHT[{u_, v_, w_}, {p_, q_, r_}] := q*r*(p/u + q/v - r/w)*(p/u - q/v + r/w) - 
-     p^2*(-(p/u) + q/v + r/w)^2
+bHT[{u_, v_, w_}, {p_, q_, r_}] := 
+    sym3[q*r*(p/u + q/v - r/w)*(p/u - q/v + r/w) - p^2*(-(p/u) + q/v + r/w)^2]
  
-bKT[{u_, v_, w_}, {p_, q_, r_}] := (-p^2)*(q/u + r/v - p/w)*
-      (r/u - p/v + q/w) + q*r*(-(q/u) + r/v + p/w)*(-(r/u) + p/v + q/w)
+bKT[{u_, v_, w_}, {p_, q_, r_}] := 
+    sym3[(-p^2)*(q/u + r/v - p/w)*(r/u - p/v + q/w) + 
+      q*r*(-(q/u) + r/v + p/w)*(-(r/u) + p/v + q/w)]
  
 bNinePointConic[va_, vb_, vc_, vd_] := Module[{p1, p2, p3, p4, p5}, 
      p1 = simplifyRationalBarycentrics[bMidpoint[va, vb]]; 
@@ -1245,3 +1246,18 @@ bBicevianChordal[{u_, v_, w_}, {p_, q_, r_}] :=
     symmetrizeTriangleExprType2Bary[{p*u*(r^2*v^2 + q*r*v*w + q^2*w^2), 
       (-q)*v*(r^2*u*v + 2*r*(q*u + p*v)*w + p*q*w^2), 
       (-r)*w*(p*r*v^2 + q^2*u*w + 2*q*v*(r*u + p*w))}]
+ 
+bKirikamiEuler[{u_, v_, w_}] := 
+    {u/((a^2 - b^2 - c^2)*u^2 + (a^2 - b^2 + c^2)*u*v + 
+       (a^2 + b^2 - c^2)*u*w + 2*a^2*v*w), 
+     v/((-a^2 + b^2 + c^2)*u*v + (-a^2 + b^2 - c^2)*v^2 + 2*b^2*u*w + 
+       (a^2 + b^2 - c^2)*v*w), w/(2*c^2*u*v + (-a^2 + b^2 + c^2)*u*w + 
+       (a^2 - b^2 + c^2)*v*w + (-a^2 - b^2 + c^2)*w^2)}
+ 
+bAnticevianConic[{p_, q_, r_}, {u_, v_, w_}] := (r^2*v^2 - q^2*w^2)*x^2 + 
+     ((-r^2)*u^2 + p^2*w^2)*y^2 + (q^2*u^2 - p^2*v^2)*z^2
+ 
+bAntiparallels[pt_, v1_:xA, v2_:xB, v3_:xC] = 
+    {bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v1]], 
+     bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v2]], 
+     bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v3]]}

@@ -1,7 +1,4 @@
 #!/usr/bin/env wolframscript
-(* ::Package:: *)
-
-ClearAll["Global`*"];
 
 If[$OperatingSystem == "Windows",
 Get["../sources/initwin.wls"],
@@ -16,14 +13,14 @@ Get["../db/NonETCNames.mx"];
 If[FileExistsQ["ETC2.mx"],
 Get["ETC2.mx"];
 Get["ETCBaryNorm2.mx"];
-ETC=ETC2;
-ETCBaryNorm=ETCBaryNorm2;
+AssociateTo[ETC, KeySelect[ETC2, ToExpression[StringTake[#, {2, -1}]] >= 66000 &]];
+AssociateTo[ETCBaryNorm, KeySelect[ETCBaryNorm2, ToExpression[StringTake[#, {2, -1}]] >= 66000 &]];
 Get["globalptnames.mx"];
 Get["globalptdescr.mx"];
 ,
 globalptnames = Association[];
 globalptdescr = Association[];
-]
+];
 
 ETCFull = ETC;
 ETCBaryNormFull = ETCBaryNorm;
@@ -55,7 +52,8 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    Print["=======END======="];
 	
    If [KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0, globalProperties[xname]["name"]=globalptnames[xname]];
-   If [KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, globalProperties[xname]["descr"]={globalptdescr[xname]}];
+   (*If [KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, globalProperties[xname]["descr"]={globalptdescr[xname]}];*)
+   If [KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, globalProperties[xname]["others"]={globalptdescr[xname]}];
    
    globalNoCleanup = False;
    globalOutputStream = OpenWrite[xname <> ".txt", CharacterEncoding -> "UTF8"];
@@ -75,39 +73,37 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
    ptdescr = "";
    ptnametop = "";
 
-   ptcoord = TimeConstrained[replacer[prcoordexpr,nx]//simplifyRationalBarycentrics,10,-1];
-
+   ptcoord = TimeConstrained[prcoordexpr/.Thread[pP -> KimberlingCenterC[nx]]//partialSReplace//simplifyRationalBarycentrics,10,-1];
    If[ptcoord == -1, Continue[]];
 
    globalNoCleanup = True;
    
-
    ptnametop = StringReplace[topname, "XX" -> intaddbrackets["X"<>ToString[nx]]];
    If[StringLength[ptnametop]>0, Print[];Print["======="<>ptnametop<>"=======1"]];
    ptdescr = StringReplace[ptnamein, "XX" -> intaddbrackets["X"<>ToString[nx]]];
    If[StringLength[ptdescr]>0, Print[];Print["======="<>ptdescr<>"=======2"]];
    
-   Print[];Print[nx];Print[];
+   Print[];
    
    ptchk = TimeConstrained[quickChecker[ptcoord,0,False],30,-1];
    
    If[
-   Total[ptchk]>=pointCheckerMinProperties,
-   
-   xname = "X" <> ToString[start];
+	   Total[ptchk]>=pointCheckerMinProperties,
+	   
+	   xname = "X" <> ToString[start];
 
-   AppendTo[ETC, xname->ptcoord[[1]]];
-   yy=intnumericnorm[evaluate[symmetrizeInternal[ETC[xname]]]/.rule69];
-   AppendTo[ETCBaryNorm, xname->yy];
-   AppendTo[ETCFull, xname->ptcoord[[1]]];
-   AppendTo[ETCBaryNormFull, xname->yy];
-   
-   AppendTo[globalptnames,xname->ptnametop];
-   AppendTo[globalptdescr,xname->ptdescr];
-   
-   start = start + 1;
-   
-   Print["======="<>ToString[ptchk]<>"======="];
+	   AppendTo[ETC, xname->ptcoord[[1]]];
+	   yy=intnumericnorm[evaluate[symmetrizeInternal[ETC[xname]]]/.rule69];
+	   AppendTo[ETCBaryNorm, xname->yy];
+	   AppendTo[ETCFull, xname->ptcoord[[1]]];
+	   AppendTo[ETCBaryNormFull, xname->yy];
+	   
+	   AppendTo[globalptnames,xname->ptnametop];
+	   AppendTo[globalptdescr,xname->ptdescr];
+	   
+	   start = start + 1;
+	   
+	   Print["======="<>ToString[ptchk]<>"======="];Print[];
    ];
    ,
    {nx, set}
@@ -122,20 +118,31 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
   Return[start-1];
 ];
 
-globalpt = Association[];
 
-startnum = Max[62000,1+Max[ToExpression[
+endnum = Max[66000-1,Max[ToExpression[
   StringTake[
    SortBy[Keys[KeySelect[ETC, StringStartsQ[#, "X"] &]], 
     numsortexpr[#] &], {2, -1}]]]];
 
+pers = {q r v w (p v (2 r u + p w) + q u (r u + 2 p w)), 
+ p r u w (p r v^2 + q^2 u w + 2 q v (r u + p w)), 
+ p q u v (r^2 u v + 2 r (q u + p v) w + p q w^2)};
+ 
 
-ptins = bIsotomicConjugate[{u,v,w}];
+Do[
 
-set={116,117};
+Print[num];
 
-endnum = quickloop[startnum, ptins, set, "Isotomic Conjugate of XX", ""];
+expr = pers /. Thread[pQ -> X[num]] // simplifyRationalBarycentrics;
+set = massHeuristics1[pers /. Thread[pQ -> X[num]], 1, 170][[1]];
+
+Print[set];
+
+endnum = quickloop[1+endnum, expr, set, "", "isotomic conjugate of bicevian chordal perspector of X("<>ToString[num]<>") and XX"]; 
+,{num,{1,2,3,4,6,7,8,9,10,11,12,21,31,37,75,76,81,86}}
+];
+
 
 (*
-loop[62000, 62394];
+loop[62000, 62060];
 *)

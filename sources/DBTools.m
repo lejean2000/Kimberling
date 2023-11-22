@@ -294,11 +294,12 @@ checkLinearCombinations[pt_, ptpairset_, inname_:"X"] :=
            If[Numerator[coef] != 1, StringJoin[ToString[Numerator[coef]], 
              "*"], ""]; denominator = If[Denominator[coef] != 1, 
             StringJoin[ToString[Denominator[coef]], "*"], ""]; 
-          AppendTo[out, StringJoin[numerator, p1, "+", denominator, p2]]; ], 
-       {pair, ptpairset}]; AssociateTo[globalProperties[inname], 
-       {"linear combinations" -> out}]; If[Length[out] > 0, 
-       If[ !TrueQ[globalSilence], Print[colorformat[StringJoin[
-            "linear combinations: ", StringRiffle[out, ", "]]]]]; ]; ]
+          AppendTo[out, StringJoin[numerator, p1, "+", denominator, p2]]; ]; 
+        If[Length[out] >= 20, Break[]]; , {pair, ptpairset}]; 
+      AssociateTo[globalProperties[inname], {"linear combinations" -> out}]; 
+      If[Length[out] > 0, If[ !TrueQ[globalSilence], 
+         Print[colorformat[StringJoin["linear combinations: ", 
+            StringRiffle[out, ", "]]]]]; ]; ]
  
 intMidpointProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
@@ -522,7 +523,7 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv,
        {name, Keys[curves]}]; AssociateTo[globalProperties[inname], 
        {"curves" -> out}]; If[Length[out] > 0, 
        If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
-           StringRiffle[out, ", "]]]]; ]; ]
+           StringRiffle[out, ", "]]]]; ]; Return[out]; ]
  
 checkInverse[pt_, inname_:"X"] := Module[{out, ptest, circset, ptc, check, 
       secondcheck, d}, out = {}; If[Total[pt /. rule69] != 0, 
