@@ -86,8 +86,10 @@ partialSReplace[expr_] := Module[{exp},
          S^10 -> evaluate[S^10]]; exp = symmetrizeInternal[exp]; 
       multiCollect[exp[[1]], S]]
  
-fareySet[n_] := Quiet[Select[Union[FareySequence[n], 1/FareySequence[n]], 
-      #1 =!= ComplexInfinity && #1 > 0 & ]]
+fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n], 
+        1/FareySequence[n]], #1 =!= ComplexInfinity && #1 > 0 & ], 
+      -Select[Union[FareySequence[n], 1/FareySequence[n]], 
+        #1 =!= ComplexInfinity && #1 > 0 & ]]]
  
 partialSAconvert[ex_] := ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. 
      SC -> evaluate[SC]

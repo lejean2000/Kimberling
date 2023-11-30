@@ -51,7 +51,11 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    pointChecker[ptcoord, xname, False, xname];
    Print["=======END======="];
 	
-   If [KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0, globalProperties[xname]["name"]=globalptnames[xname]];
+   If [
+   KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0, 
+   globalProperties[xname]["name"]=globalptnames[xname]; Print[globalptnames[xname]];
+   ];
+   
    (*If [KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, globalProperties[xname]["descr"]={globalptdescr[xname]}];*)
    If [KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, globalProperties[xname]["others"]={globalptdescr[xname]}];
    

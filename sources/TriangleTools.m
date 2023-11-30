@@ -1261,3 +1261,6 @@ bAntiparallels[pt_, v1_:xA, v2_:xB, v3_:xC] =
     {bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v1]], 
      bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v2]], 
      bParallelLine[pt, bPolar[bCircleEq[v1, v2, v3], v3]]}
+ 
+bIntersectionTriangle[la_, lb_, lc_] := {bLineIntersection[lb, lc], 
+     bLineIntersection[lc, la], bLineIntersection[la, lb]}
