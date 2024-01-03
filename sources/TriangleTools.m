@@ -38,9 +38,10 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
-     pp = X[k] /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
-         c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
-         f/Total[f]}] . Transpose[pp/Total[pp]]]
+     pp = KimberlingCenterC[k] /. {a -> bDistanceF[e, f], 
+         b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
+      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
+       Transpose[pp/Total[pp]]]
  
 setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
      b -> bDistance[x, z], c -> bDistance[x, y]}
@@ -117,19 +118,19 @@ bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{l2, l3},
 bKimberlingTriangle[name_] := symmetrizeTriangleType2[name]
  
 symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, ({v1, v2, v3} = KimberlingTrianglesBary[name]; 
-       partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB2 = 
-        v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partB3 = 
-        v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; partC1 = 
-        partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-          SA -> SB, SB -> SC, SC -> SA}; ); 
+      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesBary[name]; 
+      partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
       partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
       partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := b1*c2 - c1*b2 + c1*a2 - 
@@ -334,8 +335,9 @@ bToSearchNumbers[pt_] := S*(pt/(Total[pt]*{a, b, c})) /.
 bPerspector[mx_] := Module[{p, m11, m12, m13, m21, m22, m23, m31, m32, m33}, 
      If[ !MatrixQ[mx], {{m11, m12, m13}, {m12, m22, m23}, {m13, m23, m33}} = 
         conicEqtoMtx[mx], {{m11, m12, m13}, {m12, m22, m23}, 
-         {m13, m23, m33}} = mx]; p = {1/(m12*m13 - m11*m23), 
-        1/((-m13)*m22 + m12*m23), 1/(m13*m23 - m12*m33)}; p/Total[p]]
+         {m13, m23, m33}} = mx]; {(m13*m22 - m12*m23)*(m13*m23 - m12*m33), 
+       (m12*m13 - m11*m23)*((-m13)*m23 + m12*m33), 
+       -((m12*m13 - m11*m23)*((-m13)*m22 + m12*m23))}]
  
 bVertexConjugate[{u_, v_, w_}, {p_, q_, r_}] := 
     {a^2*((-c^4)*p*q*u*v + (b^2*p + a^2*q)*r*(b^2*u + a^2*v)*w)*
@@ -565,11 +567,12 @@ bBicevianConic[{u1_, v1_, w1_}, {u2_, v2_, w2_}] :=
 symmetrizeTriangle[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
       partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesBary[name]; 
       partB1 = v2 /. {b -> a, c -> b, a -> c, sb -> sa, sc -> sb, sa -> sc, 
-         SB -> SA, SC -> SB, SA -> SC}; 
+         SB -> SA, SC -> SB, SA -> SC, B -> A, C -> B, A -> C}; 
       partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA}; partB3 = v3; partC1 = partB1; 
-      partC2 = v2; partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, 
-         sb -> sc, sc -> sa, SA -> SB, SB -> SC, SC -> SA}; 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; partB3 = v3; 
+      partC1 = partB1; partC2 = v2; partC3 = 
+       partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bCircumcircleInverse[{u_, v_, w_}] := 
@@ -837,9 +840,9 @@ bEllipse[f1_, f2_, k_] := Module[{expr},
       pr[[1]][[1]] /. Thread[{p1, q1, r1} -> f1/Total[f1]] /. 
        Thread[{p2, q2, r2} -> f2/Total[f2]]]
  
-bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] := 
-    Simplify[bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
-      bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]]
+bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] := bConcurrencyMatrix[
+     bPerpendicular[bLine[xb, xc], pa], bPerpendicular[bLine[xa, xc], pb], 
+     bPerpendicular[bLine[xa, xb], pc]]
  
 bHatzipolakisMoses[{p_, q_, r_}] := 
     {c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*p*q + b^2*(a^2 + b^2 - c^2)*
@@ -1264,3 +1267,14 @@ bAntiparallels[pt_, v1_:xA, v2_:xB, v3_:xC] =
  
 bIntersectionTriangle[la_, lb_, lc_] := {bLineIntersection[lb, lc], 
      bLineIntersection[lc, la], bLineIntersection[la, lb]}
+ 
+bIsOrthologicSimplify[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    Factor[bConcurrencyMatrix[simplifyRationalBarycentrics[
+       bPerpendicular[bLine[xb, xc], pa]], simplifyRationalBarycentrics[
+       bPerpendicular[bLine[xa, xc], pb]], simplifyRationalBarycentrics[
+       bPerpendicular[bLine[xa, xb], pc]]]]
+ 
+bOrthopoleGen[l_, xa_:xA, xb_:xB, xc_:xC] := Module[{ha, hb, hc, la, lb}, 
+     ha = bFootPerpendicular[l, xa]; hb = bFootPerpendicular[l, xb]; 
+      hc = bFootPerpendicular[l, xc]; la = bPerpendicular[bLine[xb, xc], ha]; 
+      lb = bPerpendicular[bLine[xa, xc], hb]; Return[Cross[la, lb]]; ]

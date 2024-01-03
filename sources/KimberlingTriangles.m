@@ -951,9 +951,7 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "tangential-midarc" -> {2*a*Sin[A/2], -a - b + c - 2*a*Sin[B/2], 
        -a + b - c - 2*a*Sin[C/2]}, "2nd tangential-midarc" -> 
       {-2*a*Sin[A/2], a + b - c - 2*a*Sin[B/2], a - b + c - 2*a*Sin[C/2]}, 
-     "Thomson" -> {0, 0, 0}, "Thomson-anticomplementary" -> {0, 0, 0}, 
-     "Thomson-excentral" -> {0, 0, 0}, "Thomson-medial" -> {0, 0, 0}, 
-     "Thomson-orthic" -> {0, 0, 0}, "inner tri-equilateral" -> 
+    "inner tri-equilateral" -> 
       {(a^2*(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 6*S))/
         (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 6*S), -b^2, -c^2}, 
      "outer tri-equilateral" -> 
@@ -1220,5 +1218,7 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "7th Vijay-Paasche-Hutson"->{S (a^2 b c-S^2),a b (a c+S) (2 b c+S),a c (a b+S) (2 b c+S)},
      "8th Vijay-Paasche-Hutson" ->{4 R (c+3 R)+b (c+4 R),b (c+2 R),c (b+2 R)},
      "9th Vijay-Paasche-Hutson"->{a (2 a b c+(b+c) S),-(a b+S) (2 b c+S),-(a c+S) (2 b c+S)},
-     "10th Vijay-Paasche-Hutson"->{-a^8+4 a^6 (b^2+c^2)-(b^4-c^4)^2-a^4 (6 b^4+8 b^2 c^2+6 c^4)+4 a^2 (b^6+b^4 c^2+16 b^3 c^3+b^2 c^4+c^6)+32 a b^2 c^2 (b+c) S,4 b c S (a^4+b^4+8 a b^2 c-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S),4 b c S (a^4+b^4+8 a b c^2-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S)}
+     "10th Vijay-Paasche-Hutson"->{-a^8+4 a^6 (b^2+c^2)-(b^4-c^4)^2-a^4 (6 b^4+8 b^2 c^2+6 c^4)+4 a^2 (b^6+b^4 c^2+16 b^3 c^3+b^2 c^4+c^6)+32 a b^2 c^2 (b+c) S,4 b c S (a^4+b^4+8 a b^2 c-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S),4 b c S (a^4+b^4+8 a b c^2-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S)},
+     "Aguilera"->{a (-a + b + c) (a + b + c) + 2 (b + c) S, b ((-a + b + c) (a + b + c) - 2 S), c ((-a + b + c) (a + b + c) - 2 S)},
+     "Aguilera-Pavlov"->{S(b+c)+2 a b c ,b (-S+2 b c ),c (-S+2 b c )}
      |>;

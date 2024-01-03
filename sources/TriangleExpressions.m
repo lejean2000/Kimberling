@@ -198,17 +198,21 @@ replacerExprNoeval[expr_, nu_, np_:0] :=
 toUVW[expr_] := expr /. Thread[{x, y, z} -> {u, v, w}] /. 
       Thread[{l, m, n} -> {u, v, w}] /. Thread[{p, q, r} -> {u, v, w}]
  
-massHeuristicsSet[expr_, set_, deg_:16, ratio_:4.5] := 
-    Module[{out, etc, testexpr, check, mset}, mset = setRemoveBrackets[set]; 
+massHeuristicsSet[expr_, set_, deg_:16, ratio_:4.5, docurves_:False] := 
+    Module[{curves, out, etc, testexpr, check, mset}, 
+     mset = setRemoveBrackets[set]; If[docurves, globalSilence = True]; 
       Quiet[Monitor[out = {}; etc = {}; 
-         Do[nprg = nx; If[ !PolynomialQ[KimberlingCenterCN[nx][[1]], 
+         Do[nprg = nx; If[ !PolynomialQ[KimberlingCenterC[nx][[1]], 
               {a, b, c}], Continue[]]; testexpr = TimeConstrained[
              simplifyRationalBarycentrics[replacer[expr, nx, nx]], 10, -1]; 
            If[testexpr == -1, Continue[]]; check = checkPointinETC2[
-             testexpr]; If[Length[check] > 0, AppendTo[etc, 
-             {nx, check[[1]]}], If[heuristicsCheck[evaluate[testexpr[[1]]], 
-              deg, ratio], AppendTo[out, nx]]]; , {nx, mset}], nprg]]; 
-      Print[out]; Print[colorformat[ToString[etc]]]; Return[{out, etc}]; ]
+             testexpr]; If[docurves && Length[check] == 0, 
+            curves = Quiet[checkCurves[testexpr]]]; If[Length[check] > 0, 
+            AppendTo[etc, {nx, check[[1]]}], If[heuristicsCheck[
+              evaluate[testexpr[[1]]], deg, ratio], If[Length[curves] > 0, 
+               AppendTo[out, {nx, curves}], AppendTo[out, nx]]; ]]; , 
+          {nx, mset}], nprg]]; Print[out]; Print[colorformat[ToString[etc]]]; 
+      globalSilence = False; Return[{out, etc}]; ]
  
 setRemoveBrackets[set_] := (StringReplace[#1, {")" -> "", "(" -> ""}] & ) /@ 
      set

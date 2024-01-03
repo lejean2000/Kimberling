@@ -764,12 +764,13 @@ addExtraPoint[bary_, letter_, name_, writeout_:True] :=
         DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
          NonETCNames]; ]; Return[dbname]; ]
  
-quickChecker[expr_, num_:0, curvescheck_:True] := 
+quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
-      If[ !checkCentralExpression[ptcoord], Return[False, Module]; ]; 
-      If[num != 0, chk = 0, chk = checkPointinETC2[ptcoord]]; 
-      If[Length[chk] > 0, Print[colorformat[StringJoin["ETC: ", chk]]], 
+      If[dosymcheck, If[ !checkCentralExpression[ptcoord], 
+         Return[False, Module]; ]; ]; If[num != 0, chk = 0, 
+       chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
+       Print[colorformat[StringJoin["ETC: ", chk]]], 
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
             "X", True]]]; If[curvescheck, numcon = 

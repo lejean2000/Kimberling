@@ -41,6 +41,42 @@ singlePointProcesses = Association[
 
 globalOutputStream = False;
 
+
+addpoint[ptnum_, prcoordexpr_, topname_, ptnamein_:""] := Module[{yy, xname, start},
+  pointCheckerMinProperties = 8;
+  start = ptnum;
+
+   globalNoCleanup = True;
+   
+   If[StringLength[topname]>0, Print[];Print["======="<>topname<>"=======1"]];
+   If[StringLength[ptnamein]>0, Print[];Print["======="<>ptnamein<>"=======2"]];
+   
+   
+   ptchk = quickChecker[prcoordexpr,0,False];
+   
+   If[
+	   Total[ptchk]>=pointCheckerMinProperties,
+
+	   xname = "X" <> ToString[start];
+
+	   AppendTo[ETC, xname->prcoordexpr[[1]]];
+	   yy=intnumericnorm[evaluate[symmetrizeInternal[ETC[xname]]]/.rule69];
+	   AppendTo[ETCBaryNorm, xname->yy];
+	   AppendTo[ETCFull, xname->prcoordexpr[[1]]];
+	   AppendTo[ETCBaryNormFull, xname->yy];
+	   
+	   AppendTo[globalptnames,xname->topname];
+	   AppendTo[globalptdescr,xname->ptnamein];
+	   
+	   start = start + 1;
+	   
+	   Print["======="<>ToString[ptchk]<>"======="];
+   ];
+
+  Return[start-1];
+];
+
+
 loop[from_, to_] := Module[{xname, ptcoord, pt},
   pointCheckerMinProperties = 0;
   Do[
@@ -148,5 +184,5 @@ endnum = quickloop[1+endnum, expr, set, "", "isotomic conjugate of bicevian chor
 
 
 (*
-loop[62000, 62060];
+loop[66000, 66189];
 *)
