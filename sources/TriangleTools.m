@@ -3,6 +3,9 @@ bIntersectionTriangleV[pa_, pb_, pc_, qa_, qb_, qc_] :=
      bLineIntersection[bLine[pc, qc], bLine[pa, qa]], 
      bLineIntersection[bLine[pa, qa], bLine[pb, qb]]}
  
+bIntersectionTriangleV[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
+    bIntersectionTriangleV[pa, pb, pc, qa, qb, qc]
+ 
 bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
      l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
  
@@ -15,6 +18,9 @@ bIntersectionTriangleS[pa_, pb_, pc_, qa_, qb_, qc_] :=
     {bLineIntersection[bLine[pb, pc], bLine[qb, qc]], 
      bLineIntersection[bLine[pc, pa], bLine[qc, qa]], 
      bLineIntersection[bLine[pa, pb], bLine[qa, qb]]}
+ 
+bIntersectionTriangleS[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
+    bIntersectionTriangleS[pa, pb, pc, qa, qb, qc]
  
 bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]], 
      c^2*po[[1]]*po[[2]]}
@@ -1278,3 +1284,24 @@ bOrthopoleGen[l_, xa_:xA, xb_:xB, xc_:xC] := Module[{ha, hb, hc, la, lb},
      ha = bFootPerpendicular[l, xa]; hb = bFootPerpendicular[l, xb]; 
       hc = bFootPerpendicular[l, xc]; la = bPerpendicular[bLine[xb, xc], ha]; 
       lb = bPerpendicular[bLine[xa, xc], hb]; Return[Cross[la, lb]]; ]
+ 
+bOrthopoleGenSimplify[l_, xa_:xA, xb_:xB, xc_:xC] := 
+    Module[{ha, hb, hc, la, lb}, ha = simplifyRationalBarycentrics[
+        partialSReplace[bFootPerpendicular[l, xa]]]; 
+      hb = simplifyRationalBarycentrics[partialSReplace[bFootPerpendicular[l, 
+          xb]]]; hc = simplifyRationalBarycentrics[partialSReplace[
+         bFootPerpendicular[l, xc]]]; la = simplifyRationalBarycentrics[
+        partialSReplace[bPerpendicular[bLine[xb, xc], ha]]]; 
+      lb = simplifyRationalBarycentrics[partialSReplace[
+         bPerpendicular[bLine[xa, xc], hb]]]; 
+      Return[simplifyRationalBarycentrics[Cross[la, lb]]]; ]
+ 
+bCrosspointGeneral[pp_, pq_, {xa_, xb_, xc_}, simplify_:True] := 
+    Module[{smpl, a1, b1, c1, a2, b2, c2, a3, b3, c3}, 
+     If[simplify, smpl = simplifyRationalBarycentrics, smpl[xvar_] = xvar]; 
+      {a1, b1, c1} = smpl[bCevianTriangleGeneral[pp, xa, xb, xc]]; 
+      {a2, b2, c2} = smpl[bCevianTriangleGeneral[pq, xa, xb, xc]]; 
+      a3 = smpl[Cross[bLine[xa, a2], bLine[b1, c1]]]; 
+      b3 = smpl[Cross[bLine[xb, b2], bLine[a1, c1]]]; 
+      c3 = smpl[Cross[bLine[xc, c2], bLine[a1, b1]]]; 
+      smpl[Cross[bLine[a1, a3], bLine[b1, b3]]]]

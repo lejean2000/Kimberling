@@ -92,7 +92,7 @@ fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n],
         #1 =!= ComplexInfinity && #1 > 0 & ]]]
  
 partialSAconvert[ex_] := ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. 
-     SC -> evaluate[SC]
+      SC -> evaluate[SC] /. SW -> evaluate[SW]
  
 leastBaryFromIntersections[testset_] := 
     Module[{results, tt, out, mon, min, deg}, 
