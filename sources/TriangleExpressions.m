@@ -126,8 +126,8 @@ massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, docurves_:False] :=
      If[docurves, globalSilence = True]; 
       Quiet[Monitor[out = {}; etc = {}; Do[nprg = nx; curves = {}; 
            If[ !MemberQ[Keys[ETC], StringJoin["X", ToString[nx]]], 
-            Continue[]]; If[ !PolynomialQ[KimberlingCenterCN[nx][[1]], 
-              {a, b, c}], Continue[]]; testexpr = TimeConstrained[
+            Continue[]]; If[ !RationalExpressionQ[KimberlingCenterCN[nx][[
+               1]], {a, b, c}], Continue[]]; testexpr = TimeConstrained[
              simplifyRationalBarycentrics[replacer[expr, nx]], 10, -1]; 
            If[testexpr == -1, Continue[]]; check = checkPointinETC2[
              testexpr]; If[docurves && Length[check] == 0, 
@@ -202,7 +202,7 @@ massHeuristicsSet[expr_, set_, deg_:16, ratio_:4.5, docurves_:False] :=
     Module[{curves, out, etc, testexpr, check, mset}, 
      mset = setRemoveBrackets[set]; If[docurves, globalSilence = True]; 
       Quiet[Monitor[out = {}; etc = {}; 
-         Do[nprg = nx; If[ !PolynomialQ[KimberlingCenterC[nx][[1]], 
+         Do[nprg = nx; If[ !RationalExpressionQ[KimberlingCenterCN[nx][[1]], 
               {a, b, c}], Continue[]]; testexpr = TimeConstrained[
              simplifyRationalBarycentrics[replacer[expr, nx, nx]], 10, -1]; 
            If[testexpr == -1, Continue[]]; check = checkPointinETC2[

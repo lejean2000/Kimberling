@@ -1,5 +1,3 @@
-(* ::Package:: *)
-
 KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" -> 
       {1/2, -(b^2/(a^2 + b^2 - c^2)), -(c^2/(a^2 - b^2 + c^2))}, 
      "1st Altintas-isodynamic" -> {(-(Sqrt[3]*S*(S^2 + SB*SC)) - 
@@ -951,7 +949,7 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "tangential-midarc" -> {2*a*Sin[A/2], -a - b + c - 2*a*Sin[B/2], 
        -a + b - c - 2*a*Sin[C/2]}, "2nd tangential-midarc" -> 
       {-2*a*Sin[A/2], a + b - c - 2*a*Sin[B/2], a - b + c - 2*a*Sin[C/2]}, 
-    "inner tri-equilateral" -> 
+     "inner tri-equilateral" -> 
       {(a^2*(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 6*S))/
         (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 6*S), -b^2, -c^2}, 
      "outer tri-equilateral" -> 
@@ -1076,15 +1074,20 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "Yiu tangents" -> {-1, (a^2 + 2*b^2 - c^2)/(2*a^2 + b^2 - c^2), 
        (a^2 - b^2 + 2*c^2)/(2*a^2 - b^2 + c^2)}, 
      "1st Zaniah" -> {2*a, a + b - c, a - b + c}, 
-     "2nd Zaniah" -> {2*a, a - b + c, a + b - c}, 
-     "Moses-Miyamoto"->{-2 a^3+3 a^2 (b+c)-(b-c)^2 (b+c),b (a^2+(b-c)^2-2 a (b+c)),c (a^2+(b-c)^2-2 a (b+c))},
-     "1st Moses-Miyamoto-Apollonius triangle"->{-2 a (a+b-c) (a-b+c),(a+b-c) (a^2-b^2+2 b c-c^2-2 S),(a-b+c) (a^2-b^2+2 b c-c^2-2 S)},
-     "2nd Moses-Miyamoto-Apollonius triangle"->{-2 a (a+b-c) (a-b+c),(a+b-c) (a^2-b^2+2 b c-c^2+2 S),(a-b+c) (a^2-b^2+2 b c-c^2+2 S)},
-     "anti-excenters-incenter reflections"->{(2 a^2)/(S^2-2 SB SC),1/SB,1/SC},
-     "Gemini 1" -> {a, b + c, b + c}, "Gemini 2" -> {-a, b + c, b + c}, 
-     "Gemini 3" -> {a, a + b, a + c}, "Gemini 4" -> {-a, a + b, a + c}, 
-     "Gemini 5" -> {a, a - b, a - c}, "Gemini 6" -> {a, -a + b, -a + c}, 
-     "Gemini 7" -> {a, a - c, a - b}, "Gemini 8" -> {a, -a + c, -a + b}, 
+     "2nd Zaniah" -> {2*a, a - b + c, a + b - c}, "Moses-Miyamoto" -> 
+      {-2*a^3 + 3*a^2*(b + c) - (b - c)^2*(b + c), 
+       b*(a^2 + (b - c)^2 - 2*a*(b + c)), c*(a^2 + (b - c)^2 - 2*a*(b + c))}, 
+     "1st Moses-Miyamoto-Apollonius triangle" -> 
+      {-2*a*(a + b - c)*(a - b + c), (a + b - c)*(a^2 - b^2 + 2*b*c - c^2 - 
+         2*S), (a - b + c)*(a^2 - b^2 + 2*b*c - c^2 - 2*S)}, 
+     "2nd Moses-Miyamoto-Apollonius triangle" -> 
+      {-2*a*(a + b - c)*(a - b + c), (a + b - c)*(a^2 - b^2 + 2*b*c - c^2 + 
+         2*S), (a - b + c)*(a^2 - b^2 + 2*b*c - c^2 + 2*S)}, 
+     "anti-excenters-incenter reflections" -> {(2*a^2)/(S^2 - 2*SB*SC), 
+       SB^(-1), SC^(-1)}, "Gemini 1" -> {a, b + c, b + c}, 
+     "Gemini 2" -> {-a, b + c, b + c}, "Gemini 3" -> {a, a + b, a + c}, 
+     "Gemini 4" -> {-a, a + b, a + c}, "Gemini 5" -> {a, a - b, a - c}, 
+     "Gemini 6" -> {a, -a + b, -a + c}, "Gemini 7" -> {a, a - c, a - b}, 
      "Gemini 9" -> {a, -a + b + c, -a + b + c}, 
      "Gemini 10" -> {-a, -a + b + c, -a + b + c}, 
      "Gemini 11" -> {a, a + b + c, a + b + c}, "Gemini 12" -> 
@@ -1098,20 +1101,18 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
       {a + b + c, -b - c, -b - c}, "Gemini 25" -> {a + b + c, a + b, a + c}, 
      "Gemini 26" -> {a + b + c, a + c, a + b}, "Gemini 27" -> 
       {a - b - c, a, a}, "Gemini 28" -> {a - b - c, b + c, b + c}, 
-     "Gemini 29" -> {a, b - c, -b + c}, "Gemini 30" -> {a, -b + c, b - c}, 
-     "Gemini 31" -> {b*c, a^2, a^2}, "Gemini 32" -> {-(b*c), a^2, a^2}, 
-     "Gemini 33" -> {a^2, b*c, b*c}, "Gemini 34" -> {-a^2, b*c, b*c}, 
-     "Gemini 35" -> {Cos[A], 1, 1}, "Gemini 36" -> {-Cos[A], 1, 1}, 
-     "Gemini 37" -> {Sec[A], 1, 1}, "Gemini 38" -> {-Sec[A], 1, 1}, 
-     "Gemini 39" -> {-a + b + c, a + b + c, a + b + c}, 
-     "Gemini 40" -> {a + b + c, -a + b + c, -a + b + c}, 
+     "Gemini 29" -> {a, b - c, -b + c}, "Gemini 31" -> {b*c, a^2, a^2}, 
+     "Gemini 32" -> {-(b*c), a^2, a^2}, "Gemini 33" -> {a^2, b*c, b*c}, 
+     "Gemini 34" -> {-a^2, b*c, b*c}, "Gemini 35" -> {Cos[A], 1, 1}, 
+     "Gemini 36" -> {-Cos[A], 1, 1}, "Gemini 37" -> {Sec[A], 1, 1}, 
+     "Gemini 38" -> {-Sec[A], 1, 1}, "Gemini 39" -> {-a + b + c, a + b + c, 
+       a + b + c}, "Gemini 40" -> {a + b + c, -a + b + c, -a + b + c}, 
      "Gemini 41" -> {b^2 + c^2, a^2, a^2}, "Gemini 42" -> 
       {a^2 + b^2 + c^2, a^2, a^2}, "Gemini 43" -> {a^2, b^2 + c^2, 
-       b^2 + c^2}, "Gemini 44" -> {-a^2, b^2 + c^2, b^2 + c^2}, 
-     "Gemini 45" -> {(b - c)^2, a^2, a^2}, "Gemini 46" -> 
-      {(b + c)^2, a^2, a^2}, "Gemini 47" -> {a^2, (b + c)^2, (b + c)^2}, 
-     "Gemini 48" -> {a^2, (b - c)^2, (b - c)^2}, 
-     "Gemini 49" -> {(b + c)^2, (b - c)^2, (b - c)^2}, 
+       b^2 + c^2}, "Gemini 45" -> {(b - c)^2, a^2, a^2}, 
+     "Gemini 46" -> {(b + c)^2, a^2, a^2}, "Gemini 47" -> 
+      {a^2, (b + c)^2, (b + c)^2}, "Gemini 48" -> {a^2, (b - c)^2, 
+       (b - c)^2}, "Gemini 49" -> {(b + c)^2, (b - c)^2, (b - c)^2}, 
      "Gemini 50" -> {(b - c)^2, (b + c)^2, (b + c)^2}, 
      "Gemini 51" -> {(b - c)^2, b^2 + c^2, b^2 + c^2}, 
      "Gemini 52" -> {(b + c)^2, b^2 + c^2, b^2 + c^2}, 
@@ -1208,17 +1209,35 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "Gemini 107" -> {-1, 2, 2}, "Gemini 108" -> 
       {3*a - b - c, 2*a - 2*b - 2*c, 2*a - 2*b - 2*c}, 
      "Gemini 109" -> {1, 2, 2}, "Gemini 110" -> {2, 1, 1}, 
-     "Gemini 111" -> {-3, 1, 1},
-     "1st Vijay-Paasche-Hutson"->{-b c+4 R^2,b (c+2 R),c (b+2 R)},
-     "2nd Vijay-Paasche-Hutson"->{8 R^3-a S,-b (a c-4 R^2),-c (a b-4 R^2)},
-     "3rd Vijay-Paasche-Hutson" ->{-a (b c-4 R^2),4 R^2 (b+2 R),4 R^2 (c+2 R)},
-     "4th Vijay-Paasche-Hutson"->{a (2 a b c+(b+c) S),S (a b+S),S (a c+S)},
-     "5th Vijay-Paasche-Hutson"->{2 a^6 b c+2 b c (b^2-c^2)^2 (b c+S)+a^5 (b+c) (4 b c+S)-2 a^3 (b+c) (b^2+c^2) (4 b c+S)+2 a^4 b c (-2 b^2+b c-2 c^2+S)+a (b+c) (4 b c (b^2-c^2)^2+(b^4-18 b^2 c^2+c^4) S)+2 a^2 b c (b^4-2 b^3 c+c^4-2 c^2 S-2 b^2 (9 c^2+S)-2 b (c^3+8 c S)),-4 b S (2 b c+S) (2 a b c+(a+c) S),-4 c S (2 b c+S) (2 a b c+(a+b) S)},
-     "6th Vijay-Paasche-Hutson"->{a S (2 a b c+(b+c) S),(2 a b+S) (a c+S) (2 b c+S),(a b+S) (2 a c+S) (2 b c+S)},
-     "7th Vijay-Paasche-Hutson"->{S (a^2 b c-S^2),a b (a c+S) (2 b c+S),a c (a b+S) (2 b c+S)},
-     "8th Vijay-Paasche-Hutson" ->{4 R (c+3 R)+b (c+4 R),b (c+2 R),c (b+2 R)},
-     "9th Vijay-Paasche-Hutson"->{a (2 a b c+(b+c) S),-(a b+S) (2 b c+S),-(a c+S) (2 b c+S)},
-     "10th Vijay-Paasche-Hutson"->{-a^8+4 a^6 (b^2+c^2)-(b^4-c^4)^2-a^4 (6 b^4+8 b^2 c^2+6 c^4)+4 a^2 (b^6+b^4 c^2+16 b^3 c^3+b^2 c^4+c^6)+32 a b^2 c^2 (b+c) S,4 b c S (a^4+b^4+8 a b^2 c-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S),4 b c S (a^4+b^4+8 a b c^2-2 b^2 c^2+c^4-2 a^2 (b^2+c^2)+4 b c S)},
-     "Aguilera"->{a (-a + b + c) (a + b + c) + 2 (b + c) S, b ((-a + b + c) (a + b + c) - 2 S), c ((-a + b + c) (a + b + c) - 2 S)},
-     "Aguilera-Pavlov"->{S(b+c)+2 a b c ,b (-S+2 b c ),c (-S+2 b c )}
-     |>;
+     "Gemini 111" -> {-3, 1, 1}, "1st Vijay-Paasche-Hutson" -> 
+      {-(b*c) + 4*R^2, b*(c + 2*R), c*(b + 2*R)}, 
+     "2nd Vijay-Paasche-Hutson" -> {8*R^3 - a*S, -(b*(a*c - 4*R^2)), 
+       -(c*(a*b - 4*R^2))}, "3rd Vijay-Paasche-Hutson" -> 
+      {-(a*(b*c - 4*R^2)), 4*R^2*(b + 2*R), 4*R^2*(c + 2*R)}, 
+     "4th Vijay-Paasche-Hutson" -> {a*(2*a*b*c + (b + c)*S), S*(a*b + S), 
+       S*(a*c + S)}, "5th Vijay-Paasche-Hutson" -> 
+      {2*a^6*b*c + 2*b*c*(b^2 - c^2)^2*(b*c + S) + a^5*(b + c)*(4*b*c + S) - 
+        2*a^3*(b + c)*(b^2 + c^2)*(4*b*c + S) + 
+        2*a^4*b*c*(-2*b^2 + b*c - 2*c^2 + S) + a*(b + c)*
+         (4*b*c*(b^2 - c^2)^2 + (b^4 - 18*b^2*c^2 + c^4)*S) + 
+        2*a^2*b*c*(b^4 - 2*b^3*c + c^4 - 2*c^2*S - 2*b^2*(9*c^2 + S) - 
+          2*b*(c^3 + 8*c*S)), -4*b*S*(2*b*c + S)*(2*a*b*c + (a + c)*S), 
+       -4*c*S*(2*b*c + S)*(2*a*b*c + (a + b)*S)}, 
+     "6th Vijay-Paasche-Hutson" -> {a*S*(2*a*b*c + (b + c)*S), 
+       (2*a*b + S)*(a*c + S)*(2*b*c + S), (a*b + S)*(2*a*c + S)*(2*b*c + S)}, 
+     "7th Vijay-Paasche-Hutson" -> {S*(a^2*b*c - S^2), 
+       a*b*(a*c + S)*(2*b*c + S), a*c*(a*b + S)*(2*b*c + S)}, 
+     "8th Vijay-Paasche-Hutson" -> {4*R*(c + 3*R) + b*(c + 4*R), b*(c + 2*R), 
+       c*(b + 2*R)}, "9th Vijay-Paasche-Hutson" -> {a*(2*a*b*c + (b + c)*S), 
+       (-(a*b) - S)*(2*b*c + S), (-(a*c) - S)*(2*b*c + S)}, 
+     "10th Vijay-Paasche-Hutson" -> {-a^8 + 4*a^6*(b^2 + c^2) - 
+        (b^4 - c^4)^2 - a^4*(6*b^4 + 8*b^2*c^2 + 6*c^4) + 
+        4*a^2*(b^6 + b^4*c^2 + 16*b^3*c^3 + b^2*c^4 + c^6) + 
+        32*a*b^2*c^2*(b + c)*S, 4*b*c*S*(a^4 + b^4 + 8*a*b^2*c - 2*b^2*c^2 + 
+         c^4 - 2*a^2*(b^2 + c^2) + 4*b*c*S), 4*b*c*S*(a^4 + b^4 + 8*a*b*c^2 - 
+         2*b^2*c^2 + c^4 - 2*a^2*(b^2 + c^2) + 4*b*c*S)}, 
+     "Aguilera" -> {a*(-a + b + c)*(a + b + c) + 2*(b + c)*S, 
+       b*((-a + b + c)*(a + b + c) - 2*S), c*((-a + b + c)*(a + b + c) - 
+         2*S)}, "Aguilera-Pavlov" -> {2*a*b*c + (b + c)*S, b*(2*b*c - S), 
+       c*(2*b*c - S)}, "K1343" -> {-a^4, (b^2 + (a - c)*c)*(b^2 - c*(a + c)), 
+       -((a*b + b^2 - c^2)*(a*b - b^2 + c^2))}|>
