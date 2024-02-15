@@ -225,13 +225,12 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
           Print[colorformat[StringJoin[
               "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): ", 
               StringRiffle[hg, ", "]]]]; ]]; hg = {}; 
-        Do[eltest = igroup; test = Det[{{1, 1, 1}, bMidpoint[
-              KimberlingCenterCNy[eltest[[1]]] /. rc, KimberlingCenterCNy[
-                eltest[[2]]] /. rc], ptcoord /. rc}]; 
-          test2 = Det[{{1, 1, 1}, bMidpoint[KimberlingCenterCNy[
-                eltest[[1]]] /. rc2, KimberlingCenterCNy[eltest[[2]]] /. 
-               rc2], ptcoord /. rc2}]; If[TrueQ[Simplify[test] == 0] && 
-            TrueQ[Simplify[test2] == 0], AppendTo[hg, eltest]; ]; , 
+        Do[eltest = igroup; test = Cross[bMidpoint[KimberlingCenterCNy[
+               eltest[[1]]] /. rc, KimberlingCenterCNy[eltest[[2]]] /. rc], 
+            ptcoord /. rc]; test2 = Cross[bMidpoint[KimberlingCenterCNy[
+               eltest[[1]]] /. rc2, KimberlingCenterCNy[eltest[[2]]] /. rc2], 
+            ptcoord /. rc2]; If[TrueQ[Simplify[test] == {0, 0, 0}] && 
+            TrueQ[Simplify[test2] == {0, 0, 0}], AppendTo[hg, eltest]; ]; , 
          {igroup, intMidpointProcess[res[[2]], ptc, prec]}]; 
         hg = SortBy[hg, numsortexpr[#1[[1]]] & ]; 
         hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ hg; 
@@ -504,9 +503,9 @@ checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3},
  
 globalSeenPoints = {}
  
-checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv, 
-      normcoef, curves, circset}, out = {}; 
-      ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
+checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck, 
+      crv, normcoef, curves, circset}, 
+     out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
       curves = TriangleCurves; circset = KeySelect[CentralCircles, 
          !StringContainsQ[#1, "A-"] &&  !StringContainsQ[#1, "B-"] && 
            !StringContainsQ[#1, "C-"] &&  !StringContainsQ[#1, "-A"] && 
@@ -516,8 +515,8 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, d, secondcheck, crv,
          Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
         d = crv/normcoef /. Thread[{x, y, z} -> ptest]; 
         If[Abs[d] < 10^(-12), secondcheck = True; 
-          Do[ptest = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
-            d = curves[name] /. Thread[{x, y, z} -> ptest] /. rc; 
+          Do[ptest2 = N[NormalizeBary[evaluate[pt] /. rc], 35]; 
+            d = curves[name] /. Thread[{x, y, z} -> ptest2] /. rc; 
             If[Abs[d] > 10^(-12), secondcheck = False]; , 
            {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
        {name, Keys[curves]}]; AssociateTo[globalProperties[inname], 
@@ -667,9 +666,8 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
         If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
           If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) and X(j) for these {i,j}: ", StringRiffle[
-                SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
-        If[MemberQ[Keys[glob[pt]], "reflections"], 
-         hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
+                hg, ", "]]]]; ]; ]; If[MemberQ[Keys[glob[pt]], 
+          "reflections"], hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
                " = reflection of X(i) in X(j) for these {i,j}: ", 
                StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], 
