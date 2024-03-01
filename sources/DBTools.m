@@ -474,15 +474,15 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
             name]]; Quiet[checkConjugates[ptcoord, bCrossConjugate, 
             "= X(i)-cross conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkVertexConjugates[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], PrintTemporary[
+            "Starting circles+poles"]]; Quiet[checkCircles[ptcoord, name]]; 
           Quiet[checkInconics[ptcoord, num, name]]; 
-          If[ !TrueQ[globalSilence], PrintTemporary["Starting poles"]]; 
-          Quiet[checkPoles[ptcoord, name]]; If[ !TrueQ[globalSilence], 
-           PrintTemporary["Starting barycentric"]]; 
+          Quiet[checkPoles[ptcoord, name]]; Quiet[checkPerspector[ptcoord, 
+            name]]; Quiet[checkConicCenter[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], PrintTemporary["Starting barycentric"]]; 
           Quiet[checkBarycentric[ptcoord, "product", name]]; 
           Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
-          Quiet[checkPerspector[ptcoord, name]]; 
-          Quiet[checkConicCenter[ptcoord, name]]; TimeConstrained[
-           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
+          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
           If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; 
       Return[True]; ]
  
@@ -567,6 +567,46 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
        {ToString[First[fncname[func]]] -> res}]; If[ !TrueQ[globalSilence], 
        If[Length[res] > 0, Print[colorformat[StringJoin[str, 
             StringRiffle[res, ", "]]]]; ]]; ]
+ 
+checkCircles[pt_, name_:"X", prec_:24] := 
+    Module[{rc, rc2, d1, d2, d3, d4, d5, d6, etcset, distlist, ptn, hg, 
+      outgroups, fullgroups, as, out}, fullgroups = {}; outgroups = {}; 
+      etcset = Select[ETCBaryNorm, Total[#1] != 0 & ]; 
+      ptn = intnumericnorm[pt /. rule69]; distlist = 
+       Table[{ptname, N[bDistance[ptn, etcset[ptname]] /. rule69, prec]}, 
+        {ptname, Keys[etcset]}]; distlist = Select[distlist, 
+        Internal`RealValuedNumericQ[#1[[2]]] & ]; 
+      distlist = SortBy[distlist, #1[[2]] & ]; 
+      as = AssociationThread[(#1[[1]] & ) /@ distlist, 
+        (#1[[2]] & ) /@ distlist]; fullgroups = 
+       Select[Values[PositionIndex[as]], Length[#1] > 1 & ]; 
+      outgroups = Select[fullgroups, Length[#1] > 2 & ]; 
+      outgroups = (Take[SortBy[#1, numsortexpr[#1] & ], 3] & ) /@ outgroups; 
+      outgroups = SortBy[outgroups, numsortexpr[#1[[1]]] & ]; hg = {}; 
+      Do[rc = intCheckList[[1]]; rc2 = intCheckList[[2]]; 
+        ptn = intnumericnorm[ptcoord /. rc]; 
+        d1 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                1]]] /. rc]] /. rc, prec]; 
+        d2 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                2]]] /. rc]] /. rc, prec]; 
+        d3 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                3]]] /. rc]] /. rc, prec]; ptn = intnumericnorm[
+          ptcoord /. rc2]; d4 = N[bDistance[ptn, intnumericnorm[
+             KimberlingCenterCNy[circ[[1]]] /. rc2]] /. rc2, prec]; 
+        d5 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                2]]] /. rc2]] /. rc2, prec]; 
+        d6 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                3]]] /. rc2]] /. rc2, prec]; 
+        If[AllTrue[{d1, d2}, #1 == d3 & ] && AllTrue[{d4, d5}, #1 == d6 & ], 
+         AppendTo[hg, circ]]; , {circ, outgroups}]; 
+      hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]], 
+          intnameformat[#1[[3]]]} & ) /@ hg; If[ !TrueQ[globalSilence], 
+       If[Length[hg] > 0, If[Length[hg] == 1, Print[colorformat[
+            StringJoin["= center of circles {", ToString[hg[[1]]], "}"]]], 
+          Print[colorformat[StringJoin[
+              "= center of circles {{ X(i), X(j), X(k) }} for these {i, j, \
+k}: ", StringRiffle[hg, ", "]]]]; ]; ]]; AssociateTo[globalProperties[name], 
+       {"circles" -> hg}]; Return[hg]; ]
  
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
       outin, conics}, out = {}; outci = {}; outin = {}; 
@@ -684,18 +724,18 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            print[colorformat[StringJoin[printname, " = ", proc, " of ", 
                glob[pt][proc]]]]; ]; , {proc, Keys[singlePointProcesses]}]; 
         If[KeyExistsQ[glob[pt], "trilinear polar"], 
-         hg = glob[pt]["trilinear polar"]; If[Length[hg] > 0, 
+         hg = glob[pt]["trilinear polar"]; If[ListQ[hg] && Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
                " = trilinear pole of line {", intnameformat[hg[[1]]], ", ", 
                intnameformat[hg[[2]]], "}"]]]; ]; ]; 
-        hg = glob[pt]["perspector"]; If[Length[hg] >= 2, 
+        hg = glob[pt]["perspector"]; If[ListQ[hg] && Length[hg] >= 2, 
          print[colorformat[StringJoin[printname, StringJoin[
               " = perspector of circumconic {{A, B, C, ", StringRiffle[hg, 
                ", "], "}}"]]]]; ]; hg = glob[pt]["conic center"]; 
-        If[Length[hg] >= 2, print[colorformat[StringJoin[printname, 
-             StringJoin[" = center of circumconic {{A, B, C, ", 
-              StringRiffle[hg, ", "], "}}"]]]]; ]; localprops = 
-         Association["isoconjugate" -> 
+        If[ListQ[hg] && Length[hg] >= 2, 
+         print[colorformat[StringJoin[printname, StringJoin[
+              " = center of circumconic {{A, B, C, ", StringRiffle[hg, ", "], 
+              "}}"]]]]; ]; localprops = Association["isoconjugate" -> 
            "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
           "vertex conjugate" -> 
            "= X(i)-vertex conjugate of X(j) for these {i, j}: ", 
@@ -709,8 +749,9 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
            "= X(i)-anticomplementary conjugate of X(j) for these {i, j}: ", 
           "bCrossConjugate" -> 
            "= X(i)-cross conjugate of X(j) for these {i, j}: ", 
-          "poles" -> " = ", "others" -> " = ", "inconics" -> 
-           "= lies on inconics with perspector: ", "circumconics" -> 
+          "poles" -> " = ", "others" -> " = ", "circles" -> " = ", 
+          "inconics" -> "= lies on inconics with perspector: ", 
+          "circumconics" -> 
            "= intersection, other than A, B, C, of circumconics ", 
           "barycentric product" -> 
            "= barycentric product X(i)*X(j) for these (i, j): ", 
@@ -719,22 +760,28 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
           "harmonic" -> 
            "= {X(i),X(j)}-harmonic conjugate of X(k) for these (i,j,k): "]; 
         Do[hg = glob[pt][name2]; If[ListQ[hg] && Length[hg] > 0 && 
-            name2 != "others" && name2 != "poles", 
+            name2 != "others" && name2 != "poles" && name2 != "circles", 
            print[colorformat[StringJoin[printname, " ", localprops[name2], 
                StringRiffle[hg, ", "]]]]; ]; If[name2 == "poles", 
-           If[Length[hg] > 0, Do[print[colorformat[StringJoin[printname, " ", 
-                  prop]]], {prop, hg}]; ]; hg = glob[pt]["polesci"]; 
-            If[ListQ[hg] && Length[hg] > 0, print[colorformat[StringJoin[
-                 printname, " = pole of line X(i)X(j) wrt the circumconic \
-with perspector X(k) for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; ]; 
-            hg = glob[pt]["polesin"]; If[ListQ[hg] && Length[hg] > 0, 
+           If[ListQ[hg] && Length[hg] > 0, Do[print[colorformat[StringJoin[
+                  printname, " ", prop]]], {prop, hg}]; ]; 
+            hg = glob[pt]["polesci"]; If[ListQ[hg] && Length[hg] > 0, 
              print[colorformat[StringJoin[printname, " = pole of line \
-X(i)X(j) wrt the inconic with perspector X(k) for these {i,j,k}: ", 
-                 StringRiffle[hg, ", "]]]]; ]; ]; 
+X(i)X(j) wrt the circumconic with perspector X(k) for these {i,j,k}: ", 
+                 StringRiffle[hg, ", "]]]]; ]; hg = glob[pt]["polesin"]; 
+            If[ListQ[hg] && Length[hg] > 0, print[colorformat[StringJoin[
+                 printname, " = pole of line X(i)X(j) wrt the inconic with \
+perspector X(k) for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; ]; ]; 
           If[ListQ[hg] && Length[hg] > 0 && name2 == "others", 
            Do[print[colorformat[StringJoin[printname, localprops[name2], 
-               prop]]], {prop, hg}]]; , {name2, Keys[localprops]}]; , 
-       {pt, cycle}]; colorPrintOn = colorprint; ]
+               prop]]], {prop, hg}]]; If[ListQ[hg] && Length[hg] > 0 && 
+            name2 == "circles", If[Length[hg] == 1, Print[colorformat[
+               StringJoin[printname, " = center of circle {", ToString[
+                 hg[[1]]], "}"]]], Print[colorformat[StringJoin[printname, " \
+= center of circles {{ X(i), X(j), X(k) }} for these {i, j, k}: ", 
+                 StringRiffle[hg, ", "]]]]; ]; ]; , 
+         {name2, Keys[localprops]}]; , {pt, cycle}]; 
+      colorPrintOn = colorprint; ]
  
 print[string_] := If[StringContainsQ[string, "KeyAbsent"], 
      Return["", Module], 

@@ -49,6 +49,8 @@ bCoordChangeK[k_, d_, e_, f_] := Module[{pp},
       Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
        Transpose[pp/Total[pp]]]
  
+bCoordChangeK[k_, {d_, e_, f_}] := bCoordChangeK[k, d, e, f]
+ 
 setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
      b -> bDistance[x, z], c -> bDistance[x, y]}
  
