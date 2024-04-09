@@ -77,3 +77,14 @@ checkPointsOnCurveNamed[crvname_] := Module[{srch},
  
 XNy[k_] := Module[{k2}, If[NumberQ[k], k2 = StringJoin["X", ToString[k]], 
        k2 = k]; KimberlingCenterCNy[k2]/Total[KimberlingCenterCNy[k2]]]
+ 
+checkTrianglesOnCurve[crv_] := Module[{ecrv, out}, 
+     ecrv = evaluate[crv] /. rule69; out = {}; 
+      Do[If[(ecrv /. Thread[{x, y, z} -> (KimberlingTrianglesBary[name] /. 
+             rule69)]) == 0, AppendTo[out, name]; ], 
+       {name, Keys[KimberlingTrianglesBary]}]; Return[out]; ]
+ 
+checkCurvesForTriangle[tr_] := Module[{ecrv, out}, 
+     out = {}; Do[ecrv = evaluate[TriangleCurves[name]] /. rule69; 
+        If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. rule69)]) == 0, 
+         AppendTo[out, name]; ], {name, Keys[TriangleCurves]}]; Return[out]; ]
