@@ -852,6 +852,10 @@ bIsOrthologic[pa_, pb_, pc_, xa_, xb_, xc_] := bConcurrencyMatrix[
      bPerpendicular[bLine[xb, xc], pa], bPerpendicular[bLine[xa, xc], pb], 
      bPerpendicular[bLine[xa, xb], pc]]
  
+bIsOrthologic[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
+    bConcurrencyMatrix[bPerpendicular[bLine[xb, xc], pa], 
+     bPerpendicular[bLine[xa, xc], pb], bPerpendicular[bLine[xa, xb], pc]]
+ 
 bHatzipolakisMoses[{p_, q_, r_}] := 
     {c^2*(a^2 + b^2 - c^2)*(a^2 - b^2 + c^2)*p*q + b^2*(a^2 + b^2 - c^2)*
        (a^2 - b^2 + c^2)*p*r - 2*a^2*((-a^2)*b^2 + b^4 - a^2*c^2 - 
@@ -923,8 +927,15 @@ bOrthologyCenter[pa_, pb_, pc_, xa_, xb_, xc_] :=
     bLineIntersection[bPerpendicular[bLine[xb, xc], pa], 
      bPerpendicular[bLine[xa, xc], pb]]
  
+bOrthologyCenter[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
+    bLineIntersection[bPerpendicular[bLine[xb, xc], pa], 
+     bPerpendicular[bLine[xa, xc], pb]]
+ 
 bIsPerspective[a1_, b1_, c1_, a2_, b2_, c2_] := bConcurrencyMatrix[
      bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]
+ 
+bIsPerspective[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
+    bConcurrencyMatrix[bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]
  
 bCurveForTriangle[crv_, va_, vb_, vc_] := 
     Module[{xa, ya, za, xb, yb, zb, xc, yc, zc, rls, a1, b1, c1, repl}, 
@@ -1066,6 +1077,9 @@ bCurveForTriangleNoReplace[crv_, va_, vb_, vc_] :=
          Flatten[{va, vb, vc}]]; crv /. Thread[{x, y, z} -> repl] /. rls]
  
 bTrianglePerspector[a1_, b1_, c1_, a2_, b2_, c2_] := 
+    bLineIntersection[bLine[a1, a2], bLine[b1, b2]]
+ 
+bTrianglePerspector[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
     bLineIntersection[bLine[a1, a2], bLine[b1, b2]]
  
 bTangentialTriangle[crv_, a1_, b1_, c1_] := Module[{ta, tb, tc, a2, b2, c2}, 
@@ -1307,3 +1321,12 @@ bCrosspointGeneral[pp_, pq_, {xa_, xb_, xc_}, simplify_:True] :=
       b3 = smpl[Cross[bLine[xb, b2], bLine[a1, c1]]]; 
       c3 = smpl[Cross[bLine[xc, c2], bLine[a1, b1]]]; 
       smpl[Cross[bLine[a1, a3], bLine[b1, b3]]]]
+ 
+bAnticevianGeneral[pp_, {xa_, xb_, xc_}] := Module[{pa, pb, pc, qa, qb, qc}, 
+     {pa, pb, pc} = bCevianTriangleGeneral[pp, xa, xb, xc]; 
+      qa = bHarmonicConjugateFull[xa, pa, pp]; 
+      qb = bHarmonicConjugateFull[xb, pb, pp]; 
+      qc = bHarmonicConjugateFull[xc, pc, pp]; {qa, qb, qc}]
+ 
+sCollect[expr_, vars_] := Activate[Collect[expr, vars, Inactive[Simplify]] /. 
+      Simplify -> intFullSimplifyFactors]

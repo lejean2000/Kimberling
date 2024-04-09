@@ -35,17 +35,16 @@ checkCurvesSymb[pt_] := Do[curve = getTriangleCurve[name];
       If[Simplify[curve /. Thread[{x, y, z} -> pt]] == 0, Print[name]]; , 
      {name, Keys[TriangleCurves]}]
  
-checkPointinETC2[pt_] := Module[{ptnum, set, out}, 
+checkPointinETC2[pt_] := Module[{ptnum, set, out, cmplx}, 
      ptnum = intnumericnorm[evaluate[pt] /. rule69]; 
-      set = Keys[Select[ETCBaryNorm, #1 == ptnum & ]]; out = {}; 
-      If[Length[set] > 0, 
+      If[AllTrue[ptnum, Im[#1] == 0 & ], 
+       set = Keys[Select[ETCBaryNorm, #1 == ptnum & ]], 
+       cmplx = Keys[Select[ETCBaryNorm, AnyTrue[#1, Im[#1] != 0 & ] & ]]; 
+        set = Select[cmplx, coincide[ETCBaryNorm[#1], ptnum] & ]; ]; 
+      out = {}; If[Length[set] > 0, 
        Do[If[AllTrue[(coincideNorm[KimberlingCenterCNy[k] /. #1, pt /. 
                 #1] & ) /@ intCheckList, #1 ||  !BooleanQ[#1] & ], 
            AppendTo[out, k]; ]; , {k, set}]; ]; Return[out]; ]
- 
-checkPointinETC69[pt_] := Module[{ptnum, set}, 
-     ptnum = intnumericnorm[evaluate[pt] /. rule69]; 
-      Keys[Select[ETCBaryNorm, #1 == ptnum & ]]]
  
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
  

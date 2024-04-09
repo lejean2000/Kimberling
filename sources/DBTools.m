@@ -4,6 +4,8 @@ pointProcessBary[expr_, rule_:rule69] := Module[{pointsBary, etcbary},
           expr /. Thread[{u, v, w} -> val] /. rule], {val, etcbary}]]; 
       Return[AssociationThread[Keys[etcbary] -> pointsBary]]; ]
  
+globalExcludedNum = 0
+ 
 intnumericnorm[val_] := N[NormalizeBary[val], 35]
  
 singlePointProcesses = <|"isogonal conjugate" -> {a^2*v*w, b^2*u*w, c^2*u*v}, 
@@ -47,21 +49,22 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
 numsortexpr[str_] := StringJoin[StringTake[str, 1], 
      StringPadLeft[StringTake[str, {2, -1}], 10, "0"]]
  
-coincide[pt1_, pt2_, prec_:20] := Abs[pt1[[1]] - pt2[[1]]] < 10^(-prec) && 
-     Abs[pt1[[2]] - pt2[[2]]] < 10^(-prec) && Abs[pt1[[3]] - pt2[[3]]] < 
-      10^(-prec)
+coincide[pt1_, pt2_, prec_:20] := Module[{t}, t = Abs /@ Cross[pt1, pt2]; 
+      Return[Abs[t[[1]]] < 10^(-prec) && Abs[t[[2]]] < 10^(-prec) && 
+        Abs[t[[3]]] < 10^(-prec)]; ]
  
 intPointCheck[pt_, process_, rule_:rule69] := Module[{tmp, res, ptn, ptnum}, 
-     ptn = intnumericnorm[pt /. rule]; tmp = pointProcessBary[process, rule]; 
+     ptn = intnumericnorm[evaluate[pt] /. rule]; 
+      tmp = pointProcessBary[process, rule]; 
       res = Select[(coincide[#1, ptn] & ) /@ tmp, TrueQ]; 
       If[Length[res] > 0, If[intVerifyPointProcess[pt, Keys[res][[1]], 
           process], Return[Keys[res][[1]]]]; ]; ]
  
 intVerifyPointProcess[pt_, xnum_, processexpr_] := 
-    Module[{ptn, pta, pti}, Do[ptn = intnumericnorm[pt /. rc]; 
+    Module[{ptn, pta, pti}, Do[ptn = intnumericnorm[evaluate[pt] /. rc]; 
         pta = intnumericnorm[KimberlingCenterCNy[xnum] /. rc]; 
-        pti = intnumericnorm[processexpr /. {u, v, w} -> pta /. rc]; 
-        If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
+        pti = intnumericnorm[evaluate[processexpr] /. {u, v, w} -> pta /. 
+           rc]; If[ !coincide[ptn, pti], Return[False, Module]; ]; , 
        {rc, intCheckList}]; Return[True]; ]
  
 xnum[str_] := If[NumericQ[ToExpression[StringTake[str, 1]]], 
@@ -110,7 +113,7 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
     Module[{ptc, list1, list2, list3, list4, p1, p2, out, check, bary20}, 
      out = {}; ptc = intnumericnorm[evaluate[pt] /. rule69]; 
       list1 = intLinesProcessFullGroups[intnumericnorm[
-          bIsogonalConjugate[ptc] /. rule69], 20, ETCBaryNormFull][[2]]; 
+          bIsogonalConjugate[ptc] /. rule69], 24, ETCBaryNormFull][[2]]; 
       list2 = Table[AssociationMap[intnumericnorm[
            bIsogonalConjugate[KimberlingCenterCNy[#1]] /. rule69] & , 
          list1[[i]]], {i, 1, Length[list1]}]; 
@@ -134,9 +137,10 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
 intLinesProcessFullGroups[pt_, prec_, etcset_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump, as}, 
      fullgroups = {}; outgroups = {}; tplist = 
-       Table[{name, N[NormalizeBary[1/bLine[pt, etcset[name]] /. rule69], 
-          prec]}, {name, Keys[etcset]}]; tplist = Select[tplist, 
-        AllTrue[#1[[2]], Internal`RealValuedNumericQ] & ]; 
+       Table[{name, N[NormalizeBary[1/bLine[evaluate[pt], etcset[name]] /. 
+            rule69], prec]}, {name, Keys[etcset]}]; 
+      tplist = Select[tplist, AllTrue[#1[[2]], 
+          Internal`RealValuedNumericQ] & ]; 
       tplist = SortBy[tplist, #1[[2]][[1]] & ]; 
       as = AssociationThread[(#1[[1]] & ) /@ tplist, (#1[[2]] & ) /@ tplist]; 
       fullgroups = Select[Values[PositionIndex[as]], Length[#1] > 1 & ]; 
@@ -189,7 +193,10 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
              sout[[2]][[1]]], intaddbrackets[sout[[2]][[2]]]]; ]; ]; 
       AssociateTo[globalProperties[name], {"name" -> outname}]; 
       If[ !TrueQ[globalSilence], Print[colorformat[outname]]]; 
-      barys = ExpressionToTrad[FullSimplify[printexpr]]; 
+      If[ !FreeQ[printexpr, S], barys = ExpressionToTrad[
+         Activate[Collect[printexpr, S, Inactive[Simplify]] /. 
+           Simplify -> intFullSimplifyFactors]], 
+       barys = ExpressionToTrad[FullSimplify[printexpr]]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
          barys]]]; out = ({intnameformat[#1[[1]]], intnameformat[
@@ -329,7 +336,7 @@ checkIsogonalConjugates[pt_, name_:"X"] :=
             intnumericnorm[pt2 /. rule69]] /. rule69; 
          Return[intnumericnorm[local]]; ]; etcbary = KeyDrop[ETCBaryNorm, 
         globalExcludedNum]; rc = intCheckList[[1]]; 
-      ptc = intnumericnorm[pt /. rule69]; 
+      ptc = intnumericnorm[evaluate[pt] /. rule69]; 
       cx = (ffisoconjugate[ptc, #1] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
          Values[cx]], etcbary]; cx = SortBy[Select[cx, Im[#1[[1]]] == 0 & ], 
@@ -341,8 +348,8 @@ checkIsogonalConjugates[pt_, name_:"X"] :=
          idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
             StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
           idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
-          If[coincideNorm[pt /. rc, bPIsogonalConjugate[KimberlingCenterCNy[
-               idx1], KimberlingCenterCNy[idx2]] /. rc], 
+          If[coincideNorm[evaluate[pt] /. rc, bPIsogonalConjugate[
+              KimberlingCenterCNy[idx1], KimberlingCenterCNy[idx2]] /. rc], 
            If[LexicographicOrder[numsortexpr[idx1], numsortexpr[idx2]] == 1, 
             AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]]]]; 
         prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
@@ -363,7 +370,8 @@ checkBarycentric[pt_, type_, name_:"X"] :=
          (pt1 /. rule69)*(pt2 /. rule69)], ff[pt1_, pt2_] := 
         intnumericnorm[(pt1 /. rule69)/(pt2 /. rule69)]]; 
       etcbary = KeyDrop[ETCBaryNorm, globalExcludedNum]; 
-      ptc = intnumericnorm[pt /. rule69]; cx = (ff[ptc, #1] & ) /@ etcbary; 
+      ptc = intnumericnorm[evaluate[pt] /. rule69]; 
+      cx = (ff[ptc, #1] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
          Values[cx]], etcbary]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
       tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
@@ -373,13 +381,13 @@ checkBarycentric[pt_, type_, name_:"X"] :=
       rc = intCheckList[[1]]; Do[idx1 = If[StringTake[i[[1]], 1] == "C", 
           StringTake[i[[1]], {2, -1}], i[[1]]]; 
         idx2 = If[StringTake[i[[2]], 1] == "C", StringTake[i[[2]], {2, -1}], 
-          i[[2]]]; If[type == "quotient", 
-         If[coincideNorm[pt /. rc, (KimberlingCenterCNy[idx1] /. rc)/
-             (KimberlingCenterCNy[idx2] /. rc)], AppendTo[res, {idx1, idx2}], 
-           If[coincideNorm[pt /. rc, (KimberlingCenterCNy[idx2] /. rc)/(
-                KimberlingCenterCNy[idx1] /. rc)], AppendTo[res, 
+          i[[2]]]; If[type == "quotient", If[coincideNorm[evaluate[pt] /. rc, 
+            (KimberlingCenterCNy[idx1] /. rc)/(KimberlingCenterCNy[idx2] /. 
+              rc)], AppendTo[res, {idx1, idx2}], 
+           If[coincideNorm[evaluate[pt] /. rc, (KimberlingCenterCNy[idx2] /. 
+                rc)/(KimberlingCenterCNy[idx1] /. rc)], AppendTo[res, 
               {idx2, idx1}]]; ]; ]; If[type == "product" && 
-          coincideNorm[pt /. rc, KimberlingCenterCNy[idx2]*
+          coincideNorm[evaluate[pt] /. rc, KimberlingCenterCNy[idx2]*
              KimberlingCenterCNy[idx1] /. rc], 
          If[LexicographicOrder[idx1, idx2] == 1, AppendTo[res, {idx1, idx2}], 
            AppendTo[res, {idx2, idx1}]]; ]; , {i, tuples}]; 
@@ -410,7 +418,7 @@ checkVertexConjugates[pt_, name_:"X"] :=
         local = bVertexConjugate[intnumericnorm[pt1 /. rule69], 
             intnumericnorm[pt2 /. rule69]] /. rule69; 
          Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
-      ptc = intnumericnorm[pt /. rule69]; 
+      ptc = intnumericnorm[evaluate[pt] /. rule69]; 
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
          Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
@@ -423,8 +431,8 @@ checkVertexConjugates[pt_, name_:"X"] :=
          idx1 = If[StringTake[Keys[prev][[1]], 1] == "C", 
             StringTake[Keys[prev][[1]], {2, -1}], Keys[prev][[1]]]; 
           idx2 = If[StringTake[n, 1] == "C", StringTake[n, {2, -1}], n]; 
-          If[coincideNorm[pt /. rc, bVertexConjugate[KimberlingCenterCNy[
-               idx1], KimberlingCenterCNy[idx2]] /. rc], 
+          If[coincideNorm[evaluate[pt] /. rc, bVertexConjugate[
+              KimberlingCenterCNy[idx1], KimberlingCenterCNy[idx2]] /. rc], 
            If[LexicographicOrder[numsortexpr[idx1], numsortexpr[idx2]] == 1, 
             AppendTo[res, {idx1, idx2}], AppendTo[res, {idx2, idx1}]]]]; 
         prev = Association[n -> cx[n]]; , {n, Keys[cx]}]; 
@@ -442,8 +450,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
        Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
         Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
       ptcoord = evaluate[expr]; If[ !checkCentralExpression[ptcoord], 
-       Return[False, Module]; ]; pt = intnumericnorm[ptcoord /. rule69]; 
-      If[Length[globalSeenPoints] > 0 && 
+       Return[False, Module]; ]; pt = intnumericnorm[evaluate[ptcoord] /. 
+         rule69]; If[Length[globalSeenPoints] > 0 && 
         First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
             globalSeenPoints]] <= 10^(-20), Print[inname]; 
         Print["Point seen"]; Return[False, Module], 
@@ -490,12 +498,12 @@ addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]],
      StringJoin["X", ToString[str]], str]
  
 checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3}, 
-     ptn = intnumericnorm[ptc /. rule69]; symcheck = 
-       ptn - intnumericnorm[symmetrizeInternal2[ptc[[1]]] /. rule69]; 
-      symcheck2 = Abs[ptc[[1]]] - Abs[ptc[[1]] /. 
-           Thread[{b -> c, c -> b}]] /. rule69; 
-      symcheck3 = ptn - intnumericnorm[
-         ptc /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]; 
+     ptn = intnumericnorm[evaluate[ptc] /. rule69]; 
+      symcheck = ptn - intnumericnorm[symmetrizeInternal2[
+           evaluate[ptc[[1]]]] /. rule69]; symcheck2 = 
+       evaluate[Abs[ptc[[1]]] - Abs[ptc[[1]] /. Thread[{b -> c, c -> b}]]] /. 
+        rule69; symcheck3 = ptn - intnumericnorm[
+         evaluate[ptc] /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]; 
       If[AnyTrue[symcheck, #1 != 0 & ] || symcheck2 != 0 || 
         AnyTrue[symcheck3, #1 != 0 & ], Print[ptc]; 
         Print["expression is not symmetric"]; Return[False]; ]; 
@@ -505,13 +513,13 @@ globalSeenPoints = {}
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck, 
       crv, normcoef, curves, circset}, 
-     out = {}; ptest = N[NormalizeBary[evaluate[pt] /. rule69], 35]; 
+     out = {}; ptest = intnumericnorm[evaluate[pt] /. rule69]; 
       curves = TriangleCurves; circset = KeySelect[CentralCircles, 
          !StringContainsQ[#1, "A-"] &&  !StringContainsQ[#1, "B-"] && 
            !StringContainsQ[#1, "C-"] &&  !StringContainsQ[#1, "-A"] && 
            !StringContainsQ[#1, "-B"] &&  !StringContainsQ[#1, "-C"] & ]; 
       AppendTo[curves, circset]; Do[monitorvar = name; 
-        crv = curves[name] /. rule69; normcoef = 
+        crv = evaluate[curves[name]] /. rule69; normcoef = 
          Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
         d = crv/normcoef /. Thread[{x, y, z} -> ptest]; 
         If[Abs[d] < 10^(-12), secondcheck = True; 
@@ -525,7 +533,7 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck,
            StringRiffle[out, ", "]]]]; ]; Return[out]; ]
  
 checkInverse[pt_, inname_:"X"] := Module[{out, ptest, circset, ptc, check, 
-      secondcheck, d}, out = {}; If[Total[pt /. rule69] != 0, 
+      secondcheck, d}, out = {}; If[Total[evaluate[pt] /. rule69] != 0, 
        circset = KeySelect[CentralCircles,  !StringContainsQ[#1, "A-"] && 
              !StringContainsQ[#1, "B-"] &&  !StringContainsQ[#1, "C-"] && 
              !StringContainsQ[#1, "-A"] &&  !StringContainsQ[#1, "-B"] && 
@@ -545,10 +553,10 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
         local = func[intnumericnorm[pt1 /. rule69], intnumericnorm[
              pt2 /. rule69]] /. rule69; Return[intnumericnorm[local]]; ]; 
       etcbary = KeyDrop[ETCBaryNorm, globalExcludedNum]; 
-      rc = intCheckList[[1]]; ptc = intnumericnorm[pt /. rule69]; 
+      rc = intCheckList[[1]]; ptc = intnumericnorm[evaluate[pt] /. rule69]; 
       cx = (ff[#1, ptc] & ) /@ etcbary; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
-         Values[cx]], etcbary]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
+         Values[cx]], etcbary]; cx = (Round[#1, 1.*^-20] & ) /@ cx; 
       tuples = Select[Select[Values[PositionIndex[cx]], Length[#1] > 1 & ], 
          !((StringTake[#1[[1]], 1] == "C" && StringTake[#1[[2]], 1] == 
              "C") || (StringTake[#1[[1]], 1] != "C" && 
@@ -557,7 +565,7 @@ checkConjugates[pt_, func_, str_, name_:"X"] :=
           i[[1]]]; idx2 = If[StringTake[i[[2]], 1] == "C", 
           StringTake[i[[2]], {2, -1}], i[[2]]]; 
         If[StringTake[i[[2]], 1] != "C", {i1, i2} = {idx1, idx2}, 
-         {i1, i2} = {idx2, idx1}]; If[coincideNorm[pt /. rc, 
+         {i1, i2} = {idx2, idx1}]; If[coincideNorm[evaluate[pt] /. rc, 
           func[KimberlingCenterCNy[i1] /. rc, KimberlingCenterCNy[i2] /. 
              rc] /. rc], AppendTo[res, {i1, i2}]; ], {i, tuples}]; 
       res = SortBy[DeleteDuplicates[res], numsortexpr[#1[[1]]] & ]; 
@@ -572,10 +580,10 @@ checkCircles[pt_, name_:"X", prec_:24] :=
     Module[{rc, rc2, d1, d2, d3, d4, d5, d6, etcset, distlist, ptn, hg, 
       outgroups, fullgroups, as, out}, fullgroups = {}; outgroups = {}; 
       etcset = Select[ETCBaryNorm, Total[#1] != 0 & ]; 
-      ptn = intnumericnorm[pt /. rule69]; distlist = 
-       Table[{ptname, N[bDistance[ptn, etcset[ptname]] /. rule69, prec]}, 
-        {ptname, Keys[etcset]}]; distlist = Select[distlist, 
-        Internal`RealValuedNumericQ[#1[[2]]] & ]; 
+      ptn = intnumericnorm[evaluate[pt] /. rule69]; 
+      distlist = Table[{ptname, N[bDistance[ptn, etcset[ptname]] /. rule69, 
+          prec]}, {ptname, Keys[etcset]}]; distlist = 
+       Select[distlist, Internal`RealValuedNumericQ[#1[[2]]] & ]; 
       distlist = SortBy[distlist, #1[[2]] & ]; 
       as = AssociationThread[(#1[[1]] & ) /@ distlist, 
         (#1[[2]] & ) /@ distlist]; fullgroups = 
@@ -584,15 +592,16 @@ checkCircles[pt_, name_:"X", prec_:24] :=
       outgroups = (Take[SortBy[#1, numsortexpr[#1] & ], 3] & ) /@ outgroups; 
       outgroups = SortBy[outgroups, numsortexpr[#1[[1]]] & ]; hg = {}; 
       Do[rc = intCheckList[[1]]; rc2 = intCheckList[[2]]; 
-        ptn = intnumericnorm[ptcoord /. rc]; 
+        ptn = intnumericnorm[evaluate[ptcoord] /. rc]; 
         d1 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 1]]] /. rc]] /. rc, prec]; 
         d2 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 2]]] /. rc]] /. rc, prec]; 
         d3 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 3]]] /. rc]] /. rc, prec]; ptn = intnumericnorm[
-          ptcoord /. rc2]; d4 = N[bDistance[ptn, intnumericnorm[
-             KimberlingCenterCNy[circ[[1]]] /. rc2]] /. rc2, prec]; 
+          evaluate[ptcoord] /. rc2]; 
+        d4 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
+                1]]] /. rc2]] /. rc2, prec]; 
         d5 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 2]]] /. rc2]] /. rc2, prec]; 
         d6 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[

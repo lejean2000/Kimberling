@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     22330,        607]
-NotebookOptionsPosition[     21130,        580]
-NotebookOutlinePosition[     21685,        601]
-CellTagsIndexPosition[     21642,        598]
+NotebookDataLength[     22630,        607]
+NotebookOptionsPosition[     21430,        580]
+NotebookOutlinePosition[     21985,        601]
+CellTagsIndexPosition[     21942,        598]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -29,8 +29,7 @@ Cell[BoxData[
    3.83992070302919*^9, 3.8399207092031746`*^9}, {3.8416249776934814`*^9, 
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
- CellLabel->
-  "In[284]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+ CellLabel->"In[75]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -194,8 +193,7 @@ Cell[BoxData[{
        RowBox[{"KimberlingCenterCNy", "[", "k2", "]"}], "]"}]]}]}], "\n", 
    "]"}]}]}], "Code",
  InitializationCell->False,
- CellLabel->
-  "In[285]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+ CellLabel->"In[76]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -210,8 +208,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Can", " ", "also", " ", "be", " ", "just", " ", "Abs"}], "->", 
     "RealAbs"}], " ", "*)"}]}]], "Input",
- CellLabel->
-  "In[293]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+ CellLabel->"In[84]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 
 Cell[BoxData[
  RowBox[{
@@ -225,8 +222,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.8659359365025496`*^9, 3.8659359467166414`*^9}, {
   3.877578389921321*^9, 3.877578397215644*^9}, {3.8779284662523875`*^9, 
   3.877928467254416*^9}},
- CellLabel->
-  "In[294]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+ CellLabel->"In[85]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[
  RowBox[{
@@ -242,8 +238,7 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"b", "+", "c"}], ">", "a"}]}]}], ";"}]], "Input",
  CellChangeTimes->{{3.883556220339327*^9, 3.883556251713106*^9}},
- CellLabel->
-  "In[295]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+ CellLabel->"In[86]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -471,79 +466,18 @@ Cell[BoxData[{
       ";", "\[IndentingNewLine]", 
       RowBox[{"Return", "[", "True", "]"}], ";"}]}], "\[IndentingNewLine]", 
     "]"}]}], ";"}]}], "Input",
- Background->RGBColor[
-  0.94, 0.88, 0.94],ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ Background->RGBColor[0.94, 0.88, 0.94],
+ CellLabel->"In[87]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
   RowBox[{
-   RowBox[{
-    RowBox[{"checkPointinETC2", "[", "pt_", "]"}], ":=", 
-    RowBox[{"Module", "[", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{"ptnum", ",", "set", ",", "out"}], "}"}], ",", 
-      "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{"ptnum", "=", 
-        RowBox[{"intnumericnorm", "[", 
-         RowBox[{
-          RowBox[{"(", 
-           RowBox[{"pt", "//", "evaluate"}], ")"}], "/.", "rule69"}], "]"}]}],
-        ";", "\[IndentingNewLine]", 
-       RowBox[{"set", "=", 
-        RowBox[{"Keys", "[", 
-         RowBox[{"Select", "[", 
-          RowBox[{"ETCBaryNorm", ",", 
-           RowBox[{
-            RowBox[{"#", "==", "ptnum"}], "&"}]}], "]"}], "]"}]}], ";", 
-       "\[IndentingNewLine]", 
-       RowBox[{"out", "=", 
-        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
-       RowBox[{"If", "[", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"Length", "[", "set", "]"}], ">", "0"}], ",", 
-         "\[IndentingNewLine]", 
-         RowBox[{
-          RowBox[{"Do", "[", "\[IndentingNewLine]", 
-           RowBox[{
-            RowBox[{
-             RowBox[{"If", "[", "\[IndentingNewLine]", 
-              RowBox[{
-               RowBox[{"AllTrue", "[", 
-                RowBox[{
-                 RowBox[{"Map", "[", 
-                  RowBox[{
-                   RowBox[{
-                    RowBox[{"coincideNorm", "[", 
-                    RowBox[{
-                    RowBox[{
-                    RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], "/.", 
-                    "#"}], ",", 
-                    RowBox[{"pt", "/.", "#"}]}], "]"}], "&"}], ",", 
-                   "intCheckList"}], "]"}], ",", 
-                 RowBox[{
-                  RowBox[{"#", "||", 
-                   RowBox[{"Not", "[", 
-                    RowBox[{"BooleanQ", "[", "#", "]"}], "]"}]}], "&"}]}], 
-                "]"}], ",", "\[IndentingNewLine]", 
-               RowBox[{
-                RowBox[{"AppendTo", "[", 
-                 RowBox[{"out", ",", "k"}], "]"}], ";"}]}], 
-              "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", ",", 
-            RowBox[{"{", 
-             RowBox[{"k", ",", "set"}], "}"}]}], "\[IndentingNewLine]", "]"}],
-           ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-       RowBox[{"Return", "[", "out", "]"}], ";"}]}], "\[IndentingNewLine]", 
-     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"checkPointinETC69", "[", "pt_", "]"}], ":=", 
+   RowBox[{"checkPointinETC2", "[", "pt_", "]"}], ":=", 
    RowBox[{"Module", "[", 
     RowBox[{
      RowBox[{"{", 
-      RowBox[{"ptnum", ",", "set"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"ptnum", ",", "set", ",", "out", ",", " ", "cmplx"}], "}"}], 
+     ",", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{"ptnum", "=", 
        RowBox[{"intnumericnorm", "[", 
@@ -551,15 +485,83 @@ Cell[BoxData[{
          RowBox[{"(", 
           RowBox[{"pt", "//", "evaluate"}], ")"}], "/.", "rule69"}], "]"}]}], 
       ";", "\[IndentingNewLine]", 
-      RowBox[{"Keys", "[", 
-       RowBox[{"Select", "[", 
-        RowBox[{"ETCBaryNorm", ",", 
-         RowBox[{
-          RowBox[{"#", "==", "ptnum"}], "&"}]}], "]"}], "]"}]}]}], 
-    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"AllTrue", "[", 
+         RowBox[{"ptnum", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Im", "[", "#", "]"}], "==", "0"}], "&"}]}], "]"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"set", "=", 
+         RowBox[{"Keys", "[", 
+          RowBox[{"Select", "[", 
+           RowBox[{"ETCBaryNorm", ",", 
+            RowBox[{
+             RowBox[{"#", "==", "ptnum"}], "&"}]}], "]"}], "]"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"cmplx", "=", 
+          RowBox[{"Keys", "[", 
+           RowBox[{"Select", "[", 
+            RowBox[{"ETCBaryNorm", ",", 
+             RowBox[{
+              RowBox[{"AnyTrue", "[", 
+               RowBox[{"#", ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Im", "[", "#", "]"}], "!=", "0"}], "&"}]}], "]"}], 
+              "&"}]}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"set", "=", 
+          RowBox[{"Select", "[", 
+           RowBox[{"cmplx", ",", 
+            RowBox[{
+             RowBox[{"coincide", "[", 
+              RowBox[{
+               RowBox[{"ETCBaryNorm", "[", "#", "]"}], ",", "ptnum"}], "]"}], 
+             "&"}]}], "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+      "\[IndentingNewLine]", ";", "\[IndentingNewLine]", 
+      RowBox[{"out", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Length", "[", "set", "]"}], ">", "0"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Do", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"If", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"AllTrue", "[", 
+               RowBox[{
+                RowBox[{"Map", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"coincideNorm", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"KimberlingCenterCNy", "[", "k", "]"}], "/.", 
+                    "#"}], ",", 
+                    RowBox[{"pt", "/.", "#"}]}], "]"}], "&"}], ",", 
+                  "intCheckList"}], "]"}], ",", 
+                RowBox[{
+                 RowBox[{"#", "||", 
+                  RowBox[{"Not", "[", 
+                   RowBox[{"BooleanQ", "[", "#", "]"}], "]"}]}], "&"}]}], 
+               "]"}], ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"out", ",", "k"}], "]"}], ";"}]}], 
+             "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", ",", 
+           RowBox[{"{", 
+            RowBox[{"k", ",", "set"}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+         ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "out", "]"}], ";"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}]], "Input",
  Background->RGBColor[0.9, 1, 1],
- CellLabel->
-  "In[300]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+ CellLabel->"In[91]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
 
 Cell[BoxData[
  RowBox[{
@@ -571,12 +573,10 @@ Cell[BoxData[
      "defined", ",", "KimberlingCenter", ",", " ", "KimberlingCenterC", ",", 
       " ", "KimberlingCenterCN", ",", " ", "getTriangleCurve", ",", 
       "getvalue", ",", "ruleAbsSquare", ",", " ", "rule69", ",", " ", 
-      "checkCurvesSymb", ",", "checkPointinETC2", ",", "checkPointinETC69", 
-      ",", "rulesSimplify", ",", "checkPointsOnCurve", ",", "X", ",", 
-      "checkPointOnCurveNum", ",", "checkPointsOnCurveNamed", ",", "XNy"}], 
-     "}"}]}], "]"}]}]], "Input",
- CellLabel->
-  "In[302]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+      "checkCurvesSymb", ",", "checkPointinETC2", ",", "rulesSimplify", ",", 
+      "checkPointsOnCurve", ",", "X", ",", "checkPointOnCurveNum", ",", 
+      "checkPointsOnCurveNamed", ",", "XNy"}], "}"}]}], "]"}]}]], "Input",
+ CellLabel->"In[92]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
 Evaluator->"New Kernel",
 WindowSize->{1105.2, 615.6},
@@ -600,15 +600,15 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1226, 34, 5758, 163, 596, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 661, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1222, 33, 5754, 162, 596, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[6987, 199, 472, 14, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
-Cell[7462, 215, 512, 13, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
-Cell[7977, 230, 530, 15, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[8510, 247, 8572, 227, 671, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[17085, 476, 3281, 85, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[20369, 563, 757, 15, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[6979, 197, 468, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+Cell[7450, 212, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+Cell[7961, 226, 526, 14, 26, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+Cell[8490, 242, 8593, 227, 671, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[17086, 471, 3616, 92, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[20705, 565, 721, 13, 60, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

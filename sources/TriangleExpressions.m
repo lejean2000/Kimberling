@@ -73,7 +73,7 @@ heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] :=
       deg = (Max[Apply[Plus, CoefficientRules[#1][[All,1]], {1}]] & )[expr]; 
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
          #1 > 3 & ]]; coefsum = Total[Flatten[
-         Abs[(CoefficientList[#1, {a, b, c}] & ) /@ FactorList[expr]]]]; 
+         Abs[(CoefficientList[#1, {a, b, c, S}] & ) /@ FactorList[expr]]]]; 
       Return[deg <= 5 || (deg <= degree && smt/deg < ratio && 
          coefsum < cfsum)]; ]
  
@@ -216,3 +216,39 @@ massHeuristicsSet[expr_, set_, deg_:16, ratio_:4.5, docurves_:False] :=
  
 setRemoveBrackets[set_] := (StringReplace[#1, {")" -> "", "(" -> ""}] & ) /@ 
      set
+ 
+massHeuristicsNoEval[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, 
+     docurves_:False] := Module[{out, etc, testexpr, check, curves}, 
+     If[docurves, globalSilence = True]; 
+      Quiet[Monitor[out = {}; etc = {}; Do[nprg = nx; curves = {}; 
+           If[ !MemberQ[Keys[ETC], StringJoin["X", ToString[nx]]], 
+            Continue[]]; If[ !RationalExpressionQ[KimberlingCenterCN[nx][[
+               1]], {a, b, c}], Continue[]]; testexpr = TimeConstrained[
+             simplifyRationalBarycentrics[expr /. Thread[pP -> 
+                 KimberlingCenterC[nx]]], 10, -1]; If[testexpr == -1, 
+            Continue[]]; check = checkPointinETC2[testexpr]; 
+           If[docurves && Length[check] == 0, curves = 
+             Quiet[checkCurves[testexpr]]]; If[Length[check] > 0, 
+            AppendTo[etc, {nx, check[[1]]}], If[heuristicsCheck[
+              testexpr[[1]], deg, ratio], If[Length[curves] > 0, AppendTo[
+                out, {nx, curves}], AppendTo[out, nx]]; ]]; , 
+          {nx, nmin, nmax}], nprg]]; Print[out]; 
+      Print[colorformat[ToString[etc]]]; globalSilence = False; 
+      Return[{out, etc}]; ]
+ 
+massHeuristicsFareyNoEval[expr_, fset_, deg_:16, ratio_:4.5] := 
+    Module[{out, etc, testexpr, check}, 
+     Quiet[Monitor[out = {}; etc = {}; Do[nprg = tvar; 
+           testexpr = TimeConstrained[simplifyRationalBarycentrics[
+              expr /. t -> tvar], 10, -1]; If[testexpr == -1, Continue[]]; 
+           check = checkPointinETC2[testexpr]; If[Length[check] > 0, 
+            AppendTo[etc, {ExpressionToTrad[tvar], check[[1]]}], 
+            If[heuristicsCheck[testexpr[[1]], deg, ratio], AppendTo[out, 
+              tvar]]]; , {tvar, fset}], nprg]]; Print[out]; 
+      Print[colorformat[ToString[etc]]]; ]
+ 
+ssimplify[pt_] := Module[{ss}, 
+     ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
+           Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
+      Return[ss[simplifyRationalBarycentrics[ss[pt] /. 
+          (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 4*S^2]]]; ]
