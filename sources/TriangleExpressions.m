@@ -77,14 +77,26 @@ heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] :=
       Return[deg <= 5 || (deg <= degree && smt/deg < ratio && 
          coefsum < cfsum)]; ]
  
-partialSReplace[expr_] := Module[{exp}, 
-     exp = multiCollect[expr /. \[CapitalDelta] -> S/2, S]; 
+partialSReplace[expr_] := Module[{exp, exp2, smpl}, 
+     If[ListQ[expr], exp2 = expr[[1]], exp2 = expr]; 
+      exp = multiCollect[exp2 /. \[CapitalDelta] -> S/2, S]; 
       exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
                S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
              S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
            S^8 -> evaluate[S^8] /. S^9 -> S*evaluate[S^8] /. 
-         S^10 -> evaluate[S^10]]; exp = symmetrizeInternal[exp]; 
-      multiCollect[exp[[1]], S]]
+         S^10 -> evaluate[S^10]]; If[ !ListQ[expr], Return[exp]]; 
+      smpl = ssimplify[sym3[exp]]; Return[smpl]; ]
+ 
+ssimplify[pt_] := Module[{ss}, 
+     ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
+           Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
+      Return[ss[simplifyRationalBarycentrics[
+         ss[pt] /. (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 
+            4*S^2 /. (a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c) -> 
+           -4*S^2]]]; ]
+ 
+intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
+      (FullSimplify[#1] & ) /@ FactorList[expr]
  
 fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n], 
         1/FareySequence[n]], #1 =!= ComplexInfinity && #1 > 0 & ], 
@@ -117,9 +129,6 @@ replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
           evaluate[KimberlingCenterC[nu]]]] /. 
       Thread[{p, q, r} -> simplifyRationalBarycentrics[
          evaluate[KimberlingCenterC[np]]]]]
- 
-intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
-      (FullSimplify[#1] & ) /@ FactorList[expr]
  
 massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, docurves_:False] := 
     Module[{out, etc, testexpr, check, curves}, 
@@ -246,9 +255,3 @@ massHeuristicsFareyNoEval[expr_, fset_, deg_:16, ratio_:4.5] :=
             If[heuristicsCheck[testexpr[[1]], deg, ratio], AppendTo[out, 
               tvar]]]; , {tvar, fset}], nprg]]; Print[out]; 
       Print[colorformat[ToString[etc]]]; ]
- 
-ssimplify[pt_] := Module[{ss}, 
-     ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
-           Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
-      Return[ss[simplifyRationalBarycentrics[ss[pt] /. 
-          (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 4*S^2]]]; ]

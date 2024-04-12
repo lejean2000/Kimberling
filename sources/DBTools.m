@@ -49,9 +49,10 @@ intHarmonicProcess[fullgroups_, pt_, prec_] :=
 numsortexpr[str_] := StringJoin[StringTake[str, 1], 
      StringPadLeft[StringTake[str, {2, -1}], 10, "0"]]
  
-coincide[pt1_, pt2_, prec_:20] := Module[{t}, t = Abs /@ Cross[pt1, pt2]; 
-      Return[Abs[t[[1]]] < 10^(-prec) && Abs[t[[2]]] < 10^(-prec) && 
-        Abs[t[[3]]] < 10^(-prec)]; ]
+coincide[pt1_, pt2_, prec_:20] := Module[{t}, 
+     If[pt1 == {0, 0, 0} || pt2 == {0, 0, 0}, Return[False], 
+       t = Abs /@ Cross[pt1, pt2]; Return[Abs[t[[1]]] < 10^(-prec) && 
+          Abs[t[[2]]] < 10^(-prec) && Abs[t[[3]]] < 10^(-prec)]; ]; ]
  
 intPointCheck[pt_, process_, rule_:rule69] := Module[{tmp, res, ptn, ptnum}, 
      ptn = intnumericnorm[evaluate[pt] /. rule]; 
@@ -415,15 +416,15 @@ checkTrilinearPolar[pt_, name_:"X"] := Module[{cx, ptc, p1, p2, dset, test},
 checkVertexConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, ptc, rc, ffvertexconjugate, tuples}, 
      ffvertexconjugate[pt1_, pt2_] := Module[{local}, 
-        local = bVertexConjugate[intnumericnorm[pt1 /. rule69], 
-            intnumericnorm[pt2 /. rule69]] /. rule69; 
-         Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
+        local = bVertexConjugate[intnumericnorm[pt1], intnumericnorm[pt2]] /. 
+           rule69; Return[intnumericnorm[local]]; ]; rc = intCheckList[[1]]; 
       ptc = intnumericnorm[evaluate[pt] /. rule69]; 
       cx = (ffvertexconjugate[ptc, #1] & ) /@ ETCBaryNorm; 
       cx = Union[AssociationThread[(StringJoin["C", #1] & ) /@ Keys[cx], 
          Values[cx]], ETCBaryNorm]; cx = (Round[#1, 1.*^-19] & ) /@ cx; 
       cx = SortBy[Select[cx, Im[#1[[1]]] == 0 && Im[#1[[2]]] == 0 && 
            Im[#1[[3]]] == 0 & ], #1[[1]] & ]; res = {}; 
+      prev = Association["X0" -> {0, 0, 0}]; 
       Do[If[(StringTake[Keys[prev][[1]], 1] == "C" && StringTake[n, 1] == 
             "C") || (StringTake[Keys[prev][[1]], 1] != "C" && 
            StringTake[n, 1] != "C"), prev = Association[n -> cx[n]]; 
