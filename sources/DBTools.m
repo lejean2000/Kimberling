@@ -32,7 +32,7 @@ singlePointProcesses = <|"isogonal conjugate" -> {a^2*v*w, b^2*u*w, c^2*u*v},
 intHarmonicProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
       dump}, hgroups = {}; Do[fgr1 = SortBy[set, numsortexpr[#1] & ]; 
-        If[Length[fgr1] > 2000, fgr1 = Take[fgr1, 2000]]; 
+        If[Length[fgr1] > 200, fgr1 = Take[fgr1, 200]]; 
         flatfg2 = Subsets[fgr1, {2}]; checks = AssociationMap[
           NormalizeBary[bHarmonicConjugate[ETCBaryNorm[#1[[1]]], 
              ETCBaryNorm[#1[[2]]], pt]] & , flatfg2]; 
@@ -138,10 +138,9 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
 intLinesProcessFullGroups[pt_, prec_, etcset_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump, as}, 
      fullgroups = {}; outgroups = {}; tplist = 
-       Table[{name, N[NormalizeBary[1/bLine[evaluate[pt], etcset[name]] /. 
-            rule69], prec]}, {name, Keys[etcset]}]; 
-      tplist = Select[tplist, AllTrue[#1[[2]], 
-          Internal`RealValuedNumericQ] & ]; 
+       Table[{name, N[NormalizeBary[1/bLine[pt, etcset[name]] /. rule69], 
+          prec]}, {name, Keys[etcset]}]; tplist = Select[tplist, 
+        AllTrue[#1[[2]], Internal`RealValuedNumericQ] & ]; 
       tplist = SortBy[tplist, #1[[2]][[1]] & ]; 
       as = AssociationThread[(#1[[1]] & ) /@ tplist, (#1[[2]] & ) /@ tplist]; 
       fullgroups = Select[Values[PositionIndex[as]], Length[#1] > 1 & ]; 
@@ -197,7 +196,7 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
       If[ !FreeQ[printexpr, S], barys = ExpressionToTrad[
          Activate[Collect[printexpr, S, Inactive[Simplify]] /. 
            Simplify -> intFullSimplifyFactors]], 
-       barys = ExpressionToTrad[FullSimplify[printexpr]]]; 
+       barys = intSimplifyFactorsToTrad[printexpr]]; 
       AssociateTo[globalProperties[name], {"barycentrics" -> barys}]; 
       If[ !TrueQ[globalSilence], Print[StringJoin["Barycentrics    ", 
          barys]]]; out = ({intnameformat[#1[[1]]], intnameformat[
@@ -311,7 +310,7 @@ checkLinearCombinations[pt_, ptpairset_, inname_:"X"] :=
 intMidpointProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
       dump}, hgroups = {}; Do[fgr1 = SortBy[set, numsortexpr[#1] & ]; 
-        If[Length[fgr1] > 2000, fgr1 = Take[fgr1, 2000]; ]; 
+        If[Length[fgr1] > 200, fgr1 = Take[fgr1, 200]; ]; 
         flatfg2 = Subsets[fgr1, {2}]; ingroupnbary = AssociationMap[
           Abs[NormalizeBary[bMidpoint[ETCBaryNorm[#1[[1]]], ETCBaryNorm[
                 #1[[2]]]]] - pt] & , flatfg2]; 
@@ -323,7 +322,7 @@ intMidpointProcess[fullgroups_, pt_, prec_] :=
 intReflectionProcess[fullgroups_, pt_, prec_] := 
     Module[{fgr1, checks, flatfg2, ingroupnbary, un, hgroups, hgroup, prev, 
       dump}, hgroups = {}; Do[fgr1 = SortBy[set, numsortexpr[#1] & ]; 
-        If[Length[fgr1] > 2000, fgr1 = Take[fgr1, 2000]; ]; 
+        If[Length[fgr1] > 200, fgr1 = Take[fgr1, 200]; ]; 
         checks = AssociationMap[NormalizeBary[bMidpoint[ETCBaryNorm[#1], 
              pt]] & , fgr1]; 
         Do[refl = Select[fgr1, coincide[ETCBaryNorm[#1], checks[el]] & ]; 
@@ -463,16 +462,21 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            2]]]; If[StringLength[inname] == 0, 
          name = ToString[ExpressionToTrad[expr[[1]]]], name = inname]; 
         AssociateTo[globalProperties, name -> Association[]]; 
+        If[ !TrueQ[globalSilence], Print["Starting..."]]; 
         lines = Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
-           name]]; If[ !TrueQ[globalSilence], PrintTemporary[
-          "Starting circumconics"]]; If[full || Length[lines] >= 
-           pointCheckerMinProperties, 
+           name]]; If[ !TrueQ[globalSilence], printSessionTime[]; 
+          Print["Starting circumconics"]; ]; 
+        If[full || Length[lines] >= pointCheckerMinProperties, 
          numcon = Quiet[checkCircumconics[ptcoord, num, name]]; 
-          Quiet[checkCurves[ptcoord, name]]; Quiet[checkInverse[ptcoord, 
-            name]]; If[ !TrueQ[globalSilence], PrintTemporary[
-            "Starting trilinear+conjugates"]]; Quiet[checkTrilinearPolar[
-            ptcoord, name]]; Quiet[checkIsogonalConjugates[ptcoord, name]]; 
-          Quiet[checkConjugates[ptcoord, bDaoConjugate, 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting curves"]; ]; Quiet[checkCurves[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting inverse"]; ]; Quiet[checkInverse[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting trilinear"]; ]; Quiet[checkTrilinearPolar[
+            ptcoord, name]]; If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting conjugates"]; ]; Quiet[checkIsogonalConjugates[
+            ptcoord, name]]; Quiet[checkConjugates[ptcoord, bDaoConjugate, 
             "= X(i)-Dao conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkConjugates[ptcoord, bCevianQuotient, 
             "= X(i)-Ceva conjugate of X(j) for these {i, j}: ", name]]; 
@@ -483,16 +487,21 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
             name]]; Quiet[checkConjugates[ptcoord, bCrossConjugate, 
             "= X(i)-cross conjugate of X(j) for these {i, j}: ", name]]; 
           Quiet[checkVertexConjugates[ptcoord, name]]; 
-          If[ !TrueQ[globalSilence], PrintTemporary[
-            "Starting circles+poles"]]; Quiet[checkCircles[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting circles"]; ]; Quiet[checkCircles[ptcoord, name]]; 
           Quiet[checkInconics[ptcoord, num, name]]; 
-          Quiet[checkPoles[ptcoord, name]]; Quiet[checkPerspector[ptcoord, 
-            name]]; Quiet[checkConicCenter[ptcoord, name]]; 
-          If[ !TrueQ[globalSilence], PrintTemporary["Starting barycentric"]]; 
-          Quiet[checkBarycentric[ptcoord, "product", name]]; 
-          Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting poles"]; ]; Quiet[checkPoles[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting conic centers"]; ]; Quiet[checkPerspector[
+            ptcoord, name]]; Quiet[checkConicCenter[ptcoord, name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting baricentrics"]; ]; Quiet[checkBarycentric[
+            ptcoord, "product", name]]; Quiet[checkBarycentric[ptcoord, 
+            "quotient", name]]; If[ !TrueQ[globalSilence], 
+           printSessionTime[]; Print["Starting processes"]; ]; 
           TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
-          If[ !TrueQ[globalSilence], Print["========="]]; ]; ]; 
+          If[ !TrueQ[globalSilence], Print["==========="]]; ]; ]; 
       Return[True]; ]
  
 addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]], 
@@ -511,6 +520,11 @@ checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3},
       Return[True]; ]
  
 globalSeenPoints = {}
+ 
+printSessionTime[] := Module[{t}, Print[SessionTime[] - tmpsessiontime]; 
+      tmpsessiontime = SessionTime[]; ]
+ 
+tmpsessiontime = 0
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck, 
       crv, normcoef, curves, circset}, 
@@ -593,14 +607,14 @@ checkCircles[pt_, name_:"X", prec_:24] :=
       outgroups = (Take[SortBy[#1, numsortexpr[#1] & ], 3] & ) /@ outgroups; 
       outgroups = SortBy[outgroups, numsortexpr[#1[[1]]] & ]; hg = {}; 
       Do[rc = intCheckList[[1]]; rc2 = intCheckList[[2]]; 
-        ptn = intnumericnorm[evaluate[ptcoord] /. rc]; 
+        ptn = intnumericnorm[evaluate[pt] /. rc]; 
         d1 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 1]]] /. rc]] /. rc, prec]; 
         d2 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 2]]] /. rc]] /. rc, prec]; 
         d3 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 3]]] /. rc]] /. rc, prec]; ptn = intnumericnorm[
-          evaluate[ptcoord] /. rc2]; 
+          evaluate[pt] /. rc2]; 
         d4 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[
                 1]]] /. rc2]] /. rc2, prec]; 
         d5 = N[bDistance[ptn, intnumericnorm[KimberlingCenterCNy[circ[[

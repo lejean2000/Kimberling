@@ -78,8 +78,8 @@ heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] :=
          coefsum < cfsum)]; ]
  
 partialSReplace[expr_] := Module[{exp, exp2, smpl}, 
-     If[ListQ[expr], exp2 = expr[[1]], exp2 = expr]; 
-      exp = multiCollect[exp2 /. \[CapitalDelta] -> S/2, S]; 
+     If[ListQ[expr], exp2 = simplifyRationalBarycentrics[Simplify[expr]][[
+         1]], exp2 = Simplify[expr]]; exp = exp2 /. \[CapitalDelta] -> S/2; 
       exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
                S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
              S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
@@ -103,8 +103,10 @@ fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n],
       -Select[Union[FareySequence[n], 1/FareySequence[n]], 
         #1 =!= ComplexInfinity && #1 > 0 & ]]]
  
-partialSAconvert[ex_] := ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. 
-      SC -> evaluate[SC] /. SW -> evaluate[SW]
+partialSAconvert[ex_] := 
+    ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC] /. 
+        SW -> evaluate[SW] /. sa -> evaluate[sa] /. sb -> evaluate[sb] /. 
+     sc -> evaluate[sc]
  
 leastBaryFromIntersections[testset_] := 
     Module[{results, tt, out, mon, min, deg}, 
@@ -255,3 +257,12 @@ massHeuristicsFareyNoEval[expr_, fset_, deg_:16, ratio_:4.5] :=
             If[heuristicsCheck[testexpr[[1]], deg, ratio], AppendTo[out, 
               tvar]]]; , {tvar, fset}], nprg]]; Print[out]; 
       Print[colorformat[ToString[etc]]]; ]
+ 
+ttsimplify[ptn_] := (Activate[Collect[#1, t, Inactive[Simplify]] /. 
+        Simplify -> intFullSimplifyFactors] & ) /@ ptn
+ 
+intSimplifyFactorsToTrad[expr_] := StringReplace[ExpressionToTrad[
+      With[{ex = (#1[[1]]^#1[[2]] & ) /@ (Simplify[#1] & ) /@ 
+           Select[FactorList[expr],  !Abs[#1[[1]]] === 1 & ]}, 
+       If[Length[ex] > 1, NonCommutativeMultiply @@ ex, ex[[1]]]]], 
+     "**" -> "*"]
