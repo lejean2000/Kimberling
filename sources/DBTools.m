@@ -509,14 +509,14 @@ addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]],
  
 checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3}, 
      ptn = intnumericnorm[evaluate[ptc] /. rule69]; 
-      symcheck = ptn - intnumericnorm[symmetrizeInternal2[
-           evaluate[ptc[[1]]]] /. rule69]; symcheck2 = 
+      symcheck = Cross[ptn, intnumericnorm[symmetrizeInternal2[
+           evaluate[ptc[[1]]]] /. rule69]]; symcheck2 = 
        evaluate[Abs[ptc[[1]]] - Abs[ptc[[1]] /. Thread[{b -> c, c -> b}]]] /. 
-        rule69; symcheck3 = ptn - intnumericnorm[
-         evaluate[ptc] /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]; 
-      If[AnyTrue[symcheck, #1 != 0 & ] || symcheck2 != 0 || 
-        AnyTrue[symcheck3, #1 != 0 & ], Print[ptc]; 
-        Print["expression is not symmetric"]; Return[False]; ]; 
+        rule69; symcheck3 = Cross[ptn, intnumericnorm[
+         evaluate[ptc] /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]]; 
+      If[AnyTrue[symcheck, Abs[#1] > 10^(-20) & ] || Abs[symcheck2] > 
+         10^(-20) || AnyTrue[symcheck3, Abs[#1] > 10^(-20) & ], 
+       Print[ptc]; Print["expression is not symmetric"]; Return[False]; ]; 
       Return[True]; ]
  
 globalSeenPoints = {}
@@ -836,7 +836,7 @@ addExtraPoint[bary_, letter_, name_, writeout_:True] :=
 quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True] := 
     Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
-      If[dosymcheck, If[ !checkCentralExpression[ptcoord], 
+      If[dosymcheck, If[ !checkCentralExpression[expr], 
          Return[False, Module]; ]; ]; If[num != 0, chk = 0, 
        chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
        Print[colorformat[StringJoin["ETC: ", chk]]], 
