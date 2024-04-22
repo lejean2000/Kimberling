@@ -78,15 +78,14 @@ heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] :=
          coefsum < cfsum)]; ]
  
 partialSReplace[expr_] := Module[{exp, exp2, smpl}, 
-     If[ListQ[expr], exp2 = simplifyRationalBarycentrics[Simplify[expr]][[
-         1]], exp2 = Simplify[expr]]; 
-      exp = Expand[exp2 /. \[CapitalDelta] -> S/2]; 
+     If[ListQ[expr], exp2 = simplifyRationalBarycentrics[expr], 
+       exp2 = Simplify[expr]]; exp = Expand[exp2 /. \[CapitalDelta] -> S/2]; 
       exp = Simplify[exp /. S^2 -> evaluate[S^2] /. S^4 -> evaluate[S^4] /. 
                S^3 -> S*evaluate[S^2] /. S^5 -> S*evaluate[S^4] /. 
              S^6 -> evaluate[S^6] /. S^7 -> S*evaluate[S^6] /. 
            S^8 -> evaluate[S^8] /. S^9 -> S*evaluate[S^8] /. 
          S^10 -> evaluate[S^10]]; If[ !ListQ[expr], Return[exp]]; 
-      smpl = ssimplify[sym3[exp]]; Return[smpl]; ]
+      smpl = ssimplify[exp]; Return[smpl]; ]
  
 ssimplify[pt_] := Module[{ss}, 
      ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 

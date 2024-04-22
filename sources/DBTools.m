@@ -129,7 +129,7 @@ checkCircumconics[pt_, excl_:0, name_:"X"] :=
            KimberlingCenterCNy[p1], KimberlingCenterCNy[p2]], pt]; 
         If[check, AppendTo[out, StringJoin["{{A, B, C, ", intaddbrackets[p1], 
             ", ", intaddbrackets[p2], "}}"]]; ]; , {cnc, list4}]; 
-      AssociateTo[globalProperties[name], {"circumconics" -> out}]; 
+      Quiet[AssociateTo[globalProperties[name], {"circumconics" -> out}]]; 
       If[ !TrueQ[globalSilence], If[Length[out] > 0, 
         Print[colorformat[StringJoin[
             "= intersection, other than A, B, C, of circumconics: ", 
@@ -446,7 +446,8 @@ checkVertexConjugates[pt_, name_:"X"] :=
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
     Module[{abstime, ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
-     If[inname != "X" && KeyExistsQ[globalProperties, inname], 
+     tmpsessiontime = SessionTime[]; If[inname != "X" && 
+        KeyExistsQ[globalProperties, inname], 
        Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
         Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
       ptcoord = evaluate[expr]; If[ !checkCentralExpression[ptcoord], 
@@ -504,27 +505,29 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
           If[ !TrueQ[globalSilence], Print["==========="]]; ]; ]; 
       Return[True]; ]
  
+tmpsessiontime = 0
+ 
 addxtoname[str_] := If[NumericQ[ToExpression[StringTake[ToString[str], 1]]], 
      StringJoin["X", ToString[str]], str]
  
 checkCentralExpression[ptc_] := Module[{ptn, symcheck, symcheck2, symcheck3}, 
      ptn = intnumericnorm[evaluate[ptc] /. rule69]; 
-      symcheck = Cross[ptn, intnumericnorm[symmetrizeInternal2[
-           evaluate[ptc[[1]]]] /. rule69]]; symcheck2 = 
-       evaluate[Abs[ptc[[1]]] - Abs[ptc[[1]] /. Thread[{b -> c, c -> b}]]] /. 
-        rule69; symcheck3 = Cross[ptn, intnumericnorm[
-         evaluate[ptc] /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. rule69]]; 
-      If[AnyTrue[symcheck, Abs[#1] > 10^(-20) & ] || Abs[symcheck2] > 
-         10^(-20) || AnyTrue[symcheck3, Abs[#1] > 10^(-20) & ], 
-       Print[ptc]; Print["expression is not symmetric"]; Return[False]; ]; 
+      symcheck = Simplify[Cross[ptn, intnumericnorm[
+          symmetrizeInternal2[evaluate[ptc[[1]]]] /. rule69]]]; 
+      symcheck2 = Simplify[Abs[evaluate[ptc[[1]]]] - 
+          Abs[evaluate[ptc[[1]]] /. Thread[{b -> c, c -> b}]] /. rule69]; 
+      symcheck3 = Simplify[Cross[ptn, intnumericnorm[
+          evaluate[ptc] /. Thread[{a -> 2*a, b -> 2*b, c -> 2*c}] /. 
+           rule69]]]; If[AnyTrue[symcheck, Abs[#1] > 10^(-20) & ] || 
+        Abs[symcheck2] > 10^(-20) || AnyTrue[symcheck3, 
+         Abs[#1] > 10^(-20) & ], Print[ptc]; 
+        Print["expression is not symmetric"]; Return[False]; ]; 
       Return[True]; ]
  
 globalSeenPoints = {}
  
 printSessionTime[] := Module[{t}, Print[SessionTime[] - tmpsessiontime]; 
       tmpsessiontime = SessionTime[]; ]
- 
-tmpsessiontime = 0
  
 checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck, 
       crv, normcoef, curves, circset}, 
@@ -542,8 +545,8 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck,
             d = curves[name] /. Thread[{x, y, z} -> ptest2] /. rc; 
             If[Abs[d] > 10^(-12), secondcheck = False]; , 
            {rc, intCheckList}]; If[secondcheck, AppendTo[out, name]]; ]; , 
-       {name, Keys[curves]}]; AssociateTo[globalProperties[inname], 
-       {"curves" -> out}]; If[Length[out] > 0, 
+       {name, Keys[curves]}]; Quiet[AssociateTo[globalProperties[inname], 
+        {"curves" -> out}]]; If[Length[out] > 0, 
        If[ !TrueQ[globalSilence], Print[StringJoin["= lies on curves: ", 
            StringRiffle[out, ", "]]]]; ]; Return[out]; ]
  

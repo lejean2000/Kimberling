@@ -704,7 +704,7 @@ symmetrizeTriangleExprType1Bary[{v1_, v2_, v3_}] :=
          SA -> SB, SB -> SC, SC -> SA, u -> v, v -> w, w -> u}; 
       {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
-bCircumconcevianM1[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+bKP1[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
     {u*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + a1*a3*b2*b3*u*v + 
        a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
        a2*a3*b1*b2*u*w + a1*a2*b2*b3*u*w - a1*a3*b1*b3*v^2 + 
@@ -716,7 +716,7 @@ bCircumconcevianM1[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
        a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*((-a2)*a3*b2*b3*u^2 + 
        a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
  
-bCircumconcevianM2[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+bKP2[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
     {u*(a2*a3*b2*b3*u^2 - a2*a3*b1*b3*u*v - a1*a3*b2*b3*u*v + 
        a1*a3*b1*b3*v^2 - a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 - 
        a2*a3*b1*b2*u*w - a1*a2*b2*b3*u*w - a1*a3*b1*b3*v^2 + 
@@ -728,7 +728,7 @@ bCircumconcevianM2[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
        a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*((-a2)*a3*b2*b3*u^2 + 
        a1*a3*b1*b3*v^2 - a1*a3*b1*b2*v*w - a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
  
-bCircumconcevianM3[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+bKP3[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
     {u*(a2*a3*b2*b3*u^2 + a2*a3*b1*b3*u*v + a1*a3*b2*b3*u*v + 
        a1*a3*b1*b3*v^2 + a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
        a2*a3*b1*b2*u*w + a1*a2*b2*b3*u*w + a1*a3*b1*b3*v^2 + 
@@ -739,6 +739,12 @@ bCircumconcevianM3[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
      w*(a2*a3*b2*b3*u^2 + a1*a3*b1*b3*v^2 + a2*a3*b1*b2*u*w + 
        a1*a2*b2*b3*u*w + a1*a2*b1*b2*w^2)*(a2*a3*b2*b3*u^2 + 
        a1*a3*b1*b3*v^2 + a1*a3*b1*b2*v*w + a1*a2*b1*b3*v*w + a1*a2*b1*b2*w^2)}
+ 
+bKP4[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    simplifyRationalBarycentrics[
+     {u/(u^2/(a1*b1) + (v/a2 - w/a3)*(v/b2 - w/b3)), 
+      v/(v^2/(a2*b2) + (u/a1 - w/a3)*(u/b1 - w/b3)), 
+      w/(w^2/(a3*b3) + (u/a1 - v/a2)*(u/b1 - v/b2))}]
  
 bPerspectorGeneric[mx_, pa_, pb_, pc_] := Module[{pla, plb, plc, a1, b1}, 
      pla = bPolar[mx, pa]; plb = bPolar[mx, pb]; plc = bPolar[mx, pc]; 
@@ -1174,12 +1180,6 @@ bCrossCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
  
 bExsimilicenter3[O1_, rad1_, O2_, rad2_] := rad1*(O2/Total[O2]) - 
      rad2*(O1/Total[O1])
- 
-bCircumconcevianM4[{u_, v_, w_}, {a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
-    simplifyRationalBarycentrics[
-     {u/(u^2/(a1*b1) + (v/a2 - w/a3)*(v/b2 - w/b3)), 
-      v/(v^2/(a2*b2) + (u/a1 - w/a3)*(u/b1 - w/b3)), 
-      w/(w^2/(a3*b3) + (u/a1 - v/a2)*(u/b1 - v/b2))}]
  
 bCevianTriangleGeneral[xp_, xa_, xb_, xc_] := Module[{la, lb, lc}, 
      la = bLine[xb, xc]; lb = bLine[xc, xa]; lc = bLine[xa, xb]; 
