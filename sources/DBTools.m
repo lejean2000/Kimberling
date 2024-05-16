@@ -492,16 +492,17 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
             Print["Starting circles"]; ]; Quiet[checkCircles[ptcoord, name]]; 
           Quiet[checkInconics[ptcoord, num, name]]; 
           If[ !TrueQ[globalSilence], printSessionTime[]; 
-            Print["Starting poles"]; ]; Quiet[checkPoles[ptcoord, name]]; 
+            Print["Starting poles"]; ]; TimeConstrained[
+           Quiet[checkPoles[ptcoord, name]], 180]; If[ !TrueQ[globalSilence], 
+           printSessionTime[]; Print["Starting conic centers"]; ]; 
+          Quiet[checkPerspector[ptcoord, name]]; 
+          Quiet[checkConicCenter[ptcoord, name]]; If[ !TrueQ[globalSilence], 
+           printSessionTime[]; Print["Starting baricentrics"]; ]; 
+          Quiet[checkBarycentric[ptcoord, "product", name]]; 
+          Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
           If[ !TrueQ[globalSilence], printSessionTime[]; 
-            Print["Starting conic centers"]; ]; Quiet[checkPerspector[
-            ptcoord, name]]; Quiet[checkConicCenter[ptcoord, name]]; 
-          If[ !TrueQ[globalSilence], printSessionTime[]; 
-            Print["Starting baricentrics"]; ]; Quiet[checkBarycentric[
-            ptcoord, "product", name]]; Quiet[checkBarycentric[ptcoord, 
-            "quotient", name]]; If[ !TrueQ[globalSilence], 
-           printSessionTime[]; Print["Starting processes"]; ]; 
-          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
+            Print["Starting processes"]; ]; TimeConstrained[
+           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
           If[ !TrueQ[globalSilence], Print["==========="]]; ]; ]; 
       Return[True]; ]
  
@@ -640,10 +641,11 @@ checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci,
       conics = Join[fltCentralCircles, fltDuals]; If[ !globalCheckAllPoles, 
        Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
-            plr . {x, y, z}]; If[Length[set] >= 2, 
+            evaluate[plr] . {x, y, z}]; If[Length[set] >= 2, 
            fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
             prop = StringJoin["= pole of line ", ToString[fltset], 
               " with respect to the ", circ]; AppendTo[out, prop]; 
+            AssociateTo[globalProperties[name], {"poles" -> out}]; 
             If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
          {circ, Keys[conics]}]; ]; If[globalCheckAllPoles, 
        Do[plr = TimeConstrained[bPolar[fltCircumCircles[circ], pt], 5, -1]; 
@@ -737,8 +739,8 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
           "reflections"], hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
            print[colorformat[StringJoin[printname, 
                " = reflection of X(i) in X(j) for these {i,j}: ", 
-               StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], 
-                ", "]]]]; ]; ]; If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
+               StringRiffle[hg, ", "]]]]; ]; ]; 
+        If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
          If[MemberQ[Keys[glob[pt]], "harmonic"], hg = glob[pt]["harmonic"]; 
             If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                  " = {X(i),X(j)}-harmonic conjugate of X(k) for these \

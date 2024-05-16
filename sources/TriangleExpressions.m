@@ -90,13 +90,15 @@ partialSReplace[expr_] := Module[{exp, exp2, smpl},
 ssimplify[pt_] := Module[{ss}, 
      ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
            Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
-      Return[ss[simplifyRationalBarycentrics[
-         ss[pt] /. (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 
-            4*S^2 /. (a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c) -> 
-           -4*S^2]]]; ]
+      Return[simplifyRationalBarycentrics[
+        ss[ss[pt] /. (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 
+              -4*S^2 /. (a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c) -> 
+             4*S^2 /. -3*a^4 - 3*(b^2 - c^2)^2 + 6*a^2*(b^2 + c^2) -> 
+            12*S^2 /. -((a - b - c)*(a + b - c)*(a - b + c)*(a + b + c)) -> 
+           4*S^2]]]; ]
  
 intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
-      (FullSimplify[#1] & ) /@ FactorList[expr]
+      (FullSimplify[#1, S > 0] & ) /@ FactorList[expr]
  
 fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n], 
         1/FareySequence[n]], #1 =!= ComplexInfinity && #1 > 0 & ], 
@@ -113,16 +115,17 @@ leastBaryFromIntersections[testset_] :=
      min = 100; Monitor[results = {}; 
         Do[AbortProtect[CheckAbort[mon = {nx1, nx2}; If[nx1[[1]] >= nx2[[1]], 
                Continue[]]; tt = TimeConstrained[partialSReplace[
-                 Expand[Simplify[bLineIntersection[bLine[partialSAconvert[
-                       KimberlingCenterC[nx1[[1]]]], partialSAconvert[
-                       KimberlingCenterC[nx1[[2]]]]], bLine[partialSAconvert[
-                       KimberlingCenterC[nx2[[1]]]], partialSAconvert[
-                       KimberlingCenterC[nx2[[2]]]]]][[1]]]]], 5, -1]; 
-              If[tt == -1, Continue[]]; deg = polynomialDegree[tt[[1]]]; 
-              If[deg > 0, AppendTo[results, {nx1, nx2, tt, deg}]; 
-                If[deg < min, Print["New min:"]; min = deg; Print[{nx1, nx2, 
-                    deg}]]; ]; , Return[SortBy[results, #1[[4]] & ], 
-              Module]]; ]; , {nx1, testset}, {nx2, testset}], mon]; 
+                 Expand[Simplify[ssimplify[bLineIntersection[bLine[
+                       partialSAconvert[KimberlingCenterC[nx1[[1]]]], 
+                       partialSAconvert[KimberlingCenterC[nx1[[2]]]]], 
+                      bLine[partialSAconvert[KimberlingCenterC[nx2[[1]]]], 
+                       partialSAconvert[KimberlingCenterC[nx2[[2]]]]]]][[
+                    1]]]]], 5, -1]; If[tt == -1, Continue[]]; 
+              deg = polynomialDegree[tt]; If[deg > 0, AppendTo[results, 
+                 {nx1, nx2, tt, deg}]; If[deg < min, Print["New min:"]; 
+                  min = deg; Print[{nx1, nx2, deg}]]; ]; , 
+             Return[SortBy[results, #1[[4]] & ], Module]]; ]; , 
+         {nx1, testset}, {nx2, testset}], mon]; 
       out = SortBy[results, #1[[4]] & ]; Print[out[[1]]]; 
       Print[ExpressionToTrad[out[[1]][[3]]]]; Return[out]; ]
  
@@ -138,15 +141,16 @@ massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, docurves_:False] :=
       Quiet[Monitor[out = {}; etc = {}; Do[nprg = nx; curves = {}; 
            If[ !MemberQ[Keys[ETC], StringJoin["X", ToString[nx]]], 
             Continue[]]; If[ !RationalExpressionQ[KimberlingCenterCN[nx][[
-               1]], {a, b, c}], Continue[]]; testexpr = TimeConstrained[
-             simplifyRationalBarycentrics[replacer[expr, nx]], 10, -1]; 
-           If[testexpr == -1, Continue[]]; check = checkPointinETC2[
-             testexpr]; If[docurves && Length[check] == 0, 
-            curves = Quiet[checkCurves[testexpr]]]; If[Length[check] > 0, 
+               1]], {a, b, c, S}], Continue[]]; testexpr = 
+            TimeConstrained[simplifyRationalBarycentrics[replacer[expr, nx]], 
+             10, -1]; If[testexpr == -1, Continue[]]; 
+           check = checkPointinETC2[testexpr]; 
+           If[docurves && Length[check] == 0, curves = 
+             Quiet[checkCurves[testexpr]]]; If[Length[check] > 0, 
             AppendTo[etc, {nx, check[[1]]}], If[heuristicsCheck[
-              evaluate[testexpr[[1]]], deg, ratio], If[Length[curves] > 0, 
-               AppendTo[out, {nx, curves}], AppendTo[out, nx]]; ]]; , 
-          {nx, nmin, nmax}], nprg]]; Print[out]; 
+              partialSAconvert[testexpr[[1]]], deg, ratio], 
+             If[Length[curves] > 0, AppendTo[out, {nx, curves}], AppendTo[
+                out, nx]]; ]]; , {nx, nmin, nmax}], nprg]]; Print[out]; 
       Print[colorformat[ToString[etc]]]; globalSilence = False; 
       Return[{out, etc}]; ]
  
@@ -266,3 +270,14 @@ intSimplifyFactorsToTrad[expr_] := StringReplace[ExpressionToTrad[
            Select[FactorList[expr],  !Abs[#1[[1]]] === 1 & ]}, 
        If[Length[ex] > 1, NonCommutativeMultiply @@ ex, ex[[1]]]]], 
      "**" -> "*"]
+ 
+setSquareBary = {2, 3, 4, 5, 6, 20, 22, 23, 24, 25, 26, 32, 39, 49, 51, 52, 
+     53, 54, 64, 66, 67, 68, 69, 70, 74, 76, 83, 93, 95, 96, 97, 98, 111, 
+     113, 114, 126, 131, 132, 133, 140, 141, 154, 155, 156, 157, 159, 160, 
+     161, 182, 183, 184, 185, 187, 193, 194, 195, 206, 211, 216, 217, 230, 
+     231, 232, 233, 235, 237, 248, 251, 262, 263, 264, 275, 276, 287, 290, 
+     297, 305, 308, 311, 315, 316, 317, 324, 325, 327, 343, 351, 352, 353, 
+     373, 384, 384, 393, 394, 439, 468, 570, 574, 576, 577, 597, 598, 599, 
+     625, 626, 669, 670, 671, 684, 689, 691, 694, 695, 699, 703, 729, 737, 
+     755, 783, 805, 809, 827, 850, 880, 881, 882, 887, 892, 930, 1003, 1031, 
+     1078, 1084}

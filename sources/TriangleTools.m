@@ -822,6 +822,9 @@ bPerspectivityAxis[a1_, b1_, c1_, a2_, b2_, c2_] :=
     Module[{p1, p2}, p1 = bLineIntersection[bLine[a1, b1], bLine[a2, b2]]; 
       p2 = bLineIntersection[bLine[a1, c1], bLine[a2, c2]]; bLine[p1, p2]]
  
+bPerspectivityAxis[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
+    bPerspectivityAxis[a1, b1, c1, a2, b2, c2]
+ 
 bPerspeconic[a1_, b1_, c1_, a2_, b2_, c2_] := Module[{p1, p2, p3, p4, p5}, 
      p1 = bLineIntersection[bLine[a1, b1], bLine[a2, c2]]; 
       p2 = bLineIntersection[bLine[a1, b1], bLine[b2, c2]]; 
@@ -1116,10 +1119,18 @@ bPCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
       q*w + r*(u + w)}, {r*u + p*(u + v), r*v + q*(u + v), 0}}
  
 bIsParallelogic[pa_, pb_, pc_, xa_, xb_, xc_] := 
-    Simplify[bConcurrencyMatrix[bParallelLine[pa, bLine[xb, xc]], 
-      bParallelLine[pb, bLine[xa, xc]], bParallelLine[pc, bLine[xa, xb]]]]
+    bConcurrencyMatrix[bParallelLine[pa, bLine[xb, xc]], 
+     bParallelLine[pb, bLine[xa, xc]], bParallelLine[pc, bLine[xa, xb]]]
+ 
+bIsParallelogic[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
+    bConcurrencyMatrix[bParallelLine[pa, bLine[xb, xc]], 
+     bParallelLine[pb, bLine[xa, xc]], bParallelLine[pc, bLine[xa, xb]]]
  
 bParallelogicCenter[pa_, pb_, pc_, xa_, xb_, xc_] := 
+    bLineIntersection[bParallelLine[pa, bLine[xb, xc]], 
+     bParallelLine[pb, bLine[xa, xc]]]
+ 
+bParallelogicCenter[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
     bLineIntersection[bParallelLine[pa, bLine[xb, xc]], 
      bParallelLine[pb, bLine[xa, xc]]]
  
@@ -1330,3 +1341,21 @@ bAnticevianGeneral[pp_, {xa_, xb_, xc_}] := Module[{pa, pb, pc, qa, qb, qc},
  
 sCollect[expr_, vars_] := Activate[Collect[expr, vars, Inactive[Simplify]] /. 
       Simplify -> intFullSimplifyFactors]
+ 
+bIsogonalConjugateGeneral[ptx_, {pa_, pb_, pc_}] := 
+    Module[{inc, la, lb}, inc = simplifyRationalBarycentrics[
+        bCoordChangeK[1, pa, pb, pc]]; la = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[pa, ptx], bLine[pa, inc]]]; 
+      lb = simplifyRationalBarycentrics[bReflectionLL[bLine[pb, ptx], 
+         bLine[pb, inc]]]; simplifyRationalBarycentrics[Cross[la, lb]]]
+ 
+bUnaryCofactorTrg[{{x1_, y1_, z1_}, {x2_, y2_, z2_}, {x3_, y3_, z3_}}] := 
+    symmetrizeTriangleExprType2Bary[{y2*z3 - z2*y3, z2*x3 - x2*z3, 
+       x2*y3 - y2*x3}*{a^2, b^2, c^2}]
+ 
+bAntisymmetricTrg[pt_, trg_:{xA, xB, xC}] := {bReflectionPP[trg[[1]], pt], 
+     bReflectionPP[trg[[2]], pt], bReflectionPP[trg[[3]], pt]}
+ 
+triangle = symmetrizeTriangleType2
+ 
+com[pt_, trg_] := pt . (#1/Total[#1] & ) /@ trg
