@@ -91,11 +91,11 @@ ssimplify[pt_] := Module[{ss},
      ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
            Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
       Return[simplifyRationalBarycentrics[
-        ss[ss[pt] /. (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> 
-              -4*S^2 /. (a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c) -> 
-             4*S^2 /. -3*a^4 - 3*(b^2 - c^2)^2 + 6*a^2*(b^2 + c^2) -> 
-            12*S^2 /. -((a - b - c)*(a + b - c)*(a - b + c)*(a + b + c)) -> 
-           4*S^2]]]; ]
+        ss[ss[pt] /. (a - b - c)*(a + b - c)*(a - b + c)*(a + b + c) -> -4*
+                S^2 /. (a + b - c)*(a - b + c)*(-a + b + c)*(a + b + c) -> 
+              4*S^2 /. -3*a^4 - 3*(b^2 - c^2)^2 + 6*a^2*(b^2 + c^2) -> 
+             12*S^2 /. -((a - b - c)*(a + b - c)*(a - b + c)*(a + b + c)) -> 
+            4*S^2 /. a^4 + (b^2 - c^2)^2 - 2*a^2*(b^2 + c^2) -> -4*S^2]]]; ]
  
 intFullSimplifyFactors[expr_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
       (FullSimplify[#1, S > 0] & ) /@ FactorList[expr]
@@ -159,9 +159,9 @@ massHeuristicsFarey[expr_, fset_, deg_:16, ratio_:4.5] :=
      Quiet[Monitor[out = {}; etc = {}; Do[nprg = tvar; 
            testexpr = TimeConstrained[simplifyRationalBarycentrics[
               expr /. t -> tvar], 10, -1]; If[testexpr == -1, Continue[]]; 
-           check = checkPointinETC2[testexpr]; If[Length[check] > 0, 
-            AppendTo[etc, {ExpressionToTrad[tvar], check[[1]]}], 
-            If[heuristicsCheck[evaluate[testexpr[[1]]], deg, ratio], 
+           check = checkPointinETC2[evaluate[testexpr]]; 
+           If[Length[check] > 0, AppendTo[etc, {ExpressionToTrad[tvar], 
+              check[[1]]}], If[heuristicsCheck[testexpr[[1]], deg, ratio], 
              AppendTo[out, tvar]]]; , {tvar, fset}], nprg]]; Print[out]; 
       Print[colorformat[ToString[etc]]]; ]
  

@@ -1359,3 +1359,7 @@ bAntisymmetricTrg[pt_, trg_:{xA, xB, xC}] := {bReflectionPP[trg[[1]], pt],
 triangle = symmetrizeTriangleType2
  
 com[pt_, trg_] := pt . (#1/Total[#1] & ) /@ trg
+ 
+bCentroid[{pa_, pb_, pc_}] := Cross[simplifyRationalBarycentrics[
+      bLine[bMidpoint[pa, pb], pc]], simplifyRationalBarycentrics[
+      bLine[bMidpoint[pa, pc], pb]]]

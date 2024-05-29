@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     43374,       1113]
-NotebookOptionsPosition[     42171,       1086]
-NotebookOutlinePosition[     42726,       1107]
-CellTagsIndexPosition[     42683,       1104]
+NotebookDataLength[     45786,       1165]
+NotebookOptionsPosition[     44644,       1140]
+NotebookOutlinePosition[     45137,       1159]
+CellTagsIndexPosition[     45094,       1156]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -29,8 +29,7 @@ Cell[BoxData[
    3.83992070302919*^9, 3.8399207092031746`*^9}, {3.8416249776934814`*^9, 
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
- CellLabel->
-  "In[115]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+ CellLabel->"In[18]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -194,8 +193,7 @@ Cell[BoxData[{
        RowBox[{"KimberlingCenterCNy", "[", "k2", "]"}], "]"}]]}]}], "\n", 
    "]"}]}]}], "Code",
  InitializationCell->False,
- CellLabel->
-  "In[116]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+ CellLabel->"In[19]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -210,8 +208,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"Can", " ", "also", " ", "be", " ", "just", " ", "Abs"}], "->", 
     "RealAbs"}], " ", "*)"}]}]], "Input",
- CellLabel->
-  "In[124]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+ CellLabel->"In[27]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 
 Cell[BoxData[
  RowBox[{
@@ -225,8 +222,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.8659359365025496`*^9, 3.8659359467166414`*^9}, {
   3.877578389921321*^9, 3.877578397215644*^9}, {3.8779284662523875`*^9, 
   3.877928467254416*^9}},
- CellLabel->
-  "In[125]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+ CellLabel->"In[28]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[{
  RowBox[{
@@ -258,8 +254,7 @@ Cell[BoxData[{
       RowBox[{"Sin", "[", "C", "]"}], "->", 
       FractionBox["S", 
        RowBox[{"a", " ", "b"}]]}]}], "}"}]}], ";"}]}], "Input",
- CellLabel->
-  "In[126]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+ CellLabel->"In[29]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -617,6 +612,44 @@ Cell[BoxData[{
           RowBox[{"trkim", ",", 
            RowBox[{"Keys", "[", "KimberlingTrianglesBary", "]"}]}], "}"}]}], 
         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"chk", "=", 
+           RowBox[{"Cross", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"evaluate", "[", 
+                RowBox[{"tr", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
+               "intnumericnorm"}], ",", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"evaluate", "[", 
+                RowBox[{
+                 RowBox[{"CPTR", "[", "trkim", "]"}], "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
+               "intnumericnorm"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Max", "[", 
+              RowBox[{"Abs", "[", "chk", "]"}], "]"}], "<", 
+             SuperscriptBox["10", 
+              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", "\t", 
+            RowBox[{
+             RowBox[{"Return", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"True", ",", "trkim"}], "}"}], ",", " ", "Module"}], 
+              "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
+         "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"trkim", ",", 
+           RowBox[{"Keys", "[", "CPTR", "]"}]}], "}"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
        RowBox[{"Return", "[", 
         RowBox[{"{", "False", "}"}], "]"}], ";"}]}], "\[IndentingNewLine]", 
      "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -630,8 +663,8 @@ Cell[BoxData[{
      RowBox[{
       RowBox[{"{", 
        RowBox[{
-       "out", ",", "trsym", ",", "ntest", ",", "ptcoord", ",", "perschk", ",",
-         "outname"}], "}"}], ",", "\[IndentingNewLine]", 
+       "hmt", ",", "out", ",", "trsym", ",", "ntest", ",", "ptcoord", ",", 
+        "perschk", ",", "outname"}], "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"out", "=", 
         RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
@@ -677,6 +710,7 @@ Cell[BoxData[{
               "\"\<Perspector of \>\"", "<>", "trgname", "<>", 
                "\"\< and \>\"", "<>", "trname"}]}], ";", 
              "\[IndentingNewLine]", 
+             RowBox[{"hmt", "=", "\"\<\>\""}], ";", "\[IndentingNewLine]", 
              RowBox[{"If", "[", "\[IndentingNewLine]", 
               RowBox[{
                RowBox[{
@@ -717,13 +751,10 @@ Cell[BoxData[{
                 SuperscriptBox["10", 
                  RowBox[{"-", "20"}]]}], ",", "\[IndentingNewLine]", 
                RowBox[{
-                RowBox[{"Print", "[", 
+                RowBox[{"hmt", "=", 
                  RowBox[{"Style", "[", 
-                  RowBox[{
-                   RowBox[{
-                   "\"\<Possibly homothetic: \>\"", "<>", "trgname", "<>", 
-                    "\"\< and \>\"", "<>", "trname"}], ",", "Red"}], "]"}], 
-                 "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+                  RowBox[{"\"\< - possibly homothetic\>\"", ",", "Red"}], 
+                  "]"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
              "\[IndentingNewLine]", 
              RowBox[{"If", "[", 
               RowBox[{
@@ -731,16 +762,23 @@ Cell[BoxData[{
                 RowBox[{"Length", "[", "perschk", "]"}], ">", "0"}], ",", 
                "\[IndentingNewLine]", 
                RowBox[{"Print", "[", 
-                RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
-                 RowBox[{"perschk", "[", 
-                  RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
-               "\[IndentingNewLine]", 
+                RowBox[{"Row", "[", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
+                    RowBox[{"perschk", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}], ",", "hmt"}], "}"}], 
+                 "]"}], "]"}], ",", "\[IndentingNewLine]", 
                RowBox[{
                 RowBox[{"Print", "[", 
-                 RowBox[{"Style", "[", 
-                  RowBox[{"outname", ",", "Blue"}], "]"}], "]"}], ";"}]}], 
-              "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
-           "]"}], ";"}], "\[IndentingNewLine]", ",", 
+                 RowBox[{"Row", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"outname", ",", "Blue"}], "]"}], ",", "hmt"}], 
+                   "}"}], "]"}], "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+              ";"}]}], "\[IndentingNewLine]", "]"}], ";"}], 
+         "\[IndentingNewLine]", ",", 
          RowBox[{"{", 
           RowBox[{"trname", ",", 
            RowBox[{
@@ -860,114 +898,132 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"trgCheckParallelogic", "[", 
-    RowBox[{"trchk_", ",", "trgname_", ",", 
-     RowBox[{"set_", ":", "KimberlingTrianglesBary"}]}], "]"}], ":=", 
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{
-      "out", ",", "trsym", ",", "ntest", ",", "ptcoord", ",", "perschk", ",", 
-       "outname"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"trgCheckParallelogic", "[", 
+     RowBox[{"trchk_", ",", "trgname_", ",", 
+      RowBox[{"set_", ":", "KimberlingTrianglesBary"}]}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"out", "=", 
-       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
-      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{"{", 
        RowBox[{
+       "out", ",", "trsym", ",", "ntest", ",", "ptcoord", ",", "perschk", ",",
+         "outname"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"out", "=", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", "\[IndentingNewLine]", 
         RowBox[{
-         RowBox[{"trsym", "=", 
+         RowBox[{
+          RowBox[{"trsym", "=", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"ListQ", "[", 
+              RowBox[{
+               RowBox[{"set", "[", "trname", "]"}], "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", 
+             RowBox[{"set", "[", "trname", "]"}], ",", 
+             RowBox[{"triangle", "[", "trname", "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"ntest", "=", 
+           RowBox[{
+            RowBox[{"bIsParallelogic", "@@", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"evaluate", "[", 
+                RowBox[{"Join", "[", 
+                 RowBox[{"trsym", ",", "trchk"}], "]"}], "]"}], "/.", 
+               "rule69"}], ")"}]}], "/.", "rule69"}]}], ";", 
+          "\[IndentingNewLine]", 
           RowBox[{"If", "[", 
            RowBox[{
-            RowBox[{"ListQ", "[", 
-             RowBox[{
-              RowBox[{"set", "[", "trname", "]"}], "[", 
-              RowBox[{"[", "1", "]"}], "]"}], "]"}], ",", 
-            RowBox[{"set", "[", "trname", "]"}], ",", 
-            RowBox[{"triangle", "[", "trname", "]"}]}], "]"}]}], ";", 
-         "\[IndentingNewLine]", 
-         RowBox[{"ntest", "=", 
-          RowBox[{
-           RowBox[{"bIsParallelogic", "@@", 
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{"evaluate", "[", 
-               RowBox[{"Join", "[", 
-                RowBox[{"trsym", ",", "trchk"}], "]"}], "]"}], "/.", 
-              "rule69"}], ")"}]}], "/.", "rule69"}]}], ";", 
-         "\[IndentingNewLine]", 
-         RowBox[{"If", "[", 
-          RowBox[{
-           RowBox[{
-            RowBox[{"Abs", "[", "ntest", "]"}], "<", 
-            SuperscriptBox["10", 
-             RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", 
-           RowBox[{
-            RowBox[{"ptcoord", "=", 
-             RowBox[{"bParallelogicCenter", "[", 
-              RowBox[{"trchk", ",", "trsym"}], "]"}]}], ";", 
-            "\[IndentingNewLine]", 
-            RowBox[{"perschk", "=", 
-             RowBox[{"ptcoord", "//", "checkPointinETC2"}]}], ";", 
-            "\[IndentingNewLine]", 
-            RowBox[{"outname", " ", "=", " ", 
-             RowBox[{
-             "\"\<Parallelogic center of \>\"", "<>", "trgname", "<>", 
-              "\"\< and \>\"", "<>", "trname"}]}], ";", "\[IndentingNewLine]",
+            RowBox[{
+             RowBox[{"Abs", "[", "ntest", "]"}], "<", 
+             SuperscriptBox["10", 
+              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"ptcoord", "=", 
+              RowBox[{"bParallelogicCenter", "[", 
+               RowBox[{"trchk", ",", "trsym"}], "]"}]}], ";", 
              "\[IndentingNewLine]", 
-            RowBox[{"If", "[", 
-             RowBox[{
+             RowBox[{"perschk", "=", 
+              RowBox[{"ptcoord", "//", "checkPointinETC2"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"outname", " ", "=", " ", 
               RowBox[{
-               RowBox[{"Length", "[", "perschk", "]"}], ">", "0"}], ",", 
-              "\[IndentingNewLine]", 
-              RowBox[{"Print", "[", 
-               RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
-                RowBox[{"perschk", "[", 
-                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
-              "\[IndentingNewLine]", 
+              "\"\<Parallelogic center of \>\"", "<>", "trgname", "<>", 
+               "\"\< and \>\"", "<>", "trname"}]}], ";", 
+             "\[IndentingNewLine]", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
               RowBox[{
+               RowBox[{
+                RowBox[{"Length", "[", "perschk", "]"}], ">", "0"}], ",", 
+               "\[IndentingNewLine]", 
                RowBox[{"Print", "[", 
-                RowBox[{"Style", "[", 
-                 RowBox[{"outname", ",", "Blue"}], "]"}], "]"}], ";"}]}], 
-             "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-            "\[IndentingNewLine]", 
-            RowBox[{"ptcoord", "=", 
-             RowBox[{"bParallelogicCenter", "[", 
-              RowBox[{"trsym", ",", "trchk"}], "]"}]}], ";", 
-            "\[IndentingNewLine]", 
-            RowBox[{"perschk", "=", 
-             RowBox[{"ptcoord", "//", "checkPointinETC2"}]}], ";", 
-            "\[IndentingNewLine]", 
-            RowBox[{"outname", " ", "=", " ", 
-             RowBox[{
-             "\"\<Parallelogic center of \>\"", "<>", "trname", "<>", 
-              "\"\< and \>\"", "<>", "trgname"}]}], ";", 
-            "\[IndentingNewLine]", 
-            RowBox[{"If", "[", 
-             RowBox[{
+                RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
+                 RowBox[{"perschk", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"Print", "[", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{"outname", ",", "Blue"}], "]"}], "]"}], ";"}]}], 
+              "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+             "\[IndentingNewLine]", 
+             RowBox[{"ptcoord", "=", 
+              RowBox[{"bParallelogicCenter", "[", 
+               RowBox[{"trsym", ",", "trchk"}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"perschk", "=", 
+              RowBox[{"ptcoord", "//", "checkPointinETC2"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"outname", " ", "=", " ", 
               RowBox[{
-               RowBox[{"Length", "[", "perschk", "]"}], ">", "0"}], ",", 
-              "\[IndentingNewLine]", 
-              RowBox[{"Print", "[", 
-               RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
-                RowBox[{"perschk", "[", 
-                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
-              "\[IndentingNewLine]", 
+              "\"\<Parallelogic center of \>\"", "<>", "trname", "<>", 
+               "\"\< and \>\"", "<>", "trgname"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
               RowBox[{
+               RowBox[{
+                RowBox[{"Length", "[", "perschk", "]"}], ">", "0"}], ",", 
+               "\[IndentingNewLine]", 
                RowBox[{"Print", "[", 
-                RowBox[{"Style", "[", 
-                 RowBox[{"outname", ",", "Blue"}], "]"}], "]"}], ";"}]}], 
-             "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
-          "]"}], ";"}], "\[IndentingNewLine]", ",", 
-        RowBox[{"{", 
-         RowBox[{"trname", ",", 
-          RowBox[{
-           RowBox[{"Keys", "[", "set", "]"}], "/.", 
-           RowBox[{"\"\<infinite-altitude\>\"", "->", "Nothing"}]}]}], 
-         "}"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
-    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
+                RowBox[{"outname", "<>", "\"\<: \>\"", "<>", 
+                 RowBox[{"perschk", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"Print", "[", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{"outname", ",", "Blue"}], "]"}], "]"}], ";"}]}], 
+              "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+           "]"}], ";"}], "\[IndentingNewLine]", ",", 
+         RowBox[{"{", 
+          RowBox[{"trname", ",", 
+           RowBox[{
+            RowBox[{"Keys", "[", "set", "]"}], "/.", 
+            RowBox[{"\"\<infinite-altitude\>\"", "->", "Nothing"}]}]}], 
+          "}"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Inverse", " ", "of", " ", "triangle", " ", "matrix"}], ",", " ", 
+    RowBox[{
+     RowBox[{"usually", " ", "giving", " ", "anti"}], "-", " ", 
+     "triangle"}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"inv", "[", "trg_", "]"}], ":=", 
+   RowBox[{"simplifyRationalBarycentrics", "/@", 
+    RowBox[{"Inverse", "[", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "/", 
+         RowBox[{"Total", "[", "#", "]"}]}], "&"}], "/@", "trg"}], ")"}], 
+     "]"}]}]}], ";"}]}], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
- CellLabel->
-  "In[128]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ CellLabel->"In[31]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[
  RowBox[{
@@ -1061,8 +1117,7 @@ Cell[BoxData[
       RowBox[{"Return", "[", "out", "]"}], ";"}]}], "\[IndentingNewLine]", 
     "]"}]}], ";"}]], "Input",
  Background->RGBColor[0.9, 1, 1],
- CellLabel->
-  "In[138]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+ CellLabel->"In[42]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
 
 Cell[BoxData[
  RowBox[{
@@ -1079,15 +1134,12 @@ Cell[BoxData[
       "checkPointsOnCurveNamed", ",", "XNy", ",", "checkTrianglesOnCurve", 
       ",", "checkCurvesForTriangle", ",", "sinReplace", ",", 
       "checkTriangleExists", ",", "trgCheckPerspectivity", ",", 
-      "trgCheckParallelogic", ",", "trgCheckOrthologic"}], "}"}]}], 
-   "]"}]}]], "Input",
- CellLabel->
-  "In[139]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+      "trgCheckParallelogic", ",", "trgCheckOrthologic", ",", "inv"}], 
+     "}"}]}], "]"}]}]], "Input",
+ CellLabel->"In[43]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
-Evaluator->"New Kernel",
-WindowSize->{1105.2, 615.6},
-WindowMargins->{{
-  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+WindowSize->{1093.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 DockedCells->{},
 TaggingRules-><|"TryRealOnly" -> False|>,
 Magnification:>0.9 Inherited,
@@ -1106,15 +1158,15 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 665, 12, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
-Cell[1226, 34, 5758, 163, 596, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
+Cell[558, 20, 661, 11, 26, "Input",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+Cell[1222, 33, 5754, 162, 596, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52",
  InitializationCell->False],
-Cell[6987, 199, 472, 14, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
-Cell[7462, 215, 512, 13, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
-Cell[7977, 230, 980, 31, 59, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[8960, 263, 28637, 706, 2722, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[37600, 971, 3620, 93, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[41223, 1066, 944, 18, 78, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[6979, 197, 468, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+Cell[7450, 212, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+Cell[7961, 226, 976, 30, 59, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+Cell[8940, 258, 31124, 767, 2938, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[40067, 1027, 3616, 92, 383, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[43686, 1121, 954, 17, 78, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

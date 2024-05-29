@@ -1240,4 +1240,8 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
        b*((-a + b + c)*(a + b + c) - 2*S), c*((-a + b + c)*(a + b + c) - 
          2*S)}, "Aguilera-Pavlov" -> {2*a*b*c + (b + c)*S, b*(2*b*c - S), 
        c*(2*b*c - S)}, "K1343" -> {-a^4, (b^2 + (a - c)*c)*(b^2 - c*(a + c)), 
-       -((a*b + b^2 - c^2)*(a*b - b^2 + c^2))}|>
+       -((a*b + b^2 - c^2)*(a*b - b^2 + c^2))}, "1st Pavlov" -> 
+      {2*a^3 - 3*a^2*(b + c) + (b - c)^2*(b + c), 
+       b*(a^2 + b*(b - c) - a*(2*b + c)), c*(a^2 + c*(-b + c) - 
+         a*(b + 2*c))}, "2nd Pavlov" -> {2*a^2 - (b - c)^2 + a*(b + c), 
+       b*(a + b), c*(a + c)}|>

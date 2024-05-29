@@ -97,24 +97,28 @@ checkTriangleExists[tr_] := Module[{chk},
           intnumericnorm[evaluate[KimberlingTrianglesBary[trkim]] /. 
             rule69]]; If[Max[Abs[chk]] < 10^(-24), 
          Return[{True, trkim}, Module]; ], 
-       {trkim, Keys[KimberlingTrianglesBary]}]; Return[{False}]; ]
+       {trkim, Keys[KimberlingTrianglesBary]}]; 
+      Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
+          intnumericnorm[evaluate[CPTR[trkim][[1]]] /. rule69]]; 
+        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Module]; ], 
+       {trkim, Keys[CPTR]}]; Return[{False}]; ]
  
 trgCheckPerspectivity[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
-    Module[{out, trsym, ntest, ptcoord, perschk, outname}, 
+    Module[{hmt, out, trsym, ntest, ptcoord, perschk, outname}, 
      out = {}; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
           triangle[trname]]; ntest = bIsPerspective @@ 
            (evaluate[Join[trsym, trchk]] /. rule69) /. rule69; 
         If[Abs[ntest] < 10^(-24), ptcoord = bTrianglePerspector[trchk, 
             trsym]; perschk = checkPointinETC2[ptcoord]; 
           outname = StringJoin["Perspector of ", trgname, " and ", trname]; 
-          If[Abs[(bDistance[trchk[[1]], trchk[[2]]]/bDistance[trsym[[1]], 
-                 trsym[[2]]] /. rule69) - (bDistance[trchk[[1]], trchk[[3]]]/
-                bDistance[trsym[[1]], trsym[[3]]] /. rule69)] < 10^(-20), 
-           Print[Style[StringJoin["Possibly homothetic: ", trgname, " and ", 
-               trname], Red]]; ]; If[Length[perschk] > 0, 
-           Print[StringJoin[outname, ": ", perschk[[1]]]], 
-           Print[Style[outname, Blue]]; ]; ]; , 
-       {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; ]
+          hmt = ""; If[Abs[(bDistance[trchk[[1]], trchk[[2]]]/bDistance[
+                 trsym[[1]], trsym[[2]]] /. rule69) - (bDistance[trchk[[1]], 
+                 trchk[[3]]]/bDistance[trsym[[1]], trsym[[3]]] /. rule69)] < 
+            10^(-20), hmt = Style[" - possibly homothetic", Red]; ]; 
+          If[Length[perschk] > 0, Print[Row[{StringJoin[outname, ": ", 
+               perschk[[1]]], hmt}]], Print[Row[{Style[outname, Blue], 
+               hmt}]]; ]; ]; , {trname, Keys[set] /. "infinite-altitude" -> 
+          Nothing}]; ]
  
 trgCheckParallelogic[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
     Module[{out, trsym, ntest, ptcoord, perschk, outname}, 
@@ -149,3 +153,5 @@ trgCheckOrthologic[trchk_, trgname_, set_:KimberlingTrianglesBary] :=
           If[Length[perschk] > 0, Print[StringJoin[outname, ": ", 
              perschk[[1]]]], Print[Style[outname, Blue]]; ]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; ]
+ 
+inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]

@@ -61,10 +61,6 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    xname = "X" <> ToString[nx];
 
    ptcoord = sym[globalptexpr[xname]];
-   
-   Print[];
-   pointChecker[ptcoord, xname, False, xname];
-   Print["=======END======="];
 	
    If [
    KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0, 
@@ -75,11 +71,15 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, 
    globalProperties[xname]["others"]=globalptdescr[xname]; Print[globalptdescr[xname]];
    ];
+      
+   Print[];
+   pointChecker[ptcoord, xname, False, xname];
+   Print["=======END======="];
    
    globalNoCleanup = False;
    globalOutputStream = OpenWrite[xname <> ".txt", CharacterEncoding -> "UTF8"];
    printGlobalProperties[globalProperties, xname, intaddbrackets[xname]] // Quiet;
-   Print["=======END======="];
+   print["=======END======="];
    Close[globalOutputStream];
    ,
    {nx, from, to}
