@@ -1363,3 +1363,15 @@ com[pt_, trg_] := pt . (#1/Total[#1] & ) /@ trg
 bCentroid[{pa_, pb_, pc_}] := Cross[simplifyRationalBarycentrics[
       bLine[bMidpoint[pa, pb], pc]], simplifyRationalBarycentrics[
       bLine[bMidpoint[pa, pc], pb]]]
+ 
+bAubertLineNew[aa_, bb_, cc_, dd_] := Module[{zz}, 
+     zz = simplifyRationalBarycentrics[bIntersection[aa, bb, cc, dd]]; 
+      simplifyRationalBarycentrics[bLine[simplifyRationalBarycentrics[
+         Cross[simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[bb, cc]], zz]], 
+          simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[bb, zz]], cc]]]], 
+        simplifyRationalBarycentrics[Cross[simplifyRationalBarycentrics[
+           bPerpendicular[simplifyRationalBarycentrics[bLine[aa, dd]], zz]], 
+          simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[aa, zz]], dd]]]]]]]

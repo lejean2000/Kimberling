@@ -629,11 +629,9 @@ checkCircles[pt_, name_:"X", prec_:24] :=
          AppendTo[hg, circ]]; , {circ, outgroups}]; 
       hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]], 
           intnameformat[#1[[3]]]} & ) /@ hg; If[ !TrueQ[globalSilence], 
-       If[Length[hg] > 0, If[Length[hg] == 1, Print[colorformat[
-            StringJoin["= center of circles {", ToString[hg[[1]]], "}"]]], 
-          Print[colorformat[StringJoin[
-              "= center of circles {{ X(i), X(j), X(k) }} for these {i, j, \
-k}: ", StringRiffle[hg, ", "]]]]; ]; ]]; AssociateTo[globalProperties[name], 
+       If[Length[hg] > 0, Print[colorformat[StringJoin[
+            "= center of circles {{ X(i), X(j), X(k) }} for these {i, j, k}: \
+", StringRiffle[hg, ", "]]]]; ]]; AssociateTo[globalProperties[name], 
        {"circles" -> hg}]; Return[hg]; ]
  
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
@@ -801,16 +799,13 @@ X(i)X(j) wrt the circumconic with perspector X(k) for these {i,j,k}: ",
             If[ListQ[hg] && Length[hg] > 0, print[colorformat[StringJoin[
                  printname, " = pole of line X(i)X(j) wrt the inconic with \
 perspector X(k) for these {i,j,k}: ", StringRiffle[hg, ", "]]]]; ]; ]; 
+          If[ListQ[hg] && Length[hg] > 0 && name2 == "circles", 
+           print[colorformat[StringJoin[printname, " = center of circles {{ \
+X(i), X(j), X(k) }} for these {i, j, k}: ", StringRiffle[hg, ", "]]]]; ]; 
           If[ListQ[hg] && Length[hg] > 0 && name2 == "others", 
            Do[print[colorformat[StringJoin[printname, localprops[name2], 
-               prop]]], {prop, hg}]]; If[ListQ[hg] && Length[hg] > 0 && 
-            name2 == "circles", If[Length[hg] == 1, Print[colorformat[
-               StringJoin[printname, " = center of circle {", ToString[
-                 hg[[1]]], "}"]]], Print[colorformat[StringJoin[printname, " \
-= center of circles {{ X(i), X(j), X(k) }} for these {i, j, k}: ", 
-                 StringRiffle[hg, ", "]]]]; ]; ]; , 
-         {name2, Keys[localprops]}]; , {pt, cycle}]; 
-      colorPrintOn = colorprint; ]
+               prop]]], {prop, hg}]]; , {name2, Keys[localprops]}]; , 
+       {pt, cycle}]; colorPrintOn = colorprint; ]
  
 print[string_] := If[StringContainsQ[string, "KeyAbsent"], 
      Return["", Module], 

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    260547,       6345]
-NotebookOptionsPosition[    256425,       6289]
-NotebookOutlinePosition[    257126,       6312]
-CellTagsIndexPosition[    257083,       6309]
+NotebookDataLength[    259173,       6316]
+NotebookOptionsPosition[    255051,       6260]
+NotebookOutlinePosition[    255752,       6283]
+CellTagsIndexPosition[    255709,       6280]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2313,29 +2313,15 @@ Cell[BoxData[
            RowBox[{"Length", "[", "hg", "]"}], ">", "0"}], ",", 
           "\[IndentingNewLine]", 
           RowBox[{
-           RowBox[{"If", "[", 
-            RowBox[{
+           RowBox[{"Print", "[", 
+            RowBox[{"colorformat", "[", 
              RowBox[{
-              RowBox[{"Length", "[", "hg", "]"}], "==", "1"}], ",", 
-             "\[IndentingNewLine]", 
-             RowBox[{"Print", "[", 
-              RowBox[{"colorformat", "[", 
-               RowBox[{"\"\<= center of circles {\>\"", "<>", 
-                RowBox[{"ToString", "[", 
-                 RowBox[{"hg", "[", 
-                  RowBox[{"[", "1", "]"}], "]"}], "]"}], "<>", "\"\<}\>\""}], 
-               "]"}], "]"}], ",", "\[IndentingNewLine]", 
-             RowBox[{
-              RowBox[{"Print", "[", 
-               RowBox[{"colorformat", "[", 
-                RowBox[{
-                "\"\<= center of circles {{ X(i), X(j), X(k) }} for these {i, \
-j, k}: \>\"", "<>", 
-                 RowBox[{"StringRiffle", "[", 
-                  RowBox[{"hg", ",", "\"\<, \>\""}], "]"}]}], "]"}], "]"}], 
-              ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
-         "\[IndentingNewLine]", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
-      "\[IndentingNewLine]", 
+             "\"\<= center of circles {{ X(i), X(j), X(k) }} for these {i, j, \
+k}: \>\"", "<>", 
+              RowBox[{"StringRiffle", "[", 
+               RowBox[{"hg", ",", "\"\<, \>\""}], "]"}]}], "]"}], "]"}], 
+           ";"}]}], "\[IndentingNewLine]", "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{"AssociateTo", "[", 
        RowBox[{
         RowBox[{"globalProperties", "[", "name", "]"}], ",", 
@@ -2343,8 +2329,8 @@ j, k}: \>\"", "<>",
          RowBox[{"\"\<circles\>\"", "\[Rule]", "hg"}], "}"}]}], "]"}], ";", 
       "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{"Return", "[", "hg", "]"}], ";"}]}], "\[IndentingNewLine]", 
-    "]"}]}], ";"}]], "Input",
- CellLabel->"In[93]:=",ExpressionUUID->"2b2c947e-2b60-4f5b-9e5a-79c86d844afd"],
+    "]"}]}], ";"}]], "Input",ExpressionUUID->"2b2c947e-2b60-4f5b-9e5a-\
+79c86d844afd"],
 
 Cell[BoxData[
  RowBox[{
@@ -6075,6 +6061,26 @@ perspector X(k) for these {i,j,k}: \>\"", "<>",
                RowBox[{
                 RowBox[{"Length", "[", "hg", "]"}], ">", "0"}], " ", "&&", 
                " ", 
+               RowBox[{"name2", "==", "\"\<circles\>\""}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"print", "[", 
+                RowBox[{"colorformat", "[", 
+                 RowBox[{
+                 "printname", "<>", 
+                  "\"\< = center of circles {{ X(i), X(j), X(k) }} for these \
+{i, j, k}: \>\"", "<>", 
+                  RowBox[{"StringRiffle", "[", 
+                   RowBox[{"hg", ",", "\"\<, \>\""}], "]"}]}], "]"}], "]"}], 
+               ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+            "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"ListQ", "[", "hg", "]"}], "&&", 
+               RowBox[{
+                RowBox[{"Length", "[", "hg", "]"}], ">", "0"}], " ", "&&", 
+               " ", 
                RowBox[{"name2", "==", "\"\<others\>\""}]}], ",", 
               "\[IndentingNewLine]", 
               RowBox[{"Do", "[", 
@@ -6086,41 +6092,6 @@ perspector X(k) for these {i,j,k}: \>\"", "<>",
                   "]"}], "]"}], ",", 
                 RowBox[{"{", 
                  RowBox[{"prop", ",", " ", "hg"}], "}"}]}], "]"}]}], 
-             "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-            "\[IndentingNewLine]", 
-            RowBox[{"If", "[", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"ListQ", "[", "hg", "]"}], "&&", 
-               RowBox[{
-                RowBox[{"Length", "[", "hg", "]"}], ">", "0"}], " ", "&&", 
-               " ", 
-               RowBox[{"name2", "==", "\"\<circles\>\""}]}], ",", 
-              "\[IndentingNewLine]", 
-              RowBox[{
-               RowBox[{"If", "[", 
-                RowBox[{
-                 RowBox[{
-                  RowBox[{"Length", "[", "hg", "]"}], "==", "1"}], ",", 
-                 "\[IndentingNewLine]", 
-                 RowBox[{"Print", "[", 
-                  RowBox[{"colorformat", "[", 
-                   RowBox[{
-                   "printname", "<>", "\"\< = center of circle {\>\"", "<>", 
-                    RowBox[{"ToString", "[", 
-                    RowBox[{"hg", "[", 
-                    RowBox[{"[", "1", "]"}], "]"}], "]"}], "<>", 
-                    "\"\<}\>\""}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
-                 RowBox[{
-                  RowBox[{"Print", "[", 
-                   RowBox[{"colorformat", "[", 
-                    RowBox[{
-                    "printname", "<>", 
-                    "\"\< = center of circles {{ X(i), X(j), X(k) }} for \
-these {i, j, k}: \>\"", "<>", 
-                    RowBox[{"StringRiffle", "[", 
-                    RowBox[{"hg", ",", "\"\<, \>\""}], "]"}]}], "]"}], "]"}], 
-                  ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
              "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
            "\[IndentingNewLine]", ",", 
            RowBox[{"{", 
@@ -6325,28 +6296,28 @@ Cell[42383, 1135, 3447, 83, 447, "Input",ExpressionUUID->"bca15176-ab78-40f6-ad1
 Cell[45833, 1220, 3933, 95, 403, "Input",ExpressionUUID->"83275f8c-a3be-4d54-8212-7b9bf0d4d228"],
 Cell[49769, 1317, 597, 15, 28, "Input",ExpressionUUID->"8be899e7-53f5-49b1-a9d2-301ac7f326c4"],
 Cell[50369, 1334, 30795, 717, 2540, "Input",ExpressionUUID->"88798590-dcbe-4e1a-a851-954fbc2ef3de"],
-Cell[81167, 2053, 11542, 293, 904, "Input",ExpressionUUID->"2b2c947e-2b60-4f5b-9e5a-79c86d844afd"],
-Cell[92712, 2348, 1761, 47, 143, "Input",ExpressionUUID->"b89c36fa-e002-4abb-b4df-43d460f64f24"],
-Cell[94476, 2397, 10630, 255, 1113, "Input",ExpressionUUID->"df610716-6807-4170-8fa1-ec3c9df5ddd3"],
-Cell[105109, 2654, 4001, 101, 419, "Input",ExpressionUUID->"c0615c1e-389e-4fa6-a520-faeca5bb1121"],
-Cell[109113, 2757, 11332, 265, 1132, "Input",ExpressionUUID->"6d04d363-bd98-4fd2-b2b6-de38da3520db"],
-Cell[120448, 3024, 10640, 264, 828, "Input",ExpressionUUID->"a1d0dbe4-0639-4429-aad8-7d21f511e586"],
-Cell[131091, 3290, 9879, 257, 676, "Input",ExpressionUUID->"248d1785-f33b-47e2-912e-b1b776a4041a"],
-Cell[140973, 3549, 10873, 272, 771, "Input",ExpressionUUID->"a1358929-d20d-4668-b495-1e4bb285828e"],
-Cell[151849, 3823, 12076, 302, 1018, "Input",ExpressionUUID->"4fafc852-071d-4fdc-8baa-8b0c276eb033"],
-Cell[163928, 4127, 3809, 95, 379, "Input",ExpressionUUID->"c797be6b-9fe6-482b-8854-e3c92769d57d"],
-Cell[167740, 4224, 6466, 154, 682, "Input",ExpressionUUID->"bc8e548f-5977-4ae6-ba39-bcb6fc3313a2"],
-Cell[174209, 4380, 2222, 55, 295, "Input",ExpressionUUID->"bed5d2ed-8f13-49c8-8176-4d241a211a68"],
-Cell[176434, 4437, 2349, 58, 295, "Input",ExpressionUUID->"ac874933-0226-46ca-af4d-7dd1ac8d9de6"],
-Cell[178786, 4497, 11625, 279, 789, "Input",ExpressionUUID->"0bc4dd98-f69e-41b3-afd8-148fcb1bbc9e"],
-Cell[190414, 4778, 4219, 101, 371, "Input",ExpressionUUID->"fb05c096-2801-4b8e-91b5-a7cdfde1be05"],
-Cell[194636, 4881, 3761, 97, 248, "Input",ExpressionUUID->"52fcd3d2-0d79-43da-b241-368e2393301f"],
-Cell[198400, 4980, 16187, 355, 1770, "Input",ExpressionUUID->"b0c868e7-77ab-45f4-9f01-be0e5db4fd5a"],
-Cell[214590, 5337, 3498, 84, 447, "Input",ExpressionUUID->"a7b08756-0b30-4d61-9399-d90bc975de49"],
-Cell[218091, 5423, 6035, 135, 638, "Input",ExpressionUUID->"34e0d12b-8113-4dd3-9ab5-6c2b35676c93"],
-Cell[224129, 5560, 25771, 575, 2940, "Input",ExpressionUUID->"d3bc0e6f-728d-432e-9704-a9cc59a0a8a1"],
-Cell[249903, 6137, 4849, 120, 447, "Input",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-659bf901b269"],
-Cell[254755, 6259, 1666, 28, 181, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+Cell[81167, 2053, 10890, 279, 847, "Input",ExpressionUUID->"2b2c947e-2b60-4f5b-9e5a-79c86d844afd"],
+Cell[92060, 2334, 1761, 47, 143, "Input",ExpressionUUID->"b89c36fa-e002-4abb-b4df-43d460f64f24"],
+Cell[93824, 2383, 10630, 255, 1113, "Input",ExpressionUUID->"df610716-6807-4170-8fa1-ec3c9df5ddd3"],
+Cell[104457, 2640, 4001, 101, 419, "Input",ExpressionUUID->"c0615c1e-389e-4fa6-a520-faeca5bb1121"],
+Cell[108461, 2743, 11332, 265, 1132, "Input",ExpressionUUID->"6d04d363-bd98-4fd2-b2b6-de38da3520db"],
+Cell[119796, 3010, 10640, 264, 828, "Input",ExpressionUUID->"a1d0dbe4-0639-4429-aad8-7d21f511e586"],
+Cell[130439, 3276, 9879, 257, 676, "Input",ExpressionUUID->"248d1785-f33b-47e2-912e-b1b776a4041a"],
+Cell[140321, 3535, 10873, 272, 771, "Input",ExpressionUUID->"a1358929-d20d-4668-b495-1e4bb285828e"],
+Cell[151197, 3809, 12076, 302, 1018, "Input",ExpressionUUID->"4fafc852-071d-4fdc-8baa-8b0c276eb033"],
+Cell[163276, 4113, 3809, 95, 379, "Input",ExpressionUUID->"c797be6b-9fe6-482b-8854-e3c92769d57d"],
+Cell[167088, 4210, 6466, 154, 682, "Input",ExpressionUUID->"bc8e548f-5977-4ae6-ba39-bcb6fc3313a2"],
+Cell[173557, 4366, 2222, 55, 295, "Input",ExpressionUUID->"bed5d2ed-8f13-49c8-8176-4d241a211a68"],
+Cell[175782, 4423, 2349, 58, 295, "Input",ExpressionUUID->"ac874933-0226-46ca-af4d-7dd1ac8d9de6"],
+Cell[178134, 4483, 11625, 279, 789, "Input",ExpressionUUID->"0bc4dd98-f69e-41b3-afd8-148fcb1bbc9e"],
+Cell[189762, 4764, 4219, 101, 371, "Input",ExpressionUUID->"fb05c096-2801-4b8e-91b5-a7cdfde1be05"],
+Cell[193984, 4867, 3761, 97, 248, "Input",ExpressionUUID->"52fcd3d2-0d79-43da-b241-368e2393301f"],
+Cell[197748, 4966, 16187, 355, 1770, "Input",ExpressionUUID->"b0c868e7-77ab-45f4-9f01-be0e5db4fd5a"],
+Cell[213938, 5323, 3498, 84, 447, "Input",ExpressionUUID->"a7b08756-0b30-4d61-9399-d90bc975de49"],
+Cell[217439, 5409, 6035, 135, 638, "Input",ExpressionUUID->"34e0d12b-8113-4dd3-9ab5-6c2b35676c93"],
+Cell[223477, 5546, 25049, 560, 2883, "Input",ExpressionUUID->"d3bc0e6f-728d-432e-9704-a9cc59a0a8a1"],
+Cell[248529, 6108, 4849, 120, 447, "Input",ExpressionUUID->"e0d7722e-3b09-42ca-bc49-659bf901b269"],
+Cell[253381, 6230, 1666, 28, 181, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)

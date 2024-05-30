@@ -56,26 +56,29 @@ singlePointProcesses = Association[
 globalOutputStream = False;
 
 loop[from_, to_] := Module[{xname, ptcoord, pt},
-  pointCheckerMinProperties = 0;
+
   Do[
    xname = "X" <> ToString[nx];
 
    ptcoord = sym[globalptexpr[xname]];
-	
-   If [
-   KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0, 
-   globalProperties[xname]["name"]=globalptnames[xname]; Print[globalptnames[xname]];
-   ];
-   
-   If [
-   KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0, 
-   globalProperties[xname]["others"]=globalptdescr[xname]; Print[globalptdescr[xname]];
-   ];
-      
-   Print[];
+
+   Print[];Print[globalptnames[xname]];Print[];
+
    pointChecker[ptcoord, xname, False, xname];
    Print["=======END======="];
-   
+
+   If [
+   KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0,
+   globalProperties[xname]["name"]=globalptnames[xname];
+   ];
+
+(*
+   If [
+   KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0,
+   globalProperties[xname]["others"]=globalptdescr[xname];
+   ];
+*)
+
    globalNoCleanup = False;
    globalOutputStream = OpenWrite[xname <> ".txt", CharacterEncoding -> "UTF8"];
    printGlobalProperties[globalProperties, xname, intaddbrackets[xname]] // Quiet;

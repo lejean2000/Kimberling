@@ -8,7 +8,7 @@ Get["../sources/init.wls"]
 
 Get["../db/ETCExtra.mx"];
 Get["../db/ETCExtraBary.mx"];
-Get["../db/NonETCNames.mx"];
+
 
 STARTETCNUMBER = 70000;
 
@@ -50,7 +50,7 @@ singlePointProcesses = Association[
 
 globalOutputStream = False;
 
-quickloop[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, ptnametop, totalnum},
+addpoint[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, ptnametop, totalnum},
   pointCheckerMinProperties = 10;
   start = ptnum;
 
@@ -98,32 +98,27 @@ endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
     numsortexpr[#] &], {2, -1}]]]];
 
 
-trchk=symmetrizeTriangleExprType2Bary[{
-a^2 (-2 a^2 (b^2-c^2)^2+a^4 (b^2+c^2)+(b^2-c^2)^2 (b^2+c^2)),
--2 a^8+(b^2-c^2)^3 (b^2+c^2)-a^4 (b^2+3 c^2)^2+a^6 (4 b^2+7 c^2)-a^2 (2 b^6+3 b^4 c^2-5 c^6),
--2 a^8-(b^2-c^2)^3 (b^2+c^2)-a^4 (3 b^2+c^2)^2+a^6 (7 b^2+4 c^2)-a^2 (-5 b^6+3 b^2 c^4+2 c^6)
-}];
+trchk=symmetrizeTriangleExprType2Bary[{a^2 - 2 (b - c)^2 + a (b + c), b (-a + b - c), -(a + b - c) c}];
+
+trchk=inv[triangle["Aguilera"]];
 
 Get["../db/UNCFTRG.mx"];
 Get["../db/CPTR.mx"];
 
-allsets = <|
-"KimberlingTrianglesBary"->(KimberlingTrianglesBary/."infinite-altitude"->Nothing), 
-"CPTR"->CPTR, "UNCFTRG"->UNCFTRG
-|>;
+allsets = <|"KimberlingTrianglesBary"->KimberlingTrianglesBary, "CPTR"->CPTR, "UNCFTRG"->UNCFTRG|>;
 
-trgname = "HML-of-X(4)"
+trgname = "anti-Aguilera";
 
 Do[
 	Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest=bIsPerspective@@(evaluate[Join[trsym,trchk]]/.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			ptcoord=bTrianglePerspector[trchk,trsym]//simplifyRationalBarycentrics;
+			ptcoord=TimeConstrained[bTrianglePerspector[trchk,trsym]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			perschk=ptcoord//checkPointinETC2;
-			outname = "Perspector of "<>trgname<>" and "<>trname;
+			outname = "Perspector of these triangles: "<>trgname<>" and "<>trname;
 			Print[outname];
-			If[Length[perschk] == 0, endnum = quickloop[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 		];
 	,{trname,Keys[allsets[setname]]}
 	];
@@ -138,21 +133,20 @@ Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest=bIsOrthologic@@(evaluate[Join[trsym,trchk]]/.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			outname = "Orthology center of "<>trname<>" and "<>trgname;
+			outname = "Orthology center of these triangles: "<>trgname<>" and "<>trname;
 			Print[outname];
-			ptcoord=TimeConstrained[bOrthologyCenter[trchk,trsym]//simplifyRationalBarycentrics, 60, -1];
+			ptcoord=TimeConstrained[bOrthologyCenter[trchk,trsym]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
 			perschk=ptcoord//checkPointinETC2;
-			outname = "Orthology center of "<>trgname<>" and "<>trname;
-			Print[outname];
-			If[Length[perschk] == 0, endnum = quickloop[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 			
-			outname = "Orthology center of "<>trname<>" and "<>trgname;
+			outname = "Orthology center of these triangles: "<>trname<>" and "<>trgname;
 			Print[outname];
-			ptcoord=TimeConstrained[bOrthologyCenter[trsym,trchk]//simplifyRationalBarycentrics, 60, -1];
+			ptcoord=TimeConstrained[bOrthologyCenter[trsym,trchk]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
 			perschk=ptcoord//checkPointinETC2;
-			If[Length[perschk] == 0, endnum = quickloop[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 		];
 	,{trname,Keys[allsets[setname]]}
 	];
@@ -167,21 +161,20 @@ Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest = bIsParallelogic @@ (evaluate[Join[trsym, trchk]] /.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			outname = "Parallelogic center of "<>trname<>" and "<>trgname;
+			outname = "Parallelogic center of these triangles: "<>trgname<>" and "<>trname;
 			Print[outname];
-			ptcoord=TimeConstrained[bParallelogicCenter[trchk,trsym]//simplifyRationalBarycentrics, 60, -1];
+			ptcoord=TimeConstrained[bParallelogicCenter[trchk,trsym]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
 			perschk=ptcoord//checkPointinETC2;
-			outname = "Parallelogic center of "<>trgname<>" and "<>trname;
-			Print[outname];
-			If[Length[perschk] == 0, endnum = quickloop[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 			
-			outname = "Orthology center of "<>trname<>" and "<>trgname;
+			outname = "Orthology center of these triangles: "<>trname<>" and "<>trgname;
 			Print[outname];
-			ptcoord=TimeConstrained[bParallelogicCenter[trsym,trchk]//simplifyRationalBarycentrics, 60, -1];
+			ptcoord=TimeConstrained[bParallelogicCenter[trsym,trchk]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
 			perschk=ptcoord//checkPointinETC2;
-			If[Length[perschk] == 0, endnum = quickloop[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 		];
 	,{trname,Keys[allsets[setname]]}
 	];
