@@ -1375,3 +1375,8 @@ bAubertLineNew[aa_, bb_, cc_, dd_] := Module[{zz},
            bPerpendicular[simplifyRationalBarycentrics[bLine[aa, dd]], zz]], 
           simplifyRationalBarycentrics[bPerpendicular[
             simplifyRationalBarycentrics[bLine[aa, zz]], dd]]]]]]]
+ 
+bCrossTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
+    {bLineIntersection[bLine[pb, qc], bLine[pc, qb]], 
+     bLineIntersection[bLine[pc, qa], bLine[pa, qc]], 
+     bLineIntersection[bLine[pa, qb], bLine[pb, qa]]}
