@@ -1,10 +1,7 @@
-bIntersectionTriangleV[pa_, pb_, pc_, qa_, qb_, qc_] := 
+bVertexTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
     {bLineIntersection[bLine[pb, qb], bLine[pc, qc]], 
      bLineIntersection[bLine[pc, qc], bLine[pa, qa]], 
      bLineIntersection[bLine[pa, qa], bLine[pb, qb]]}
- 
-bIntersectionTriangleV[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
-    bIntersectionTriangleV[pa, pb, pc, qa, qb, qc]
  
 bLineIntersection[l1_, l2_] := {l1[[2]]*l2[[3]] - l2[[2]]*l1[[3]], 
      l1[[3]]*l2[[1]] - l2[[3]]*l1[[1]], l1[[1]]*l2[[2]] - l2[[1]]*l1[[2]]}
@@ -14,13 +11,15 @@ bLine[u_, v_] := Module[{m, xx, yy, zz},
          {xx, yy, zz}}]; {Coefficient[m, xx], Coefficient[m, yy], 
        Coefficient[m, zz]}]
  
-bIntersectionTriangleS[pa_, pb_, pc_, qa_, qb_, qc_] := 
+bMidTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
+    {bMidpoint[pa, qa], bMidpoint[pb, qb], bMidpoint[pc, qc]}
+ 
+bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
+ 
+bSideTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
     {bLineIntersection[bLine[pb, pc], bLine[qb, qc]], 
      bLineIntersection[bLine[pc, pa], bLine[qc, qa]], 
      bLineIntersection[bLine[pa, pb], bLine[qa, qb]]}
- 
-bIntersectionTriangleS[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
-    bIntersectionTriangleS[pa, pb, pc, qa, qb, qc]
  
 bIsogonalConjugate[po_] := {a^2*po[[2]]*po[[3]], b^2*po[[1]]*po[[3]], 
      c^2*po[[1]]*po[[2]]}
@@ -143,8 +142,6 @@ symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3,
  
 bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := b1*c2 - c1*b2 + c1*a2 - 
      a1*c2 + a1*b2 - b1*a2
- 
-bMidpoint[a_, b_] := With[{m = Total[b]*a + Total[a]*b}, m/Total[m]]
  
 bParallelLine[{p1_, p2_, p3_}, {l1_, l2_, l3_}] := 
     Module[{m, tot, xx, yy, zz}, tot = p1 + p2 + p3; 
@@ -1380,3 +1377,11 @@ bCrossTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] :=
     {bLineIntersection[bLine[pb, qc], bLine[pc, qb]], 
      bLineIntersection[bLine[pc, qa], bLine[pa, qc]], 
      bLineIntersection[bLine[pa, qb], bLine[pb, qa]]}
+ 
+bCrossPedalTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{(-u)*(p*v + q*(v + w))*(p*w + r*(v + w)), v*(r*v - q*w)*
+       (q*u + p*(u + w)), -((r*u + p*(u + v))*w*(r*v - q*w))}, 
+     {(-u)*(r*u - p*w)*(p*v + q*(v + w)), v*(q*u + p*(u + w))*
+       (q*w + r*(u + w)), (r*v + q*(u + v))*w*(r*u - p*w)}, 
+     {u*(q*u - p*v)*(p*w + r*(v + w)), v*((-q)*u + p*v)*(q*w + r*(u + w)), 
+      -((r*u + p*(u + v))*(r*v + q*(u + v))*w)}}

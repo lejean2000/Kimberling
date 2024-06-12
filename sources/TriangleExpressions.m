@@ -87,6 +87,14 @@ partialSReplace[expr_] := Module[{exp, exp2, smpl},
          S^10 -> evaluate[S^10]]; If[ !ListQ[expr], Return[exp]]; 
       smpl = ssimplify[exp]; Return[smpl]; ]
  
+smpl[x_] := simplifyRationalBarycentrics[partialSAconvert[
+      partialSReplace[simplifyRationalBarycentrics[x]]]]
+ 
+partialSAconvert[ex_] := 
+    ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC] /. 
+        SW -> evaluate[SW] /. sa -> evaluate[sa] /. sb -> evaluate[sb] /. 
+     sc -> evaluate[sc]
+ 
 ssimplify[pt_] := Module[{ss}, 
      ss[ptn_] := (Activate[Collect[#1, S, Inactive[Simplify]] /. 
            Simplify -> intFullSimplifyFactors] & ) /@ ptn; 
@@ -104,11 +112,6 @@ fareySet[n_] := Quiet[Join[Select[Union[FareySequence[n],
         1/FareySequence[n]], #1 =!= ComplexInfinity && #1 > 0 & ], 
       -Select[Union[FareySequence[n], 1/FareySequence[n]], 
         #1 =!= ComplexInfinity && #1 > 0 & ]]]
- 
-partialSAconvert[ex_] := 
-    ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC] /. 
-        SW -> evaluate[SW] /. sa -> evaluate[sa] /. sb -> evaluate[sb] /. 
-     sc -> evaluate[sc]
  
 leastBaryFromIntersections[testset_] := 
     Module[{results, tt, out, mon, min, deg}, 
