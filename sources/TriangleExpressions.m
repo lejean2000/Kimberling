@@ -87,8 +87,10 @@ partialSReplace[expr_] := Module[{exp, exp2, smpl},
          S^10 -> evaluate[S^10]]; If[ !ListQ[expr], Return[exp]]; 
       smpl = ssimplify[exp]; Return[smpl]; ]
  
-smpl[x_] := simplifyRationalBarycentrics[partialSAconvert[
-      partialSReplace[simplifyRationalBarycentrics[x]]]]
+smpl[x_] := Module[{y}, If[ !RationalExpressionQ[x[[1]], {a, b, c, A, B, C}], 
+       y = simplifyRationalBarycentrics[x]; , 
+       y = simplifyRationalBarycentrics[partialSAconvert[partialSReplace[
+            simplifyRationalBarycentrics[x]]]]; ]; Return[y]; ]
  
 partialSAconvert[ex_] := 
     ex /. SA -> evaluate[SA] /. SB -> evaluate[SB] /. SC -> evaluate[SC] /. 
