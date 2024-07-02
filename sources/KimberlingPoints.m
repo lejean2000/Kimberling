@@ -4,10 +4,11 @@ defined[s_] := ToExpression[StringJoin["ValueQ[", s, "]"]] ||
      ToExpression[StringJoin["DownValues[", s, "]"]] =!= {} || 
      ToExpression[StringJoin["SubValues[", s, "]"]] =!= {}
  
-KimberlingCenter[k_, XPA_, XPB_, XPC_] := Module[{bary}, 
-     bary = KimberlingCenterCN[k]; (bary/Total[bary]) . {XPA, XPB, XPC} /. 
-       {a -> EuclideanDistance[XPB, XPC], b -> EuclideanDistance[XPA, XPC], 
-        c -> EuclideanDistance[XPA, XPB]}]
+KimberlingCenter[k_, XPA_, XPB_, XPC_] := Module[{bary, rpl}, 
+     rpl = {a -> EuclideanDistance[XPB, XPC], b -> EuclideanDistance[XPA, 
+          XPC], c -> EuclideanDistance[XPA, XPB]}; 
+      bary = KimberlingCenterCN[k] /. rpl; (bary/Total[bary]) . 
+       {XPA, XPB, XPC}]
  
 KimberlingCenterCN = X
  
@@ -104,54 +105,59 @@ checkTriangleExists[tr_] := Module[{chk},
        {trkim, Keys[CPTR]}]; Return[{False}]; ]
  
 trgCheckPerspectivity[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
-    Module[{hmt, out, trsym, ntest, ptcoord, perschk, outname}, 
-     out = {}; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
+    Module[{hmt, out, trsym, ntest, ptcoord, perschk, homval, outname}, 
+     out = Association[]; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
           triangle[trname]]; ntest = bIsPerspective @@ 
            (evaluate[Join[trsym, trchk]] /. rule69) /. rule69; 
         If[Abs[ntest] < 10^(-24), ptcoord = bTrianglePerspector[trchk, 
             trsym]; perschk = checkPointinETC2[ptcoord]; 
           outname = StringJoin["Perspector of ", trgname, " and ", trname]; 
-          hmt = ""; If[Abs[(bDistance[trchk[[1]], trchk[[2]]]/bDistance[
-                 trsym[[1]], trsym[[2]]] /. rule69) - (bDistance[trchk[[1]], 
-                 trchk[[3]]]/bDistance[trsym[[1]], trsym[[3]]] /. rule69)] < 
-            10^(-20), hmt = Style[" - possibly homothetic", Red]; ]; 
-          If[Length[perschk] > 0, Print[Row[{StringJoin[outname, ": ", 
-               perschk[[1]]], hmt}]], Print[Row[{Style[outname, Blue], 
-               hmt}]]; ]; ]; , {trname, Keys[set] /. "infinite-altitude" -> 
-          Nothing}]; ]
+          hmt = ""; homval = Abs[(bDistance[trchk[[1]], trchk[[2]]]/bDistance[
+                trsym[[1]], trsym[[2]]] /. rule69) - (bDistance[trchk[[1]], 
+                trchk[[3]]]/bDistance[trsym[[1]], trsym[[3]]] /. rule69)]; 
+          If[homval < 10^(-20), hmt = Style[" - possibly homothetic", Red]; 
+            If[Length[perschk] > 0, Print[Row[{StringJoin[outname, ": ", 
+                 perschk[[1]]], hmt}]]]; ]; If[Length[perschk] > 0, 
+           AssociateTo[out, outname -> perschk[[1]]]; , 
+           Print[Row[{outname, hmt}]]]; ]; , 
+       {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; Print[out]; ]
  
 trgCheckParallelogic[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
     Module[{out, trsym, ntest, ptcoord, perschk, outname}, 
-     out = {}; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
+     out = Association[]; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
           triangle[trname]]; ntest = bIsParallelogic @@ 
            (evaluate[Join[trsym, trchk]] /. rule69) /. rule69; 
         If[Abs[ntest] < 10^(-24), ptcoord = bParallelogicCenter[trchk, 
             trsym]; perschk = checkPointinETC2[ptcoord]; 
           outname = StringJoin["Parallelogic center of ", trgname, " and ", 
-            trname]; If[Length[perschk] > 0, Print[StringJoin[outname, ": ", 
-             perschk[[1]]]], Print[Style[outname, Blue]]; ]; 
+            trname]; If[Length[perschk] > 0, AssociateTo[out, 
+             outname -> perschk[[1]]]; , Print[outname]; ]; 
           ptcoord = bParallelogicCenter[trsym, trchk]; 
           perschk = checkPointinETC2[ptcoord]; outname = 
            StringJoin["Parallelogic center of ", trname, " and ", trgname]; 
-          If[Length[perschk] > 0, Print[StringJoin[outname, ": ", 
-             perschk[[1]]]], Print[Style[outname, Blue]]; ]; ]; , 
-       {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; ]
+          If[Length[perschk] > 0, AssociateTo[out, outname -> 
+              perschk[[1]]]; , Print[outname]; ]; ]; , 
+       {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; Print[out]; ]
  
 trgCheckOrthologic[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
     Module[{out, trsym, ntest, ptcoord, perschk, outname}, 
-     out = {}; Do[trsym = If[ListQ[set[trname][[1]]], set[trname], 
-          triangle[trname]]; ntest = bIsOrthologic @@ 
-           (evaluate[Join[trsym, trchk]] /. rule69) /. rule69; 
-        If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter[trchk, trsym]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Orthology center of ", trgname, " and ", trname]; 
-          If[Length[perschk] > 0, Print[StringJoin[outname, ": ", 
-             perschk[[1]]]], Print[Style[outname, Blue]]; ]; 
-          ptcoord = bOrthologyCenter[trsym, trchk]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Orthology center of ", trname, " and ", trgname]; 
-          If[Length[perschk] > 0, Print[StringJoin[outname, ": ", 
-             perschk[[1]]]], Print[Style[outname, Blue]]; ]; ]; , 
-       {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; ]
+     out = Association[]; If[TrueQ[0 == Simplify[bCollinearityMatrix @@ 
+           evaluate /@ trchk]], Return[False, Module]]; 
+      Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
+        If[trname == "8th Brocard" || trname == "Ehrmann-cross" || 
+          trname == "pedal of X(30)", Continue[]]; 
+        ntest = bIsOrthologic @@ (evaluate[Join[trsym, trchk]] /. rule69) /. 
+          rule69; If[Abs[ntest] < 10^(-24), 
+         ptcoord = bOrthologyCenter[trchk, trsym]; perschk = 
+           checkPointinETC2[ptcoord]; outname = StringJoin[
+            "Orthology center of ", trgname, " and ", trname]; 
+          If[Length[perschk] > 0, AssociateTo[out, outname -> 
+              perschk[[1]]]; , Print[outname]; ]; ptcoord = 
+           bOrthologyCenter[trsym, trchk]; perschk = checkPointinETC2[
+            ptcoord]; outname = StringJoin["Orthology center of ", trname, 
+            " and ", trgname]; If[Length[perschk] > 0, 
+           AssociateTo[out, outname -> perschk[[1]]]; , 
+           Print[outname]; ]; ]; , {trname, Keys[set] /. 
+         "infinite-altitude" -> Nothing}]; Print[out]; ]
  
 inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]

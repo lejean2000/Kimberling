@@ -688,7 +688,7 @@ symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] :=
        {partC1, partC2, partC3}}]
  
 bToCartesianN[p_] := N[bToCartesian[p, {31/3, (4*Sqrt[35])/3}, {0, 0}, 
-       {6, 0}] /. rule69, 20]
+       {6, 0}] /. rule69, 30]
  
 symmetrizeTriangleExprType1Bary[{v1_, v2_, v3_}] := 
     Module[{partB1, partB2, partB3, partC1, partC2, partC3}, 
@@ -974,9 +974,22 @@ bCircleInvervse[circ_, pt_] := bLineIntersection[bPolar[circ, pt],
      bLine[bConicCenter[circ], pt]]
  
 bAubertCenterSimplify[aa_, bb_, cc_, dd_] := Module[{l1, l2}, 
-     l1 = Simplify[Simplify[bAubertLine[aa, bb, cc, dd]] /. Abs -> RealAbs]; 
-      l2 = Simplify[Simplify[bAubertLine[aa, bb, dd, cc]] /. Abs -> RealAbs]; 
-      simplifyRationalBarycentrics[bLineIntersection[l1, l2]]]
+     l1 = Simplify[Simplify[bAubertLineNew[aa, bb, cc, dd]] /. 
+         Abs -> RealAbs]; l2 = Simplify[Simplify[bAubertLineNew[aa, bb, dd, 
+           cc]] /. Abs -> RealAbs]; simplifyRationalBarycentrics[
+       bLineIntersection[l1, l2]]]
+ 
+bAubertLineNew[aa_, bb_, cc_, dd_] := Module[{zz}, 
+     zz = simplifyRationalBarycentrics[bIntersection[aa, bb, cc, dd]]; 
+      simplifyRationalBarycentrics[bLine[simplifyRationalBarycentrics[
+         Cross[simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[bb, cc]], zz]], 
+          simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[bb, zz]], cc]]]], 
+        simplifyRationalBarycentrics[Cross[simplifyRationalBarycentrics[
+           bPerpendicular[simplifyRationalBarycentrics[bLine[aa, dd]], zz]], 
+          simplifyRationalBarycentrics[bPerpendicular[
+            simplifyRationalBarycentrics[bLine[aa, zz]], dd]]]]]]]
  
 bVuCirclesPoint[{p_, q_, r_}, {u_, v_, w_}] := 
     {b^2*p*u*(r*(u + v) - (p + q)*w) + c^2*p*u*((-p - r)*v + q*(u + w)) + 
@@ -1170,6 +1183,9 @@ bSideReflectionTriangle[x1_, x2_, x3_, y1_, y2_, y3_] :=
         bLineIntersection[l1, l3]]; pc = simplifyRationalBarycentrics[
         bLineIntersection[l1, l2]]; {pa, pb, pc}]
  
+bSideReflectionTriangle[{x1_, x2_, x3_}, {y1_, y2_, y3_}] := 
+    bSideReflectionTriangle[x1, x2, x3, y1, y2, y3]
+ 
 polarCurve[crv_, pt_] := pt . Grad[crv, {x, y, z}]
  
 bPAntipedal[{u_, v_, w_}, {p_, q_, r_}] := 
@@ -1361,18 +1377,6 @@ bCentroid[{pa_, pb_, pc_}] := Cross[simplifyRationalBarycentrics[
       bLine[bMidpoint[pa, pb], pc]], simplifyRationalBarycentrics[
       bLine[bMidpoint[pa, pc], pb]]]
  
-bAubertLineNew[aa_, bb_, cc_, dd_] := Module[{zz}, 
-     zz = simplifyRationalBarycentrics[bIntersection[aa, bb, cc, dd]]; 
-      simplifyRationalBarycentrics[bLine[simplifyRationalBarycentrics[
-         Cross[simplifyRationalBarycentrics[bPerpendicular[
-            simplifyRationalBarycentrics[bLine[bb, cc]], zz]], 
-          simplifyRationalBarycentrics[bPerpendicular[
-            simplifyRationalBarycentrics[bLine[bb, zz]], cc]]]], 
-        simplifyRationalBarycentrics[Cross[simplifyRationalBarycentrics[
-           bPerpendicular[simplifyRationalBarycentrics[bLine[aa, dd]], zz]], 
-          simplifyRationalBarycentrics[bPerpendicular[
-            simplifyRationalBarycentrics[bLine[aa, zz]], dd]]]]]]]
- 
 bCrossTriangle[{pa_, pb_, pc_}, {qa_, qb_, qc_}] := 
     {bLineIntersection[bLine[pb, qc], bLine[pc, qb]], 
      bLineIntersection[bLine[pc, qa], bLine[pa, qc]], 
@@ -1385,3 +1389,41 @@ bCrossPedalTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
        (q*w + r*(u + w)), (r*v + q*(u + v))*w*(r*u - p*w)}, 
      {u*(q*u - p*v)*(p*w + r*(v + w)), v*((-q)*u + p*v)*(q*w + r*(u + w)), 
       -((r*u + p*(u + v))*(r*v + q*(u + v))*w)}}
+ 
+bCrossSideReflectionTriangle[x1_, x2_, x3_, y1_, y2_, y3_] := 
+    Module[{l12, l13, l21, l23, l31, l32, pa, pb, pc}, 
+     l12 = simplifyRationalBarycentrics[bReflectionLL[bLine[x2, x3], 
+         bLine[y1, y2]]]; l13 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[x2, x3], bLine[y1, y3]]]; 
+      l21 = simplifyRationalBarycentrics[bReflectionLL[bLine[x1, x3], 
+         bLine[y2, y1]]]; l23 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[x1, x3], bLine[y2, y3]]]; 
+      l31 = simplifyRationalBarycentrics[bReflectionLL[bLine[x1, x2], 
+         bLine[y3, y1]]]; l32 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[x1, x2], bLine[y3, y2]]]; 
+      pa = simplifyRationalBarycentrics[bLineIntersection[l12, l13]]; 
+      pb = simplifyRationalBarycentrics[bLineIntersection[l21, l23]]; 
+      pc = simplifyRationalBarycentrics[bLineIntersection[l31, l32]]; 
+      {pa, pb, pc}]
+ 
+bCrossSideReflectionTriangle[{x1_, x2_, x3_}, {y1_, y2_, y3_}] := 
+    bCrossSideReflectionTriangle[x1, x2, x3, y1, y2, y3]
+ 
+bCrossReflectionTriangle[x1_, x2_, x3_, y1_, y2_, y3_] := 
+    Module[{l12, l13, l21, l23, l31, l32, pa, pb, pc}, 
+     l23 = simplifyRationalBarycentrics[bReflectionLL[bLine[x2, x3], 
+         bLine[y2, y3]]]; l32 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[y2, y3], bLine[x2, x3]]]; 
+      l13 = simplifyRationalBarycentrics[bReflectionLL[bLine[x1, x3], 
+         bLine[y1, y3]]]; l31 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[y1, y3], bLine[x1, x3]]]; 
+      l12 = simplifyRationalBarycentrics[bReflectionLL[bLine[x2, x1], 
+         bLine[y2, y1]]]; l21 = simplifyRationalBarycentrics[
+        bReflectionLL[bLine[y2, y1], bLine[x2, x1]]]; 
+      pa = simplifyRationalBarycentrics[bLineIntersection[l23, l32]]; 
+      pb = simplifyRationalBarycentrics[bLineIntersection[l13, l31]]; 
+      pc = simplifyRationalBarycentrics[bLineIntersection[l12, l21]]; 
+      {pa, pb, pc}]
+ 
+bCrossReflectionTriangle[{x1_, x2_, x3_}, {y1_, y2_, y3_}] := 
+    bCrossReflectionTriangle[x1, x2, x3, y1, y2, y3]

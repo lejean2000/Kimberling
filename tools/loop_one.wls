@@ -12,19 +12,6 @@ Get["../db/NonETCNames.mx"];
 Get["../db/TRETC.mx"];
 TRETC = Sort[Map[Round[#[[1]], 0.00000000000000000001] &, TRETC]];
 
-STARTETCNUMBER = 70000;
-
-If[FileExistsQ["globalptnames.mx"],
-Get["globalptnames.mx"];
-Get["globalptdescr.mx"];
-Get["globalptexpr.mx"];
-Get["globalptbary.mx"];
-,
-globalptnames = Association[];
-globalptdescr = Association[];
-globalptexpr = Association[];
-globalptbary = Association[];
-];
 
 ETCFull = ETC;
 ETCBaryNormFull = ETCBaryNorm;
@@ -36,18 +23,6 @@ Do[
   , {ptname, Keys[ETCExtra]}
 ];
 
-(* Add Extra points to ETC*)
-Do[
-  AppendTo[ETCFull, ptname -> globalptexpr[ptname]];
-  AppendTo[ETCBaryNormFull, ptname -> globalptbary[ptname]];
-  , {ptname, Keys[globalptexpr]}
-];
-
-Do[
-  AppendTo[ETC, ptname -> globalptexpr[ptname]];
-  AppendTo[ETCBaryNorm, ptname -> globalptbary[ptname]];
-  , {ptname, Keys[globalptexpr]}
-  ];
 
 singlePointProcesses = Association[
   "isogonal conjugate" -> {a^2 v w, b^2 u w, c^2 u v},
@@ -58,14 +33,11 @@ singlePointProcesses = Association[
 
 globalOutputStream = False;
 
-loop[from_, to_] := Module[{xname, ptcoord, pt},
+loop[nx_, title_, ptcoord_] := Module[{xname, ptcoord, pt},
 
-  Do[
    xname = "X" <> ToString[nx];
 
-   ptcoord = sym[globalptexpr[xname]];
-
-   Print[];Print[globalptnames[xname]];Print[];
+   Print[];Print[title];Print[];
 
    pointChecker[ptcoord, xname, False, xname];
    
@@ -75,32 +47,13 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    
    Print["=======END======="];
 
-   If [
-   KeyExistsQ[globalptnames,xname]&&StringLength[globalptnames[xname]]>0,
-   globalProperties[xname]["name"]=globalptnames[xname];
-   ];
-
-(*
-   If [
-   KeyExistsQ[globalptdescr,xname]&&StringLength[globalptdescr[xname]]>0,
-   globalProperties[xname]["others"]=globalptdescr[xname];
-   ];
-*)
+   globalProperties[xname]["name"]=title;
 
    globalNoCleanup = False;
    globalOutputStream = OpenWrite[xname <> ".txt", CharacterEncoding -> "UTF8"];
    printGlobalProperties[globalProperties, xname, intaddbrackets[xname]] // Quiet;
    print["=======END======="];
    Close[globalOutputStream];
-   ,
-   {nx, from, to}
-   ];
+
 ];
 
-endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
-  StringTake[
-   SortBy[Keys[KeySelect[globalptnames, StringStartsQ[#, "X"] &]], 
-    numsortexpr[#] &], {2, -1}]
-]]];
-
-loop[STARTETCNUMBER, endnum];
