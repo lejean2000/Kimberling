@@ -825,23 +825,24 @@ addExtraPoint[bary_, letter_, name_, writeout_:True] :=
            SortBy[Keys[KeySelect[ETCExtra, StringStartsQ[#1, letter] & ]], 
             numsortexpr[#1] & ], {2, -1}]]]; 
       dbname = StringJoin[letter, ToString[idxmax]]; 
-      pt = N[NormalizeBary[evaluate[symmetrizeInternal2[expr]] /. rule69], 
-        35]; AppendTo[ETCBaryNorm, dbname -> pt]; AppendTo[ETCExtraBary, 
-       dbname -> pt]; AppendTo[ETC, dbname -> expr]; 
+      pt = intnumericnorm[evaluate[symmetrizeInternal2[expr]] /. rule69]; 
+      AppendTo[ETCBaryNorm, dbname -> pt]; AppendTo[ETCExtraBary, 
+       dbname -> pt]; AppendTo[ETCBaryNormFull, dbname -> pt]; 
+      AppendTo[ETC, dbname -> expr]; AppendTo[ETCFull, dbname -> expr]; 
       AppendTo[ETCExtra, dbname -> expr]; AppendTo[NonETCNames, 
        dbname -> name]; If[writeout, DumpSave["ETCExtra.mx", ETCExtra]; 
         DumpSave["ETCExtraBary.mx", ETCExtraBary]; DumpSave["NonETCNames.mx", 
          NonETCNames]; ]; Return[dbname]; ]
  
-quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True] := 
-    Module[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
-     lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
+quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True, 
+     minprop_:1000] := Module[{ptcoord, pt, chk, lines, barys, symcheck, 
+      name, numcon}, lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
       If[dosymcheck, If[ !checkCentralExpression[expr], 
          Return[False, Module]; ]; ]; If[num != 0, chk = 0, 
        chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
        Print[colorformat[StringJoin["ETC: ", chk]]], 
        barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
         lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
-            "X", True]]]; If[curvescheck, numcon = 
-          Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
+            "X", True]]]; If[curvescheck && lines < minprop, 
+         numcon = Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
       Return[{lines, numcon}]; ]
