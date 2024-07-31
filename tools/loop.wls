@@ -57,6 +57,7 @@ singlePointProcesses = Association[
 ];
 
 globalOutputStream = False;
+pointCheckerMinProperties = 2;
 
 loop[from_, to_] := Module[{xname, ptcoord, pt},
 
@@ -68,10 +69,16 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    Print[];Print[globalptnames[xname]];Print[];
 
    pointChecker[ptcoord, xname, False, xname];
+
+   pos = Position[TRETC, Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001]];
    
-   srch = Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001];
-   pos = FirstPosition[TRETC, srch][[1]];
-   If[Length[pos] > 0, globalProperties[xname]["others"]={pos};Print[pos]];
+   globalProperties[xname]["others"]={};
+   Do[
+		trpt = StringTake[ToString[el],{6,-2+StringLength[ToString[el]]}];
+		AppendTo[globalProperties[xname]["others"],trpt];
+		Print[trpt];
+   ,{el,pos}
+   ];
    
    Print["=======END======="];
 

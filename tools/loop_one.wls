@@ -41,8 +41,12 @@ loop[xname_, title_, ptcoord_] := Module[{pt, srch, pos},
    pointChecker[ptcoord, xname, False, xname];
    
    srch = Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001];
-   pos = FirstPosition[TRETC, srch][[1]];
-   If[Length[pos] > 0, globalProperties[xname]["others"]={pos};Print[pos]];
+   pos = ToString[FirstPosition[TRETC, srch][[1]]];
+
+   If[pos!="NotFound",
+	   pos = StringTake[pos,{5,-1+StringLength[pos]}];
+	   If[StringLength[pos] > 0, globalProperties[xname]["others"]={pos};Print[pos]];
+   ];
    
    Print["=======END======="];
 

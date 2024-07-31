@@ -43,10 +43,9 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
-     pp = KimberlingCenterC[k] /. {a -> bDistanceF[e, f], 
-         b -> bDistanceF[d, f], c -> bDistanceF[d, e]}; 
-      Transpose[{d/Total[d], e/Total[e], f/Total[f]}] . 
-       Transpose[pp/Total[pp]]]
+     pp = X[k] /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
+         c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
+         f/Total[f]}] . Transpose[pp/Total[pp]]]
  
 bCoordChangeK[k_, {d_, e_, f_}] := bCoordChangeK[k, d, e, f]
  
@@ -79,10 +78,11 @@ bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
 bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
  
 bPerpendicular[{p_, q_, r_}, {u_, v_, w_}] := 
-    Module[{sa, sb, sc, f, g, h, ff, gg, hh, m}, sa = (b^2 + c^2 - a^2)/2; 
-      sb = (-b^2 + c^2 + a^2)/2; sc = (b^2 - c^2 + a^2)/2; f = q - r; 
-      g = r - p; h = p - q; ff = sb*g - sc*h; gg = sc*h - sa*f; 
-      hh = sa*f - sb*g; m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
+    Module[{sa, sb, sc, f, g, h, ff, gg, hh, m, x, y, z}, 
+     sa = (b^2 + c^2 - a^2)/2; sb = (-b^2 + c^2 + a^2)/2; 
+      sc = (b^2 - c^2 + a^2)/2; f = q - r; g = r - p; h = p - q; 
+      ff = sb*g - sc*h; gg = sc*h - sa*f; hh = sa*f - sb*g; 
+      m = Det[{{ff, gg, hh}, {u, v, w}, {x, y, z}}]; 
       {Coefficient[m, x], Coefficient[m, y], Coefficient[m, z]}]
  
 cToBary[v1_, v2_, v3_, xy_] := 
@@ -121,24 +121,6 @@ bAubertCenter2[aa_, bb_, cc_, dd_] := Module[{l1, l3},
 bAubertCenter3[aa_, bb_, cc_, dd_] := Module[{l2, l3}, 
      l2 = bAubertLine[aa, bb, dd, cc]; l3 = bAubertLine[aa, dd, bb, cc]; 
       bLineIntersection[l2, l3]]
- 
-bKimberlingTriangle[name_] := symmetrizeTriangleType2[name]
- 
-symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
-      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesBary[name]; 
-      partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
-         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
-         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
-      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bIsParallel[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := b1*c2 - c1*b2 + c1*a2 - 
      a1*c2 + a1*b2 - b1*a2
@@ -449,14 +431,6 @@ bKirikamiCenter[pA_, pB_, pC_, pD_] := Module[{lAC, lBD, la, lb, lc, ld, pAB,
       pCD = bLineIntersection[lc, ld]; pDA = bLineIntersection[ld, la]; 
       bLineIntersection[bLine[pAB, pCD], bLine[pBC, pDA]]]
  
-symmetrizeABC[expr_] := Module[{coordx, coordy, coordz}, 
-     SetDelayed @@ {coordx[a_, b_, c_], expr[[1]]}; 
-      SetDelayed @@ {coordy[a_, b_, c_], expr[[2]]}; 
-      SetDelayed @@ {coordz[a_, b_, c_], expr[[3]]}; 
-      {coordx[a, b, c] + coordy[c, a, b] + coordz[b, c, a], 
-       coordx[b, c, a] + coordy[a, b, c] + coordz[c, a, b], 
-       coordx[c, a, b] + coordy[b, c, a] + coordz[a, b, c]}]
- 
 bOrthopole[{u_, v_, w_}] := {(a^2*u - SC*v - SB*w)*(SB*SC*u - b^2*SB*v - 
        c^2*SC*w), ((-SC)*u + b^2*v - SA*w)*((-a^2)*SA*u + SA*SC*v - 
        c^2*SC*w), ((-SB)*u - SA*v + c^2*w)*((-a^2)*SA*u - b^2*SB*v + SA*SB*w)}
@@ -487,16 +461,6 @@ radicalCenter[c1_, r1_, c2_, r2_, c3_, r3_] := Module[{bc1, bc2, bc3},
          {bc1[[1]], bc2[[1]], bc3[[1]]}}], 
        Det[{{1, 1, 1}, {bc1[[1]], bc2[[1]], bc3[[1]]}, {bc1[[2]], bc2[[2]], 
           bc3[[2]]}}]}]
- 
-symmetrizeABCUVW[expr_] := Module[{coordx, coordy, coordz}, 
-     SetDelayed @@ {coordx[a_, b_, c_, u_, v_, w_], expr[[1]]}; 
-      SetDelayed @@ {coordy[a_, b_, c_, u_, v_, w_], expr[[2]]}; 
-      SetDelayed @@ {coordz[a_, b_, c_, u_, v_, w_], expr[[3]]}; 
-      {coordx[a, b, c, u, v, w] + coordy[c, a, b, w, u, v] + 
-        coordz[b, c, a, v, w, u], coordx[b, c, a, v, w, u] + 
-        coordy[a, b, c, u, v, w] + coordz[c, a, b, w, u, v], 
-       coordx[c, a, b, w, u, v] + coordy[b, c, a, v, w, u] + 
-        coordz[a, b, c, u, v, w]}]
  
 bCevianTriangle[{u_, v_, w_}] := {{0, v, w}, {u, 0, w}, {u, v, 0}}
  
@@ -596,6 +560,22 @@ bOrthoassociate[P1_] := Module[{eq, g}, g[a_, b_, c_, p_, q_, r_] :=
        Thread[{pp, qq, rr} -> P1]]
  
 bTripoleL[L1_] := 1/L1
+ 
+symmetrizeTriangleType2[name_] := Module[{v1, v2, v3, partB1, partB2, partB3, 
+      partC1, partC2, partC3}, {v1, v2, v3} = KimberlingTrianglesBary[name]; 
+      partB1 = v3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partB2 = v1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partB3 = v2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, 
+         SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partC1 = partB3 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partC2 = partB1 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      partC3 = partB2 /. {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, 
+         sc -> sa, SA -> SB, SB -> SC, SC -> SA, A -> B, B -> C, C -> A}; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bDaoConjugate[{u_, v_, w_}, {p_, q_, r_}] := {q*r*u*(-u + v + w), 
      p*r*v*(u - v + w), p*q*(u + v - w)*w}
@@ -1161,6 +1141,8 @@ bPedalGeneral[pp_, p1_, p2_, p3_] := Module[{h1, h2, h3},
       h3 = Simplify[bLineIntersection[bPerpendicular[bLine[p1, p2], pp], 
          bLine[p1, p2]]]; {h1, h2, h3}]
  
+bPedalGeneral[pp_, {p1_, p2_, p3_}] := bPedalGeneral[pp, p1, p2, p3]
+ 
 bReflectionLL[{p_, q_, r_}, {l_, m_, n_}] := 
     {b^2*(m^2*p - m*n*p + l*n*q + l^2*(q - r) + l*m*(-2*q + r)) + 
       c^2*(n^2*p + l*n*(q - 2*r) + l^2*(-q + r) + m*((-n)*p + l*r)) - 
@@ -1427,3 +1409,58 @@ bCrossReflectionTriangle[x1_, x2_, x3_, y1_, y2_, y3_] :=
  
 bCrossReflectionTriangle[{x1_, x2_, x3_}, {y1_, y2_, y3_}] := 
     bCrossReflectionTriangle[x1, x2, x3, y1, y2, y3]
+ 
+bOrthoidalTriangle[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
+    Module[{la, lb, lc}, la = simplifyRationalBarycentrics[
+        bPerpendicular[bLine[b2, c2], a1]]; 
+      lb = simplifyRationalBarycentrics[bPerpendicular[bLine[a2, c2], b1]]; 
+      lc = simplifyRationalBarycentrics[bPerpendicular[bLine[a2, b2], c1]]; 
+      simplifyRationalBarycentrics /@ bIntersectionTriangle[la, lb, lc]]
+ 
+bParaidalTriangle[{a1_, b1_, c1_}, {a2_, b2_, c2_}] := 
+    Module[{la, lb, lc}, la = simplifyRationalBarycentrics[
+        bParallelLine[a1, bLine[b2, c2]]]; lb = simplifyRationalBarycentrics[
+        bParallelLine[b1, bLine[a2, c2]]]; lc = simplifyRationalBarycentrics[
+        bParallelLine[c1, bLine[a2, b2]]]; simplifyRationalBarycentrics /@ 
+       bIntersectionTriangle[la, lb, lc]]
+ 
+lambda[p1_, q1_] := simplifyRationalBarycentrics[bIsogonalConjugate[
+      bInfinityPoint[bLine[p1, q1]]]]
+ 
+psi[{u_, v_, w_}, {p_, q_, r_}] := sym3[a^2*v*(q*u - p*v)*w*(r*u - p*w)]
+ 
+bPTCTriangle[{u_, v_, w_}, {p_, q_, r_}, {l_, m_, n_}] := 
+    {{0, -((b^2 - c^2)*((-l)*(q + r)*v + m*p*(v + w))) + 
+       a^2*(l*(-q + r)*v + m*(p*v + 2*r*v - p*w - 2*q*w)), 
+      -((b^2 - c^2)*((-l)*(q + r)*w + n*p*(v + w))) + 
+       a^2*(l*(-q + r)*w + n*(p*v + 2*r*v - p*w - 2*q*w))}, 
+     {(-a^2)*(m*(p + r)*u - l*q*(u + w)) - 
+       c^2*((-m)*(p + r)*u + l*q*(u + w)) - 
+       b^2*(m*(-p + r)*u + l*(q*u + 2*r*u - 2*p*w - q*w)), 0, 
+      c^2*(m*(p + r)*w - n*q*(u + w)) + a^2*((-m)*(p + r)*w + n*q*(u + w)) + 
+       b^2*(m*(p - r)*w + n*((-q)*u - 2*r*u + 2*p*w + q*w))}, 
+     {a^2*(n*(p + q)*u - l*r*(u + v)) + b^2*((-n)*(p + q)*u + l*r*(u + v)) + 
+       c^2*(n*(-p + q)*u + l*(2*q*u + r*u - 2*p*v - r*v)), 
+      -((a^2 - b^2)*((-n)*(p + q)*v + m*r*(u + v))) + 
+       c^2*(n*(-p + q)*v + m*(2*q*u + r*u - 2*p*v - r*v)), 0}}
+ 
+drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] := Module[{drset, trgsete}, 
+     drset = {}; trgsete = evaluate[trgset]; AppendTo[drset, 
+       {Triangle[{pa, pb, pc}]}]; AppendTo[drset, {RGBColor[1, 0, 0, 0.8], 
+        Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, pb, 
+              pc], 30] & ) /@ trgsete[[1]]]}]; If[Length[trgset] >= 2, 
+       AppendTo[drset, {RGBColor[0, 0.5, 1, 0.8], 
+          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
+                pb, pc], 30] & ) /@ trgsete[[2]]]}]; ]; 
+      If[Length[trgset] >= 3, AppendTo[drset, {RGBColor[0, 1, 0.5, 0.8], 
+          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
+                pb, pc], 30] & ) /@ trgsete[[3]]]}]; ]; 
+      If[Length[trgset] >= 4, AppendTo[drset, {RGBColor[1, 0.1, 0.5, 0.8], 
+          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
+                pb, pc], 30] & ) /@ trgsete[[4]]]}]; ]; 
+      If[Length[trgset] >= 5, AppendTo[drset, {RGBColor[0.5, 0, 1, 0.5], 
+          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
+                pb, pc], 30] & ) /@ trgsete[[5]]]}]; ]; Graphics[drset]]
+ 
+bIsHomothetic[tr1_, tr2_] := bIsParallel[bLine[tr1[[1]], tr1[[2]]], 
+     bLine[tr2[[1]], tr2[[2]]]]

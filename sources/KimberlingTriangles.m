@@ -371,18 +371,20 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
           2*Sqrt[3]*b^4 + 2*Sqrt[3]*a^2*c^2 + 5*Sqrt[3]*b^2*c^2 - 
           Sqrt[3]*c^4 + 6*a^2*S - 12*b^2*S - 6*c^2*S))/
         (9*(-(Sqrt[3]*a^2) - Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S))}, 
-     "7th Fermat-Dao" -> {(4*(Sqrt[3]*a^2 + 2*S))/(-(Sqrt[3]*a^2) + 
-         Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S), 1, 1}, "8th Fermat-Dao" -> 
-      {(4*(-(Sqrt[3]*a^2) + 2*S))/(Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 
-         2*S), 1, 1}, "9th Fermat-Dao" -> 
-      {(2*(-(a^4*b^2) + 2*a^2*b^4 - b^6 - a^4*c^2 + 10*a^2*b^2*c^2 + 
-          b^4*c^2 + 2*a^2*c^4 + b^2*c^4 - c^6 + 2*Sqrt[3]*a^2*b^2*S - 
-          2*Sqrt[3]*b^4*S + 2*Sqrt[3]*a^2*c^2*S + 8*Sqrt[3]*b^2*c^2*S - 
-          2*Sqrt[3]*c^4*S))/(-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 
-          2*S)^2, b^2, c^2}, "10th Fermat-Dao" -> 
-      {(-2*(a^4*b^2 - 2*a^2*b^4 + b^6 + a^4*c^2 - 10*a^2*b^2*c^2 - b^4*c^2 - 
-          2*a^2*c^4 - b^2*c^4 + c^6 + 2*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S + 
-          2*Sqrt[3]*a^2*c^2*S + 8*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S))/
+     "7th Fermat-Dao" -> {4*(Sqrt[3]*a^2 + 2*S), -(Sqrt[3]*a^2) + 
+        Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S, -(Sqrt[3]*a^2) + Sqrt[3]*b^2 + 
+        Sqrt[3]*c^2 + 2*S}, "8th Fermat-Dao" -> {4*(Sqrt[3]*a^2 - 2*S), 
+       -(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S, 
+       -(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 - 2*S}, 
+     "9th Fermat-Dao" -> {(2*(-(a^4*b^2) + 2*a^2*b^4 - b^6 - a^4*c^2 + 
+          10*a^2*b^2*c^2 + b^4*c^2 + 2*a^2*c^4 + b^2*c^4 - c^6 + 
+          2*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S + 2*Sqrt[3]*a^2*c^2*S + 
+          8*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S))/
+        (-(Sqrt[3]*a^2) + Sqrt[3]*b^2 + Sqrt[3]*c^2 + 2*S)^2, b^2, c^2}, 
+     "10th Fermat-Dao" -> {(-2*(a^4*b^2 - 2*a^2*b^4 + b^6 + a^4*c^2 - 
+          10*a^2*b^2*c^2 - b^4*c^2 - 2*a^2*c^4 - b^2*c^4 + c^6 + 
+          2*Sqrt[3]*a^2*b^2*S - 2*Sqrt[3]*b^4*S + 2*Sqrt[3]*a^2*c^2*S + 
+          8*Sqrt[3]*b^2*c^2*S - 2*Sqrt[3]*c^4*S))/
         (Sqrt[3]*a^2 - Sqrt[3]*b^2 - Sqrt[3]*c^2 + 2*S)^2, b^2, c^2}, 
      "11th Fermat-Dao" -> {3*a^6 - 9*a^4*b^2 + 3*a^2*b^4 + 3*b^6 - 
         9*a^4*c^2 - 18*a^2*b^2*c^2 - 3*b^4*c^2 + 3*a^2*c^4 - 3*b^2*c^4 + 
@@ -487,9 +489,9 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
          b^2*c - a*c^2 - b*c^2 + c^3), b*(a^3 - a^2*b - a*b^2 + b^3 + a^2*c + 
          2*a*b*c + b^2*c - a*c^2 - b*c^2 - c^3), 
        c*(a^3 + a^2*b - a*b^2 - b^3 - a^2*c + 2*a*b*c - b^2*c - a*c^2 + 
-         b*c^2 + c^3)}, "Honsberger" -> 
-      {-(a/(a*b - b^2 + a*c + 2*b*c - c^2)), (a - b + c)^(-1), 
-       (a + b - c)^(-1)}, "Hung-Feuerbach" -> 
+         b*c^2 + c^3)}, "Honsberger" -> {a*(a + b - c)*(a - b + c), 
+       -((a + b - c)*(-(b - c)^2 + a*(b + c))), 
+       -((a - b + c)*(-(b - c)^2 + a*(b + c)))}, "Hung-Feuerbach" -> 
       {-((a + b - c)*(a - b + c)*(b + c)^2*(a^2 + b^2 + a*c - b*c)*
          (a^2 + a*b - b*c + c^2)*(a^2 + b^2 + 2*b*c + c^2)), 
        (a + c)*(a^2 + b^2 - a*c + b*c)*(a^2 + a*b + b*c + c^2)*
@@ -656,19 +658,22 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
          a^2*S + 3*b^2*S - c^2*S)}, "Lucas Brocard" -> 
       {a^2*(-a^2 + 2*S), -(b^2*(-a^2 - c^2 + S)), -(c^2*(-a^2 - b^2 + S))}, 
      "Lucas(-1) Brocard" -> {a^2*(a^2 + 2*S), -(b^2*(a^2 + c^2 + S)), 
-       -(c^2*(a^2 + b^2 + S))}, "Lucas central" -> {a*(Cos[A] + 2*Sin[A]), 
-       b*Cos[B], c*Cos[C]}, "Lucas(-1) central" -> {a*(Cos[A] - 2*Sin[A]), 
-       b*Cos[B], c*Cos[C]}, "Lucas homothetic" -> {-1/4*(-a^2 + b^2 + c^2)^2, 
-       b^2*(c^2 + S), c^2*(b^2 + S)}, "Lucas(-1) homothetic" -> 
-      {-1/4*(a^2 - b^2 - c^2)^2, b^2*(c^2 - S), c^2*(b^2 - S)}, 
-     "Lucas inner" -> {a*(2*Cos[A] + (3*Sin[A])/2), b*(2*Cos[B] + Sin[B]), 
-       c*(2*Cos[C] + Sin[C])}, "Lucas(-1) inner" -> 
-      {a*(2*Cos[A] - (3*Sin[A])/2), b*(2*Cos[B] - Sin[B]), 
-       c*(2*Cos[C] - Sin[C])}, "Lucas inner tangential" -> 
-      {a*(4*Cos[A] + Sin[A]), b*(4*Cos[B] + 3*Sin[B]), 
-       c*(4*Cos[C] + 3*Sin[C])}, "Lucas(-1) inner tangential" -> 
-      {a*(4*Cos[A] - Sin[A]), b*(4*Cos[B] - 3*Sin[B]), 
-       c*(4*Cos[C] - 3*Sin[C])}, "Lucas reflection" -> 
+       -(c^2*(a^2 + b^2 + S))}, "Lucas central" -> 
+      {a^2*(a^2 - b^2 - c^2 - 4*S), b^2*(-a^2 + b^2 - c^2), 
+       c^2*(-a^2 - b^2 + c^2)}, "Lucas(-1) central" -> 
+      {a^2*(a^2 - b^2 - c^2 + 4*S), b^2*(-a^2 + b^2 - c^2), 
+       c^2*(-a^2 - b^2 + c^2)}, "Lucas homothetic" -> 
+      {-1/4*(-a^2 + b^2 + c^2)^2, b^2*(c^2 + S), c^2*(b^2 + S)}, 
+     "Lucas(-1) homothetic" -> {-1/4*(a^2 - b^2 - c^2)^2, b^2*(c^2 - S), 
+       c^2*(b^2 - S)}, "Lucas inner" -> {a^2*(2*a^2 - 2*b^2 - 2*c^2 - 3*S), 
+       2*b^2*(-a^2 + b^2 - c^2 - S), 2*c^2*(-a^2 - b^2 + c^2 - S)}, 
+     "Lucas(-1) inner" -> {a^2*(2*a^2 - 2*b^2 - 2*c^2 + 3*S), 
+       2*b^2*(-a^2 + b^2 - c^2 + S), 2*c^2*(-a^2 - b^2 + c^2 + S)}, 
+     "Lucas inner tangential" -> {a^2*(2*a^2 - 2*b^2 - 2*c^2 - S), 
+       b^2*(-2*a^2 + 2*b^2 - 2*c^2 - 3*S), c^2*(-2*a^2 - 2*b^2 + 2*c^2 - 
+         3*S)}, "Lucas(-1) inner tangential" -> 
+      {a^2*(2*a^2 - 2*b^2 - 2*c^2 + S), b^2*(-2*a^2 + 2*b^2 - 2*c^2 + 3*S), 
+       c^2*(-2*a^2 - 2*b^2 + 2*c^2 + 3*S)}, "Lucas reflection" -> 
       {(-a^12 + 3*a^10*b^2 - 2*a^8*b^4 - 2*a^6*b^6 + 3*a^4*b^8 - a^2*b^10 + 
          3*a^10*c^2 + 4*a^8*b^2*c^2 - 12*a^6*b^4*c^2 + a^4*b^6*c^2 + 
          5*a^2*b^8*c^2 - b^10*c^2 - 2*a^8*c^4 - 12*a^6*b^2*c^4 - 
@@ -693,10 +698,10 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
         (-a^6 + 2*a^4*c^2 - b^2*(b^2 - c^2)^2 + a^2*c^2*(3*b^2 - c^2) - 
          4*a^2*b^2*S), b*c*(a^2 + b^2 - c^2)*(-a^6 + 2*a^4*b^2 - 
          a^2*b^2*(b^2 - 3*c^2) - c^2*(b^2 - c^2)^2 - 4*a^2*c^2*S)}, 
-     "Lucas secondary central" -> {a*(Cos[A] - 2*Sin[A]), 
-       b*(Cos[B] + 4*Sin[B]), c*(Cos[C] + 4*Sin[C])}, 
-     "Lucas(-1) secondary central" -> {a*(Cos[A] + 2*Sin[A]), 
-       b*(Cos[B] - 4*Sin[B]), c*(Cos[C] - 4*Sin[C])}, 
+     "Lucas secondary central" -> {a^2*(a^2 - b^2 - c^2 + 4*S), 
+       b^2*(-a^2 + b^2 - c^2 - 8*S), c^2*(-a^2 - b^2 + c^2 - 8*S)}, 
+     "Lucas(-1) secondary central" -> {a^2*(a^2 - b^2 - c^2 - 4*S), 
+       b^2*(-a^2 + b^2 - c^2 + 8*S), c^2*(-a^2 - b^2 + c^2 + 8*S)}, 
      "Lucas 1st secondary tangents" -> {a^2*(a^2 - b^2 - c^2 + 4*S), 
        b^2*(-a^2 + b^2 - c^2 - 6*S), c^2*(-a^2 - b^2 + c^2 - 6*S)}, 
      "Lucas(-1) 1st secondary tangents" -> {a^2*(-a^2 + b^2 + c^2 + 4*S), 
@@ -705,9 +710,10 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
        b^2*(a^2 - b^2 + c^2 - 2*S), c^2*(a^2 + b^2 - c^2 - 2*S)}, 
      "Lucas(-1) 2nd secondary tangents" -> {a^2*(a^2 - b^2 - c^2 + 12*S), 
        b^2*(-a^2 + b^2 - c^2 - 2*S), c^2*(-a^2 - b^2 + c^2 - 2*S)}, 
-     "Lucas tangents" -> {a*Cos[A], b*(Cos[B] + Sin[B]), 
-       c*(Cos[C] + Sin[C])}, "Lucas(-1) tangents" -> 
-      {a*Cos[A], b*(Cos[B] - Sin[B]), c*(Cos[C] - Sin[C])}, 
+     "Lucas tangents" -> {a^2*(a^2 - b^2 - c^2), 
+       b^2*(-a^2 + b^2 - c^2 - 2*S), c^2*(-a^2 - b^2 + c^2 - 2*S)}, 
+     "Lucas(-1) tangents" -> {a^2*(a^2 - b^2 - c^2), 
+       b^2*(-a^2 + b^2 - c^2 + 2*S), c^2*(-a^2 - b^2 + c^2 + 2*S)}, 
      "Macbeath" -> {0, 1/(b^2*(a^2 - b^2 + c^2)), 1/(c^2*(a^2 + b^2 - c^2))}, 
      "inner-Malfatti" -> {(a*(1 - Cos[A/2] + 2*Cos[B/2] + 2*Cos[C/2] + 
           2*Cos[B/2]*Cos[C/2]))/(1 + Cos[A/2]), b, c}, 
@@ -963,8 +969,9 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
      "1st tri-squares" -> {2*S, a^2 + 3*b^2 - c^2 + 2*S, 
        a^2 - b^2 + 3*c^2 + 2*S}, "2nd tri-squares" -> 
       {2*S, -a^2 - 3*b^2 + c^2 + 2*S, -a^2 + b^2 - 3*c^2 + 2*S}, 
-     "3rd tri-squares" -> {(4*(a^2 + S))/(-a^2 + b^2 + c^2 + 2*S), 1, 1}, 
-     "4th tri-squares" -> {(4*(-a^2 + S))/(a^2 - b^2 - c^2 + 2*S), 1, 1}, 
+     "3rd tri-squares" -> {4*(a^2 + S), -a^2 + b^2 + c^2 + 2*S, 
+       -a^2 + b^2 + c^2 + 2*S}, "4th tri-squares" -> 
+      {4*(a^2 - S), -a^2 + b^2 + c^2 - 2*S, -a^2 + b^2 + c^2 - 2*S}, 
      "Trinh" -> {a^2*(a^4 - 2*a^2*b^2 + b^4 - 2*a^2*c^2 + 4*b^2*c^2 + c^4), 
        -(b^2*(a^4 - 2*a^2*b^2 + b^4 + a^2*c^2 + b^2*c^2 - 2*c^4)), 
        c^2*(-a^4 - a^2*b^2 + 2*b^4 + 2*a^2*c^2 - b^2*c^2 - c^4)}, 
@@ -1257,4 +1264,7 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
       {4*b*c + S, -2*b*c + S, -2*b*c + S}, "11th Brocard" -> 
       {a^6 - 3*a^2*(b^2 - c^2)^2 + a^4*(b^2 + c^2) + (b^2 - c^2)*(b^4 - c^4), 
        b^2*(a^4 - 2*a^2*(2*b^2 - 3*c^2) + (b^2 - c^2)*(3*b^2 - c^2)), 
-       c^2*(a^4 + 2*a^2*(3*b^2 - 2*c^2) + (b^2 - 3*c^2)*(b^2 - c^2))}|>
+       c^2*(a^4 + 2*a^2*(3*b^2 - 2*c^2) + (b^2 - 3*c^2)*(b^2 - c^2))}, 
+     "1st Pavlov-Altintas" -> {-(a*(b - c)^2), b*((b - c)*c + a*(b + c)), 
+       c*(b*(-b + c) + a*(b + c))}, "1st anti-Pavlov-Altintas" -> 
+      {a - b - c, c, b}|>

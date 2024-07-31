@@ -74,7 +74,7 @@ heuristicsCheck[expr_, degree_:16, ratio_:5, cfsum_:200] :=
       smt = Total[Select[(1 + countSummands[#1[[1]]] & ) /@ FactorList[expr], 
          #1 > 3 & ]]; coefsum = Total[Flatten[
          Abs[(CoefficientList[#1, {a, b, c, S}] & ) /@ FactorList[expr]]]]; 
-      Return[deg <= 5 || (deg <= degree && smt/deg < ratio && 
+      Return[deg <= 4 || (deg <= degree && smt/deg < ratio && 
          coefsum < cfsum)]; ]
  
 partialSReplace[expr_] := Module[{exp, exp2, smpl}, 
@@ -140,8 +140,8 @@ replacer[expr_, nu_, np_:0] := simplifyRationalBarycentrics[
       Thread[{p, q, r} -> simplifyRationalBarycentrics[
          evaluate[KimberlingCenterC[np]]]]]
  
-massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, docurves_:False] := 
-    Module[{out, etc, testexpr, check, curves}, 
+massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, cfsum_:200, 
+     docurves_:False] := Module[{out, etc, testexpr, check, curves}, 
      If[docurves, globalSilence = True]; 
       Quiet[Monitor[out = {}; etc = {}; Do[nprg = nx; curves = {}; 
            If[ !MemberQ[Keys[ETC], StringJoin["X", ToString[nx]]], 
@@ -153,7 +153,7 @@ massHeuristics1[expr_, nmin_, nmax_, deg_:16, ratio_:4.5, docurves_:False] :=
            If[docurves && Length[check] == 0, curves = 
              Quiet[checkCurves[testexpr]]]; If[Length[check] > 0, 
             AppendTo[etc, {nx, check[[1]]}], If[heuristicsCheck[
-              partialSAconvert[testexpr[[1]]], deg, ratio], 
+              partialSAconvert[testexpr[[1]]], deg, ratio, cfsum], 
              If[Length[curves] > 0, AppendTo[out, {nx, curves}], AppendTo[
                 out, nx]]; ]]; , {nx, nmin, nmax}], nprg]]; Print[out]; 
       Print[colorformat[ToString[etc]]]; globalSilence = False; 
@@ -286,3 +286,14 @@ setSquareBary = {2, 3, 4, 5, 6, 20, 22, 23, 24, 25, 26, 32, 39, 49, 51, 52,
      625, 626, 669, 670, 671, 684, 689, 691, 694, 695, 699, 703, 729, 737, 
      755, 783, 805, 809, 827, 850, 880, 881, 882, 887, 892, 930, 1003, 1031, 
      1078, 1084}
+ 
+massCheckPointsNoEval2Param[expr_, range_:{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 
+      12}] := Module[{out, assoc, namey, namex, check}, 
+     out = {}; Monitor[Do[assoc = Association[]; namex = StringJoin["X", 
+            ToString[ix]]; Do[namey = StringJoin["X", ToString[iy]]; 
+            AssociateTo[assoc, "row" -> namex]; If[ix > iy, 
+             AssociateTo[assoc, namey -> ""]; Continue[]]; 
+            check = checkPointinETC2[replacerNoeval[expr, ix, iy]]; 
+            If[Length[check] > 0, AssociateTo[assoc, namey -> check[[1]]], 
+             AssociateTo[assoc, namey -> "-"]]; , {iy, range}]; 
+          AppendTo[out, assoc]; , {ix, range}]; , ix]; Return[out]; ]
