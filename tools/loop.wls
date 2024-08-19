@@ -65,6 +65,8 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    xname = "X" <> ToString[nx];
 
    ptcoord = sym[globalptexpr[xname]];
+   
+   If[checkPointinETC2[ptcoord], Print[xname<>" EXISTS"]; Continue[]];
 
    Print[];Print[globalptnames[xname]];Print[];
 
@@ -75,6 +77,11 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    globalProperties[xname]["others"]={};
    Do[
 		trpt = StringTake[ToString[el],{6,-2+StringLength[ToString[el]]}];
+		itrg = StringTake[trpt, {1 + StringPosition[trpt, "-of-"][[1]][[2]], StringLength[trpt]}];
+		ptidx = ToExpression[StringTake[trpt, {3, -1 + StringPosition[trpt, ")"][[1]][[1]]}]];
+		
+		If[Not[checkNumberedPoint[ptcoord, itrg, ptidx]],trpt = trpt<>" UNSUCCESSFUL"];
+
 		AppendTo[globalProperties[xname]["others"],trpt];
 		Print[trpt];
    ,{el,pos}

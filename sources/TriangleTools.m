@@ -906,8 +906,9 @@ bLozadaPerspector[{u_, v_, w_}] := {(-a + b + c)*u^2, (a - b + c)*v^2,
 bLozadaPerspector2nd[{u_, v_, w_}] := {(a + b - c)*(a - b + c)*u^2, 
      (a + b - c)*(-a + b + c)*v^2, (a - b + c)*(-a + b + c)*w^2}
  
-multiCollectFactors[expr_, vars_] := Times @@ (#1[[1]]^#1[[2]] & ) /@ 
-      (multiCollect[#1, vars] & ) /@ FactorList[expr]
+multiCollectFactors[expr_, vars_] := PolynomialForm[
+     Times @@ (#1[[1]]^#1[[2]] & ) /@ (multiCollect[#1, vars] & ) /@ 
+        FactorList[expr], TraditionalOrder -> True]
  
 bOrthologyCenter[pa_, pb_, pc_, xa_, xb_, xc_] := 
     bLineIntersection[bPerpendicular[bLine[xb, xc], pa], 

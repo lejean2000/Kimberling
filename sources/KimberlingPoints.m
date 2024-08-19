@@ -128,7 +128,8 @@ trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
            AssociateTo[out, outname -> perschk[[1]]]; , 
            Print[Row[{outname, hmt}]]; ]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
-      Print[GroupBy[out, Identity, Keys]]; Return[cnt]; ]
+      KeyValueMap[Print[#1 -> #2] & , GroupBy[out, Identity, Keys]]; 
+      Return[cnt]; ]
  
 trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
     Module[{out, trsym, ntest, ptcoord, perschk, outname}, 
@@ -147,8 +148,8 @@ trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
             " and ", trgname]; If[Length[perschk] > 0, 
            AssociateTo[out, outname -> perschk[[1]]]; , 
            Print[outname]; ]; ]; , {trname, Keys[set] /. 
-         "infinite-altitude" -> Nothing}]; 
-      Print[GroupBy[out, Identity, Keys]]; ]
+         "infinite-altitude" -> Nothing}]; KeyValueMap[Print[#1 -> #2] & , 
+       GroupBy[out, Identity, Keys]]; ]
  
 trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary, 
      exclset_:{}] := Module[{out, out2, out3, trexcl, htest, trsym, trsyme, 
@@ -179,7 +180,32 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
         Label[end]; , {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
       Print[StringJoin["Orthology center of ", trgname, " and ", 
         ToString[out2]]]; Print[StringJoin["Orthology center of ", 
-        ToString[out3], " and ", trgname]]; 
-      Print[GroupBy[out, Identity, Keys]]; ]
+        ToString[out3], " and ", trgname]]; KeyValueMap[Print[#1 -> #2] & , 
+       GroupBy[out, Identity, Keys]]; ]
  
 inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]
+ 
+checkNumberedPoint[ptc_, trgname_, idx_] := Module[{trgn, newkey}, 
+     If[newkey == "ABC-X3-reflections", newkey = "ABC-X3 reflections"]; 
+      If[newkey == "anti-X3-ABC-reflections", 
+       newkey = "anti-X3-ABC reflections"]; 
+      If[newkey == "X3-ABC-reflections", newkey = "X3-ABC reflections"]; 
+      If[newkey == "2nd-circumperp-tangential", 
+       newkey = "2nd circumperp tangential"]; 
+      newkey = StringReplace[trgname, {"1st-" -> "1st ", "2nd-" -> "2nd ", 
+         "3rd-" -> "3rd ", "4th-" -> "4th ", "Gemini-" -> "Gemini "}]; 
+      If[ !KeyExistsQ[KimberlingTrianglesBary, newkey], 
+       Return[False, Module]]; trgn = intnumericnorm /@ 
+        (evaluate[triangle[newkey]] /. rule69); 
+      If[Total[Abs[bToCartesianN[bCoordChangeK[idx, trgn] /. rule69] - 
+           bToCartesianN[ptc /. rule69]]] > 10^(-20), Return[False, Module]]; 
+      trgn = intnumericnorm /@ (evaluate[triangle[newkey]] /. 
+         intCheckList[[1]]); 
+      If[Total[Abs[bToCartesianN[bCoordChangeK[idx, trgn] /. 
+             intCheckList[[1]]] - bToCartesianN[ptc /. intCheckList[[1]]]]] > 
+        10^(-20), Return[False, Module]]; 
+      trgn = intnumericnorm /@ (evaluate[triangle[newkey]] /. 
+         intCheckList[[2]]); 
+      If[Total[Abs[bToCartesianN[bCoordChangeK[idx, trgn] /. 
+             intCheckList[[2]]] - bToCartesianN[ptc /. intCheckList[[2]]]]] > 
+        10^(-20), Return[False, Module]]; Return[True]; ]

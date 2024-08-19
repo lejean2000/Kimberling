@@ -846,3 +846,24 @@ quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True,
             "X", True]]]; If[curvescheck && lines < minprop, 
          numcon = Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
       Return[{lines, numcon}]; ]
+ 
+quickCheckerTransform[expr_, inname_:"PTX", num_:0] := 
+    Module[{pointProcesses, texpr, procname}, 
+     If[ !TrueQ[globalSilence], Print[inname]]; quickChecker[expr, num, 
+       True]; pointProcesses = Association["isotomic conjugate" -> 
+         Hold[bIsotomicConjugate[#1]], "isogonal conjugate" -> 
+         Hold[bIsogonalConjugate[#1]], "complement" -> 
+         Hold[bComplement[KimberlingCenterC[2], #1]], "anticomplement" -> 
+         Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
+        "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
+        "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
+        "zosma transform" -> Hold[bZosmaTransform[#1]], 
+        "polar conjugate" -> Hold[bPIsogonalConjugate[KimberlingCenterCN[48], 
+           #1]], "eigentransform" -> Hold[bEigentransform[#1]], 
+        "cundyParryPsi" -> Hold[cundyParryPsi[#1]], "cundyParryPhi" -> 
+         Hold[cundyParryPhi[#1]]]; 
+      Do[texpr = simplifyRationalBarycentrics[
+          Factor[Together[evaluate[ReleaseHold[pointProcesses[name] /. #1 -> 
+                expr]]]]]; procname = StringJoin[name, " of ", inname]; 
+        If[ !TrueQ[globalSilence], Print[procname]]; quickChecker[texpr, 0, 
+         True]; , {name, Keys[pointProcesses]}]; ]
