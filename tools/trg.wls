@@ -133,7 +133,7 @@ Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest=bIsOrthologic@@(evaluate[Join[trsym,trchk]]/.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			outname = "Orthology center of these triangles: "<>trgname<>" and "<>trname;
+			outname = "Orthology center of these triangles: "<>trgname<>" to "<>trname;
 			Print[outname];
 			ptcoord=TimeConstrained[bOrthologyCenter[trchk,trsym]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
@@ -141,7 +141,7 @@ Do[
 
 			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 			
-			outname = "Orthology center of these triangles: "<>trname<>" and "<>trgname;
+			outname = "Orthology center of these triangles: "<>trname<>" to "<>trgname;
 			Print[outname];
 			ptcoord=TimeConstrained[bOrthologyCenter[trsym,trchk]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
@@ -161,7 +161,7 @@ Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest = bIsParallelogic @@ (evaluate[Join[trsym, trchk]] /.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			outname = "Parallelogic center of these triangles: "<>trgname<>" and "<>trname;
+			outname = "Parallelogic center of these triangles: "<>trgname<>" to "<>trname;
 			Print[outname];
 			ptcoord=TimeConstrained[bParallelogicCenter[trchk,trsym]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];
@@ -169,7 +169,7 @@ Do[
 
 			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 			
-			outname = "Orthology center of these triangles: "<>trname<>" and "<>trgname;
+			outname = "Parallelogic center of these triangles: "<>trname<>" to "<>trgname;
 			Print[outname];
 			ptcoord=TimeConstrained[bParallelogicCenter[trsym,trchk]//simplifyRationalBarycentrics//partialSReplace, 60, -1];
 			If[ptc == -1, Print["timeout"];Continue[]];

@@ -1465,3 +1465,19 @@ drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] := Module[{drset, trgsete},
  
 bIsHomothetic[tr1_, tr2_] := bIsParallel[bLine[tr1[[1]], tr1[[2]]], 
      bLine[tr2[[1]], tr2[[2]]]]
+ 
+basepoints[tr1_, tr2_, pt_:{}] := Module[{xa, out, sol, ptt}, 
+     If[Length[pt] == 0, ptt = smpl[bTrianglePerspector[tr1, tr2]]; , 
+       ptt = pt; ]; out = {}; 
+      sol = Solve[Cross[(x*ptt)/Total[ptt] + (1 - x)*(tr2[[1]]/Total[tr2]), 
+          tr1[[1]]] == 0, x]; If[Length[sol] > 0, 
+       xa = Simplify[x /. sol[[1]]], xa = {}]; If[Length[xa] > 0, 
+       Quiet[AppendTo[out, simplifyRationalBarycentrics[sym3[xa]]]], 
+       AppendTo[out, {}]; ]; 
+      sol = Solve[Cross[((1 - x)*ptt)/Total[ptt] + x*(tr2[[1]]/Total[tr2]), 
+          tr1[[1]]] == 0, x]; If[Length[sol] > 0, 
+       xa = Simplify[x /. sol[[1]]], xa = {}]; If[Length[xa] > 0, 
+       Quiet[AppendTo[out, simplifyRationalBarycentrics[sym3[xa]]]], 
+       AppendTo[out, {}]; ]; Return[out]; ]
+ 
+inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]

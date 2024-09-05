@@ -37,15 +37,24 @@ globalOutputStream = False;
 loop[xname_, title_, ptcoord_] := Module[{pt, srch, pos},
 
    Print[];Print[title];Print[];
+   
+   If[checkPointinETC2[ptcoord], Print[xname<>" EXISTS"]; Continue[]];
 
    pointChecker[ptcoord, xname, False, xname];
    
-   srch = Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001];
-   pos = ToString[FirstPosition[TRETC, srch][[1]]];
+   pos = Position[TRETC, Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001]];
+   
+   globalProperties[xname]["others"]={};
+   Do[
+		trpt = StringTake[ToString[el],{6,-2+StringLength[ToString[el]]}];
+		itrg = StringTake[trpt, {1 + StringPosition[trpt, "-of-"][[1]][[2]], StringLength[trpt]}];
+		ptidx = ToExpression[StringTake[trpt, {3, -1 + StringPosition[trpt, ")"][[1]][[1]]}]];
+		
+		If[Not[checkNumberedPoint[ptcoord, itrg, ptidx]],trpt = trpt<>" UNSUCCESSFUL"];
 
-   If[pos!="NotFound",
-	   pos = StringTake[pos,{5,-1+StringLength[pos]}];
-	   If[StringLength[pos] > 0, globalProperties[xname]["others"]={pos};Print[pos]];
+		AppendTo[globalProperties[xname]["others"],trpt];
+		Print[trpt];
+   ,{el,pos}
    ];
    
    Print["=======END======="];
@@ -60,7 +69,5 @@ loop[xname_, title_, ptcoord_] := Module[{pt, srch, pos},
 
 ];
 
-loop["Y13673","Tripole of perspectivity axis of these triangles: X(2)-Ehrmann and anti-Ehrmann-mid",
-sym[(4*a^6-a^4*(b^2+4*c^2)+(b^2-c^2)^2*(7*b^2+4*c^2)-2*a^2*(5*b^4-3*b^2*c^2+2*c^4))*(4*a^6-a^4*(4*b^2+c^2)+(b^2-c^2)^2*(4*b^2+7*c^2)-2*a^2*(2*b^4-3*b^2*c^2+5*c^4))]];
-
-
+loop["X70004","NONAME190",
+sym[4*a^6-4*a^5*(b+c)-2*a*b*(b-c)^2*c*(b+c)-(b-c)^4*(b+c)^2-2*a^4*(b^2-b*c+c^2)+2*a^3*(2*b^3+b^2*c+b*c^2+2*c^3)-a^2*(b^4+4*b^2*c^2+c^4)]];

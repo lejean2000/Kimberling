@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" -> 
       {1/2, -(b^2/(a^2 + b^2 - c^2)), -(c^2/(a^2 - b^2 + c^2))}, 
      "1st Altintas-isodynamic" -> {(-(Sqrt[3]*S*(S^2 + SB*SC)) - 
@@ -1257,14 +1259,14 @@ KimberlingTrianglesBary = <|"ABC" -> {a, 0, 0}, "ABC-X3 reflections" ->
         a^4*(b^2 + 3*c^2)^2 + a^6*(4*b^2 + 7*c^2) - 
         a^2*(2*b^6 + 3*b^4*c^2 - 5*c^6), -2*a^8 - (b^2 - c^2)^3*(b^2 + c^2) - 
         a^4*(3*b^2 + c^2)^2 + a^6*(7*b^2 + 4*c^2) - 
-        a^2*(-5*b^6 + 3*b^2*c^4 + 2*c^6)}, "1st anti-Pavlov" -> 
+        a^2*(-5*b^6 + 3*b^2*c^4 + 2*c^6)}, "inverse-of-1st-Pavlov" -> 
       {a^2 - 2*(b - c)^2 + a*(b + c), b*(-a + b - c), -((a + b - c)*c)}, 
      "2nd anti-Pavlov" -> {(a + b)*(a + c)*(a - 2*(b + c)), 
-       b*(a + b)*(b + c), c*(a + c)*(b + c)}, "anti-Aguilera-Pavlov" -> 
+       b*(a + b)*(b + c), c*(a + c)*(b + c)}, "inverse-of-Aguilera-Pavlov" -> 
       {4*b*c + S, -2*b*c + S, -2*b*c + S}, "11th Brocard" -> 
       {a^6 - 3*a^2*(b^2 - c^2)^2 + a^4*(b^2 + c^2) + (b^2 - c^2)*(b^4 - c^4), 
        b^2*(a^4 - 2*a^2*(2*b^2 - 3*c^2) + (b^2 - c^2)*(3*b^2 - c^2)), 
        c^2*(a^4 + 2*a^2*(3*b^2 - 2*c^2) + (b^2 - 3*c^2)*(b^2 - c^2))}, 
      "1st Pavlov-Altintas" -> {-(a*(b - c)^2), b*((b - c)*c + a*(b + c)), 
-       c*(b*(-b + c) + a*(b + c))}, "1st anti-Pavlov-Altintas" -> 
+       c*(b*(-b + c) + a*(b + c))}, "inverse-of-1st-Pavlov-Altintas" -> 
       {a - b - c, c, b}|>
