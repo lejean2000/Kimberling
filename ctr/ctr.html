@@ -1,0 +1,311 @@
+<!doctype html>
+<html style="font-size: 16px" lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta name="keywords" content="Geometry" />
+        <meta name="description" content="Catalog of central triangles" />
+        <title>Catalog of central triangles</title>
+        <link rel="stylesheet" href="nicepage.css" media="screen" />
+        <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+        <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+        <link
+            id="u-theme-google-font"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" />
+        <style class="u-style">
+            .u-section-2 .u-sheet-1 {
+                min-height: 692px;
+            }
+            .u-section-2 .u-text-1 {
+                font-size: 4rem;
+                font-weight: 700;
+                margin: 70px 0 0;
+            }
+            .u-section-2 .u-line-1 {
+                width: 50px;
+                height: 0;
+                margin: 9px auto 0 0;
+            }
+            .u-section-2 .u-text-2 {
+                font-weight: 700;
+                line-height: 1.6;
+                font-size: 1.25rem;
+                text-transform: uppercase;
+                margin: 9px 0 0;
+            }
+            .u-section-2 .u-text-3 {
+                line-height: 2;
+                font-size: 1.125rem;
+                margin: 20px 200px 20px 0;
+            }
+            @media (max-width: 1199px) {
+                .u-section-2 .u-text-3 {
+                    margin-right: 200px;
+                }
+            }
+            @media (max-width: 991px) {
+                .u-section-2 .u-text-3 {
+                    margin-right: 69px;
+                }
+            }
+            @media (max-width: 767px) {
+                .u-section-2 .u-text-3 {
+                    margin-right: 0;
+                }
+            }
+            @media (max-width: 575px) {
+                .u-section-2 .u-text-1 {
+                    font-size: 3.75rem;
+                }
+                .u-section-2 .u-text-2 {
+                    font-size: 1.125rem;
+                }
+            }
+            code {
+                font-size: 1rem !important;
+            }
+            math {
+                display: inline-flex;
+                align-items: left;
+                gap: 4px;
+                flex-wrap: wrap;
+                row-gap: 10px;
+            }
+            .mathdiv {
+                border: 2px solid;
+                padding: 10px;
+                width: 800px;
+                resize: horizontal;
+                overflow: auto;
+            }
+            h3{
+                margin-top: 40px!important;
+                
+            }
+        </style>
+
+        <meta name="theme-color" content="#1484ec" />
+    </head>
+    <body class="u-body u-xl-mode">
+        <section class="u-align-left u-clearfix u-section-2" id="carousel_068e">
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <h2 class="u-text u-text-1">Catalog of central triangles</h2>
+                <div class="u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-1"></div>
+
+                <h6 class="u-text u-text-palette-2-base u-text-2">Last change: 30 Oct 2024</h6>
+
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                    Unlike <a href="https://faculty.evansville.edu/ck6/encyclopedia/ETC.html">triangle centers</a> which are defined by a single triangle center function, central triangles
+                    <a href="https://mathworld.wolfram.com/CentralTriangle.html">are defined by</a> two functions. There are lots (more than 500) triangles
+                    <a href="https://faculty.evansville.edu/ck6/encyclopedia/IndexOfTrianglesReferencedInETC.html">used in ETC</a>.
+                </p>
+
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                    There are also many famous families of central triangles, which depend in some way on one or more triangle centers - e.g. cevian triangles, pedal triangles, etc.
+                </p>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                    Many other central triangles families do not have names. The goal of this site is to provide a list of such families, sometimes linking to their common properties. For each family we will at least include a description of how it arises geometrically and its barycentric coordinates.
+                </p>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                    We will follow a common naming scheme as follows. All families start with CTR followed by an index,
+                    e.g. CTR1.
+                </p>
+                <ul>
+                    <li class="u-align-justify u-text u-text-grey-40 u-text-3">
+                        If a family depends on one parameter, which is always a triangle center, having an ETC designation, e.g. X(m), then the name of any particular triangle in this series is <strong>CTR1-m</strong>. The listed barycentric coordinates will depend on X(m) = (u:v:w).
+                    </li>
+                    <li class="u-align-justify u-text u-text-grey-40 u-text-3">
+                        If a family depends on two parameters, e.g. CTR5, the naming will be CTR5-m.n and the listed barycentric coordinates will depend on two points X(m) = (u:v:w) and X(n) = (p:q:r).
+                    </li>
+                </ul>
+
+                <h3 class="u-text-2">CTR<sub>1</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                    Let P=(u:v:w) be a point. The CTR<sub>1</sub>(P) triangle is formed by the Aubert (Steiner) lines of quadrilaterals ABPC, BCPA, and CAPB. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        (a^2*(-v+w)+(b^2-c^2)*(v+w))*(a^2*(v-w)+(b^2-c^2)*(2*u+v+w)) 
+                        : <br />
+                        a^4*(v*(u+2*v)+(u+v)*w+w^2)-2*a^2*(b^2*(v^2+u*w+2*v*w)+c^2*(2*v*(u+v)+(u+2*v)*w+w^2))-(b^2-c^2)*(c^2*((v+w)*(2*v+w)+u*(3*v+w))+b^2*(w*(v+w)+u*(v+3*w)))
+                        : <br />
+                        a^4*(v*(u+v)+(u+v)*w+2*w^2)-2*a^2*(c^2*(u*v+2*v*w+w^2)+b^2*(v*(u+v)+2*(u+v)*w+2*w^2))+(b^2-c^2)*(c^2*(v*(3*u+v)+(u+v)*w)+b^2*(v*(u+v)+3*(u+v)*w+2*w^2)) 
+                    </code>
+                </div>
+                
+                <h3 class="u-text-2">CTR<sub>2</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let P be a point and A'B'C' the anticevian triangle of P=(u:v:w). The CTR<sub>2</sub>(P) triangle is formed by the Aubert (Steiner) lines of quadrilaterals CABA', ABCB', BCAC'. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        (a^2*(2*u-v-w)-(b^2-c^2)*(v-w))*(-((b^2-c^2)*(v-w))+a^2*(v+w)) 
+                        : <br />
+                        (b^2-c^2)*(v-w)*(b^2*(u+w)+c^2*(-u-2*v+w))-a^4*(-2*v^2+v*w-w^2+u*(v+w))-2*a^2*(b^2*(v^2+u*w-2*v*w)+c^2*(2*v^2-u*w-2*v*w+w^2))
+                        : <br />
+                        (b^2-c^2)*(c^2*(u+v)+b^2*(-u+v-2*w))*(v-w)-a^4*(-v^2+v*w-2*w^2+u*(v+w))-2*a^2*(c^2*(u*v-2*v*w+w^2)+b^2*(-(u*v)+v^2-2*v*w+2*w^2))
+                    </code>
+                </div>
+
+                <h3 class="u-text-2">CTR<sub>3</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let A1B1C1 be the cevian and A2B2C2 be the circlecevian triangle of P=(u:v:w). Circle (BC1C2) intersect BC at Ba, circle (CB1B2) intersect BC at Ca. Define Ab,Cb,Ac,Bc cyclically. Let Pa be the intersection of BaBc and CaCb and similarly define Pb and Pc. The CTR<sub>3</sub>(P) triangle is PaPbPc. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        a^2*v*(b^2*u-c^2*u+a^2*v)*w*(-(b^2*u)+c^2*u+a^2*w)*(c^2*u*v*(2*v*w+u*(v+w))+w*(a^2*v*(-u^2+v*w)+b^2*u*(2*v*w+u*(v+w))))
+                        : <br />
+                        u*(a^2*v-c^2*v-b^2*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(b^4*u^2*w*(v+w)-v*(c^2*u+a^2*w)*(-a^2*(u+v)*w+c^2*u*(v+w))+b^2*u*(a^2*v*w*(-u+w)+c^2*u*(v^2-w^2)))
+                        : <br />
+                        u*(-c^2*v+(a^2-b^2)*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(-b^4*u^2*w*(v+w)+v*(a^2*c^2*u*(-u+v)*w+a^4*v*w*(u+w)+c^4*u^2*(v+w))+b^2*u*(a^2*(u-v)*v*w+c^2*u*(-v^2+w^2)))
+                    </code>
+                </div>
+                
+                <h3 class="u-text-2">CTR<sub>4</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let P be a point. DEF cevian triangle of P=(u:v:w). AD intersects the circle (AEF) at A1 different from A. Define B1, C1 cyclically. The CTR<sub>4</sub>(P) triangle is A1B1C1. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        c^2*u*v*(u+w)*(v+w)-(u+v)*w*(a^2*v*(u+w)-b^2*u*(v+w)) : <br />
+                        b^2*v*(u+v)*w^2+c^2*v^3*(u+w) : <br />
+                        b^2*(u+v)*w^3+c^2*v^2*w*(u+w)
+                    </code>
+                </div>                
+                
+                <h3 class="u-text-2">CTR<sub>5</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let XYZ be the anticevian triangle of P=(u:v:w). Denote with X' the Kimberling-Pavlov X-conjugate of Q=(p:q:r) and Q, and similarly define Y' and Z' (see the preamble to X(55917) in ETC for definitions). The CTR<sub>5</sub>(P,Q) triangle is X'Y'Z'. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        u*(q*r*u+p*r*v-p*q*w)*(q*r*u-p*r*v+p*q*w) : <br />
+                        v*(q*r*u-p*r*v+p*q*w)*(q*r*u+p*r*v+p*q*w) : <br />
+                        w*(q*r*u+p*r*v-p*q*w)*(q*r*u+p*r*v+p*q*w)
+                    </code>
+                </div> 
+
+                <h3 class="u-text-2">CTR<sub>6</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Consider the three parabolas inscribed in ABC and tangent to the sides of the cevian triangle A1B1C1 of P=(u,v,w). Let Pa,Pb, Pc be their perspectors. CTR<sub>6</sub> is the triangle PaPbPc. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        (u + v) (u + w) : (u + v) (v - w) : (u + w) (-v + w)
+                    </code>
+                </div> 
+
+                <h3 class="u-text-2">CTR<sub>7</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   CTR<sub>7</sub> is the barycentric sum of the cevian triangles of P=(u:v:w) and Q=(p:q:r). In other words, if the cevian traingles of P and Q are PaPbPc and QaQbQc, their barycentric sum is the triangle with vertices Pa+Qa, Pb+Qb, Pc+Qc. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        0 : r v + q (2 v + w) : q w + r (v + 2 w)
+                    </code> 
+                </div> 
+                <p class=" u-text u-text-grey-40 u-text-default-xs">Note the following triangle equivalences:<br/>
+                CTR7-1.1 = incentral<br/>
+                CTR7-1.75 = medial<br/>
+                CTR7-1.82 = pedal of X(182)<br/>
+                CTR7-2.2 = medial<br/>
+                CTR7-2.4 = pedal of X(5)<br/>
+                CTR7-4.8 = pedal of X(10)<br/>
+                CTR7-4.69 = medial<br/>
+                CTR7-5.95 = medial<br/>
+                CTR7-6.76 = medial<br/>
+                CTR7-8.105 = cevian of X(80)<br/>
+                </p>
+                
+                <h3 class="u-text-2">CTR<sub>8</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR<sub>8</sub>. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        {c^2*u*(u+w)-(u+v)*(-b^2*u+a^2*(u+w)) : b^2*(u+v)*(u+v+w) : c^2*(u+w)*(u+v+w)}
+                    </code>
+                </div>
+                <p class=" u-text u-text-grey-40 u-text-default-xs">Note the following triangle equivalences:<br/>
+                CTR8-4 = orthic<br/>
+                CTR8-8 = excenters-midpoints<br/>
+                CTR8-146 = anticevian of X(30)<br/>
+                CTR8-150 = Moses-Soddy<br/>
+                </p>
+                
+                <h3 class="u-text-2">CTR<sub>9</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   CTR<sub>9</sub> is the barycentric sum of the cevian triangles of P=(u:v:w) and the anticevian triangle of Q=(p:q:r). In other words, if these two traingles are denoted by PaPbPc and QaQbQc, their barycentric sum is the triangle with vertices Pa+Qa, Pb+Qb, Pc+Qc. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        p (v + w) : p v - r v - q (2 v + w) : (p - q) w - r (v + 2 w)
+                    </code> 
+                </div>
+
+                <h3 class="u-text-2">CTR<sub>10</sub></h3>
+                <p class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let A<sub>1</sub>B<sub>1</sub>C<sub>1</sub> be the inner-Conway trianlge. Denote with Pa the trace of AA<sub>1</sub> upon the circumconic with perspector P=(u:v:w). Similarly define Pb and Pc. Then CTR<sub>10</sub> is PaPbPc. The barycentric coordinates of the A-vertex are:<br />
+                </p>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        u : -v + w : v - w
+                    </code> 
+                </div>
+                <p class=" u-text u-text-grey-40 u-text-default-xs">Note the following triangle equivalences:<br/>
+                CTR10-1 = inner-Conway<br/>
+                CTR10-2 = ABC<br/>
+                CTR10-6 = 1st anti-circumperp<br/>
+                CTR10-9 = Gemini 29<br/>
+                CTR10-10 = Gemini 17<br/>
+                CTR10-37 = Gemini 18
+                </p>                
+
+                <h3 class="u-text-2">CTR<sub>11</sub></h3>
+                <div class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   CTR<sub>11</sub> is the triangle formed by triangle formed by:
+                    <ul>
+                        <li>intersection of BC with polar of A in circle (BCP)</li>
+                        <li>intersection of AC with polar of B in circle (ACP)</li>
+                        <li>intersection of AB with polar of C in circle (ABP).</li>
+                    </ul>
+                    The barycentric coordinates of the A-vertex are:<br />
+                </div>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                        0 : b^2*u*(u+v)-v*(c^2*u+a^2*w) : (b^2*u+a^2*v)*w-c^2*u*(u+w)
+                    </code> 
+                </div>
+                <p class=" u-text u-text-grey-40 u-text-default-xs">Note the following triangle equivalences:<br/>
+                CTR11-1 = incentral<br/>
+                CTR11-2 is degenerate<br/>
+                CTR11-3 = cevian of X(110)<br/>
+                CTR11-6 is degenerate
+                </p>
+
+                 <h3 class="u-text-2">CTR<sub>12</sub></h3>
+                <div class="u-align-justify u-text u-text-grey-40 u-text-3">
+                   Let QaQbQc be the cevian triangle of Q. CTR<sub>12</sub> is the triangle with vertices at the inversion poles of QbQc, QaQc, and QaQb wrt to the P-circumconic. The barycentric coordinates of the A-vertex are:<br />
+                </div>
+                <div class="mathdiv u-text-grey-40">
+                    <code>
+                       u*(q*r*u+p*r*v+p*q*w) : -v*(q*r*u+p*r*v-p*q*w) : -w*(q*r*u-p*r*v+p*q*w)
+                    </code> 
+                </div>
+                <p class=" u-text u-text-grey-40 u-text-default-xs">Note the following triangle equivalences:<br/>
+                CTR12-1.9 = 6th mixtilinear<br/>
+                CTR12-1.88 = cevian of X(88)<br/>
+                CTR12-1.100 = cevian of X(100)<br/>
+                CTR12-2.2 	= Gemini 111<br/>
+                CTR12-2.75 	= 2nd Conway<br/>
+                CTR12-2.76 	= anti-inverse-in-incircle<br/>
+                CTR12-2.99 	= Steiner<br/>
+                CTR12-6.2 	= Ara<br/>
+                CTR12-6.99 	= Steiner
+                </p>
+                
+            </div>
+        </section>
+    </body>
+</html>
