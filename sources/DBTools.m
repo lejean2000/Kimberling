@@ -169,7 +169,7 @@ checkInconics[pt_, excl_:0, name_:"X"] := Module[{ptc, out, crv},
              ", "]]]]; ]]; Return[out]; ]
  
 linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_, 
-     quick_:False] := Module[{res, gr, hg, out, head, test, test2, hgroups, 
+     quick_:False] := Block[{res, gr, hg, out, head, test, test2, hgroups, 
       ptc, unproven, rc, rc2, eltest, sout, barys, outname, harm, ff2, 
       outforsort}, rc = intCheckList[[1]]; rc2 = intCheckList[[2]]; 
       ptc = intnumericnorm[evaluate[ptcoord] /. rule69]; 
@@ -205,8 +205,8 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
        Print[colorformat[StringJoin["Lies on these lines: ", 
           StringRiffle[out, ", "]]]]]; 
       If[abort && Length[out] < pointCheckerMinProperties, 
-       Return[out, Module]]; If[ !quick, checkLinearCombinations[ptcoord, 
-         out, name]; harm = intHarmonicProcess[res[[2]], ptc, prec]; 
+       Return[out, Block]]; If[ !quick, checkLinearCombinations[ptcoord, out, 
+         name]; harm = intHarmonicProcess[res[[2]], ptc, prec]; 
         harm = (SortBy[#1, Length] & ) /@ harm; ff2[in_] := 
          ({in[[1]], #1} & ) /@ Take[in, {2, -1}]; 
         harm = (#1[[1]] & ) /@ ff2 /@ harm; hg = {}; 
@@ -445,21 +445,22 @@ checkVertexConjugates[pt_, name_:"X"] :=
             StringRiffle[res, ", "]]]]; ]]; ]
  
 pointChecker[expr_, num_:0, full_:False, inname_:"X"] := 
-    Module[{abstime, ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
+    Block[{abstime, ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
      tmpsessiontime = SessionTime[]; If[inname != "X" && 
         KeyExistsQ[globalProperties, inname], 
        Print[StringJoin["Key ", inname, " exists in global properties !"]]; 
-        Return[False, Module]]; globalExcludedNum = addxtoname[num]; 
+        Return[False, Block]]; globalExcludedNum = addxtoname[num]; 
       ptcoord = evaluate[expr]; If[ !checkCentralExpression[ptcoord], 
-       Return[False, Module]; ]; pt = intnumericnorm[evaluate[ptcoord] /. 
-         rule69]; If[Length[globalSeenPoints] > 0 && 
-        First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
-            globalSeenPoints]] <= 10^(-20), Print[inname]; 
-        Print["Point seen"]; Return[False, Module], 
-       AppendTo[globalSeenPoints, {ptcoord, pt}]; ]; 
+       Return[False, Block]; ]; pt = intnumericnorm[evaluate[ptcoord] /. 
+         rule69]; If[globalSeenPoints != False, 
+       If[Length[globalSeenPoints] > 0 && 
+         First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
+             globalSeenPoints]] <= 10^(-20), Print[inname]; 
+         Print["Point seen"]; Return[False, Block], 
+        AppendTo[globalSeenPoints, {ptcoord, pt}]; ]]; 
       If[num != 0, chk = 0, chk = checkPointinETC2[ptcoord]]; 
       If[Length[chk] > 0, Print[colorformat[StringJoin["ETC: ", chk]]]; 
-        Return[False, Module], barys = Factor[FactorTermsList[expr[[1]]][[
+        Return[False, Block], barys = Factor[FactorTermsList[expr[[1]]][[
            2]]]; If[StringLength[inname] == 0, 
          name = ToString[ExpressionToTrad[expr[[1]]]], name = inname]; 
         AssociateTo[globalProperties, name -> Association[]]; 
@@ -497,12 +498,8 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            printSessionTime[]; Print["Starting conic centers"]; ]; 
           Quiet[checkPerspector[ptcoord, name]]; 
           Quiet[checkConicCenter[ptcoord, name]]; If[ !TrueQ[globalSilence], 
-           printSessionTime[]; Print["Starting baricentrics"]; ]; 
-          Quiet[checkBarycentric[ptcoord, "product", name]]; 
-          Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
-          If[ !TrueQ[globalSilence], printSessionTime[]; 
-            Print["Starting processes"]; ]; TimeConstrained[
-           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
+           printSessionTime[]; Print["Starting processes"]; ]; 
+          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
           If[ !TrueQ[globalSilence], Print["==========="]]; ]; ]; 
       Return[True]; ]
  
@@ -693,13 +690,14 @@ checkConicCenter[pt_, inname_:"X"] := Module[{out, ptest, ptcheck, crv, set1,
  
 pointCheckerTransform[expr_, inname_, num_:0, full_:False] := 
     Module[{pointProcesses, texpr, procname}, 
-     If[ !TrueQ[globalSilence], Print[inname]]; pointChecker[expr, num, full, 
-       inname]; If[TrueQ[globalSilence], printGlobalProperties[
-        globalProperties, inname]]; pointProcesses = 
-       Association["isotomic conjugate" -> Hold[bIsotomicConjugate[#1]], 
-        "isogonal conjugate" -> Hold[bIsogonalConjugate[#1]], 
-        "complement" -> Hold[bComplement[KimberlingCenterC[2], #1]], 
-        "anticomplement" -> Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
+     If[ !TrueQ[globalSilence], Print[]; Print[inname]]; 
+      pointChecker[expr, num, full, inname]; If[TrueQ[globalSilence], 
+       printGlobalProperties[globalProperties, inname]]; 
+      pointProcesses = Association["isotomic conjugate" -> 
+         Hold[bIsotomicConjugate[#1]], "isogonal conjugate" -> 
+         Hold[bIsogonalConjugate[#1]], "complement" -> 
+         Hold[bComplement[KimberlingCenterC[2], #1]], "anticomplement" -> 
+         Hold[bAntiComplement[KimberlingCenterC[2], #1]], 
         "cyclocevian conjugate" -> Hold[bCyclocevianConjugate[#1]], 
         "circumcircle inverse" -> Hold[bCircumcircleInverse[#1]], 
         "zosma transform" -> Hold[bZosmaTransform[#1]], 
@@ -835,15 +833,20 @@ addExtraPoint[bary_, letter_, name_, writeout_:True] :=
          NonETCNames]; ]; Return[dbname]; ]
  
 quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True, 
-     minprop_:1000] := Module[{ptcoord, pt, chk, lines, barys, symcheck, 
-      name, numcon}, lines = 0; numcon = 0; ptcoord = evaluate[expr]; 
+     minprop_:1000] := Block[{ptcoord, pt, chk, lines, barys, symcheck, name, 
+      numcon}, ptcoord = evaluate[expr]; lines = 0; numcon = 0; 
       If[dosymcheck, If[ !checkCentralExpression[expr], 
-         Return[False, Module]; ]; ]; If[num != 0, chk = 0, 
+         Return[False, Block]; ]; ]; If[num != 0, chk = 0, 
        chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
        Print[colorformat[StringJoin["ETC: ", chk]]], 
-       barys = Factor[FactorTermsList[expr[[1]]][[2]]]; 
-        lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, False, True, 
-            "X", True]]]; If[curvescheck && lines < minprop, 
+       pt = intnumericnorm[ptcoord /. rule69]; If[globalSeenPoints != False, 
+         If[Length[globalSeenPoints] > 0 && 
+           First[MinimalBy[Value][(Total[Abs[#1[[2]] - pt]] & ) /@ 
+               globalSeenPoints]] <= 10^(-20), Print["Point seen !"]; 
+           Return[{0, 0}, Block], AppendTo[globalSeenPoints, 
+            {ptcoord, pt}]; ]]; barys = Factor[FactorTermsList[expr[[1]]][[
+           2]]]; lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, 
+            False, True, "X", True]]]; If[curvescheck && lines < minprop, 
          numcon = Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
       Return[{lines, numcon}]; ]
  

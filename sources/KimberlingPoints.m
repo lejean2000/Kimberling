@@ -50,7 +50,7 @@ checkPointinETC2[pt_] := Module[{ptnum, set, out, cmplx},
 rulesSimplify = a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && 
      b + c > a && S > 0
  
-checkPointsOnCurve[crv_] := Module[{curve, curve2, out, normcoef}, 
+checkPointsOnCurve[crv_] := Block[{curve, curve2, out, normcoef}, 
      curve = evaluate[crv] /. Thread[{u, v, w} -> {x, y, z}]; 
       curve2 = curve /. rule69; normcoef = 
        Max[Flatten[Abs[CoefficientList[curve2, {x, y, z}]]]]; 
@@ -71,22 +71,23 @@ checkPointOnCurveNum[crv_, pt_, rules_:intCheckList] :=
         If[test > 1/10^15, Return[False, Module]]; , {r, rules}]; 
       Return[True]; ]
  
-checkPointsOnCurveNamed[crvname_] := Module[{srch}, 
+checkPointsOnCurveNamed[crvname_] := Block[{srch}, 
      srch = Select[Keys[TriangleCurves], StringContainsQ[#1, crvname] & ]; 
-      If[Length[srch] > 1, Print["Which curve?"]; Print[srch]]; 
-      If[Length[srch] == 0, Print["No such curve"]]; Print[srch]; 
+      If[Length[srch] > 1, Print["Which curve?"]; Print[srch]; 
+        Return[False, Block]]; If[Length[srch] == 0, Print["No such curve"]; 
+        Return[False, Block]]; Print[srch]; 
       Return[checkPointsOnCurve[TriangleCurves[First[srch]]]]; ]
  
 XNy[k_] := Module[{k2}, If[NumberQ[k], k2 = StringJoin["X", ToString[k]], 
        k2 = k]; KimberlingCenterCNy[k2]/Total[KimberlingCenterCNy[k2]]]
  
-checkTrianglesOnCurve[crv_] := Module[{ecrv, out}, 
+checkTrianglesOnCurve[crv_] := Block[{ecrv, out}, 
      ecrv = evaluate[crv] /. rule69; out = {}; 
       Do[If[(ecrv /. Thread[{x, y, z} -> (KimberlingTrianglesBary[name] /. 
              rule69)]) == 0, AppendTo[out, name]; ], 
        {name, Keys[KimberlingTrianglesBary]}]; Return[out]; ]
  
-checkCurvesForTriangle[tr_] := Module[{ecrv, out}, 
+checkCurvesForTriangle[tr_] := Block[{ecrv, out}, 
      out = {}; Do[ecrv = evaluate[TriangleCurves[name]] /. rule69; 
         If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. rule69)]) == 0, 
          AppendTo[out, name]; ], {name, Keys[TriangleCurves]}]; Return[out]; ]
@@ -95,53 +96,59 @@ sinReplace = {Sin[A] -> S/(b*c), Sin[B] -> S/(a*c), Sin[C] -> S/(a*b),
      Cos[A] -> evaluate[Cos[A]], Cos[B] -> evaluate[Cos[B]], 
      Cos[C] -> evaluate[Cos[C]]}
  
-checkTriangleExists[tr_] := Module[{chk}, 
+checkTriangleExists[tr_] := Block[{chk}, 
      Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
           intnumericnorm[evaluate[KimberlingTrianglesBary[trkim]] /. 
             rule69]]; If[Max[Abs[chk]] < 10^(-24), 
-         Return[{True, trkim}, Module]; ], 
+         Return[{True, trkim}, Block]; ], 
        {trkim, Keys[KimberlingTrianglesBary]}]; 
       Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
           intnumericnorm[evaluate[CPTR[trkim][[1]]] /. rule69]]; 
-        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Module]; ], 
+        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Block]; ], 
        {trkim, Keys[CPTR]}]; 
       Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
           intnumericnorm[evaluate[ENCTR[trkim][[1]]] /. rule69]]; 
-        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Module]; ], 
+        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Block]; ], 
        {trkim, Keys[ENCTR]}]; Return[{False}]; ]
  
 trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
-    Module[{cnt, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
-      homval, outname}, cnt = 0; If[Length[trgname] != 0, 
-       Print["Invalid TRG Name"]; Return[False, Module]]; 
-      out = Association[]; trchke = evaluate[trchk] /. rule69; 
+    Block[{cnt, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
+      homval, outname, ishomo, homval2}, cnt = 0; If[Length[trgname] != 0, 
+       Print["Invalid TRG Name"]; Return[False, Block]]; out = Association[]; 
+      trchke = evaluate[trchk] /. rule69; ishomo = False; 
       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
         trsyme = evaluate[trsym] /. rule69; ntest = bIsPerspective @@ 
-          Join[trsyme, trchke]; If[Abs[ntest] < 10^(-24), 
-         cnt = cnt + 1; ptcoord = bTrianglePerspector[trchk, trsym]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Perspector of ", trgname, " and ", trname]; hmt = ""; 
-          homval = Abs[(bDistance[trchke[[1]], trchke[[2]]]/bDistance[
-                trsyme[[1]], trsyme[[2]]] /. rule69) - 
-             (bDistance[trchke[[1]], trchke[[3]]]/bDistance[trsyme[[1]], 
-                trsyme[[3]]] /. rule69)]; If[homval < 10^(-20), 
-           homval = Abs[bIsHomothetic[trchke, trsyme]]; If[homval < 10^(-20), 
-             hmt = Style[" - possibly homothetic", Red], 
+          Join[trsyme, trchke]; homval = 
+         Abs[(bDistance[trchke[[1]], trchke[[2]]]/bDistance[trsyme[[1]], 
+              trsyme[[2]]] /. rule69) - (bDistance[trchke[[1]], trchke[[3]]]/
+             bDistance[trsyme[[1]], trsyme[[3]]] /. rule69)]; 
+        If[Abs[ntest] < 10^(-24), cnt = cnt + 1; ptcoord = 
+           bTrianglePerspector[trchk, trsym]; perschk = checkPointinETC2[
+            ptcoord]; outname = StringJoin["Perspector of ", trgname, 
+            " and ", trname]; hmt = ""; If[homval < 10^(-20), 
+           homval2 = Abs[bIsHomothetic[trchke, trsyme] /. rule69]; 
+            If[homval2 < 10^(-20), If[trname == "ABC", ishomo = True]; 
+              hmt = Style[" - possibly homothetic", Red], 
              hmt = Style[" - possibly similar", Green]; ]; 
-            If[Length[perschk] > 0, Print[Row[{StringJoin[outname, ": ", 
-                  perschk[[1]]], hmt}]]; ]; ]; If[Length[perschk] > 0, 
+            If[Length[perschk] > 0 && (trname == "ABC" ||  !ishomo), 
+             Print[Row[{StringJoin[outname, ": ", perschk[[1]]], 
+                 hmt}]]; ]; ]; If[Length[perschk] > 0, 
            AssociateTo[out, outname -> perschk[[1]]]; , 
-           Print[Row[{outname, hmt}]]; ]; ]; , 
+           Print[Row[{outname, hmt}]]; ]; ]; If[Length[perschk] == 0 && 
+          homval < 10^(-20) &&  !TrueQ[homval2 < 10^(-20)] && 
+          MemberQ[KimberlingTrianglesBaryOrthKeys, trname], 
+         Print[Row[{StringJoin[trgname, " and ", trname], 
+             Style[" - possibly similar", Green]}]]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
       KeyValueMap[Print[#1 -> #2] & , GroupBy[out, Identity, Keys]]; 
       Return[cnt]; ]
  
 trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
-    Module[{keysset, out, trsym, ntest, ptcoord, perschk, outname}, 
+    Block[{keysset, out, trsym, ntest, ptcoord, perschk, outname}, 
      If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
-        Return[False, Module]]; 
+        Return[False, Block]]; 
       If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk]], 
-       Print["COLLINEAR POINTS"]; Return[False, Module]]; 
+       Print["COLLINEAR POINTS"]; Return[False, Block]]; 
       If[Keys[set][[1]] == "ABC", keysset = KimberlingTrianglesBaryOrthKeys, 
        keysset = Keys[set]; ]; out = Association[]; 
       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
@@ -161,10 +168,10 @@ trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
         Keys]]; ]
  
 trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary, 
-     exclset_:{}] := Module[{out, out2, out3, trexcl, htest, trsym, trsyme, 
+     exclset_:{}] := Block[{out, out2, out3, trexcl, htest, trsym, trsyme, 
       trchke, ntest, ptcoord, perschk, outname, collinear, keysset}, 
      If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
-        Return[False, Module]]; out = Association[]; collinear = False; 
+        Return[False, Block]]; out = Association[]; collinear = False; 
       If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk]], 
        collinear = True; Print["COLLINEAR POINTS"]]; 
       trchke = evaluate[trchk] /. rule69; out2 = {}; out3 = {}; 
@@ -225,9 +232,9 @@ checkNumberedPoint[ptc_, trgname_, idx_] := Module[{trgn, newkey},
         10^(-20), Return[False, Module]]; Return[True]; ]
  
 trgCheckBasepoints[trchk_, trgname_, set_:KimberlingTrianglesBary] := 
-    Module[{bps, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
+    Block[{bps, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
       homval, check}, Monitor[If[Length[trgname] != 0, 
-        Print["Invalid TRG Name"]; Return[False, Module]]; 
+        Print["Invalid TRG Name"]; Return[False, Block]]; 
        out = Association[]; trchke = evaluate[trchk] /. rule69; 
        Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
          trsyme = evaluate[trsym] /. rule69; ntest = bIsPerspective @@ 
@@ -249,13 +256,27 @@ trgCheckBasepoints[trchk_, trgname_, set_:KimberlingTrianglesBary] :=
                 "NP"]]; ]; ]; , {trname, Keys[set] /. "infinite-altitude" -> 
            Nothing}]; AssociationMap[Print[#1] & , out]; , trname]]
  
-trgFullCheck[trgchk_] := Module[{ex}, ex = checkTriangleExists[trgchk]; 
-      If[TrueQ[ex[[1]] != False], Print[ex]; 
-        If[StringContainsQ[ex[[2]], "CTR"] == False, Return[False, 
-          Module]]; ]; ex = checkCurvesForTriangle[trgchk]; 
-      If[Length[ex] > 0, Print[ex]]; Print[checkCurvesForTriangle[trgchk]]; 
-      Quiet[trgCheckPerspectivity[trgchk]]; 
-      Quiet[trgCheckPerspectivity[trgchk, "TR", CPTR]]; 
-      Quiet[trgCheckPerspectivity[trgchk, "TR", ENCTR]]; 
-      Quiet[trgCheckOrthologic[trgchk]]; Quiet[trgCheckParallelogic[trgchk]]; 
-      drawTriangles[{trgchk}]]
+trgFullCheck[trgchk_, scope_:{"pKIM", "oKIM", "plKIM", "pCPTR", "pENCTR", 
+       "oCPTR", "oENCTR"}] := Block[{ex}, 
+     Monitor[mon = "check"; ex = checkTriangleExists[trgchk]; 
+       If[TrueQ[ex[[1]] != False], Print[ex]]; mon = "curves"; 
+       ex = checkCurvesForTriangle[trgchk]; If[Length[ex] > 0, Print[ex]]; 
+       If[MemberQ[scope, "pKIM"] || MemberQ[scope, "fKIM"], 
+        mon = "pKIM"; Quiet[trgCheckPerspectivity[trgchk]]; ]; 
+       If[MemberQ[scope, "pCPTR"], mon = "pCPTR"; 
+         Quiet[trgCheckPerspectivity[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "pENCTR"], mon = "pENCTR"; 
+         Quiet[trgCheckPerspectivity[trgchk, "TR", ENCTR]]; ]; 
+       If[MemberQ[scope, "oKIM"] || MemberQ[scope, "fKIM"], 
+        mon = "oKIM"; Quiet[trgCheckOrthologic[trgchk]]; ]; 
+       If[MemberQ[scope, "oCPTR"], mon = "oCPTR"; 
+         Quiet[trgCheckOrthologic[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "oENCTR"], mon = "oENCTR"; 
+         Quiet[trgCheckOrthologic[trgchk, "TR", ENCTR]]; ]; 
+       If[MemberQ[scope, "plKIM"] || MemberQ[scope, "fKIM"], 
+        mon = "plKIM"; Quiet[trgCheckParallelogic[trgchk]]; ]; 
+       If[MemberQ[scope, "plCPTR"], mon = "plCPTR"; 
+         Quiet[trgCheckParallelogic[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "plENCTR"], mon = "plENCTR"; 
+         Quiet[trgCheckParallelogic[trgchk, "TR", ENCTR]]; ]; 
+       drawTriangles[{trgchk}], mon]]

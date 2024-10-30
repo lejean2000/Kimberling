@@ -1,5 +1,7 @@
 #!/usr/bin/env wolframscript
 
+$HistoryLength = 0;
+
 If[$OperatingSystem == "Windows",
 Get["../sources/initwin.wls"],
 Get["../sources/init.wls"]
@@ -9,8 +11,10 @@ Get["../db/ETCExtra.mx"];
 Get["../db/ETCExtraBary.mx"];
 Get["../db/NonETCNames.mx"];
 
+(*
 Get["../db/TRETC.mx"];
 TRETC = Sort[Map[Round[#[[1]], 0.00000000000000000001] &, TRETC]];
+*)
 
 STARTETCNUMBER = 70000;
 
@@ -43,11 +47,12 @@ Do[
   , {ptname, Keys[globalptexpr]}
 ];
 
+(* Add Extra points to ETC*)
 Do[
   AppendTo[ETC, ptname -> globalptexpr[ptname]];
   AppendTo[ETCBaryNorm, ptname -> globalptbary[ptname]];
   , {ptname, Keys[globalptexpr]}
-  ];
+];
 
 singlePointProcesses = Association[
   "isogonal conjugate" -> {a^2 v w, b^2 u w, c^2 u v},
@@ -59,7 +64,7 @@ singlePointProcesses = Association[
 globalOutputStream = False;
 pointCheckerMinProperties = 2;
 
-loop[from_, to_] := Module[{xname, ptcoord, pt},
+loop[from_, to_] := Block[{xname, ptcoord, pt, pos},
 
   Do[
    xname = "X" <> ToString[nx];
@@ -71,10 +76,12 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
    Print[];Print[globalptnames[xname]];Print[];
 
    pointChecker[ptcoord, xname, False, xname];
-
-   pos = Position[TRETC, Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001]];
    
    globalProperties[xname]["others"]={};
+
+   (*
+   pos = Position[TRETC, Round[bToCartesianN[evaluate[ptcoord]][[1]], 0.00000000000000000001]];
+
    Do[
 		trpt = StringTake[ToString[el],{6,-2+StringLength[ToString[el]]}];
 		itrg = StringTake[trpt, {1 + StringPosition[trpt, "-of-"][[1]][[2]], StringLength[trpt]}];
@@ -86,7 +93,8 @@ loop[from_, to_] := Module[{xname, ptcoord, pt},
 		Print[trpt];
    ,{el,pos}
    ];
-   
+   *)
+
    Print["=======END======="];
 
    If [
@@ -117,4 +125,4 @@ endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
     numsortexpr[#] &], {2, -1}]
 ]]];
 
-loop[STARTETCNUMBER, endnum];
+loop[70020, endnum];

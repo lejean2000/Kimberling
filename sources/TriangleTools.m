@@ -662,10 +662,10 @@ symmetrizeTriangleExprType2Bary[{v1_, v2_, v3_}] :=
     Module[{partB1, partB2, partB3, partC1, partC2, partC3, repl}, 
      repl = {a -> b, b -> c, c -> a, sa -> sb, sb -> sc, sc -> sa, SA -> SB, 
         SB -> SC, SC -> SA, u -> v, v -> w, w -> u, p -> q, q -> r, r -> p, 
-        A -> B, B -> C, C -> A}; partB1 = v3 /. repl; partB2 = v1 /. repl; 
-      partB3 = v2 /. repl; partC1 = partB3 /. repl; partC2 = partB1 /. repl; 
-      partC3 = partB2 /. repl; {{v1, v2, v3}, {partB1, partB2, partB3}, 
-       {partC1, partC2, partC3}}]
+        A -> B, B -> C, C -> A, x -> y, y -> z, z -> x}; partB1 = v3 /. repl; 
+      partB2 = v1 /. repl; partB3 = v2 /. repl; partC1 = partB3 /. repl; 
+      partC2 = partB1 /. repl; partC3 = partB2 /. repl; 
+      {{v1, v2, v3}, {partB1, partB2, partB3}, {partC1, partC2, partC3}}]
  
 bToCartesianN[p_] := N[bToCartesian[p, {31/3, (4*Sqrt[35])/3}, {0, 0}, 
        {6, 0}] /. rule69, 30]
@@ -1026,9 +1026,8 @@ bAreLinePerpendicular[{x1_, y1_, z1_}, {x2_, y2_, z2_}] :=
     a^2*x1*x2 + b^2*y1*y2 + c^2*z1*z2 - SA*(y1*z2 + y2*z1) - 
      SB*(z1*x2 + z2*x1) - SC*(x1*y2 + x2*y1)
  
-bCircleOnDiameter[U1_, U2_] := curveSimplify[
-     evaluate[bAreLinePerpendicular[bLine[{x, y, z}, U1], 
-       bLine[{x, y, z}, U2]]]]
+bCircleOnDiameter[U1_, U2_] := curveSimplify[partialSAconvert[
+      bAreLinePerpendicular[bLine[{x, y, z}, U1], bLine[{x, y, z}, U2]]]]
  
 laHireRadicalCenter[func_] := Module[{e}, e = symmetrizeInternal2[func]; 
       radicalCenter[xA, e[[1]], xB, e[[2]], xC, e[[3]]]]
@@ -1445,23 +1444,18 @@ bPTCTriangle[{u_, v_, w_}, {p_, q_, r_}, {l_, m_, n_}] :=
       -((a^2 - b^2)*((-n)*(p + q)*v + m*r*(u + v))) + 
        c^2*(n*(-p + q)*v + m*(2*q*u + r*u - 2*p*v - r*v)), 0}}
  
-drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] := Module[{drset, trgsete}, 
-     drset = {}; trgsete = evaluate[trgset]; AppendTo[drset, 
-       {Triangle[{pa, pb, pc}]}]; AppendTo[drset, {RGBColor[1, 0, 0, 0.8], 
-        Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, pb, 
-              pc], 30] & ) /@ trgsete[[1]]]}]; If[Length[trgset] >= 2, 
-       AppendTo[drset, {RGBColor[0, 0.5, 1, 0.8], 
-          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
-                pb, pc], 30] & ) /@ trgsete[[2]]]}]; ]; 
-      If[Length[trgset] >= 3, AppendTo[drset, {RGBColor[0, 1, 0.5, 0.8], 
-          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
-                pb, pc], 30] & ) /@ trgsete[[3]]]}]; ]; 
-      If[Length[trgset] >= 4, AppendTo[drset, {RGBColor[1, 0.1, 0.5, 0.8], 
-          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
-                pb, pc], 30] & ) /@ trgsete[[4]]]}]; ]; 
-      If[Length[trgset] >= 5, AppendTo[drset, {RGBColor[0.5, 0, 1, 0.5], 
-          Triangle[(N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, 
-                pb, pc], 30] & ) /@ trgsete[[5]]]}]; ]; Graphics[drset]]
+drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] := 
+    Module[{i, drset, trgsete, evald, colors}, 
+     colors = {RGBColor[1, 0, 0, 0.8], RGBColor[0, 0.5, 1, 0.8], 
+        RGBColor[0, 1, 0.5, 0.8], RGBColor[1, 0.1, 0.5, 0.8], 
+        RGBColor[0.5, 0, 1, 0.5], RGBColor[0.2, 0.2, 0.2, 0.2]}; drset = {}; 
+      trgsete = evaluate[trgset]; AppendTo[drset, {Triangle[{pa, pb, pc}]}]; 
+      i = 1; Do[evald = (N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[
+              pa, pb, pc], 30] & ) /@ pt; 
+        If[TrueQ[bCollinearityMatrix @@ (pt /. rule69) == 0], 
+         AppendTo[drset, ({PointSize[Medium], colors[[i]], Point[#1]} & ) /@ 
+            evald]; , AppendTo[drset, {colors[[i]], Triangle[evald]}]; ]; 
+        i = i + 1; , {pt, trgsete}]; Graphics[drset]]
  
 bIsHomothetic[tr1_, tr2_] := bIsParallel[bLine[tr1[[1]], tr1[[2]]], 
      bLine[tr2[[1]], tr2[[2]]]]
@@ -1481,3 +1475,7 @@ basepoints[tr1_, tr2_, pt_:{}] := Module[{xa, out, sol, ptt},
        AppendTo[out, {}]; ]; Return[out]; ]
  
 inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]
+ 
+bDanneelsPoint[{u_, v_, w_}] := {u^2*(v + w), v^2*(u + w), (u + v)*w^2}
+ 
+symtr = symmetrizeTriangleExprType2Bary

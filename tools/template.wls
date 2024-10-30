@@ -7,7 +7,6 @@ Get["../sources/init.wls"]
 
 Get["../db/ETCExtra.mx"];
 Get["../db/ETCExtraBary.mx"];
-Get["../db/NonETCNames.mx"];
 
 STARTETCNUMBER = 70000;
 
@@ -40,6 +39,13 @@ Do[
   , {ptname, Keys[globalptexpr]}
 ];
 
+(* Add Extra points to ETC*)
+Do[
+  AppendTo[ETC, ptname -> globalptexpr[ptname]];
+  AppendTo[ETCBaryNorm, ptname -> globalptbary[ptname]];
+  , {ptname, Keys[globalptexpr]}
+];
+
 singlePointProcesses = Association[
   "isogonal conjugate" -> {a^2 v w, b^2 u w, c^2 u v},
   "isotomic conjugate" -> {v w, u w, u v},
@@ -50,17 +56,17 @@ singlePointProcesses = Association[
 globalOutputStream = False;
 
 
-addpoint[ptnum_, prcoordexpr_, topname_, ptnamein_:""] := Module[{yy, xname, start},
-  pointCheckerMinProperties = 8;
+addpoint[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, ptnametop, totalnum},
+  pointCheckerMinProperties = 10;
   start = ptnum;
+
+   ptnametop = topname;
 
    globalNoCleanup = True;
    
-   If[StringLength[topname]>0, Print[];Print["======="<>topname<>"=======1"]];
-   If[StringLength[ptnamein]>0, Print[];Print["======="<>ptnamein<>"=======2"]];
+   Print[];
    
-   
-   ptchk = TimeConstrained[quickChecker[ptcoord,0,False],30,-1];
+   ptchk = TimeConstrained[quickChecker[ptcoord,0,True,True,pointCheckerMinProperties],30,-1];
    (*If[Total[ptchk]>=2,crvsnum=checkCurves[ptcoord] // Quiet // Length;,crvsnum=0];*)
    
    totalnum = Total[ptchk];
@@ -85,31 +91,31 @@ addpoint[ptnum_, prcoordexpr_, topname_, ptnamein_:""] := Module[{yy, xname, sta
 
 	   Print["======="<>ToString[ptchk]<>"======="];Print[xname];
    ];
-
+  
+  Print[];
   Return[start-1];
 ];
 
 
-quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname, ptcoord, ptdescr, start},
-  pointCheckerMinProperties = 1;
+quickloop[ptnum_, prcoordexpr_, set_, topname_] := Module[{yy, xname, ptcoord, start, ptnametop},
+  pointCheckerMinProperties = 10;
   start = ptnum;
   Do[
-   ptdescr = "";
    ptnametop = "";
 
-   ptcoord = TimeConstrained[prcoordexpr/.Thread[pP -> KimberlingCenterC[nx]]//partialSReplace//simplifyRationalBarycentrics,10,-1];
+   ptcoord = TimeConstrained[prcoordexpr/.Thread[pP -> KimberlingCenterC[nx]]//smpl,10,-1];
    If[ptcoord == -1, Continue[]];
 
    globalNoCleanup = True;
    
    ptnametop = StringReplace[topname, "XX" -> intaddbrackets["X"<>ToString[nx]]];
    If[StringLength[ptnametop]>0, Print[];Print["======="<>ptnametop<>"=======1"]];
-   ptdescr = StringReplace[ptnamein, "XX" -> intaddbrackets["X"<>ToString[nx]]];
-   If[StringLength[ptdescr]>0, Print[];Print["======="<>ptdescr<>"=======2"]];
    
    Print[];
    
    ptchk = TimeConstrained[quickChecker[ptcoord,0,False],30,-1];
+   (*If[Total[ptchk]>=2,crvsnum=checkCurves[ptcoord] // Quiet // Length;,crvsnum=0];*)
+   
    totalnum = Total[ptchk];
    
    If[
@@ -146,7 +152,7 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_, ptnamein_] := Module[{yy, xname,
 
 endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
   StringTake[
-   SortBy[Keys[KeySelect[ETC, StringStartsQ[#, "X"] &]], 
+   SortBy[Keys[KeySelect[globalptnames, StringStartsQ[#, "X"] &]], 
     numsortexpr[#] &], {2, -1}]]]];
 
 
@@ -164,7 +170,7 @@ set = massHeuristics1[pers /. Thread[pQ -> X[num]], 1, 170][[1]];
 
 Print[set];
 
-endnum = quickloop[1+endnum, expr, set, "", "isotomic conjugate of bicevian chordal perspector of X("<>ToString[num]<>") and XX"]; 
+endnum = quickloop[1+endnum, expr, set, "isotomic conjugate of bicevian chordal perspector of X("<>ToString[num]<>") and XX"]; 
 ,{num,{1,2,3,4,6,7,8,9,10,11,12,21,31,37,75,76,81,86}}
 ];
 
