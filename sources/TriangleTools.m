@@ -1479,3 +1479,11 @@ inv[trg_] := simplifyRationalBarycentrics /@ Inverse[(#1/Total[#1] & ) /@ trg]
 bDanneelsPoint[{u_, v_, w_}] := {u^2*(v + w), v^2*(u + w), (u + v)*w^2}
  
 symtr = symmetrizeTriangleExprType2Bary
+ 
+crosstripolar[trg1_, trg2_] := Block[{pa, pb, pc}, 
+     pa = simplifyRationalBarycentrics[bTripoleEqGeneral[trg1[[1]], 
+         trg2[[2]], trg2[[3]], bLine[trg1[[2]], trg1[[3]]]]]; 
+      pb = simplifyRationalBarycentrics[bTripoleEqGeneral[trg1[[2]], 
+         trg2[[3]], trg2[[1]], bLine[trg1[[3]], trg1[[1]]]]]; 
+      pc = simplifyRationalBarycentrics[bTripoleEqGeneral[trg1[[3]], 
+         trg2[[1]], trg2[[2]], bLine[trg1[[1]], trg1[[2]]]]]; {pa, pb, pc}]
