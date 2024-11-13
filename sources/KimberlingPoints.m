@@ -140,8 +140,8 @@ trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
          Print[Row[{StringJoin[trgname, " and ", trname], 
              Style[" - possibly similar", Green]}]]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
-      KeyValueMap[Print[#1 -> #2] & , GroupBy[out, Identity, Keys]]; 
-      Return[cnt]; ]
+      KeyValueMap[Print[intaddbrackets[#1] -> #2] & , GroupBy[out, Identity, 
+        Keys]]; Return[cnt]; ]
  
 trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
     Block[{keysset, out, trsym, ntest, ptcoord, perschk, outname}, 
@@ -164,8 +164,8 @@ trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
             " and ", trgname]; If[Length[perschk] > 0, 
            AssociateTo[out, outname -> perschk[[1]]]; , 
            Print[outname]; ]; ]; , {trname, keysset /. "infinite-altitude" -> 
-          Nothing}]; KeyValueMap[Print[#1 -> #2] & , GroupBy[out, Identity, 
-        Keys]]; ]
+          Nothing}]; KeyValueMap[Print[intaddbrackets[#1] -> #2] & , 
+       GroupBy[out, Identity, Keys]]; ]
  
 trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary, 
      exclset_:{}] := Block[{out, out2, out3, trexcl, htest, trsym, trsyme, 
@@ -203,8 +203,8 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
       If[Length[out2] > 0, Print[StringJoin["Orthology center of ", trgname, 
          " and ", ToString[out2]]]]; If[Length[out3] > 0, 
        Print[StringJoin["Orthology center of ", ToString[out3], " and ", 
-         trgname]]]; KeyValueMap[Print[#1 -> #2] & , GroupBy[out, Identity, 
-        Keys]]; ]
+         trgname]]]; KeyValueMap[Print[intaddbrackets[#1] -> #2] & , 
+       GroupBy[out, Identity, Keys]]; ]
  
 checkNumberedPoint[ptc_, trgname_, idx_] := Module[{trgn, newkey}, 
      If[newkey == "ABC-X3-reflections", newkey = "ABC-X3 reflections"]; 
@@ -257,26 +257,33 @@ trgCheckBasepoints[trchk_, trgname_, set_:KimberlingTrianglesBary] :=
            Nothing}]; AssociationMap[Print[#1] & , out]; , trname]]
  
 trgFullCheck[trgchk_, scope_:{"pKIM", "oKIM", "plKIM", "pCPTR", "pENCTR", 
-       "oCPTR", "oENCTR"}] := Block[{ex}, 
-     Monitor[mon = "check"; ex = checkTriangleExists[trgchk]; 
+       "oCPTR", "oENCTR", "pUNCFTRG"}] := 
+    Block[{ex}, Monitor[mon = "check"; ex = checkTriangleExists[trgchk]; 
        If[TrueQ[ex[[1]] != False], Print[ex]]; mon = "curves"; 
        ex = checkCurvesForTriangle[trgchk]; If[Length[ex] > 0, Print[ex]]; 
        If[MemberQ[scope, "pKIM"] || MemberQ[scope, "fKIM"], 
         mon = "pKIM"; Quiet[trgCheckPerspectivity[trgchk]]; ]; 
-       If[MemberQ[scope, "pCPTR"], mon = "pCPTR"; 
-         Quiet[trgCheckPerspectivity[trgchk, "TR", CPTR]]; ]; 
-       If[MemberQ[scope, "pENCTR"], mon = "pENCTR"; 
-         Quiet[trgCheckPerspectivity[trgchk, "TR", ENCTR]]; ]; 
-       If[MemberQ[scope, "oKIM"] || MemberQ[scope, "fKIM"], 
+       If[MemberQ[scope, "pCPTR"] || MemberQ[scope, "fCPTR"], 
+        mon = "pCPTR"; Quiet[trgCheckPerspectivity[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "pENCTR"] || MemberQ[scope, "fENCTR"], 
+        mon = "pENCTR"; Quiet[trgCheckPerspectivity[trgchk, "TR", ENCTR]]; ]; 
+       If[MemberQ[scope, "pUNCFTRG"] || MemberQ[scope, "fUNCFTRG"], 
+        mon = "pUNCFTRG"; Quiet[trgCheckPerspectivity[trgchk, "TR", 
+           UNCFTRG]]; ]; If[MemberQ[scope, "oKIM"] || MemberQ[scope, "fKIM"], 
         mon = "oKIM"; Quiet[trgCheckOrthologic[trgchk]]; ]; 
-       If[MemberQ[scope, "oCPTR"], mon = "oCPTR"; 
-         Quiet[trgCheckOrthologic[trgchk, "TR", CPTR]]; ]; 
-       If[MemberQ[scope, "oENCTR"], mon = "oENCTR"; 
-         Quiet[trgCheckOrthologic[trgchk, "TR", ENCTR]]; ]; 
-       If[MemberQ[scope, "plKIM"] || MemberQ[scope, "fKIM"], 
-        mon = "plKIM"; Quiet[trgCheckParallelogic[trgchk]]; ]; 
-       If[MemberQ[scope, "plCPTR"], mon = "plCPTR"; 
-         Quiet[trgCheckParallelogic[trgchk, "TR", CPTR]]; ]; 
-       If[MemberQ[scope, "plENCTR"], mon = "plENCTR"; 
-         Quiet[trgCheckParallelogic[trgchk, "TR", ENCTR]]; ]; 
-       drawTriangles[{trgchk}], mon]]
+       If[MemberQ[scope, "oCPTR"] || MemberQ[scope, "fCPTR"], 
+        mon = "oCPTR"; Quiet[trgCheckOrthologic[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "oENCTR"] || MemberQ[scope, "fENCTR"], 
+        mon = "oENCTR"; Quiet[trgCheckOrthologic[trgchk, "TR", ENCTR]]; ]; 
+       If[MemberQ[scope, "oUNCFTRG"] || MemberQ[scope, "fUNCFTRG"], 
+        mon = "oUNCFTRG"; Quiet[trgCheckOrthologic[trgchk, "TR", 
+           UNCFTRG]]; ]; If[MemberQ[scope, "plKIM"] || 
+         MemberQ[scope, "fKIM"], mon = "plKIM"; 
+         Quiet[trgCheckParallelogic[trgchk]]; ]; 
+       If[MemberQ[scope, "plCPTR"] || MemberQ[scope, "fCPTR"], 
+        mon = "plCPTR"; Quiet[trgCheckParallelogic[trgchk, "TR", CPTR]]; ]; 
+       If[MemberQ[scope, "plENCTR"] || MemberQ[scope, "fENCTR"], 
+        mon = "plENCTR"; Quiet[trgCheckParallelogic[trgchk, "TR", ENCTR]]; ]; 
+       If[MemberQ[scope, "plUNCFTRG"] || MemberQ[scope, "fUNCFTRG"], 
+        mon = "plUNCFTRG"; Quiet[trgCheckParallelogic[trgchk, "TR", 
+           UNCFTRG]]; ]; drawTriangles[{trgchk}], mon]]

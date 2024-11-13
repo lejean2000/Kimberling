@@ -12,7 +12,7 @@ Many other central triangles families do not have names. The goal of this site i
 We will follow a common naming scheme as follows. All families start with CTR followed by an index, e.g. CTR1.
 
 *   If a family depends on one parameter, which is always a triangle center, having an ETC designation, e.g. X(m), then the name of any particular triangle in this series is **CTR1-m**. The listed barycentric coordinates will depend on X(m) = (u:v:w).
-*   If a family depends on two parameters, e.g. CTR5, the naming will be CTR5-m.n and the listed barycentric coordinates will depend on two points X(m) = (u:v:w) and X(n) = (p:q:r).
+*   If a family depends on two parameters, e.g. CTR5, the naming will be **CTR5-m.n** and the listed barycentric coordinates will depend on two points X(m) = (u:v:w) and X(n) = (p:q:r).
 
 Below, the variable points are usually P=(u:v:w) and Q=(p:q:r), unless stated differently.
 
@@ -20,39 +20,41 @@ Below, the variable points are usually P=(u:v:w) and Q=(p:q:r), unless stated di
 
 Let P=(u:v:w) be a point. The CTR1(P) triangle is formed by the Aubert (Steiner) lines of quadrilaterals ABPC, BCPA, and CAPB. The barycentric coordinates of the A-vertex are:  
 
-`(a^2*(-v+w)+(b^2-c^2)*(v+w))*(a^2*(v-w)+(b^2-c^2)*(2*u+v+w)) :
-a^4*(v*(u+2*v)+(u+v)*w+w^2)-2*a^2*(b^2*(v^2+u*w+2*v*w)+c^2*(2*v*(u+v)+(u+2*v)*w+w^2))-(b^2-c^2)*(c^2*((v+w)*(2*v+w)+u*(3*v+w))+b^2*(w*(v+w)+u*(v+3*w))) :
-a^4*(v*(u+v)+(u+v)*w+2*w^2)-2*a^2*(c^2*(u*v+2*v*w+w^2)+b^2*(v*(u+v)+2*(u+v)*w+2*w^2))+(b^2-c^2)*(c^2*(v*(3*u+v)+(u+v)*w)+b^2*(v*(u+v)+3*(u+v)*w+2*w^2))`
+    (a^2*(-v+w)+(b^2-c^2)*(v+w))*(a^2*(v-w)+(b^2-c^2)*(2*u+v+w)) :
+    a^4*(v*(u+2*v)+(u+v)*w+w^2)-2*a^2*(b^2*(v^2+u*w+2*v*w)+c^2*(2*v*(u+v)+(u+2*v)*w+w^2))-(b^2-c^2)*(c^2*((v+w)*(2*v+w)+u*(3*v+w))+b^2*(w*(v+w)+u*(v+3*w))) :
+    a^4*(v*(u+v)+(u+v)*w+2*w^2)-2*a^2*(c^2*(u*v+2*v*w+w^2)+b^2*(v*(u+v)+2*(u+v)*w+2*w^2))+(b^2-c^2)*(c^2*(v*(3*u+v)+(u+v)*w)+b^2*(v*(u+v)+3*(u+v)*w+2*w^2))
 
 ### CTR2
 
 Let P be a point and A'B'C' the anticevian triangle of P=(u:v:w). The CTR2(P) triangle is formed by the Aubert (Steiner) lines of quadrilaterals CABA', ABCB', BCAC'. The barycentric coordinates of the A-vertex are:  
 
-`(a^2*(2*u-v-w)-(b^2-c^2)*(v-w))*(-((b^2-c^2)*(v-w))+a^2*(v+w)) :
-(b^2-c^2)*(v-w)*(b^2*(u+w)+c^2*(-u-2*v+w))-a^4*(-2*v^2+v*w-w^2+u*(v+w))-2*a^2*(b^2*(v^2+u*w-2*v*w)+c^2*(2*v^2-u*w-2*v*w+w^2)) :
-(b^2-c^2)*(c^2*(u+v)+b^2*(-u+v-2*w))*(v-w)-a^4*(-v^2+v*w-2*w^2+u*(v+w))-2*a^2*(c^2*(u*v-2*v*w+w^2)+b^2*(-(u*v)+v^2-2*v*w+2*w^2))`
+    (a^2*(2*u-v-w)-(b^2-c^2)*(v-w))*(-((b^2-c^2)*(v-w))+a^2*(v+w)) :
+    (b^2-c^2)*(v-w)*(b^2*(u+w)+c^2*(-u-2*v+w))-a^4*(-2*v^2+v*w-w^2+u*(v+w))-2*a^2*(b^2*(v^2+u*w-2*v*w)+c^2*(2*v^2-u*w-2*v*w+w^2)) :
+    (b^2-c^2)*(c^2*(u+v)+b^2*(-u+v-2*w))*(v-w)-a^4*(-v^2+v*w-2*w^2+u*(v+w))-2*a^2*(c^2*(u*v-2*v*w+w^2)+b^2*(-(u*v)+v^2-2*v*w+2*w^2))
 
 ### CTR3
 
 Let A1B1C1 be the cevian and A2B2C2 be the circlecevian triangle of P=(u:v:w). Circle (BC1C2) intersect BC at Ba, circle (CB1B2) intersect BC at Ca. Define Ab,Cb,Ac,Bc cyclically. Let Pa be the intersection of BaBc and CaCb and similarly define Pb and Pc. The CTR3(P) triangle is PaPbPc. The barycentric coordinates of the A-vertex are:  
 
-`a^2*v*(b^2*u-c^2*u+a^2*v)*w*(-(b^2*u)+c^2*u+a^2*w)*(c^2*u*v*(2*v*w+u*(v+w))+w*(a^2*v*(-u^2+v*w)+b^2*u*(2*v*w+u*(v+w)))) : 
-u*(a^2*v-c^2*v-b^2*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(b^4*u^2*w*(v+w)-v*(c^2*u+a^2*w)*(-a^2*(u+v)*w+c^2*u*(v+w))+b^2*u*(a^2*v*w*(-u+w)+c^2*u*(v^2-w^2))) : 
-u*(-c^2*v+(a^2-b^2)*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(-b^4*u^2*w*(v+w)+v*(a^2*c^2*u*(-u+v)*w+a^4*v*w*(u+w)+c^4*u^2*(v+w))+b^2*u*(a^2*(u-v)*v*w+c^2*u*(-v^2+w^2)))`
+    a^2*v*(b^2*u-c^2*u+a^2*v)*w*(-(b^2*u)+c^2*u+a^2*w)*(c^2*u*v*(2*v*w+u*(v+w))+w*(a^2*v*(-u^2+v*w)+b^2*u*(2*v*w+u*(v+w)))) : 
+    u*(a^2*v-c^2*v-b^2*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(b^4*u^2*w*(v+w)-v*(c^2*u+a^2*w)*(-a^2*(u+v)*w+c^2*u*(v+w))+b^2*u*(a^2*v*w*(-u+w)+c^2*u*(v^2-w^2))) : 
+    u*(-c^2*v+(a^2-b^2)*w)*(c^2*u*v+b^2*u*w+a^2*v*w)*(-b^4*u^2*w*(v+w)+v*(a^2*c^2*u*(-u+v)*w+a^4*v*w*(u+w)+c^4*u^2*(v+w))+b^2*u*(a^2*(u-v)*v*w+c^2*u*(-v^2+w^2)))
 
 ### CTR4
 
 Let P be a point. DEF cevian triangle of P=(u:v:w). AD intersects the circle (AEF) at A' different from A. Define B', C' cyclically. The CTR4(P) triangle is A'B'C'. The barycentric coordinates of the A-vertex are:  
 
-`c^2*u*v*(u+w)*(v+w)-(u+v)*w*(a^2*v*(u+w)-b^2*u*(v+w)) :   b^2*v*(u+v)*w^2+c^2*v^3*(u+w) :   b^2*(u+v)*w^3+c^2*v^2*w*(u+w)`
+    c^2*u*v*(u+w)*(v+w)-(u+v)*w*(a^2*v*(u+w)-b^2*u*(v+w)) :
+    b^2*v*(u+v)*w^2+c^2*v^3*(u+w) :
+    b^2*(u+v)*w^3+c^2*v^2*w*(u+w)
 
 ### CTR5
 
 Let XYZ be the anticevian triangle of P=(u:v:w). Denote with X' the Kimberling-Pavlov X-conjugate of Q=(p:q:r) and Q, and similarly define Y' and Z' (see the preamble to X(55917) in ETC for definitions). The CTR5(P,Q) triangle is X'Y'Z'. The barycentric coordinates of the A-vertex are:  
 
-`u*(q*r*u+p*r*v-p*q*w)*(q*r*u-p*r*v+p*q*w) :
-v*(q*r*u-p*r*v+p*q*w)*(q*r*u+p*r*v+p*q*w) :
-w*(q*r*u+p*r*v-p*q*w)*(q*r*u+p*r*v+p*q*w)`
+    u*(q*r*u+p*r*v-p*q*w)*(q*r*u-p*r*v+p*q*w) :
+    v*(q*r*u-p*r*v+p*q*w)*(q*r*u+p*r*v+p*q*w) :
+    w*(q*r*u+p*r*v-p*q*w)*(q*r*u+p*r*v+p*q*w)
 
 ### CTR6
 
