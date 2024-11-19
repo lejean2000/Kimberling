@@ -1487,3 +1487,15 @@ crosstripolar[trg1_, trg2_] := Block[{pa, pb, pc},
          trg2[[3]], trg2[[1]], bLine[trg1[[3]], trg1[[1]]]]]; 
       pc = simplifyRationalBarycentrics[bTripoleEqGeneral[trg1[[3]], 
          trg2[[1]], trg2[[2]], bLine[trg1[[1]], trg1[[2]]]]]; {pa, pb, pc}]
+ 
+pappus[{a1_, a2_, a3_}, {b1_, b2_, b3_}] := 
+    Module[{m1, m2, m3, l12, l21, l23, l32, l13, l31}, 
+     l12 = simplifyRationalBarycentrics[bLine[a1, b2]]; 
+      l21 = simplifyRationalBarycentrics[bLine[a2, b1]]; 
+      m3 = simplifyRationalBarycentrics[Cross[l12, l21]]; 
+      l23 = simplifyRationalBarycentrics[bLine[a2, b3]]; 
+      l32 = simplifyRationalBarycentrics[bLine[a3, b2]]; 
+      m1 = simplifyRationalBarycentrics[Cross[l23, l32]]; 
+      l13 = simplifyRationalBarycentrics[bLine[a1, b3]]; 
+      l31 = simplifyRationalBarycentrics[bLine[a3, b1]]; 
+      m2 = simplifyRationalBarycentrics[Cross[l13, l31]]; {m1, m2, m3}]

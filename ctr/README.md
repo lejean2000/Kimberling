@@ -154,5 +154,23 @@ Let PaPbPc be the P-circumconcevian triangle of Q. Let TaTbTc be the tangential 
 `q*u*(r*u+p*w)+p*v*(r*u+2*p*w) : -r*v*(q*u+p*v)+p*q*v*w : -w*(q*r*u-p*r*v+p*q*w)`
 
 Note the following triangle equivalences:  
-CTR13-6.1 = 2nd circumperp tangential
+
+CTR13-6.1 = 2nd circumperp tangential  
 CTR13-6.3 = anti-Hutson intouch
+
+### CTR14
+
+Let PaPbPc be the cevian triangle of P. Let Ab and Ac be the reflections of Pa in the midpoints of BPb and CPc. Let AbAc intersect PbPc at point Ta, and similarly define Tb and Tc. TaTbTc is CTR14(P). This is a generalization of the 1st Van Khea-Pavlov triangle, which corresponds to CTR14-7. The barycentric coordinates of the A-vertex are:
+
+`u (v^2 + w^2 + u (v + w)) : v w (u + w) : v (u + v) w`
+
+Note the following triangle equivalences:  
+CTR14-2 = Gemini 110  
+CTR14-7 = 1st Van Khea-Pavlov
+
+### CTR15
+
+Let PaPbPc be the cevian triangle of P. CTR15(P) is the triangle formed by the trilinear polars of Pa wrt APbPc, Pb wrt BPcPa, Pc wrt CPaPb. The barycentric coordinates of the A-vertex are:
+
+`-2 u : 3 v : 3 w`
+
