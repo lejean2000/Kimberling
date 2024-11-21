@@ -1499,3 +1499,6 @@ pappus[{a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
       l13 = simplifyRationalBarycentrics[bLine[a1, b3]]; 
       l31 = simplifyRationalBarycentrics[bLine[a3, b1]]; 
       m2 = simplifyRationalBarycentrics[Cross[l13, l31]]; {m1, m2, m3}]
+ 
+projtrg[{pta_, ptb_, ptc_}, ln_] := {bFootPerpendicular[ln, pta], 
+     bFootPerpendicular[ln, ptb], bFootPerpendicular[ln, ptc]}
