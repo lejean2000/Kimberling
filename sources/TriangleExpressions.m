@@ -1,3 +1,33 @@
+BarCar[f_, cA_, cB_, cC_] := 
+    f /. {x -> Det[{{cB[[1]] - x, cC[[1]] - x}, {cB[[2]] - y, cC[[2]] - y}}], 
+      y -> Det[{{cC[[1]] - x, cA[[1]] - x}, {cC[[2]] - y, cA[[2]] - y}}], 
+      z -> Det[{{cA[[1]] - x, cB[[1]] - x}, {cA[[2]] - y, cB[[2]] - y}}], 
+      a -> Norm[cB - cC], b -> Norm[cC - cA], c -> Norm[cA - cB]}
+ 
+Cartesianas[f_] := Factor[BarCar[f, PA, PB, PC]]
+ 
+Circulito[centro_, OptionsPattern[{Color -> RGBColor[1, 0, 0], 
+       Size -> 0.01}]] := Module[{color, size}, color = OptionValue[Color]; 
+      size = OptionValue[Size]; {color, Disk[centro, size], 
+       RGBColor[0, 0, 0], Circle[centro, size]}]
+ 
+EscribirTexto[texto_, {x_, y_}, {dx_, dy_}] := 
+    Text[Style[texto, FontFamily -> "Times", FontSlant -> "Italic", 12], 
+     {x + dx, y + dy}]
+ 
+GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}] := 
+    Module[{cartesianas, triangulo, vertices, etiquetas, grafica}, 
+     triangulo = Graphics[{Blue, AbsoluteThickness[1.5], 
+         Line[{PA, PB, PC, PA}]}]; vertices = 
+       Graphics[(Circulito[#1, Color -> Red, Size -> 0.05] & ) /@ 
+         {PA, PB, PC}]; etiquetas = Graphics[{EscribirTexto["A", PA, 
+          {0, 0.15}], EscribirTexto["B", PB, {0, -0.2}], 
+         EscribirTexto["C", PC, {0, -0.2}]}]; cartesianas = 
+       Cartesianas[ecuacion]; grafica = ContourPlot[cartesianas == 0, 
+        {x, xmin, xmax}, {y, ymin, ymax}, Frame -> None, 
+        ContourStyle -> Red]; Show[{triangulo, grafica, vertices, etiquetas}, 
+       AspectRatio -> Automatic]]
+ 
 polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
       (v_)?VectorQ :> Total[v], 2]]
  
@@ -297,3 +327,10 @@ massCheckPointsNoEval2Param[expr_, range_:{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
             If[Length[check] > 0, AssociateTo[assoc, namey -> check[[1]]], 
              AssociateTo[assoc, namey -> "-"]]; , {iy, range}]; 
           AppendTo[out, assoc]; , {ix, range}]; , ix]; Return[out]; ]
+ 
+EcuacionImplicita[ptP_, var_, OptionsPattern[{UsarLast -> True}]] := 
+    Module[{eqxy, eqxz, locus}, eqxy = Resultant[x - \[Lambda]*ptP[[1]], 
+        y - \[Lambda]*ptP[[2]], \[Lambda]]; 
+      eqxz = Resultant[x - \[Lambda]*ptP[[1]], z - \[Lambda]*ptP[[3]], 
+        \[Lambda]]; locus = Factor[Resultant[eqxy, eqxz, var]]; 
+      If[OptionValue[UsarLast], locus = Last[locus]]; locus]
