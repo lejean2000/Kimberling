@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     84946,       2082]
-NotebookOptionsPosition[     83800,       2057]
-NotebookOutlinePosition[     84293,       2076]
-CellTagsIndexPosition[     84250,       2073]
+NotebookDataLength[     86315,       2116]
+NotebookOptionsPosition[     85169,       2091]
+NotebookOutlinePosition[     85662,       2110]
+CellTagsIndexPosition[     85619,       2107]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -550,7 +550,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{
-    RowBox[{"checkCurvesForTriangle", "[", "tr_", "]"}], ":=", 
+    RowBox[{"intCurvesForTriangle", "[", 
+     RowBox[{"tr_", ",", "checktr_"}], "]"}], ":=", 
     RowBox[{"Block", "[", 
      RowBox[{
       RowBox[{"{", 
@@ -565,7 +566,7 @@ Cell[BoxData[{
            RowBox[{
             RowBox[{"evaluate", "[", 
              RowBox[{"TriangleCurves", "[", "name", "]"}], "]"}], "/.", 
-            "rule69"}]}], ";", "\[IndentingNewLine]", 
+            "checktr"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"If", "[", "\[IndentingNewLine]", 
            RowBox[{
             RowBox[{
@@ -580,7 +581,7 @@ Cell[BoxData[{
                    RowBox[{"evaluate", "[", 
                     RowBox[{"tr", "[", 
                     RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", 
-                   "\[VeryThinSpace]", "rule69"}], ")"}]}], "]"}]}], ")"}], 
+                   "\[VeryThinSpace]", "checktr"}], ")"}]}], "]"}]}], ")"}], 
              "\[Equal]", "0"}], ",", "\[IndentingNewLine]", 
             RowBox[{
              RowBox[{"AppendTo", "[", 
@@ -589,6 +590,38 @@ Cell[BoxData[{
          RowBox[{"{", 
           RowBox[{"name", ",", 
            RowBox[{"Keys", "[", "TriangleCurves", "]"}]}], "}"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", "out", "]"}], ";"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"checkCurvesForTriangle", "[", "tr_", "]"}], ":=", 
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"ecrv", ",", " ", "out"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"out", "=", 
+        RowBox[{"intCurvesForTriangle", "[", 
+         RowBox[{"tr", ",", "rule69"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "[", "out", "]"}], ">", "0"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"out", "=", 
+           RowBox[{"Intersection", "[", 
+            RowBox[{"out", ",", " ", 
+             RowBox[{"intCurvesForTriangle", "[", 
+              RowBox[{"tr", ",", 
+               RowBox[{"intCheckList", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", " ", 
+             RowBox[{"intCurvesForTriangle", "[", 
+              RowBox[{"tr", ",", 
+               RowBox[{"intCheckList", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "]"}]}], ";"}]}], 
         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
        RowBox[{"Return", "[", "out", "]"}], ";"}]}], "\[IndentingNewLine]", 
      "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -1800,8 +1833,9 @@ Cell[BoxData[{
         RowBox[{"drawTriangles", "[", 
          RowBox[{"{", "trgchk", "}"}], "]"}]}], ",", "mon"}], "]"}]}], 
     "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
- Background->RGBColor[
-  0.94, 0.88, 0.94],ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ Background->RGBColor[0.94, 0.88, 0.94],
+ CellLabel->
+  "In[320]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -2081,9 +2115,9 @@ Cell[1226, 34, 5870, 165, 612, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-5
 Cell[7099, 201, 472, 14, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 Cell[7574, 217, 512, 13, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 Cell[8089, 232, 1430, 43, 59, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[9522, 277, 64109, 1526, 6003, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[73634, 1805, 9131, 229, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[82768, 2036, 1028, 19, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[9522, 277, 65478, 1560, 6171, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[75003, 1839, 9131, 229, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[84137, 2070, 1028, 19, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

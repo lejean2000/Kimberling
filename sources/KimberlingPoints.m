@@ -88,9 +88,15 @@ checkTrianglesOnCurve[crv_] := Block[{ecrv, out},
        {name, Keys[KimberlingTrianglesBary]}]; Return[out]; ]
  
 checkCurvesForTriangle[tr_] := Block[{ecrv, out}, 
-     out = {}; Do[ecrv = evaluate[TriangleCurves[name]] /. rule69; 
-        If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. rule69)]) == 0, 
-         AppendTo[out, name]; ], {name, Keys[TriangleCurves]}]; Return[out]; ]
+     out = intCurvesForTriangle[tr, rule69]; If[Length[out] > 0, 
+       out = Intersection[out, intCurvesForTriangle[tr, intCheckList[[1]]], 
+          intCurvesForTriangle[tr, intCheckList[[2]]]]; ]; Return[out]; ]
+ 
+intCurvesForTriangle[tr_, checktr_] := Block[{ecrv, out}, 
+     out = {}; Do[ecrv = evaluate[TriangleCurves[name]] /. checktr; 
+        If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. checktr)]) == 
+          0, AppendTo[out, name]; ], {name, Keys[TriangleCurves]}]; 
+      Return[out]; ]
  
 sinReplace = {Sin[A] -> S/(b*c), Sin[B] -> S/(a*c), Sin[C] -> S/(a*b), 
      Cos[A] -> evaluate[Cos[A]], Cos[B] -> evaluate[Cos[B]], 
