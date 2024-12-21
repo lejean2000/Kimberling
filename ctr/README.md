@@ -42,11 +42,14 @@ Let A1B1C1 be the cevian and A2B2C2 be the circlecevian triangle of P=(u:v:w). C
 
 ### CTR4
 
-Let P be a point. DEF cevian triangle of P=(u:v:w). AD intersects the circle (AEF) at A' different from A. Define B', C' cyclically. The CTR4(P) triangle is A'B'C'. The barycentric coordinates of the A-vertex are:  
+Let P be a point. PaPbPc cevian triangle of P=(u:v:w). APa intersects the circle (APbPc) at A' different from A. Define B', C' cyclically. The CTR4(P) triangle is A'B'C'. The barycentric coordinates of the A-vertex are:  
 
     c^2*u*v*(u+w)*(v+w)-(u+v)*w*(a^2*v*(u+w)-b^2*u*(v+w)) :
     b^2*v*(u+v)*w^2+c^2*v^3*(u+w) :
     b^2*(u+v)*w^3+c^2*v^2*w*(u+w)
+
+Properties:
+1. A'B'C' is orthologic to the orthoidal triangle of ABC wrt the circumcevian traingle of the isogonal conjugate of P.
 
 ### CTR5
 
@@ -84,7 +87,9 @@ CTR7-8.105 = cevian of X(80)
 
 Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. The barycentric coordinates of the A-vertex are:  
 
-`{c^2*u*(u+w)-(u+v)*(-b^2*u+a^2*(u+w)) : b^2*(u+v)*(u+v+w) : c^2*(u+w)*(u+v+w)}`
+    c^2*u*(u+w)-(u+v)*(-b^2*u+a^2*(u+w)) : 
+    b^2*(u+v)*(u+v+w) : 
+    c^2*(u+w)*(u+v+w)
 
 Note the following triangle equivalences:  
 CTR8-4 = orthic  
@@ -134,7 +139,9 @@ CTR11-6 is degenerate
 
 Let QaQbQc be the cevian triangle of Q. CTR12 is the triangle with vertices at the inversion poles of QbQc, QaQc, and QaQb wrt to the P-circumconic. The barycentric coordinates of the A-vertex are:  
 
-`u*(q*r*u+p*r*v+p*q*w) : -v*(q*r*u+p*r*v-p*q*w) : -w*(q*r*u-p*r*v+p*q*w)`
+    u*(q*r*u+p*r*v+p*q*w) : 
+    -v*(q*r*u+p*r*v-p*q*w) : 
+    -w*(q*r*u-p*r*v+p*q*w)
 
 Note the following triangle equivalences:  
 CTR12-1.9 = 6th mixtilinear  
@@ -151,7 +158,9 @@ CTR12-6.99 = Steiner
 
 Let PaPbPc be the P-circumconcevian triangle of Q. Let TaTbTc be the tangential triangle of PaPbPc wrt P-circumconic. Then TaTbTc is perspective to ABC and is called here CTR13. The barycentric coordinates of the A-vertex are:
 
-`q*u*(r*u+p*w)+p*v*(r*u+2*p*w) : -r*v*(q*u+p*v)+p*q*v*w : -w*(q*r*u-p*r*v+p*q*w)`
+    q*u*(r*u+p*w)+p*v*(r*u+2*p*w) : 
+    -r*v*(q*u+p*v)+p*q*v*w : 
+    -w*(q*r*u-p*r*v+p*q*w)
 
 Note the following triangle equivalences:  
 
@@ -174,3 +183,54 @@ Let PaPbPc be the cevian triangle of P. CTR15(P) is the triangle formed by the t
 
 `-2 u : 3 v : 3 w`
 
+### CTR16
+
+Let PaPbPc be the cevian triangle of P. Let A' be the pole of PbPc in circle APbPc and similarly define B' anc C'. CTR16(P) is A'B'C'. The barycentric coordinates of the A-vertex are:
+
+    -a^2 (u + v) (u + w) + u (b^2 (u + v) + c^2 (u + w)) : 
+    b^2 w (u + v) : 
+    c^2 v (u + w)
+
+### CTR17
+
+Let PaPbPc be the cevian triangle of P. Let A' be the exsimilrcenter of circles ABPa and ACPa. Similarly define B' and C'. CTR17(P) is A'B'C'. The barycentric coordinates of the A-vertex are:
+
+    a^2 (c v - b w) : 
+    b (-a^2 v + b (b + c) (v + w)) : 
+    c (a^2 w - c (b + c) (v + w))
+
+### CTR18
+
+Given a point P, let Ab, Ac be the intersection of BC with the lines through A parallel to BP and CP respectively. Define Bc, Ba, Ca and Cb cyclically. These six points lie on a conic, called P-orthial.
+
+CTR18(P) is the side-triangle of BcCaAb and CbAcBa.
+
+The barycentric coordinates of the A-vertex are:
+
+`u (v + w) (u + v + w) : v (-u + v - w) w : -v (u + v - w) w`
+
+### CTR19
+
+Given a point P, let Ab, Ac be the intersection of BC with the lines through A parallel to BP and CP respectively. Define Bc, Ba, Ca and Cb cyclically. These six points lie on a conic, called P-orthial.
+
+CTR19(P) is the vertex-triangle of BcCaAb and CbAcBa.
+
+The barycentric coordinates of the A-vertex are:
+
+`-u (v + w) (u + v + w) : v (u + v - w) (u + w) : (u + v) w (u - v + w)`
+
+### CTR20
+
+Let P, Q be arbitrary points not on the sides of ABC.
+
+Ab = intersection of AB with line through P parallel to AQ
+
+Ac - intersection of AC with line through P parallel to AQ
+
+Cyclically define Ba, Bc, Ca, Cb. 
+
+CTR20(P,Q) is the cross-triangle of BcCaAb and CbAcBa.
+
+The barycentric coordinates of the A-vertex are:
+
+`p q v w + p r v w - q r u (v + w) : -q v (p w + r (v + w)) : -r w (p v + q (v + w))`
