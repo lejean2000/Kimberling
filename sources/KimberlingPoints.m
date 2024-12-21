@@ -119,32 +119,29 @@ checkTriangleExists[tr_] := Block[{chk},
  
 trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
     Block[{cnt, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
-      homval, outname, ishomo, homval2}, cnt = 0; If[Length[trgname] != 0, 
-       Print["Invalid TRG Name"]; Return[False, Block]]; out = Association[]; 
+      homval, outname, ishomo, homval2, simtest, homtest}, 
+     cnt = 0; If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
+        Return[False, Block]]; out = Association[]; 
       trchke = evaluate[trchk] /. rule69; ishomo = False; 
       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
         trsyme = evaluate[trsym] /. rule69; ntest = bIsPerspective @@ 
-          Join[trsyme, trchke]; homval = 
-         Abs[(bDistance[trchke[[1]], trchke[[2]]]/bDistance[trsyme[[1]], 
-              trsyme[[2]]] /. rule69) - (bDistance[trchke[[1]], trchke[[3]]]/
-             bDistance[trsyme[[1]], trsyme[[3]]] /. rule69)]; 
-        If[Abs[ntest] < 10^(-24), cnt = cnt + 1; ptcoord = 
+          Join[trsyme, trchke]; simtest = bIsSimilarNumeric[trchke, trsyme]; 
+        homtest = Abs[bIsHomothetic[trchke, trsyme] /. rule69] < 10^(-20); 
+        If[Abs[ntest] < 10^(-20), cnt = cnt + 1; ptcoord = 
            bTrianglePerspector[trchk, trsym]; perschk = checkPointinETC2[
             ptcoord]; outname = StringJoin["Perspector of ", trgname, 
-            " and ", trname]; hmt = ""; If[homval < 10^(-20), 
-           homval2 = Abs[bIsHomothetic[trchke, trsyme] /. rule69]; 
-            If[homval2 < 10^(-20), If[trname == "ABC", ishomo = True]; 
-              hmt = Style[" - possibly homothetic", Red], 
+            " and ", trname]; hmt = ""; If[simtest, 
+           If[homtest, If[trname == "ABC", ishomo = True]; hmt = Style[
+                " - possibly homothetic", Red], 
              hmt = Style[" - possibly similar", Green]; ]; 
             If[Length[perschk] > 0 && (trname == "ABC" ||  !ishomo), 
              Print[Row[{StringJoin[outname, ": ", perschk[[1]]], 
                  hmt}]]; ]; ]; If[Length[perschk] > 0, 
            AssociateTo[out, outname -> perschk[[1]]]; , 
-           Print[Row[{outname, hmt}]]; ]; ]; If[Length[perschk] == 0 && 
-          homval < 10^(-20) &&  !TrueQ[homval2 < 10^(-20)] && 
-          MemberQ[KimberlingTrianglesBaryOrthKeys, trname], 
-         Print[Row[{StringJoin[trgname, " and ", trname], 
-             Style[" - possibly similar", Green]}]]; ]; , 
+           Print[Row[{outname, hmt}]]; ]; , 
+         If[simtest && MemberQ[KimberlingTrianglesBaryOrthKeys, trname], 
+           Print[Row[{StringJoin[trgname, " and ", trname], Style[
+                " - possibly similar", Green]}]]; ]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
       KeyValueMap[Print[intaddbrackets[#1] -> #2] & , GroupBy[out, Identity, 
         Keys]]; Return[cnt]; ]

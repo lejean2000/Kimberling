@@ -43,19 +43,19 @@ setupBaseTriangle[x_, y_, z_] := {a -> EuclideanDistance[y, z],
      b -> EuclideanDistance[x, z], c -> EuclideanDistance[x, y]}
  
 bCoordChangeK[k_, d_, e_, f_] := Module[{pp}, 
-     pp = X[k] /. {a -> bDistanceF[e, f], b -> bDistanceF[d, f], 
-         c -> bDistanceF[d, e]}; Transpose[{d/Total[d], e/Total[e], 
+     pp = X[k] /. {a -> bDistance[e, f], b -> bDistance[d, f], 
+         c -> bDistance[d, e]}; Transpose[{d/Total[d], e/Total[e], 
          f/Total[f]}] . Transpose[pp/Total[pp]]]
  
 bCoordChangeK[k_, {d_, e_, f_}] := bCoordChangeK[k, d, e, f]
- 
-setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
-     b -> bDistance[x, z], c -> bDistance[x, y]}
  
 bDistance[p_, q_] := Module[{sp, sq}, sp = p/Total[p]; sq = q/Total[q]; 
       Sqrt[(-a^2)*(sp[[2]] - sq[[2]])*(sp[[3]] - sq[[3]]) - 
         b^2*(sp[[1]] - sq[[1]])*(sp[[3]] - sq[[3]]) - c^2*(sp[[1]] - sq[[1]])*
          (sp[[2]] - sq[[2]])]]
+ 
+setupBaseTriangleBary[x_, y_, z_] := {a -> bDistance[y, z], 
+     b -> bDistance[x, z], c -> bDistance[x, y]}
  
 bLineL[{u_, v_}] := Module[{m, xx, yy, zz}, 
      m = Det[{{u[[1]], u[[2]], u[[3]]}, {v[[1]], v[[2]], v[[3]]}, 
@@ -1502,3 +1502,11 @@ pappus[{a1_, a2_, a3_}, {b1_, b2_, b3_}] :=
  
 projtrg[{pta_, ptb_, ptc_}, ln_] := {bFootPerpendicular[ln, pta], 
      bFootPerpendicular[ln, ptb], bFootPerpendicular[ln, ptc]}
+ 
+prmPointOnLine[p1_, p2_] := simplifyRationalBarycentrics[
+     t*(p1/Total[p1]) + (1 - t)*(p2/Total[p2])]
+ 
+bIsSimilarNumeric[tr1_, tr2_, rule_:rule69] := Module[{f1, f2}, 
+     f1 = bDistance[tr1[[1]], tr1[[2]]]/bDistance[tr2[[1]], tr2[[2]]] /. 
+        rule; f2 = bDistance[tr1[[1]], tr1[[3]]]/bDistance[tr2[[1]], 
+          tr2[[3]]] /. rule; Return[Abs[f1 - f2] < 10^(-10)]; ]

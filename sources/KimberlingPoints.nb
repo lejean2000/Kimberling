@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     86315,       2116]
-NotebookOptionsPosition[     85169,       2091]
-NotebookOutlinePosition[     85662,       2110]
-CellTagsIndexPosition[     85619,       2107]
+NotebookDataLength[     84406,       2070]
+NotebookOptionsPosition[     83199,       2043]
+NotebookOutlinePosition[     83753,       2064]
+CellTagsIndexPosition[     83710,       2061]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -30,7 +30,7 @@ Cell[BoxData[
    3.8416249791378546`*^9}, 3.841627116456952*^9, {3.8418034050176563`*^9, 
    3.841803420274452*^9}},
  CellLabel->
-  "In[265]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
+  "In[551]:=",ExpressionUUID->"436b7e03-1782-4754-9ece-a6aea07591c6"],
 
 Cell[BoxData[{
  RowBox[{
@@ -197,7 +197,7 @@ Cell[BoxData[{
    "]"}]}]}], "Code",
  InitializationCell->False,
  CellLabel->
-  "In[266]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
+  "In[552]:=",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-55ec1009fe52"],
 
 Cell[BoxData[
  RowBox[{
@@ -213,7 +213,7 @@ Cell[BoxData[
     RowBox[{"Can", " ", "also", " ", "be", " ", "just", " ", "Abs"}], "->", 
     "RealAbs"}], " ", "*)"}]}]], "Input",
  CellLabel->
-  "In[274]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
+  "In[560]:=",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 
 Cell[BoxData[
  RowBox[{
@@ -228,7 +228,7 @@ Cell[BoxData[
   3.877578389921321*^9, 3.877578397215644*^9}, {3.8779284662523875`*^9, 
   3.877928467254416*^9}},
  CellLabel->
-  "In[275]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
+  "In[561]:=",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 
 Cell[BoxData[{
  RowBox[{
@@ -273,7 +273,7 @@ Cell[BoxData[{
       RowBox[{"evaluate", "[", 
        RowBox[{"Cos", "[", "C", "]"}], "]"}]}]}], "}"}]}], ";"}]}], "Input",
  CellLabel->
-  "In[276]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
+  "In[562]:=",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -762,8 +762,8 @@ Cell[BoxData[{
        RowBox[{
        "cnt", ",", "trchke", ",", "trsyme", ",", "hmt", ",", "out", ",", 
         "trsym", ",", "ntest", ",", "ptcoord", ",", "perschk", ",", "homval", 
-        ",", "outname", ",", "ishomo", ",", "homval2"}], "}"}], ",", 
-      "\[IndentingNewLine]", 
+        ",", "outname", ",", "ishomo", ",", "homval2", ",", "simtest", ",", 
+        " ", "homtest"}], "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"cnt", "=", "0"}], ";", "\[IndentingNewLine]", 
        RowBox[{"If", "[", 
@@ -804,48 +804,26 @@ Cell[BoxData[{
             RowBox[{"Join", "[", 
              RowBox[{"trsyme", ",", "trchke"}], "]"}]}]}], ";", 
           "\[IndentingNewLine]", 
-          RowBox[{"homval", " ", "=", " ", 
-           RowBox[{"Abs", "[", 
-            RowBox[{
-             RowBox[{"(", 
-              RowBox[{
-               RowBox[{
-                RowBox[{"bDistance", "[", 
-                 RowBox[{
-                  RowBox[{"trchke", "[", 
-                   RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
-                  RowBox[{"trchke", "[", 
-                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "/", 
-                RowBox[{"bDistance", "[", 
-                 RowBox[{
-                  RowBox[{"trsyme", "[", 
-                   RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
-                  RowBox[{"trsyme", "[", 
-                   RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], " ", "/.", " ", 
-               "rule69"}], ")"}], " ", "-", " ", 
-             RowBox[{"(", 
-              RowBox[{
-               RowBox[{
-                RowBox[{"bDistance", "[", 
-                 RowBox[{
-                  RowBox[{"trchke", "[", 
-                   RowBox[{"[", "1", "]"}], "]"}], ",", 
-                  RowBox[{"trchke", "[", 
-                   RowBox[{"[", "3", "]"}], "]"}]}], "]"}], "/", 
-                RowBox[{"bDistance", "[", 
-                 RowBox[{
-                  RowBox[{"trsyme", "[", 
-                   RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
-                  RowBox[{"trsyme", "[", 
-                   RowBox[{"[", "3", "]"}], "]"}]}], "]"}]}], " ", "/.", " ", 
-               "rule69"}], ")"}]}], "]"}]}], ";", " ", "\[IndentingNewLine]", 
+          RowBox[{"simtest", " ", "=", " ", 
+           RowBox[{"bIsSimilarNumeric", "[", 
+            RowBox[{"trchke", ",", "trsyme"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"homtest", "=", 
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{
+              RowBox[{"bIsHomothetic", "[", 
+               RowBox[{"trchke", ",", "trsyme"}], "]"}], "/.", " ", 
+              "rule69"}], "]"}], "<", 
+            SuperscriptBox["10", 
+             RowBox[{"-", "20"}]]}]}], ";", "\[IndentingNewLine]", 
           "\[IndentingNewLine]", 
           RowBox[{"If", "[", 
            RowBox[{
             RowBox[{
              RowBox[{"Abs", "[", "ntest", "]"}], "<", 
              SuperscriptBox["10", 
-              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"-", "20"}]]}], ",", "\[IndentingNewLine]", 
             RowBox[{
              RowBox[{"cnt", "=", 
               RowBox[{"cnt", "+", "1"}]}], ";", "\[IndentingNewLine]", 
@@ -864,23 +842,10 @@ Cell[BoxData[{
              RowBox[{"hmt", "=", "\"\<\>\""}], ";", "\[IndentingNewLine]", 
              "\[IndentingNewLine]", 
              RowBox[{"If", "[", 
-              RowBox[{
-               RowBox[{"homval", " ", "<", " ", 
-                RowBox[{"10", "^", 
-                 RowBox[{"(", 
-                  RowBox[{"-", "20"}], ")"}]}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"simtest", ",", "\[IndentingNewLine]", 
                RowBox[{
-                RowBox[{"homval2", "=", 
-                 RowBox[{"Abs", "[", 
-                  RowBox[{
-                   RowBox[{"bIsHomothetic", "[", 
-                    RowBox[{"trchke", ",", "trsyme"}], "]"}], "/.", " ", 
-                   "rule69"}], "]"}]}], ";", "\[IndentingNewLine]", 
                 RowBox[{"If", "[", 
-                 RowBox[{
-                  RowBox[{"homval2", "<", 
-                   SuperscriptBox["10", 
-                    RowBox[{"-", "20"}]]}], ",", "\[IndentingNewLine]", 
+                 RowBox[{"homtest", ",", "\[IndentingNewLine]", 
                   RowBox[{
                    RowBox[{"If", "[", 
                     RowBox[{
@@ -935,44 +900,31 @@ Cell[BoxData[{
                  RowBox[{"Row", "[", 
                   RowBox[{"{", 
                    RowBox[{"outname", ",", "hmt"}], "}"}], "]"}], "]"}], 
-                ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
-           "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-          "\[IndentingNewLine]", 
-          RowBox[{"(*", 
-           RowBox[{
-           "Similarity", " ", "is", " ", "reported", " ", "for", " ", "ALL", 
-            " ", "triangles"}], " ", "*)"}], "\[IndentingNewLine]", 
-          RowBox[{"If", "[", 
-           RowBox[{
-            RowBox[{
+                ";"}]}], "\[IndentingNewLine]", "]"}], ";"}], 
+            "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+            RowBox[{"(*", 
              RowBox[{
-              RowBox[{"Length", "[", "perschk", "]"}], "==", "0"}], " ", "&&",
-              " ", 
-             RowBox[{"homval", " ", "<", " ", 
-              RowBox[{"10", "^", 
-               RowBox[{"(", 
-                RowBox[{"-", "20"}], ")"}]}]}], "&&", 
-             RowBox[{"Not", "[", 
-              RowBox[{"TrueQ", "[", 
-               RowBox[{"homval2", "<", " ", 
-                RowBox[{"10", "^", 
-                 RowBox[{"(", 
-                  RowBox[{"-", "20"}], ")"}]}]}], "]"}], "]"}], "&&", 
-             RowBox[{"MemberQ", "[", 
-              RowBox[{"KimberlingTrianglesBaryOrthKeys", ",", "trname"}], 
-              "]"}]}], ",", "\[IndentingNewLine]", 
+             "Similarity", " ", "is", " ", "reported", " ", "for", " ", "ALL",
+               " ", "triangles"}], " ", "*)"}], "\[IndentingNewLine]", 
             RowBox[{
-             RowBox[{"Print", "[", 
-              RowBox[{"Row", "[", 
-               RowBox[{"{", 
-                RowBox[{
-                 RowBox[{"trgname", "<>", "\"\< and \>\"", "<>", "trname"}], 
-                 ",", 
-                 RowBox[{"Style", "[", 
-                  RowBox[{"\"\< - possibly similar\>\"", ",", "Green"}], 
-                  "]"}]}], "}"}], "]"}], "]"}], ";"}]}], 
-           "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
-         "\[IndentingNewLine]", ",", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"simtest", "&&", 
+                RowBox[{"MemberQ", "[", 
+                 RowBox[{"KimberlingTrianglesBaryOrthKeys", ",", "trname"}], 
+                 "]"}]}], ",", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"Print", "[", 
+                 RowBox[{"Row", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{
+                    "trgname", "<>", "\"\< and \>\"", "<>", "trname"}], ",", 
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\< - possibly similar\>\"", ",", "Green"}], 
+                    "]"}]}], "}"}], "]"}], "]"}], ";"}]}], 
+              "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", 
+           "]"}], ";"}], "\[IndentingNewLine]", ",", 
          RowBox[{"{", 
           RowBox[{"trname", ",", 
            RowBox[{
@@ -1835,7 +1787,7 @@ Cell[BoxData[{
     "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
  CellLabel->
-  "In[320]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+  "In[564]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -2066,7 +2018,7 @@ Cell[BoxData[{
    "]"}]}]}], "Input",
  Background->RGBColor[0.9, 1, 1],
  CellLabel->
-  "In[290]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+  "In[577]:=",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
 
 Cell[BoxData[
  RowBox[{
@@ -2087,10 +2039,12 @@ Cell[BoxData[
       "checkNumberedPoint", ",", "trgCheckBasepoints", ",", "trgFullCheck"}], 
      "}"}]}], "]"}]}]], "Input",
  CellLabel->
-  "In[292]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+  "In[579]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
-WindowSize->{1141.2, 568.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Evaluator->"New Kernel",
+WindowSize->{1152., 579.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 DockedCells->{},
 TaggingRules-><|"TryRealOnly" -> False|>,
 Magnification:>0.9 Inherited,
@@ -2115,9 +2069,9 @@ Cell[1226, 34, 5870, 165, 612, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-5
 Cell[7099, 201, 472, 14, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 Cell[7574, 217, 512, 13, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 Cell[8089, 232, 1430, 43, 59, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[9522, 277, 65478, 1560, 6171, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[75003, 1839, 9131, 229, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[84137, 2070, 1028, 19, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[9522, 277, 63508, 1512, 6096, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[73033, 1791, 9131, 229, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[82167, 2022, 1028, 19, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)
