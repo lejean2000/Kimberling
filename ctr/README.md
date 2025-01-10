@@ -219,7 +219,7 @@ The barycentric coordinates of the A-vertex are:
 
 `-u (v + w) (u + v + w) : v (u + v - w) (u + w) : (u + v) w (u - v + w)`
 
-### CTR20
+### CTR20 and CTR21
 
 Let P, Q be arbitrary points not on the sides of ABC.
 
@@ -233,4 +233,17 @@ CTR20(P,Q) is the cross-triangle of BcCaAb and CbAcBa.
 
 The barycentric coordinates of the A-vertex are:
 
-`p q v w + p r v w - q r u (v + w) : -q v (p w + r (v + w)) : -r w (p v + q (v + w))`
+    p q v w + p r v w - q r u (v + w) :
+    -q v (p w + r (v + w)) : 
+    -r w (p v + q (v + w))`
+
+CTR21(P,Q) is the side-triangle of BcCaAb and CbAcBa.
+
+The barycentric coordinates of the A-vertex are:
+
+    p*r^2*v^2*w+q*r*v*(r*u*v+p*u*w+r*w*(v+w))+q^2*w*(p*v*w+r*(v^2+(u+v)*w)) :
+    q*v*(r*v-q*w)*(p*w+r*(v+w)) :
+    -r*w*(r*v-q*w)*(p*v+q*(v+w))
+
+
+

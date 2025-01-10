@@ -833,8 +833,9 @@ addExtraPoint[bary_, letter_, name_, writeout_:True] :=
          NonETCNames]; ]; Return[dbname]; ]
  
 quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True, 
-     minprop_:1000] := Block[{ptcoord, pt, chk, lines, barys, symcheck, name, 
-      numcon}, ptcoord = evaluate[expr]; lines = 0; numcon = 0; 
+     minprop_:1000, countcutoff_:100000000] := 
+    Block[{ptcoord, pt, chk, lines, barys, symcheck, name, numcon}, 
+     ptcoord = evaluate[expr]; lines = 0; numcon = 0; 
       If[dosymcheck, If[ !checkCentralExpression[expr], 
          Return[False, Block]; ]; ]; If[num != 0, chk = 0, 
        chk = checkPointinETC2[ptcoord]]; If[Length[chk] > 0, 
@@ -845,10 +846,12 @@ quickChecker[expr_, num_:0, curvescheck_:True, dosymcheck_:True,
                globalSeenPoints]] <= 10^(-20), Print["Point seen !"]; 
            Return[{0, 0}, Block], AppendTo[globalSeenPoints, 
             {ptcoord, pt}]; ]]; barys = Factor[FactorTermsList[expr[[1]]][[
-           2]]]; lines = Length[Quiet[linesProcessAlg[ptcoord, barys, 20, 
-            False, True, "X", True]]]; If[curvescheck && lines < minprop, 
-         numcon = Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
-      Return[{lines, numcon}]; ]
+           2]]]; lineset = Quiet[linesProcessAlg[ptcoord, barys, 20, False, 
+           True, "X", True]]; lines = Length[Select[lineset, 
+           Max[ToExpression[#1]] < countcutoff & ]]; 
+        If[curvescheck && lines < minprop, numcon = 
+          Length[Quiet[checkCircumconics[ptcoord, num, name]]]]; ]; 
+      Return[{lines, numcon, Length[lineset]}]; ]
  
 quickCheckerTransform[expr_, inname_:"PTX", num_:0] := 
     Module[{pointProcesses, texpr, procname}, 

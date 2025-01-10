@@ -1,0 +1,664 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     28905,        656]
+NotebookOptionsPosition[     19773,        529]
+NotebookOutlinePosition[     20651,        555]
+CellTagsIndexPosition[     20608,        552]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Triangle Operations", "Title",ExpressionUUID->"03755eff-fc15-4616-8cc1-222a8adbf9a8"],
+
+Cell[CellGroupData[{
+
+Cell["Ivan Pavlov", "Author",ExpressionUUID->"b20f6b3f-4500-4514-b640-5a468d63c14e"],
+
+Cell["https://groups.io/g/euclid/profile/6427475", "Institution",ExpressionUUID->"cb190694-edf5-48be-b03a-a4d64a32cb0f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["", "Author",ExpressionUUID->"d9bf9b44-a2b3-4fc1-bb3f-fc5e959e8151"],
+
+Cell[TextData[StyleBox["In this short note we gather some definitions of \
+operations which preserve triangle centrality.",
+ FontSize->14]], "Abstract",ExpressionUUID->"ed3fc74e-b735-419f-8df6-\
+9680d6f8ec82"],
+
+Cell["20 Dec 2024", "Date",ExpressionUUID->"4f7c4082-766b-4cf9-bb18-cc8c88bb452f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Operations Involving Two Triangles ", "Section",ExpressionUUID->"d6bc47a8-373a-470b-8a9f-f7d8fe50bb34"],
+
+Cell["\<\
+Below we will consider the operations on two triangles, ABC and A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote] which in some cases \
+may be degenerate (a line or a point).\
+\>", "Text",ExpressionUUID->"b905b8e1-273e-4b23-b29e-01106470d33e"],
+
+Cell["The following three operations are symmetric.", "Text",ExpressionUUID->"3127331d-7d58-4f27-a7f6-efbf61259f21"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Vertex triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"5050c868-171f-4f87-b9da-39902062c07d"],
+
+Cell[TextData[StyleBox["The triangle formed by lines AA\[CloseCurlyQuote], BB\
+\[CloseCurlyQuote], and CC\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"4bcd139f-\
+9250-4cc0-b468-60396a0588fe"],
+
+Cell[TextData[StyleBox["Side triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"f2711867-251d-4b1f-938e-e3243b693e9f"],
+
+Cell[TextData[StyleBox["The triangle with vertices BC \[Intersection] B\
+\[CloseCurlyQuote]C\[CloseCurlyQuote], CA \[Intersection] \
+C\[CloseCurlyQuote]A\[CloseCurlyQuote], AB \[Intersection] \
+A\[CloseCurlyQuote]B\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"c224fda0-\
+01cf-4b6b-81e4-dbe7dbe2e4fc"],
+
+Cell[TextData[StyleBox["Cross triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"987c3e82-5edf-45c7-bb7f-a7d03fe29583"],
+
+Cell[TextData[StyleBox["The triangle with vertices BC\[CloseCurlyQuote] \
+\[Intersection] B\[CloseCurlyQuote]C, CA\[CloseCurlyQuote] \[Intersection] C\
+\[CloseCurlyQuote]A, AB\[CloseCurlyQuote] \[Intersection] \
+A\[CloseCurlyQuote]B.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"5ebb80d7-\
+e9f8-4702-8d03-9d8c49a6307d"],
+
+Cell[TextData[StyleBox["Mid triangle",
+ FontWeight->"Bold"]], "Definition",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"db9b48ca-2b89-450e-9bcc-16145be035a0"],
+
+Cell[TextData[StyleBox["The triangle with vertices the midpoints of AA\
+\[CloseCurlyQuote], BB\[CloseCurlyQuote], and CC\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"585dfcc9-68f5-47b3-8170-266f612c4625"],
+
+Cell["", "Text",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"63494b3d-367e-44d2-abab-ad34ab40a03b"],
+
+Cell["The operations defined next are not symmetric.", "Text",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"ac91934e-229a-4ba0-88dc-af20f4e1b4bf"],
+
+Cell["", "Text",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"2585f87f-65b1-4dbf-9eed-e8aab7345b13"],
+
+Cell[TextData[StyleBox["Orthoidal triangle of ABC wrt A\[CloseCurlyQuote]B\
+\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"b3cef4ca-46c6-44d5-83ca-\
+f2cc58e9003a"],
+
+Cell[TextData[StyleBox["The triangle formed by the lines through A, B, C \
+perpendicular to B\[CloseCurlyQuote]C\[CloseCurlyQuote], C\[CloseCurlyQuote]A\
+\[CloseCurlyQuote], A\[CloseCurlyQuote]B\[CloseCurlyQuote], respectively.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"f02a0bea-\
+1fe1-46bb-8c7e-a91189017e9c"],
+
+Cell[TextData[StyleBox["Paraidal triangle of ABC wrt A\[CloseCurlyQuote]B\
+\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"27873001-298e-4aae-ba4f-\
+cf41b17b2828"],
+
+Cell[TextData[StyleBox["The triangle formed by the lines through A, B, C \
+parallel to B\[CloseCurlyQuote]C\[CloseCurlyQuote], C\[CloseCurlyQuote]A\
+\[CloseCurlyQuote], A\[CloseCurlyQuote]B\[CloseCurlyQuote], respectively.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"8b5a59d5-\
+b437-4ec4-967b-34c2ddba3502"],
+
+Cell[TextData[StyleBox["Antisymmetric triangle of ABC wrt \
+A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"0bc67f10-e95b-46fd-8e9e-\
+6f5e65e9fe6a"],
+
+Cell[TextData[StyleBox["The triangle formed by the reflections of A in A\
+\[CloseCurlyQuote], B in B\[CloseCurlyQuote], and C in C\[CloseCurlyQuote]. ",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"411195f3-\
+2185-4ac1-ac61-bc1c335da44d"],
+
+Cell[TextData[StyleBox["It is accepatable to have ABC or A'B'C' degenerate \
+into a point.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"9deae7ed-\
+34fd-4bf5-be8d-22df53fbd0ec"],
+
+Cell[TextData[StyleBox["Side reflection triangle of ABC wrt A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"d39c7aaf-57c6-4841-8c93-\
+063d6079f31b"],
+
+Cell[TextData[StyleBox["The triangle formed by the reflections of lines BC, \
+CA, AB in lines B\[CloseCurlyQuote]C\[CloseCurlyQuote], C\[CloseCurlyQuote]A\
+\[CloseCurlyQuote], A\[CloseCurlyQuote]B\[CloseCurlyQuote], respectively.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"f32f1770-\
+3165-4e1d-9a5a-5c8f07d551f8"],
+
+Cell[TextData[StyleBox["Side cross-reflection triangle of ABC wrt A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"9246b36b-c546-4558-ab1e-\
+33cbfb049e27"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["A", "1"], 
+    SubscriptBox["B", "1"], 
+    SubscriptBox["C", "1"]}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "dafbfa5d-a19b-4def-921e-352db949d825"],
+ StyleBox[", the side cross-reflection triangle of ABC wrt \
+A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote] is defined as \
+follows.",
+  FontSlant->"Plain"]
+}], "DefinitionContinuation",ExpressionUUID->"d0f04186-e43a-4a8d-87dc-\
+5d4f8b245c2b"],
+
+Cell[TextData[StyleBox["Let:",
+ FontSlant->"Plain"]], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"1bc3ba5d-c05c-4db4-8695-974b05cedcef"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "AB"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "a00e2763-23a8-4af1-b05f-2d743b4ebae0"],
+ StyleBox[" = the reflection of line BC in line A'B'.",
+  FontSlant->"Plain"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"f900175b-bb35-4826-a7ce-a4f532e66814"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "AC"], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "d4b6d685-2ba7-442f-878b-6fad954ad4fa"],
+ StyleBox[" = the reflection of line BC in line A\[CloseCurlyQuote]C\
+\[CloseCurlyQuote].",
+  FontSlant->"Plain"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"55e349b4-7700-47f9-be2b-e909a26c24bf"],
+
+Cell[TextData[{
+ StyleBox["and cyclically define ",
+  FontSlant->"Plain"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["L", "BA"], ",", " ", 
+    SubscriptBox["L", "BC"], ",", " ", 
+    SubscriptBox["L", "CA"], ",", " ", 
+    SubscriptBox["L", "CB"]}], TraditionalForm]],ExpressionUUID->
+  "d1d88dd7-4178-4fee-900d-48f8021ac672"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"5d8debd8-81f7-4fac-b172-f5df0489a7a4"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["A", "1"], "=", " "}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "5f4b3340-e3e8-41ca-8396-0c40448f9655"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "AB"], TraditionalForm]],ExpressionUUID->
+  "60e75623-4f41-44fe-b1b9-b1db07d8da36"],
+ " ",
+ StyleBox["\[Intersection] ",
+  FontSlant->"Plain"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "AC"], TraditionalForm]],ExpressionUUID->
+  "3d03422b-2b89-4215-b082-91d3b4b7a415"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"5740dc42-01a4-4c0f-8d0e-806f86f09a1d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["B", "1"], "=", " "}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "f1812136-caee-4702-84fa-0d5f444ebf3b"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "BA"], TraditionalForm]],ExpressionUUID->
+  "5f800df4-e143-440b-98c0-019b358b1dfe"],
+ " ",
+ StyleBox["\[Intersection] ",
+  FontSlant->"Plain"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "BC"], TraditionalForm]],ExpressionUUID->
+  "ca759dd6-e614-43af-9ecf-7494eb16f297"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"d348b20d-c071-40f6-b851-3088ad8af52e"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["C", "1"], "=", " "}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "638f32d7-fa33-4de1-a385-e1384911c182"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "CA"], TraditionalForm]],ExpressionUUID->
+  "64d928ce-23ad-4b79-9e9b-cad508fdbd9e"],
+ " ",
+ StyleBox["\[Intersection] ",
+  FontSlant->"Plain"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "CB"], TraditionalForm]],ExpressionUUID->
+  "aa98e3c2-125c-4785-8c2b-6f11544433f7"]
+}], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"f61b1b26-e143-4b30-a0fc-993ea72b1b61"],
+
+Cell[TextData[StyleBox["Vertex-side reflection triangle of ABC wrt A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"343d42af-1a0f-4cec-ab0e-\
+2ecb0bac77ea"],
+
+Cell[TextData[StyleBox["The triangle formed by the reflections of A, B, and C \
+in lines B\[CloseCurlyQuote]C\[CloseCurlyQuote], C\[CloseCurlyQuote]A\
+\[CloseCurlyQuote], A\[CloseCurlyQuote]B\[CloseCurlyQuote], respectively. It \
+is accepatable to have ABC degenerate into a point.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"fabb72a7-\
+cadb-4014-bdbb-d7fd394c09ad"],
+
+Cell[TextData[StyleBox["Cross-tripolar triangle of ABC wrt \
+A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"a0a51cd3-d784-4ec4-b3a8-\
+cc4d60c2a1a8"],
+
+Cell[TextData[StyleBox["The triangle formed by the tripolars of B\
+\[CloseCurlyQuote]C\[CloseCurlyQuote], \
+C\[CloseCurlyQuote]A\[CloseCurlyQuote], \
+A\[CloseCurlyQuote]B\[CloseCurlyQuote] wrt ABC.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"8d2398c3-\
+ae45-4aa3-883e-3fb08e74a2d4"],
+
+Cell[TextData[StyleBox["Projection triangle of ABC wrt A\[CloseCurlyQuote]B\
+\[CloseCurlyQuote]C\[CloseCurlyQuote]",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"58ff25f2-0b7e-41e6-b93d-\
+c05f8e15989a"],
+
+Cell[TextData[StyleBox["The triangle formed by the projections of A, B, C \
+upon B\[CloseCurlyQuote]C\[CloseCurlyQuote], C\[CloseCurlyQuote]A\
+\[CloseCurlyQuote], A\[CloseCurlyQuote]B\[CloseCurlyQuote] resp. If ABC \
+degenerates to a point P, then the projection triangle coincides with the \
+pedal triangle of P wrt A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"a7079e73-\
+56d7-4572-881b-99617cece0ab"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Operations Involving Three Triangles ", "Section",ExpressionUUID->"1f8106da-f0b2-4e0c-9363-e8a20b19c9e2"],
+
+Cell["\<\
+Below we will consider the operations on three triangles, ABC and A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote], and XaXbXc.\
+\>", "Text",ExpressionUUID->"7679b1d2-2e76-4763-9e97-e2b0d29e8fc8"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["{XaXbXc, ABC, A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote]}-1st-cross triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"0cf284cb-bec4-4ea7-ab37-\
+33b695e2f616"],
+
+Cell[TextData[StyleBox["Denote Pa = XaA\:2229B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote], Qa = XaA\[CloseCurlyQuote]\:2229BC. ",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"5ff93a44-\
+9383-4744-ae39-81767fc59a6c"],
+
+Cell[TextData[StyleBox["Cyclically define Pb, Pc, Qb, Qc.",
+ FontSlant->"Plain"]], "DefinitionContinuation",
+ CellGroupingRules->{
+  "GroupTogetherNestedGrouping", 
+   16000.},ExpressionUUID->"412ed3ea-c609-4ed0-8e9e-e80e7da04509"],
+
+Cell[TextData[StyleBox["We call the triangle formed by lines PaQa, PbQb, and \
+PcQc, the ??? triangle of ABC and A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"37533ba8-\
+ae4f-4e7c-a6fd-2893daf4f420"],
+
+Cell[TextData[StyleBox["{XaXbXc, ABC, A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote]}-2nd-cross triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"8037b55e-f0c4-459b-b845-\
+fd8bc60f73c7"],
+
+Cell[TextData[StyleBox["Denote Pab = XaA\:2229A\[CloseCurlyQuote]B\
+\[CloseCurlyQuote], Pac=XaA\:2229A\[CloseCurlyQuote]C\[CloseCurlyQuote],  Qab \
+= XaA\[CloseCurlyQuote]\:2229AB, Qac=XaA\[CloseCurlyQuote]\:2229AC. ",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"83804711-\
+6e8b-40a8-a7d4-f9711c965363"],
+
+Cell[TextData[StyleBox["Let Ta=PabQac\:2229PacQab and cyclically define Tb \
+and Tc.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"9676da12-\
+f35b-469e-9203-3c74d8d8a563"],
+
+Cell[TextData[StyleBox["We call TaTbTc the ??? triangle of ABC and A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"133577ec-\
+9e2e-44ff-9d57-e5e2c6710919"],
+
+Cell[TextData[StyleBox["{XaXbXc, ABC, A\[CloseCurlyQuote]B\[CloseCurlyQuote]C\
+\[CloseCurlyQuote]}-3rd-cross triangle",
+ FontWeight->"Bold"]], "Definition",ExpressionUUID->"d49e9ed0-47ea-489a-8b5c-\
+632009461a15"],
+
+Cell[TextData[StyleBox["Denote Pab = XaA\:2229A\[CloseCurlyQuote]B\
+\[CloseCurlyQuote], Pac=XaA\:2229A\[CloseCurlyQuote]C\[CloseCurlyQuote],  Qab \
+= XaA\[CloseCurlyQuote]\:2229AB, Qac=XaA\[CloseCurlyQuote]\:2229AC. ",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"fdf53e9d-\
+3239-4e67-8569-27fa93a2b506"],
+
+Cell[TextData[StyleBox["Let Ta=PabQab\:2229PacQac and cyclically define Tb \
+and Tc.",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"20b7cc4f-\
+1075-4252-a97c-2327af9b2907"],
+
+Cell[TextData[StyleBox["We call TaTbTc the ??? triangle of ABC and A\
+\[CloseCurlyQuote]B\[CloseCurlyQuote]C\[CloseCurlyQuote].",
+ FontSlant->"Plain"]], "DefinitionContinuation",ExpressionUUID->"74d7d261-\
+0c89-4d19-93cd-2b5c353f3fac"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Acknowledgments", "AcknowledgmentsSection",
+ TextAlignment->Left,ExpressionUUID->"c357aad8-a083-46ec-87ba-b18c72a6e568"],
+
+Cell["Enter acknowledgment text here.", "Acknowledgments",ExpressionUUID->"3777df53-610f-46b4-ba79-ece1cb0f9245"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "ReferenceSection",
+ TextAlignment->Left,ExpressionUUID->"5c7569db-3f94-4ee1-ac09-6f76379c6429"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Authorlast, \[OpenCurlyDoubleQuote]Article Title,\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"a8c15582-746a-4772-9710-8e3fa9b0055d"],
+
+Cell[TextData[{
+ "Authorlast1 and B. Authorlast2, \[OpenCurlyDoubleQuote]Article Title,\
+\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"e0e31f92-8307-4467-9a78-818e135c4c0c"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Article Title,\[CloseCurlyDoubleQuote] ",
+ StyleBox["Journal Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["Volume",
+  FontWeight->"Bold"],
+ "(Issue), 2005 pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"aff42709-031e-452b-93c4-93b2603b7419"],
+
+Cell[TextData[{
+ "Authorlast, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"afa7d2b5-d471-4387-925b-64deaeb117ad"],
+
+Cell[TextData[{
+ "Authorlast1 and B. Authorlast2, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"75d5631d-fe5b-4ca1-885f-c2ceb44f45a1"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, ",
+ StyleBox["Book Title",
+  FontSlant->"Italic"],
+ ", ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ "th ed., Publisher Location: Publisher Name, 2005."
+}], "Reference",ExpressionUUID->"28f20c76-bd7e-40d4-b571-a6ad31f687ea"],
+
+Cell[TextData[{
+ "Authorlast, \[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"701ed427-a805-42ff-9061-789288503ef3"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"33a8d895-c0c3-471a-b69c-663188fe7db4"],
+
+Cell[TextData[{
+ "Authorlast1, B. Authorlast2, and C. Authorlast3, \
+\[OpenCurlyDoubleQuote]Paper Title,\[CloseCurlyDoubleQuote] in ",
+ StyleBox["Conference Proceedings Title (Conference Acronym and Year)",
+  FontSlant->"Italic"],
+ ", Conference Location (A. Authorlast, ed.), Publisher Location: Publisher \
+Name, Publication Date pp. #\[Dash]#."
+}], "Reference",ExpressionUUID->"5ed14eb8-2a19-40a3-9cf7-275a274c18d8"],
+
+Cell["\<\
+Authorlast. \[OpenCurlyDoubleQuote]Website Title.\[CloseCurlyDoubleQuote] \
+(Last updated date or date visited in three-character Month Day, Year format) \
+URL.\
+\>", "Reference",ExpressionUUID->"a873353a-4478-4e00-bd27-3873d29833c9"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{650.4, 532.8},
+WindowMargins->{{238.79999999999998`, Automatic}, {
+  0.6000000000000227, Automatic}},
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"Article"}, "JournalArticle.nb", CharacterEncoding -> 
+       "UTF-8"]]]}, WindowSize -> {582.6, 488.4}, 
+  WindowMargins -> {{0, Automatic}, {Automatic, 0}}, Visible -> False, 
+  FrontEndVersion -> "13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+   StyleDefinitions -> "PrivateStylesheetFormatting.nb"],
+PrivateNotebookOptions -> {"NotebookAuthor" -> ""},
+ExpressionUUID->"29094ef2-32b1-414e-bff4-52864772da7f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 91, 0, 76, "Title",ExpressionUUID->"03755eff-fc15-4616-8cc1-222a8adbf9a8"],
+Cell[CellGroupData[{
+Cell[696, 26, 84, 0, 42, "Author",ExpressionUUID->"b20f6b3f-4500-4514-b640-5a468d63c14e"],
+Cell[783, 28, 120, 0, 14, "Institution",ExpressionUUID->"cb190694-edf5-48be-b03a-a4d64a32cb0f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[940, 33, 73, 0, 42, "Author",ExpressionUUID->"d9bf9b44-a2b3-4fc1-bb3f-fc5e959e8151"],
+Cell[1016, 35, 209, 3, 63, "Abstract",ExpressionUUID->"ed3fc74e-b735-419f-8df6-9680d6f8ec82"],
+Cell[1228, 40, 82, 0, 27, "Date",ExpressionUUID->"4f7c4082-766b-4cf9-bb18-cc8c88bb452f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1347, 45, 109, 0, 50, "Section",ExpressionUUID->"d6bc47a8-373a-470b-8a9f-f7d8fe50bb34"],
+Cell[1459, 47, 263, 4, 39, "Text",ExpressionUUID->"b905b8e1-273e-4b23-b29e-01106470d33e"],
+Cell[1725, 53, 116, 0, 22, "Text",ExpressionUUID->"3127331d-7d58-4f27-a7f6-efbf61259f21"],
+Cell[CellGroupData[{
+Cell[1866, 57, 133, 1, 22, "Definition",ExpressionUUID->"5050c868-171f-4f87-b9da-39902062c07d"],
+Cell[2002, 60, 232, 3, 22, "DefinitionContinuation",ExpressionUUID->"4bcd139f-9250-4cc0-b468-60396a0588fe"],
+Cell[2237, 65, 131, 1, 22, "Definition",ExpressionUUID->"f2711867-251d-4b1f-938e-e3243b693e9f"],
+Cell[2371, 68, 341, 5, 22, "DefinitionContinuation",ExpressionUUID->"c224fda0-01cf-4b6b-81e4-dbe7dbe2e4fc"],
+Cell[2715, 75, 132, 1, 22, "Definition",ExpressionUUID->"987c3e82-5edf-45c7-bb7f-a7d03fe29583"],
+Cell[2850, 78, 341, 5, 22, "DefinitionContinuation",ExpressionUUID->"5ebb80d7-e9f8-4702-8d03-9d8c49a6307d"],
+Cell[3194, 85, 198, 4, 22, "Definition",ExpressionUUID->"db9b48ca-2b89-450e-9bcc-16145be035a0",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[3395, 91, 313, 5, 22, "DefinitionContinuation",ExpressionUUID->"585dfcc9-68f5-47b3-8170-266f612c4625",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[3711, 98, 139, 3, 22, "Text",ExpressionUUID->"63494b3d-367e-44d2-abab-ad34ab40a03b",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[3853, 103, 185, 3, 22, "Text",ExpressionUUID->"ac91934e-229a-4ba0-88dc-af20f4e1b4bf",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[4041, 108, 139, 3, 22, "Text",ExpressionUUID->"2585f87f-65b1-4dbf-9eed-e8aab7345b13",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[4183, 113, 209, 3, 22, "Definition",ExpressionUUID->"b3cef4ca-46c6-44d5-83ca-f2cc58e9003a"],
+Cell[4395, 118, 335, 4, 22, "DefinitionContinuation",ExpressionUUID->"f02a0bea-1fe1-46bb-8c7e-a91189017e9c"],
+Cell[4733, 124, 208, 3, 22, "Definition",ExpressionUUID->"27873001-298e-4aae-ba4f-cf41b17b2828"],
+Cell[4944, 129, 330, 4, 22, "DefinitionContinuation",ExpressionUUID->"8b5a59d5-b437-4ec4-967b-34c2ddba3502"],
+Cell[5277, 135, 213, 3, 22, "Definition",ExpressionUUID->"0bc67f10-e95b-46fd-8e9e-6f5e65e9fe6a"],
+Cell[5493, 140, 258, 3, 22, "DefinitionContinuation",ExpressionUUID->"411195f3-2185-4ac1-ac61-bc1c335da44d"],
+Cell[5754, 145, 198, 3, 22, "DefinitionContinuation",ExpressionUUID->"9deae7ed-34fd-4bf5-be8d-22df53fbd0ec"],
+Cell[5955, 150, 215, 3, 22, "Definition",ExpressionUUID->"d39c7aaf-57c6-4841-8c93-063d6079f31b"],
+Cell[6173, 155, 337, 4, 22, "DefinitionContinuation",ExpressionUUID->"f32f1770-3165-4e1d-9a5a-5c8f07d551f8"],
+Cell[6513, 161, 221, 3, 22, "Definition",ExpressionUUID->"9246b36b-c546-4558-ab1e-33cbfb049e27"],
+Cell[6737, 166, 505, 14, 22, "DefinitionContinuation",ExpressionUUID->"d0f04186-e43a-4a8d-87dc-5d4f8b245c2b"],
+Cell[7245, 182, 202, 4, 22, "DefinitionContinuation",ExpressionUUID->"1bc3ba5d-c05c-4db4-8695-974b05cedcef",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[7450, 188, 409, 11, 22, "DefinitionContinuation",ExpressionUUID->"f900175b-bb35-4826-a7ce-a4f532e66814",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[7862, 201, 445, 12, 22, "DefinitionContinuation",ExpressionUUID->"55e349b4-7700-47f9-be2b-e909a26c24bf",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[8310, 215, 493, 14, 22, "DefinitionContinuation",ExpressionUUID->"5d8debd8-81f7-4fac-b172-f5df0489a7a4",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[8806, 231, 677, 21, 22, "DefinitionContinuation",ExpressionUUID->"5740dc42-01a4-4c0f-8d0e-806f86f09a1d",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[9486, 254, 677, 21, 22, "DefinitionContinuation",ExpressionUUID->"d348b20d-c071-40f6-b851-3088ad8af52e",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[10166, 277, 677, 21, 22, "DefinitionContinuation",ExpressionUUID->"f61b1b26-e143-4b30-a0fc-993ea72b1b61",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[10846, 300, 222, 3, 22, "Definition",ExpressionUUID->"343d42af-1a0f-4cec-ab0e-2ecb0bac77ea"],
+Cell[11071, 305, 389, 5, 39, "DefinitionContinuation",ExpressionUUID->"fabb72a7-cadb-4014-bdbb-d7fd394c09ad"],
+Cell[11463, 312, 214, 3, 22, "Definition",ExpressionUUID->"a0a51cd3-d784-4ec4-b3a8-cc4d60c2a1a8"],
+Cell[11680, 317, 305, 5, 22, "DefinitionContinuation",ExpressionUUID->"8d2398c3-ae45-4aa3-883e-3fb08e74a2d4"],
+Cell[11988, 324, 210, 3, 22, "Definition",ExpressionUUID->"58ff25f2-0b7e-41e6-b93d-c05f8e15989a"],
+Cell[12201, 329, 485, 7, 39, "DefinitionContinuation",ExpressionUUID->"a7079e73-56d7-4572-881b-99617cece0ab"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12735, 342, 111, 0, 50, "Section",ExpressionUUID->"1f8106da-f0b2-4e0c-9363-e8a20b19c9e2"],
+Cell[12849, 344, 217, 3, 22, "Text",ExpressionUUID->"7679b1d2-2e76-4763-9e97-e2b0d29e8fc8"],
+Cell[CellGroupData[{
+Cell[13091, 351, 213, 3, 22, "Definition",ExpressionUUID->"0cf284cb-bec4-4ea7-ab37-33b695e2f616"],
+Cell[13307, 356, 231, 3, 22, "DefinitionContinuation",ExpressionUUID->"5ff93a44-9383-4744-ae39-81767fc59a6c"],
+Cell[13541, 361, 231, 4, 22, "DefinitionContinuation",ExpressionUUID->"412ed3ea-c609-4ed0-8e9e-e80e7da04509",
+ CellGroupingRules->{"GroupTogetherNestedGrouping", 16000.}],
+Cell[13775, 367, 281, 4, 22, "DefinitionContinuation",ExpressionUUID->"37533ba8-ae4f-4e7c-a6fd-2893daf4f420"],
+Cell[14059, 373, 213, 3, 22, "Definition",ExpressionUUID->"8037b55e-f0c4-459b-b845-fd8bc60f73c7"],
+Cell[14275, 378, 324, 4, 22, "DefinitionContinuation",ExpressionUUID->"83804711-6e8b-40a8-a7d4-f9711c965363"],
+Cell[14602, 384, 192, 3, 22, "DefinitionContinuation",ExpressionUUID->"9676da12-f35b-469e-9203-3c74d8d8a563"],
+Cell[14797, 389, 235, 3, 22, "DefinitionContinuation",ExpressionUUID->"133577ec-9e2e-44ff-9d57-e5e2c6710919"],
+Cell[15035, 394, 213, 3, 22, "Definition",ExpressionUUID->"d49e9ed0-47ea-489a-8b5c-632009461a15"],
+Cell[15251, 399, 324, 4, 22, "DefinitionContinuation",ExpressionUUID->"fdf53e9d-3239-4e67-8569-27fa93a2b506"],
+Cell[15578, 405, 192, 3, 22, "DefinitionContinuation",ExpressionUUID->"20b7cc4f-1075-4252-a97c-2327af9b2907"],
+Cell[15773, 410, 235, 3, 22, "DefinitionContinuation",ExpressionUUID->"74d7d261-0c89-4d19-93cd-2b5c353f3fac"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16057, 419, 126, 1, 50, "AcknowledgmentsSection",ExpressionUUID->"c357aad8-a083-46ec-87ba-b18c72a6e568"],
+Cell[16186, 422, 113, 0, 22, "Acknowledgments",ExpressionUUID->"3777df53-610f-46b4-ba79-ece1cb0f9245"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16336, 427, 115, 1, 50, "ReferenceSection",ExpressionUUID->"5c7569db-3f94-4ee1-ac09-6f76379c6429"],
+Cell[CellGroupData[{
+Cell[16476, 432, 299, 8, 18, "Reference",ExpressionUUID->"a8c15582-746a-4772-9710-8e3fa9b0055d"],
+Cell[16778, 442, 321, 9, 18, "Reference",ExpressionUUID->"e0e31f92-8307-4467-9a78-818e135c4c0c"],
+Cell[17102, 453, 338, 9, 18, "Reference",ExpressionUUID->"aff42709-031e-452b-93c4-93b2603b7419"],
+Cell[17443, 464, 251, 8, 18, "Reference",ExpressionUUID->"afa7d2b5-d471-4387-925b-64deaeb117ad"],
+Cell[17697, 474, 271, 8, 18, "Reference",ExpressionUUID->"75d5631d-fe5b-4ca1-885f-c2ceb44f45a1"],
+Cell[17971, 484, 288, 8, 18, "Reference",ExpressionUUID->"28f20c76-bd7e-40d4-b571-a6ad31f687ea"],
+Cell[18262, 494, 380, 6, 34, "Reference",ExpressionUUID->"701ed427-a805-42ff-9061-789288503ef3"],
+Cell[18645, 502, 419, 7, 50, "Reference",ExpressionUUID->"33a8d895-c0c3-471a-b69c-663188fe7db4"],
+Cell[19067, 511, 419, 7, 50, "Reference",ExpressionUUID->"5ed14eb8-2a19-40a3-9cf7-275a274c18d8"],
+Cell[19489, 520, 244, 4, 18, "Reference",ExpressionUUID->"a873353a-4478-4e00-bd27-3873d29833c9"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
