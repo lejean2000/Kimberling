@@ -1454,7 +1454,7 @@ drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] :=
               pa, pb, pc], 30] & ) /@ pt; 
         If[TrueQ[bCollinearityMatrix @@ (pt /. rule69) == 0], 
          AppendTo[drset, ({PointSize[Medium], colors[[i]], Point[#1]} & ) /@ 
-            evald]; , AppendTo[drset, {colors[[i]], Triangle[evald]}]; ]; 
+            evald]; , AppendTo[drset, {colors[[i]], Polygon[evald]}]; ]; 
         i = i + 1; , {pt, trgsete}]; Graphics[drset]]
  
 bIsHomothetic[tr1_, tr2_] := bIsParallel[bLine[tr1[[1]], tr1[[2]]], 
