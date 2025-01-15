@@ -87,9 +87,9 @@ CTR7-8.105 = cevian of X(80)
 
 Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. The barycentric coordinates of the A-vertex are:  
 
-    c^2*u*(u+w)-(u+v)*(-b^2*u+a^2*(u+w)) : 
-    b^2*(u+v)*(u+v+w) : 
-    c^2*(u+w)*(u+v+w)
+    c^2 u (u + w) - (u + v) (-b^2 u + a^2 (u + w)) : 
+    b^2 (u + v) (u + v + w) : 
+    c^2 (u + w) (u + v + w)
 
 Note the following triangle equivalences:  
 CTR8-4 = orthic  
@@ -127,7 +127,7 @@ CTR11 is the triangle formed by triangle formed by:
 
 The barycentric coordinates of the A-vertex are:  
 
-`0 : b^2*u*(u+v)-v*(c^2*u+a^2*w) : (b^2*u+a^2*v)*w-c^2*u*(u+w)`
+`0 : b^2 u (u + v) - v (c^2 u + a^2 w) : (b^2 u + a^2 v) w - c^2 u (u + w)`
 
 Note the following triangle equivalences:  
 CTR11-1 = incentral  
@@ -139,9 +139,9 @@ CTR11-6 is degenerate
 
 Let QaQbQc be the cevian triangle of Q. CTR12 is the triangle with vertices at the inversion poles of QbQc, QaQc, and QaQb wrt to the P-circumconic. The barycentric coordinates of the A-vertex are:  
 
-    u*(q*r*u+p*r*v+p*q*w) : 
-    -v*(q*r*u+p*r*v-p*q*w) : 
-    -w*(q*r*u-p*r*v+p*q*w)
+    u (q r u + p r v + p q w) : 
+    -v (q r u + p r v - p q w) : 
+    -w (q r u - p r v + p q w)
 
 Note the following triangle equivalences:  
 CTR12-1.9 = 6th mixtilinear  
@@ -158,9 +158,9 @@ CTR12-6.99 = Steiner
 
 Let PaPbPc be the P-circumconcevian triangle of Q. Let TaTbTc be the tangential triangle of PaPbPc wrt P-circumconic. Then TaTbTc is perspective to ABC and is called here CTR13. The barycentric coordinates of the A-vertex are:
 
-    q*u*(r*u+p*w)+p*v*(r*u+2*p*w) : 
-    -r*v*(q*u+p*v)+p*q*v*w : 
-    -w*(q*r*u-p*r*v+p*q*w)
+    q u (r u + p w) + p v (r u + 2 p w) : 
+    -v (q r u + p r v - p q w) : 
+    -w (q r u - p r v + p q w)
 
 Note the following triangle equivalences:  
 
@@ -241,9 +241,19 @@ CTR21(P,Q) is the side-triangle of BcCaAb and CbAcBa.
 
 The barycentric coordinates of the A-vertex are:
 
-    p*r^2*v^2*w+q*r*v*(r*u*v+p*u*w+r*w*(v+w))+q^2*w*(p*v*w+r*(v^2+(u+v)*w)) :
-    q*v*(r*v-q*w)*(p*w+r*(v+w)) :
-    -r*w*(r*v-q*w)*(p*v+q*(v+w))
+    r (q^2 + (p + q ) r) v^2 w + q (p q + (q + r) r ) v w^2 + u q r (r v^2 + w (p v + q w)) :
+    q v (r v - q w) (p w + r (v + w)) :
+    -r w (r v - q w) (p v + q (v + w))
 
+### CTR22
 
+Let PaPbPc be the cevian triangle of P and Q be any point. Let la be the line through Pa parallel to AQ, and similarly define lb and lc.
+
+CTR22(P,Q) is the triangle bound by lines la, lb, lc.
+
+The barycentric coordinates of the A-vertex are:
+
+    p (r u (u + v) + q u (u + w) + p (u^2 - v w)):
+    (p + r) (q u (v - w) + p v (u + w)):
+    (p + q) (p (u + v) w + r u (-v + w))
 
