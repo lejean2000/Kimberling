@@ -1,7 +1,7 @@
 Catalog of central triangles
 ----------------------------
 
-###### Last change: 30 Oct 2024
+###### Last change: 28 Jan 2025
 
 Unlike [triangle centers](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html) which are defined by a single triangle center function, central triangles [are defined by](https://mathworld.wolfram.com/CentralTriangle.html) two functions. There are lots (more than 500) triangles [used in ETC](https://faculty.evansville.edu/ck6/encyclopedia/IndexOfTrianglesReferencedInETC.html).
 
@@ -241,7 +241,7 @@ CTR21(P,Q) is the side-triangle of BcCaAb and CbAcBa.
 
 The barycentric coordinates of the A-vertex are:
 
-    r (q^2 + (p + q ) r) v^2 w + q (p q + (q + r) r ) v w^2 + u q r (r v^2 + w (p v + q w)) :
+    r (q^2 + (p + q) r) v^2 w + q (p q + (q + r) r ) v w^2 + u q r (r v^2 + w (p v + q w)) :
     q v (r v - q w) (p w + r (v + w)) :
     -r w (r v - q w) (p v + q (v + w))
 
@@ -257,3 +257,35 @@ The barycentric coordinates of the A-vertex are:
     (p + r) (q u (v - w) + p v (u + w)):
     (p + q) (p (u + v) w + r u (-v + w))
 
+### CTR23
+
+Let Ab be the projection of A upon BP, Ac - the projection of A upon PC, and Ha the projection of A upon BC. Let Oa be the circumcenter of AbAcHa. Similarly define Ob and Oc. 
+
+CTR23(P) is the triangle OaObOc.
+
+The barycentric coordinates of the A-vertex are:
+
+`u (c^2 v + b^2 w), ((a^2 - c^2) v + b^2 (u + v)) w, v ((a^2 - b^2) w + c^2 (u + w))`
+
+Note the following triangle equivalences:  
+CTR23-1 = extouch-of-Fuhrmann
+
+### CTR24
+CTR24(P) is the anticomplementary triangle of the cevian triangle of P.
+
+It is obviously perspective to the cevian triangle of P and to the cross-cevian triangle of P and Q.
+
+The barycentric coordinates of the A-vertex are:
+
+`u (v + w) (2 u + v + w), -v (u - w) (u + w), - w (u - v) (u + v)`
+
+Note the following triangle equivalences:  
+CTR24-2 = ABC  
+CTR24-4 = anti-Wasat  
+CTR24-7 = Ursa-minor  
+
+### CTR25
+CTR25(P,Q) is the inverse of the cevian triangle of P in the circumconic with perspector Q. For P=X(2) it coincides with the anticevian triangle of Q.
+
+The barycentric coordinates of the A-vertex are:  
+`p (p - q - r) v w, q v (r v - p w + q w), r w (-p v + r v + q w)`
