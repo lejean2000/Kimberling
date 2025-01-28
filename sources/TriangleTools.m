@@ -1510,3 +1510,53 @@ bIsSimilarNumeric[tr1_, tr2_, rule_:rule69] := Module[{f1, f2},
      f1 = bDistance[tr1[[1]], tr1[[2]]]/bDistance[tr2[[1]], tr2[[2]]] /. 
         rule; f2 = bDistance[tr1[[1]], tr1[[3]]]/bDistance[tr2[[1]], 
           tr2[[3]]] /. rule; Return[Abs[f1 - f2] < 10^(-10)]; ]
+ 
+bCircumconicGeneric[ptp_, {pa_, pb_, pc_}] := Module[{qa, qb, crv, p2}, 
+     qa = simplifyRationalBarycentrics[bReflectionPP[pa, ptp]]; 
+      qb = simplifyRationalBarycentrics[bReflectionPP[pb, ptp]]; 
+      crv = curveSimplify[bFivePointConicEq[pa, pb, pc, qa, qb]]; 
+      p2 = simplifyRationalBarycentrics[bPerspectorGeneric[crv, pa, pb, pc]]; 
+      qa = simplifyRationalBarycentrics[bReflectionPP[pa, p2]]; 
+      qb = simplifyRationalBarycentrics[bReflectionPP[pb, p2]]; 
+      curveSimplify[bFivePointConicEq[pa, pb, pc, qa, qb]]]
+ 
+bMixtilinearAA[{u_, v_, w_}] := a^2*b*(b - c)*c*(c*v + b*w)^2*x^2 + 
+     a^2*c*(c*v + b*w)*(c*(-a^2 + c^2)*v + b^2*c*(-2*u + v - 2*w) + a^2*b*w + 
+       b^3*w + b*c^2*(2*u - 2*v + w))*x*y + 
+     b*(b - c)*c*((-b)*c*u + c^2*u + a^2*w)^2*y^2 - 
+     a^2*b*(c*v + b*w)*(c*(a^2 + c^2)*v + b^2*c*(2*u + v - 2*w) + b^3*w - 
+       b*(c^2*(2*u + 2*v - w) + a^2*w))*x*z + 
+     (b*(b - c)^3*c*(b^2 + c^2)*u^2 - a^2*b*(b - c)^2*c*u*
+        (b*u - c*u - 2*b*v + 2*c*w) + a^6*((-c)*v^2 + b*w^2) - 
+       a^4*(b - c)*(c^2*v^2 + b^2*w^2 + b*c*(-(v - w)^2 + 2*u*(v + w))))*y*
+      z + b*(b - c)*c*(b^2*u - b*c*u + a^2*v)^2*z^2
+ 
+bMixtilinearBB[{u_, v_, w_}] := a*(a - c)*c*((-a)*c*v + c^2*v + b^2*w)^2*
+      x^2 + b^2*c*(c*u + a*w)*(c*(-b^2 + c^2)*u + a^3*w + 
+       a^2*c*(u - 2*(v + w)) + a*(b^2*w + c^2*(-2*u + 2*v + w)))*x*y + 
+     a*b^2*(a - c)*c*(c*u + a*w)^2*y^2 + 
+     (b^4*c*(-b^2 + c^2)*u^2 + a^6*c*v^2 - 3*a^5*c^2*v^2 + 
+       a^4*c*v*(b^2*(2*u - v) + 4*c^2*v) - a^3*(4*c^4*v^2 + b^4*w^2 + 
+         b^2*c^2*v*(4*u - 3*v + 2*w)) + 
+       a^2*(3*c^5*v^2 + b^2*c^3*v*(2*u - 3*v + 4*w) + 
+         b^4*c*(u^2 + 2*w*(-v + w) - 2*u*(v + w))) + 
+       a*((-c^6)*v^2 + b^2*c^4*v*(v - 2*w) + b^6*w^2 + 
+         b^4*c^2*(-2*u^2 + (2*v - w)*w + 2*u*(v + w))))*x*z - 
+     a*b^2*(c*u + a*w)*(c*(b^2 + c^2)*u + a^2*c*(u + 2*v - 2*w) + a^3*w - 
+       a*(c^2*(2*u + 2*v - w) + b^2*w))*y*z + 
+     a*(a - c)*c*(b^2*u + a*(a - c)*v)^2*z^2
+ 
+bMixtilinearCC[{u_, v_, w_}] := a*(a - b)*b*(c^2*v + b*(-a + b)*w)^2*x^2 + 
+     (b*c^4*(b^2 - c^2)*u^2 + a^6*b*w^2 - 3*a^5*b^2*w^2 + 
+       a^4*b*w*(c^2*(2*u - w) + 4*b^2*w) - 
+       a^3*(c^4*v^2 + b^2*c^2*(4*u + 2*v - 3*w)*w + 4*b^4*w^2) + 
+       a^2*(b^3*c^2*(2*u + 4*v - 3*w)*w + 3*b^5*w^2 + 
+         b*c^4*(u^2 + 2*v*(v - w) - 2*u*(v + w))) + 
+       a*(c^6*v^2 - b^6*w^2 + b^4*c^2*w*(-2*v + w) + 
+         b^2*c^4*(-2*u^2 - v*(v - 2*w) + 2*u*(v + w))))*x*y + 
+     a*(a - b)*b*(c^2*u + a*(a - b)*w)^2*y^2 + b*c^2*(b*u + a*v)*
+      (b*(b^2 - c^2)*u + a^3*v + a^2*b*(u - 2*(v + w)) + 
+       a*(c^2*v + b^2*(-2*u + v + 2*w)))*x*z - a*c^2*(b*u + a*v)*
+      (b*(b^2 + c^2)*u + a^3*v + a^2*b*(u - 2*v + 2*w) - 
+       a*(c^2*v + b^2*(2*u - v + 2*w)))*y*z + a*(a - b)*b*c^2*(b*u + a*v)^2*
+      z^2
