@@ -787,6 +787,10 @@ b4thConicIntersection[{x1_, y1_, z1_}, {x2_, y2_, z2_}, {x3_, y3_, z3_},
           ix*(iz*(x3*y2*z1 + x2*y3*z1 + x3*y1*z2 + x1*y3*z2 + x2*y1*z3 + 
               x1*y2*z3) - 2*ix*(y3*z1*z2 + y2*z1*z3 + y1*z2*z3))))}
  
+b4thConicIntersection /: b4thConicIntersection::usage = "Three common points, \
+and perspectors of the two conics wrt the triangle defined by these three \
+points"
+ 
 bLineIntersectionETC[n1_, n2_, n3_, n4_] := bLineIntersection[
      bLine[KimberlingCenterC[n1], KimberlingCenterC[n2]], 
      bLine[KimberlingCenterC[n3], KimberlingCenterC[n4]]]
