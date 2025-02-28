@@ -105,7 +105,9 @@ CTR9 is the barycentric sum of the cevian triangles of P=(u:v:w) and the anticev
 
 ### CTR10
 
-Let A'B'C' be the inner-Conway trianlge. Denote with Pa the trace of AA' upon the circumconic with perspector P=(u:v:w). Similarly define Pb and Pc. Then CTR10 is PaPbPc. The barycentric coordinates of the A-vertex are:  
+Let A'B'C' be the inner-Conway trianlge. Denote with Pa the trace of AA' upon the circumconic with perspector P=(u:v:w). Similarly define Pb and Pc. Then CTR10 is PaPbPc. 
+PaPbPc is homothetic to the anticevian triangle of P.
+The barycentric coordinates of the A-vertex are:  
 
 `u : -v + w : v - w`
 
