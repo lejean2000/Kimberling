@@ -267,7 +267,7 @@ CTR23(P) is the triangle OaObOc.
 
 The barycentric coordinates of the A-vertex are:
 
-`u (c^2 v + b^2 w), ((a^2 - c^2) v + b^2 (u + v)) w, v ((a^2 - b^2) w + c^2 (u + w))`
+`u (c^2 v + b^2 w) : ((a^2 - c^2) v + b^2 (u + v)) w : v ((a^2 - b^2) w + c^2 (u + w))`
 
 Note the following triangle equivalences:  
 CTR23-1 = extouch-of-Fuhrmann
@@ -279,7 +279,7 @@ It is obviously perspective to the cevian triangle of P and to the cross-cevian 
 
 The barycentric coordinates of the A-vertex are:
 
-`u (v + w) (2 u + v + w), -v (u - w) (u + w), - w (u - v) (u + v)`
+`u (v + w) (2 u + v + w) : -v (u - w) (u + w) : - w (u - v) (u + v)`
 
 Note the following triangle equivalences:  
 CTR24-2 = ABC  
@@ -290,4 +290,30 @@ CTR24-7 = Ursa-minor
 CTR25(P,Q) is the inverse of the cevian triangle of P in the circumconic with perspector Q. For P=X(2) it coincides with the anticevian triangle of Q.
 
 The barycentric coordinates of the A-vertex are:  
-`p (p - q - r) v w, q v (r v - p w + q w), r w (-p v + r v + q w)`
+`p (p - q - r) v w : q v (r v - p w + q w) : r w (-p v + r v + q w)`
+
+### CTR26
+Let PaPbPc and QaQbQc be the cevian triangles of P and Q and X be any point. CTR26(P,Q,X) is the triangle formed by the points XPa∩QbQc, XPb∩QaQc and XPc∩QaQb.
+
+The barycentric coordinates of the A-vertex are:  
+`p (r v + q w) x : q (r v x + p w y - p v z) : r (q w x - p w y + p v z)`
+
+### CTR27
+CTR27(P,Q) is the anticevian triangle of Q wrt the cevian triangle of P (wrt to ABC).
+
+The barycentric coordinates of the A-vertex are:  
+`p u v w : v^2 (-r u + p w) : (-q u + p v) w^2`
+
+### CTR28
+If PaPbPc is the cevian triangle of P, CTR28(P) is the triangle with vertices at the orthocenters of APbPc, BPaPc, and CPaPb.
+
+CTR28(P) is bilogic to ABC if P lies on the Lucas cubic K007.
+
+The barycentric coordinates of the A-vertex are:
+
+    a^4 (u^2 - v w) - 2 a^2 u (c^2 (u + v) + b^2 (u + w)) + (b^2 - c^2) (-c^2 (u^2 + 2 u v + v w) + b^2 (u^2 + 2 u w + v w)) :
+    (a^2 - b^2 - c^2) (a^2 v (u + w) - c^2 v (u + w) + b^2 (-u v + 2 u w + v w)) : 
+    (a^2 - b^2 - c^2) ((a^2 - b^2) (u + v) w + c^2 (2 u v - u w + v w))
+
+Note the following triangle equivalences:  
+CTR28-2 = Euler
