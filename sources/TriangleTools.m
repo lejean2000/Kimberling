@@ -1112,6 +1112,8 @@ bPCevianTriangle[{u_, v_, w_}, {p_, q_, r_}] :=
     {{0, p*v + q*(v + w), p*w + r*(v + w)}, {q*u + p*(u + w), 0, 
       q*w + r*(u + w)}, {r*u + p*(u + v), r*v + q*(u + v), 0}}
  
+bPCevianTriangle /: bPCevianTriangle::usage = "P-pedal triangle of Q"
+ 
 bIsParallelogic[pa_, pb_, pc_, xa_, xb_, xc_] := 
     bConcurrencyMatrix[bParallelLine[pa, bLine[xb, xc]], 
      bParallelLine[pb, bLine[xa, xc]], bParallelLine[pc, bLine[xa, xb]]]
@@ -1564,3 +1566,9 @@ bMixtilinearCC[{u_, v_, w_}] := a*(a - b)*b*(c^2*v + b*(-a + b)*w)^2*x^2 +
       (b*(b^2 + c^2)*u + a^3*v + a^2*b*(u - 2*v + 2*w) - 
        a*(c^2*v + b^2*(2*u - v + 2*w)))*y*z + a*(a - b)*b*c^2*(b*u + a*v)^2*
       z^2
+ 
+TranLozadaCCO[p_, q_, r_] := {a^2*((p[[1]]*q[[1]])/r[[1]]), 
+     b^2*((p[[2]]*q[[2]])/r[[2]]), c^2*((p[[3]]*q[[3]])/r[[3]])}
+ 
+TranLozadaOOC[p_, q_, r_] := {(p[[1]]*q[[1]])/(a^2*r[[1]]), 
+     (p[[2]]*q[[2]])/(b^2*r[[2]]), (p[[3]]*q[[3]])/(c^2*r[[3]])}

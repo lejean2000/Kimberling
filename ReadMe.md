@@ -1,8 +1,8 @@
 # Triangle Center Tools
 
-This repo provides you the `KimberlingCenter[k, A, B, C]` function which given an integer k and three points A, B and C, calculates the k-th triangle center according to Kimberling's [encyclopedia of triangle centers](https://faculty.evansville.edu/ck6/encyclopedia/etc.html).
+This repo provides you the `KimberlingCenter[k, A, B, C]` function which given an integer k and three points A, B and C, calculates the k-th triangle center according to Kimberling's [Encyclopedia of Triangle Centers](https://faculty.evansville.edu/ck6/encyclopedia/etc.html).
 
-Note that currrently k<=53412.
+Note that currrently k<=67400.
 
 Here is a simple example which plots a few random triangle centers:
 ```
@@ -29,4 +29,4 @@ Print /@ centers;
 ```
 ![](https://i.postimg.cc/WzQSTTw3/etc.png)
 
-There are some other helpful tools as well, but most are not documented yet.
+There are many other helpful tools as well, but they are not documented yet.
