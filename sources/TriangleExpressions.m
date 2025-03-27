@@ -20,13 +20,13 @@ GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}] :=
      triangulo = Graphics[{Blue, AbsoluteThickness[1.5], 
          Line[{PA, PB, PC, PA}]}]; vertices = 
        Graphics[(Circulito[#1, Color -> Red, Size -> 0.05] & ) /@ 
-         {PA, PB, PC}]; etiquetas = Graphics[{EscribirTexto["A", PA, 
-          {0, 0.15}], EscribirTexto["B", PB, {0, -0.2}], 
-         EscribirTexto["C", PC, {0, -0.2}]}]; cartesianas = 
-       Cartesianas[ecuacion]; grafica = ContourPlot[cartesianas == 0, 
-        {x, xmin, xmax}, {y, ymin, ymax}, Frame -> None, 
-        ContourStyle -> Red]; Show[{triangulo, grafica, vertices, etiquetas}, 
-       AspectRatio -> Automatic]]
+         {PA, PB, PC}]; cartesianas = Cartesianas[ecuacion]; 
+      grafica = ContourPlot[cartesianas == 0, {x, xmin, xmax}, 
+        {y, ymin, ymax}, Frame -> None, ContourStyle -> Red]; 
+      Show[{triangulo, grafica, vertices}, AspectRatio -> Automatic]]
+ 
+GraficaBaricentricas[ecuacion_] := GraficaBaricentricas[ecuacion, {-20, 20}, 
+     {-20, 20}]
  
 polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
       (v_)?VectorQ :> Total[v], 2]]
