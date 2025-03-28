@@ -498,8 +498,12 @@ pointChecker[expr_, num_:0, full_:False, inname_:"X"] :=
            printSessionTime[]; Print["Starting conic centers"]; ]; 
           Quiet[checkPerspector[ptcoord, name]]; 
           Quiet[checkConicCenter[ptcoord, name]]; If[ !TrueQ[globalSilence], 
-           printSessionTime[]; Print["Starting processes"]; ]; 
-          TimeConstrained[Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
+           printSessionTime[]; Print["Starting baricentrics"]; ]; 
+          Quiet[checkBarycentric[ptcoord, "product", name]]; 
+          Quiet[checkBarycentric[ptcoord, "quotient", name]]; 
+          If[ !TrueQ[globalSilence], printSessionTime[]; 
+            Print["Starting processes"]; ]; TimeConstrained[
+           Quiet[pointCheckAllProcesses[ptcoord, name]], 90]; 
           If[ !TrueQ[globalSilence], Print["==========="]]; ]; ]; 
       Return[True]; ]
  
