@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      9583,        250]
-NotebookOptionsPosition[      8594,        227]
-NotebookOutlinePosition[      9034,        244]
-CellTagsIndexPosition[      8991,        241]
+NotebookDataLength[      8974,        234]
+NotebookOptionsPosition[      8242,        216]
+NotebookOutlinePosition[      8646,        232]
+CellTagsIndexPosition[      8603,        229]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -23,7 +23,7 @@ Cell[BoxData[
   RowBox[{"SetDirectory", "[", 
    RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
  CellLabel->
-  "In[353]:=",ExpressionUUID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
+  "In[370]:=",ExpressionUUID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
 
 Cell[BoxData[{
  RowBox[{
@@ -89,7 +89,8 @@ Cell[BoxData[{
        "\"\<Evans conic\>\"", ",", "\"\<Thomson-Gibert-Moses hyperbola \>\"", 
        ",", "\"\<1st Johnson Yff circle\>\"", ",", 
        "\"\<2nd Johnson Yff circle\>\""}], "}"}]}], "]"}]}], ";"}]}], "Input",
- CellLabel->"In[86]:=",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+ CellLabel->
+  "In[371]:=",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
 
 Cell[BoxData[{
  RowBox[{
@@ -124,7 +125,7 @@ Cell[BoxData[{
             RowBox[{"evaluate", "[", 
              RowBox[{"ETC", "[", "#", "]"}], "]"}], ",", "a"}], "]"}], 
           "&"}]}], "]"}]}], "}"}]}], "]"}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{"fltInCircles", "=", 
    RowBox[{"Association", "[", "]"}]}], ";"}], "\n", 
@@ -157,20 +158,40 @@ Cell[BoxData[{
             RowBox[{"ETC", "[", "#", "]"}], "]"}], ",", "a"}], "]"}], "&"}]}],
         "]"}]}], "}"}]}], "]"}], ";"}]}], "Input",
  CellLabel->
-  "In[346]:=",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
+  "In[345]:=",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
 
 Cell[BoxData[{
  RowBox[{
-  RowBox[{"fltDuals", "=", 
-   RowBox[{"Association", "[", "]"}]}], ";"}], "\n", 
+  RowBox[{"invalid", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<dual conic of Steiner circumellipse\>\"", ",", 
+     "\"\<dual conic of Steiner inellipse\>\"", ",", 
+     "\"\<dual conic of MacBeath circumconic\>\"", ",", 
+     "\"\<dual conic of MacBeath inconic\>\"", ",", 
+     "\"\<dual conic of Kiepert hyperbola\>\"", ",", 
+     "\"\<dual conic of Kiepert parabola\>\"", ",", 
+     "\"\<dual conic of 2nd Terzi\[CAcute] hyperbola\>\"", ",", 
+     "\"\<dual conic of 3rd Terzi\[CAcute] hyperbola\>\""}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Do", "[", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
+     RowBox[{"key", "=", 
+      RowBox[{"\"\<dual conic of \>\"", "<>", "crvname"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"KeyExistsQ", "[", 
+         RowBox[{"fltDuals", ",", "key"}], "]"}], " ", "||", " ", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"invalid", ",", "key"}], "]"}]}], ",", 
+       RowBox[{"Continue", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
      RowBox[{"AppendTo", "[", 
       RowBox[{"fltDuals", ",", 
-       RowBox[{
-        RowBox[{"\"\<dual conic of \>\"", "<>", "crvname"}], "->", 
+       RowBox[{"key", "->", 
         RowBox[{"curveSimplify", "[", 
          RowBox[{"bDualConic", "[", 
           RowBox[{"fltCentralCircles", "[", "crvname", "]"}], "]"}], 
@@ -179,55 +200,22 @@ Cell[BoxData[{
      RowBox[{"crvname", ",", 
       RowBox[{"Keys", "[", "fltCentralCircles", "]"}]}], "}"}]}], 
    "\[IndentingNewLine]", "]"}], ";"}]}], "Input",
- CellLabel->"In[90]:=",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
+ CellLabel->
+  "In[375]:=",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"fltDuals", "=", 
-   RowBox[{"KeyDrop", "[", 
-    RowBox[{"fltDuals", ",", 
-     RowBox[{"{", 
-      RowBox[{
-      "\"\<dual conic of Steiner circumellipse\>\"", ",", 
-       "\"\<dual conic of Steiner inellipse\>\"", ",", 
-       "\"\<dual conic of MacBeath circumconic\>\"", ",", 
-       "\"\<dual conic of MacBeath inconic\>\"", ",", 
-       "\"\<dual conic of Kiepert hyperbola\>\"", ",", 
-       "\"\<dual conic of Kiepert parabola\>\"", ",", 
-       "\"\<dual conic of 2nd Terzi\[CAcute] hyperbola\>\"", ",", 
-       "\"\<dual conic of 3rd Terzi\[CAcute] hyperbola\>\""}], "}"}]}], 
-    "]"}]}], ";"}]], "Input",
- CellLabel->"In[92]:=",ExpressionUUID->"a083c8e4-4b87-475d-8695-1678bb24bad6"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"DeleteFile", "[", "\"\<fltCircles.m\>\"", "]"}], 
-  ";"}], "\[IndentingNewLine]", 
  RowBox[{"Save", "[", 
   RowBox[{"\"\<fltCircles.m\>\"", ",", 
    RowBox[{"{", 
     RowBox[{
     "fltInCircles", ",", "fltCircumCircles", ",", "fltCentralCircles", ",", 
-     "fltDuals"}], "}"}]}], "]"}]}], "Input",
+     "fltDuals"}], "}"}]}], "]"}]], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
- CellLabel->"In[93]:=",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"],
-
-Cell[BoxData[
- TemplateBox[{
-  "DeleteFile", "fdnfnd", 
-   "\"Directory or file \\\"\\!\\(\\*RowBox[{\\\"\\\\\\\"fltCircles.m\\\\\\\"\
-\\\"}]\\)\\\" not found.\"", 2, 93, 6, 34248507544789039563, "Local"},
-  "MessageTemplate"]], "Message", "MSG",
  CellLabel->
-  "During evaluation of \
-In[93]:=",ExpressionUUID->"7a65b553-fdc0-463a-b51e-5d82a0e125f1"]
-}, Open  ]]
+  "In[381]:=",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
 },
-WindowSize->{1152., 579.6},
-WindowMargins->{{
-  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+WindowSize->{1141.2, 573.6},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"a813cf8d-5bd2-4c56-a801-bd5633c2c4a7"
@@ -244,14 +232,10 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[558, 20, 206, 5, 28, "Input",ExpressionUUID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
-Cell[767, 27, 3133, 64, 276, "Input",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
-Cell[3903, 93, 2340, 66, 181, "Input",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
-Cell[6246, 161, 764, 20, 86, "Input",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
-Cell[7013, 183, 732, 16, 67, "Input",ExpressionUUID->"a083c8e4-4b87-475d-8695-1678bb24bad6"],
-Cell[CellGroupData[{
-Cell[7770, 203, 454, 11, 64, "Input",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"],
-Cell[8227, 216, 351, 8, 28, "Message",ExpressionUUID->"7a65b553-fdc0-463a-b51e-5d82a0e125f1"]
-}, Open  ]]
+Cell[767, 27, 3137, 65, 276, "Input",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+Cell[3907, 94, 2340, 66, 181, "Input",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
+Cell[6250, 162, 1633, 41, 162, "Input",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
+Cell[7886, 205, 352, 9, 44, "Input",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
 }
 ]
 *)

@@ -317,3 +317,44 @@ The barycentric coordinates of the A-vertex are:
 
 Note the following triangle equivalences:  
 CTR28-2 = Euler
+
+### CTR29
+Let PaPbPc and QaQbQc be the cevian triangles of P and Q. Let Ta be the projection of Qa upon APa, and similarly define Tb, Tc. Triangle TaTbTc is CTR29(P, Q).
+
+The barycentric coordinates of the A-vertex are:
+
+    c^2 (v + w) (2 p v + r v - q w) - b^2 (v + w) (r v - (2 p + q) w) + a^2 (r v (v - w) - 2 p v w + q w (-v + w)), 
+    v (-a^2 (r v + q w) + b^2 (r v + q w + 2 r w) + c^2 (r v + q (2 v + w))), 
+    w (-a^2 (r v + q w) + b^2 (r v + q w + 2 r w) + c^2 (r v + q (2 v + w)))
+
+Note the following triangle equivalences:  
+CTR29-2.4 = 4th Brocard  
+CTR29-3.6 = 7th Brocard  
+CTR29-4.2 = orthocentroidal  
+CTR29-4.6 = 1st orthosymmedial  
+CTR29-6.3 = 2nd Brocard  
+CTR29-6.4 = 2nd orthosymmedial  
+CTR29-7.1 = CTR4-7  
+CTR29-8.40 = CTR4-8  
+CTR29-98.99 = ABC  
+CTR29-4.2 = orthocentroidal  
+CTR29-2.3 = CTR4-2  
+
+### CTR30
+Let P, Q be two points and QaQbQc be the pedal triangle of Q. CTR30(P, Q) is the triangle with vertices AP∩QQa, BP∩QQb, and CP∩QQc.
+
+The barycentric coordinates of the A-vertex are:
+
+    -((b^2 - c^2) p (v + w)) + a^2 (2 r v + p (v - w) - 2 q w), 
+    (a^2 (q - r) - (b^2 - c^2) (q + r)) v, 
+    (a^2 (q - r) - (b^2 - c^2) (q + r)) w
+
+Note the following triangle equivalences:  
+CTR30-2.1 = 1st Savin  
+CTR30-6.1 = CTR20-1.4  
+CTR30-7.1 = intouch  
+CTR30-8.1 = Hutson intouch  
+CTR30-55.1 = CTR26-7.1.1  
+CTR30-57.1 = Bevan antipodal  
+CTR30-65.1 = anti-tangential-midarc  
+CTR30-84.1 = hexyl  

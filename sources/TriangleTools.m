@@ -919,8 +919,9 @@ bOrthologyCenter[pa_, pb_, pc_, xa_, xb_, xc_] :=
      bPerpendicular[bLine[xa, xc], pb]]
  
 bOrthologyCenter[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
-    bLineIntersection[bPerpendicular[bLine[xb, xc], pa], 
-     bPerpendicular[bLine[xa, xc], pb]]
+    bLineIntersection[simplifyRationalBarycentrics[
+      bPerpendicular[bLine[xb, xc], pa]], simplifyRationalBarycentrics[
+      bPerpendicular[bLine[xa, xc], pb]]]
  
 bIsPerspective[a1_, b1_, c1_, a2_, b2_, c2_] := bConcurrencyMatrix[
      bLine[a1, a2], bLine[b1, b2], bLine[c1, c2]]
@@ -1307,6 +1308,9 @@ bIsOrthologicSimplify[pa_, pb_, pc_, xa_, xb_, xc_] :=
        bPerpendicular[bLine[xb, xc], pa]], simplifyRationalBarycentrics[
        bPerpendicular[bLine[xa, xc], pb]], simplifyRationalBarycentrics[
        bPerpendicular[bLine[xa, xb], pc]]]]
+ 
+bIsOrthologicSimplify[{pa_, pb_, pc_}, {xa_, xb_, xc_}] := 
+    bIsOrthologicSimplify[pa, pb, pc, xa, xb, xc]
  
 bOrthopoleGen[l_, xa_:xA, xb_:xB, xc_:xC] := Module[{ha, hb, hc, la, lb}, 
      ha = bFootPerpendicular[l, xa]; hb = bFootPerpendicular[l, xb]; 
