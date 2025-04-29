@@ -16,7 +16,7 @@ Get["../db/TRETC.mx"];
 TRETC = Sort[Map[Round[#[[1]], 0.00000000000000000001] &, TRETC]];
 *)
 
-STARTETCNUMBER = 70000;
+STARTETCNUMBER = 80000;
 
 If[FileExistsQ["globalptnames.mx"],
 Get["globalptnames.mx"];
@@ -125,4 +125,4 @@ endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
     numsortexpr[#] &], {2, -1}]
 ]]];
 
-loop[70020, endnum];
+loop[80000, endnum];

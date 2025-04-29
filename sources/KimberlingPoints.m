@@ -81,11 +81,17 @@ checkPointsOnCurveNamed[crvname_] := Block[{srch},
 XNy[k_] := Module[{k2}, If[NumberQ[k], k2 = StringJoin["X", ToString[k]], 
        k2 = k]; KimberlingCenterCNy[k2]/Total[KimberlingCenterCNy[k2]]]
  
-checkTrianglesOnCurve[crv_] := Block[{ecrv, out}, 
-     ecrv = evaluate[crv] /. rule69; out = {}; 
-      Do[If[(ecrv /. Thread[{x, y, z} -> (KimberlingTrianglesBary[name] /. 
-             rule69)]) == 0, AppendTo[out, name]; ], 
-       {name, Keys[KimberlingTrianglesBary]}]; Return[out]; ]
+checkTrianglesOnCurve[crv_, trsets_:{"CPTR", "ENCTR", "UNI"}] := 
+    Block[{ecrv, out, trgsets}, trgsets = {KimberlingTrianglesBary}; 
+      If[MemberQ[trsets, "CPTR"], AppendTo[trgsets, AssociationMap[
+         CPTR[#1][[1]] & , Keys[CPTR]]]]; If[MemberQ[trsets, "ENCTR"], 
+       AppendTo[trgsets, AssociationMap[ENCTR[#1][[1]] & , Keys[ENCTR]]]]; 
+      If[MemberQ[trsets, "UNI"], AppendTo[trgsets, AssociationMap[
+         UNCFTRG[#1][[1]] & , Keys[UNCFTRG]]]]; 
+      ecrv = evaluate[crv] /. rule69; out = {}; 
+      Do[Do[If[(ecrv /. Thread[{x, y, z} -> (set[name] /. rule69)]) == 0, 
+          AppendTo[out, name]; ], {name, Keys[set]}]; , {set, trgsets}]; 
+      Return[out]; ]
  
 checkCurvesForTriangle[tr_] := Block[{ecrv, out}, 
      out = intCurvesForTriangle[tr, rule69]; If[Length[out] > 0, 
@@ -150,8 +156,8 @@ trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
     Block[{keysset, out, trsym, ntest, ptcoord, perschk, outname}, 
      If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
         Return[False, Block]]; 
-      If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk]], 
-       Print["COLLINEAR POINTS"]; Return[False, Block]]; 
+      If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk /. 
+           rule69]], Print["COLLINEAR POINTS"]; Return[False, Block]]; 
       If[Keys[set][[1]] == "ABC", keysset = KimberlingTrianglesBaryOrthKeys, 
        keysset = Keys[set]; ]; out = Association[]; 
       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
@@ -175,36 +181,36 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
       trchke, ntest, ptcoord, perschk, outname, collinear, keysset}, 
      If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
         Return[False, Block]]; out = Association[]; collinear = False; 
-      If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk]], 
+      If[TrueQ[0 == bCollinearityMatrix @@ evaluate /@ trchk /. rule69], 
        collinear = True; Print["COLLINEAR POINTS"]]; 
       trchke = evaluate[trchk] /. rule69; out2 = {}; out3 = {}; 
       If[Keys[set][[1]] == "ABC", keysset = KimberlingTrianglesBaryOrthKeys, 
-       keysset = Keys[set]; ]; 
-      Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
-        trsyme = evaluate[trsym] /. rule69; If[trname == "8th Brocard" || 
-          trname == "Ehrmann-cross" || trname == "pedal of X(30)", 
-         Continue[]]; If[Length[exclset] > 0, 
-         Do[If[KeyExistsQ[set, excl], trexcl = If[ListQ[set[excl][[1]]], set[
-                excl], triangle[excl]]; htest = Abs[bIsHomothetic[trsyme, 
-                evaluate[trexcl] /. rule69]]; If[htest < 10^(-24), 
-              Goto[end]]; ]; , {excl, exclset}]]; If[collinear, 
-         If[TrueQ[0 == Simplify[bCollinearityMatrix @@ trsyme]], Continue[]]; 
-          ntest = bIsOrthologic[trchke, trsyme] /. rule69; , 
-         ntest = bIsOrthologic[trsyme, trchke] /. rule69; ]; 
-        If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter[trchk, trsym]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Orthology center of ", trgname, " and ", trname]; 
-          PrintTemporary[outname]; If[Length[perschk] > 0, 
-           AssociateTo[out, outname -> perschk[[1]]]; , 
-           AppendTo[out2, trname]; ]; If[ !collinear, 
-           ptcoord = bOrthologyCenter[trsym, trchk]; perschk = 
-             checkPointinETC2[ptcoord]; outname = StringJoin[
-              "Orthology center of ", trname, " and ", trgname]; 
-            If[Length[perschk] > 0, AssociateTo[out, outname -> 
-                perschk[[1]]]; , AppendTo[out3, trname]; ]; ]; ]; 
-        Label[end]; , {trname, keysset /. "infinite-altitude" -> Nothing}]; 
-      If[Length[out2] > 0, Print[StringJoin["Orthology center of ", trgname, 
-         " and ", ToString[out2]]]]; If[Length[out3] > 0, 
+       keysset = Keys[set]; ]; Monitor[
+       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
+         trsyme = evaluate[trsym] /. rule69; If[trname == "8th Brocard" || 
+           trname == "Ehrmann-cross" || trname == "pedal of X(30)", 
+          Continue[]]; If[Length[exclset] > 0, 
+          Do[If[KeyExistsQ[set, excl], trexcl = If[ListQ[set[excl][[1]]], 
+                set[excl], triangle[excl]]; htest = Abs[bIsHomothetic[trsyme, 
+                 evaluate[trexcl] /. rule69]]; If[htest < 10^(-24), Goto[
+                end]]; ]; , {excl, exclset}]]; If[collinear, 
+          If[TrueQ[0 == Simplify[bCollinearityMatrix @@ trsyme]], 
+            Continue[]]; ntest = bIsOrthologic[trchke, trsyme] /. rule69; , 
+          ntest = bIsOrthologic[trsyme, trchke] /. rule69; ]; 
+         If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter @@ 
+             Union[trchk, trsym]; perschk = checkPointinETC2[ptcoord]; 
+           outname = StringJoin["Orthology center of ", trgname, " and ", 
+             trname]; PrintTemporary[outname]; If[Length[perschk] > 0, 
+            AssociateTo[out, outname -> perschk[[1]]]; , 
+            AppendTo[out2, trname]; ]; If[ !collinear, 
+            ptcoord = bOrthologyCenter[trsym, trchk]; perschk = 
+              checkPointinETC2[ptcoord]; outname = StringJoin[
+               "Orthology center of ", trname, " and ", trgname]; 
+             If[Length[perschk] > 0, AssociateTo[out, outname -> 
+                 perschk[[1]]]; , AppendTo[out3, trname]; ]; ]; ]; 
+         Label[end]; , {trname, keysset /. "infinite-altitude" -> Nothing}], 
+       trname]; If[Length[out2] > 0, Print[StringJoin["Orthology center of ", 
+         trgname, " and ", ToString[out2]]]]; If[Length[out3] > 0, 
        Print[StringJoin["Orthology center of ", ToString[out3], " and ", 
          trgname]]]; KeyValueMap[Print[intaddbrackets[#1] -> #2] & , 
        GroupBy[out, Identity, Keys]]; ]
