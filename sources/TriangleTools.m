@@ -1354,6 +1354,9 @@ bIsogonalConjugateGeneral[ptx_, {pa_, pb_, pc_}] :=
       lb = simplifyRationalBarycentrics[bReflectionLL[bLine[pb, ptx], 
          bLine[pb, inc]]]; simplifyRationalBarycentrics[Cross[la, lb]]]
  
+bIsogonalConjugateGeneral[pt_, xa_, xb_, xc_] := bIsogonalConjugateGeneral[
+     pt, {xa, xb, xc}]
+ 
 bUnaryCofactorTrg[{{x1_, y1_, z1_}, {x2_, y2_, z2_}, {x3_, y3_, z3_}}] := 
     symmetrizeTriangleExprType2Bary[{y2*z3 - z2*y3, z2*x3 - x2*z3, 
        x2*y3 - y2*x3}*{a^2, b^2, c^2}]
@@ -1576,3 +1579,40 @@ TranLozadaCCO[p_, q_, r_] := {a^2*((p[[1]]*q[[1]])/r[[1]]),
  
 TranLozadaOOC[p_, q_, r_] := {(p[[1]]*q[[1]])/(a^2*r[[1]]), 
      (p[[2]]*q[[2]])/(b^2*r[[2]]), (p[[3]]*q[[3]])/(c^2*r[[3]])}
+ 
+bOrthoptic[conic_] := Module[{f, g, h, p, q, r}, 
+     {f, g, h} = (Coefficient[conic, #1] & ) /@ {x^2, y^2, z^2}; 
+      {p, q, r} = (1/2)*(Coefficient[conic, #1] & ) /@ {y*z, z*x, x*y}; 
+      (-b^2)*f*g*x^2 - c^2*f*h*x^2 - a^2*f*p*x^2 + b^2*f*p*x^2 + 
+       c^2*f*p*x^2 + c^2*q^2*x^2 + a^2*q*r*x^2 - b^2*q*r*x^2 - c^2*q*r*x^2 + 
+       b^2*r^2*x^2 - a^2*f*g*x*y - b^2*f*g*x*y + c^2*f*g*x*y - a^2*f*p*x*y + 
+       b^2*f*p*x*y - c^2*f*p*x*y + a^2*g*q*x*y - b^2*g*q*x*y - c^2*g*q*x*y + 
+       2*c^2*p*q*x*y - 2*c^2*h*r*x*y - a^2*p*r*x*y + b^2*p*r*x*y + 
+       c^2*p*r*x*y + a^2*q*r*x*y - b^2*q*r*x*y + c^2*q*r*x*y + a^2*r^2*x*y + 
+       b^2*r^2*x*y - c^2*r^2*x*y - a^2*f*g*y^2 - c^2*g*h*y^2 + c^2*p^2*y^2 + 
+       a^2*g*q*y^2 - b^2*g*q*y^2 + c^2*g*q*y^2 - a^2*p*r*y^2 + b^2*p*r*y^2 - 
+       c^2*p*r*y^2 + a^2*r^2*y^2 - a^2*f*h*x*z + b^2*f*h*x*z - c^2*f*h*x*z - 
+       a^2*f*p*x*z - b^2*f*p*x*z + c^2*f*p*x*z - 2*b^2*g*q*x*z - 
+       a^2*p*q*x*z + b^2*p*q*x*z + c^2*p*q*x*z + a^2*q^2*x*z - b^2*q^2*x*z + 
+       c^2*q^2*x*z + a^2*h*r*x*z - b^2*h*r*x*z - c^2*h*r*x*z + 
+       2*b^2*p*r*x*z + a^2*q*r*x*z + b^2*q*r*x*z - c^2*q*r*x*z + 
+       a^2*g*h*y*z - b^2*g*h*y*z - c^2*g*h*y*z - 2*a^2*f*p*y*z - 
+       a^2*p^2*y*z + b^2*p^2*y*z + c^2*p^2*y*z - a^2*g*q*y*z - b^2*g*q*y*z + 
+       c^2*g*q*y*z + a^2*p*q*y*z - b^2*p*q*y*z + c^2*p*q*y*z - a^2*h*r*y*z + 
+       b^2*h*r*y*z - c^2*h*r*y*z + a^2*p*r*y*z + b^2*p*r*y*z - c^2*p*r*y*z + 
+       2*a^2*q*r*y*z - a^2*f*h*z^2 - b^2*g*h*z^2 + b^2*p^2*z^2 - 
+       a^2*p*q*z^2 - b^2*p*q*z^2 + c^2*p*q*z^2 + a^2*q^2*z^2 + a^2*h*r*z^2 + 
+       b^2*h*r*z^2 - c^2*h*r*z^2]
+ 
+bIsotomicConjugateGeneral[pt_, xa_, xb_, xc_] := 
+    Module[{pa, pb, pc, ma, mb, ta, tb}, 
+     {pa, pb, pc} = simplifyRationalBarycentrics /@ bCevianTriangleGeneral[
+         pt, xa, xb, xc]; ma = simplifyRationalBarycentrics[
+        bMidpoint[xb, xc]]; mb = simplifyRationalBarycentrics[
+        bMidpoint[xc, xa]]; ta = simplifyRationalBarycentrics[
+        bReflectionPP[pa, ma]]; tb = simplifyRationalBarycentrics[
+        bReflectionPP[pb, mb]]; simplifyRationalBarycentrics[
+       Cross[bLine[xa, ta], bLine[xb, tb]]]]
+ 
+bIsotomicConjugateGeneral[pt_, {xa_, xb_, xc_}] := 
+    bIsotomicConjugateGeneral[pt, xa, xb, xc]

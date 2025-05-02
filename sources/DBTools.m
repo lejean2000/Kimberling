@@ -538,7 +538,8 @@ checkCurves[pt_, inname_:"X"] := Module[{out, ptest, ptest2, d, secondcheck,
          !StringContainsQ[#1, "A-"] &&  !StringContainsQ[#1, "B-"] && 
            !StringContainsQ[#1, "C-"] &&  !StringContainsQ[#1, "-A"] && 
            !StringContainsQ[#1, "-B"] &&  !StringContainsQ[#1, "-C"] & ]; 
-      AppendTo[curves, circset]; Do[monitorvar = name; 
+      AppendTo[curves, circset]; AppendTo[curves, fltDuals]; 
+      AppendTo[curves, fltOrthoptic]; Do[monitorvar = name; 
         crv = evaluate[curves[name]] /. rule69; normcoef = 
          Max[Flatten[Abs[CoefficientList[crv, {x, y, z}]]]]; 
         d = crv/normcoef /. Thread[{x, y, z} -> ptest]; 
@@ -637,7 +638,8 @@ checkCircles[pt_, name_:"X", prec_:24] :=
  
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
       outin, conics}, out = {}; outci = {}; outin = {}; 
-      conics = Join[fltCentralCircles, fltDuals]; If[ !globalCheckAllPoles, 
+      conics = Join[fltCentralCircles, fltDuals, fltOrthoptic]; 
+      If[ !globalCheckAllPoles, 
        Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
             evaluate[plr] . {x, y, z}]; If[Length[set] >= 2, 

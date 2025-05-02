@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      8974,        234]
-NotebookOptionsPosition[      8242,        216]
-NotebookOutlinePosition[      8646,        232]
-CellTagsIndexPosition[      8603,        229]
+NotebookDataLength[     12025,        312]
+NotebookOptionsPosition[     10786,        288]
+NotebookOutlinePosition[     11226,        305]
+CellTagsIndexPosition[     11183,        302]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -50,7 +50,16 @@ Cell[BoxData[{
          RowBox[{"#", ",", "\"\<-B \>\""}], "]"}], "]"}], "&&", 
        RowBox[{"Not", "[", 
         RowBox[{"StringContainsQ", "[", 
-         RowBox[{"#", ",", "\"\<-C \>\""}], "]"}], "]"}]}], 
+         RowBox[{"#", ",", "\"\<-C \>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<parabola-A\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<parabola-B\>\""}], "]"}], "]"}], "&&", 
+       RowBox[{"Not", "[", 
+        RowBox[{"StringContainsQ", "[", 
+         RowBox[{"#", ",", "\"\<parabola-C\>\""}], "]"}], "]"}]}], 
       "\[IndentingNewLine]", "&"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"fltCentralCircles", "=", 
@@ -90,7 +99,7 @@ Cell[BoxData[{
        ",", "\"\<1st Johnson Yff circle\>\"", ",", 
        "\"\<2nd Johnson Yff circle\>\""}], "}"}]}], "]"}]}], ";"}]}], "Input",
  CellLabel->
-  "In[371]:=",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+  "In[451]:=",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
 
 Cell[BoxData[{
  RowBox[{
@@ -125,7 +134,7 @@ Cell[BoxData[{
             RowBox[{"evaluate", "[", 
              RowBox[{"ETC", "[", "#", "]"}], "]"}], ",", "a"}], "]"}], 
           "&"}]}], "]"}]}], "}"}]}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"fltInCircles", "=", 
    RowBox[{"Association", "[", "]"}]}], ";"}], "\n", 
@@ -160,7 +169,7 @@ Cell[BoxData[{
  CellLabel->
   "In[345]:=",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
 
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
   RowBox[{"invalid", "=", 
    RowBox[{"{", 
@@ -173,7 +182,18 @@ Cell[BoxData[{
      "\"\<dual conic of Kiepert parabola\>\"", ",", 
      "\"\<dual conic of 2nd Terzi\[CAcute] hyperbola\>\"", ",", 
      "\"\<dual conic of 3rd Terzi\[CAcute] hyperbola\>\""}], "}"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+  ";"}]], "Input",
+ CellLabel->
+  "In[613]:=",ExpressionUUID->"a4666e62-01e9-4745-9fda-64bd70f8160c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"fltDuals", "=", 
+   RowBox[{"Association", "[", "]"}]}], ";"}]], "Input",
+ CellLabel->
+  "In[614]:=",ExpressionUUID->"c507dff0-f95e-4f14-8b83-55aba6c5724f"],
+
+Cell[BoxData[
  RowBox[{
   RowBox[{"Do", "[", "\[IndentingNewLine]", 
    RowBox[{
@@ -199,9 +219,61 @@ Cell[BoxData[{
     RowBox[{"{", 
      RowBox[{"crvname", ",", 
       RowBox[{"Keys", "[", "fltCentralCircles", "]"}]}], "}"}]}], 
-   "\[IndentingNewLine]", "]"}], ";"}]}], "Input",
+   "\[IndentingNewLine]", "]"}], ";"}]], "Input",
  CellLabel->
-  "In[375]:=",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
+  "In[615]:=",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"fltOrthoptic", "=", 
+   RowBox[{"Association", "[", "]"}]}], ";"}]], "Input",
+ CellLabel->
+  "In[497]:=",ExpressionUUID->"e526821d-4368-42b7-9a21-4ab0746703df"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"invalid", "=", 
+   RowBox[{"{", "\"\<orthoptic circle of incircle\>\"", "}"}]}], 
+  ";"}]], "Input",ExpressionUUID->"2e6270e9-21e7-4244-96f9-df244ed73a94"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Do", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"key", "=", 
+      RowBox[{"\"\<orthoptic circle of \>\"", "<>", "crvname"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"KeyExistsQ", "[", 
+         RowBox[{"fltOrthoptic", ",", "key"}], "]"}], " ", "||", " ", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"invalid", ",", "key"}], "]"}]}], ",", 
+       RowBox[{"Continue", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"crv", " ", "=", " ", 
+      RowBox[{"curveSimplify", "[", 
+       RowBox[{"bOrthoptic", "[", 
+        RowBox[{"fltCentralCircles", "[", "crvname", "]"}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"polynomialDegree", "[", "crv", "]"}], "<=", "12"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"fltOrthoptic", ",", 
+          RowBox[{"key", "->", "crv"}]}], "]"}], ";"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", "key", "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"crvname", ",", 
+      RowBox[{"Keys", "[", "fltCentralCircles", "]"}]}], "}"}]}], 
+   "\[IndentingNewLine]", "]"}], ";"}]], "Input",ExpressionUUID->"749b5c25-\
+513b-4b23-a6ff-6c2d8b3260c8"],
 
 Cell[BoxData[
  RowBox[{"Save", "[", 
@@ -209,13 +281,14 @@ Cell[BoxData[
    RowBox[{"{", 
     RowBox[{
     "fltInCircles", ",", "fltCircumCircles", ",", "fltCentralCircles", ",", 
-     "fltDuals"}], "}"}]}], "]"}]], "Input",
+     "fltDuals", ",", " ", "fltOrthoptic"}], "}"}]}], "]"}]], "Input",
  Background->RGBColor[0.94, 0.88, 0.94],
  CellLabel->
-  "In[381]:=",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
+  "In[733]:=",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
 },
-WindowSize->{1141.2, 573.6},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1152., 579.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
 FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"a813cf8d-5bd2-4c56-a801-bd5633c2c4a7"
@@ -232,10 +305,15 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[558, 20, 206, 5, 28, "Input",ExpressionUUID->"658dcf2b-44de-401b-bdbb-a83df03762b0"],
-Cell[767, 27, 3137, 65, 276, "Input",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
-Cell[3907, 94, 2340, 66, 181, "Input",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
-Cell[6250, 162, 1633, 41, 162, "Input",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
-Cell[7886, 205, 352, 9, 44, "Input",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
+Cell[767, 27, 3560, 74, 295, "Input",ExpressionUUID->"cd0f5e1a-4096-4021-9069-a8e93ed50b35"],
+Cell[4330, 103, 2340, 66, 181, "Input",ExpressionUUID->"9fc84c5b-5a6b-4d30-bed3-94ce00b3519e"],
+Cell[6673, 171, 646, 15, 67, "Input",ExpressionUUID->"a4666e62-01e9-4745-9fda-64bd70f8160c"],
+Cell[7322, 188, 191, 5, 28, "Input",ExpressionUUID->"c507dff0-f95e-4f14-8b83-55aba6c5724f"],
+Cell[7516, 195, 1067, 28, 105, "Input",ExpressionUUID->"618c8c2a-ef2c-4dc7-b803-c3c4863ee744"],
+Cell[8586, 225, 195, 5, 28, "Input",ExpressionUUID->"e526821d-4368-42b7-9a21-4ab0746703df"],
+Cell[8784, 232, 190, 4, 28, "Input",ExpressionUUID->"2e6270e9-21e7-4244-96f9-df244ed73a94"],
+Cell[8977, 238, 1424, 37, 181, "Input",ExpressionUUID->"749b5c25-513b-4b23-a6ff-6c2d8b3260c8"],
+Cell[10404, 277, 378, 9, 44, "Input",ExpressionUUID->"33453c9b-3ca5-4b87-b28c-29a1198ea3c4"]
 }
 ]
 *)

@@ -22,11 +22,12 @@ GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}] :=
        Graphics[(Circulito[#1, Color -> Red, Size -> 0.05] & ) /@ 
          {PA, PB, PC}]; cartesianas = Cartesianas[ecuacion]; 
       grafica = ContourPlot[cartesianas == 0, {x, xmin, xmax}, 
-        {y, ymin, ymax}, Frame -> None, ContourStyle -> Red]; 
-      Show[{triangulo, grafica, vertices}, AspectRatio -> Automatic]]
+        {y, ymin, ymax}, Frame -> None, ContourStyle -> Red, 
+        PerformanceGoal -> "Quality"]; Show[{triangulo, grafica, vertices}, 
+       AspectRatio -> Automatic]]
  
-GraficaBaricentricas[ecuacion_] := GraficaBaricentricas[ecuacion, {-20, 20}, 
-     {-20, 20}]
+GraficaBaricentricas[ecuacion_] := GraficaBaricentricas[ecuacion, {-5, 15}, 
+     {-5, 12}]
  
 polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
       (v_)?VectorQ :> Total[v], 2]]
