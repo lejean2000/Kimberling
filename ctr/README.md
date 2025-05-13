@@ -358,3 +358,37 @@ CTR30-55.1 = CTR26-7.1.1
 CTR30-57.1 = Bevan antipodal  
 CTR30-65.1 = anti-tangential-midarc  
 CTR30-84.1 = hexyl  
+
+### CTR31
+Let PaPbPc be the cevian triangle of P and Q is a point not on the sides of ABC. Through Pa construct a line parallel to CQ and let its intersection with AB be Ab. Through Pa construct a line parallel to BQ and let its intersection with AC be Ac. Let Na be the reflection of Pa in the midpoint of AbAc. Similarly construct Nb and Nc. NaNbNc is CTR31(P,Q).
+
+CTR31(P,Q) is perspective to ABC and the perspector is the Dao conjugate of the complement of Q, and P. 
+CTR31(P,Q) is also perspective to the cevian triangle of Q.
+
+The barycentric coordinates of the A-vertex are:
+
+`p (q v + r w + p (v + w)) : q (p + r) w : (p + q) r v`
+
+Note the following triangle equivalences:  
+CTR31-1.1 = CTR14-1  
+CTR31-1.2 = Gemini 16  
+CTR31-1.7 = 1st Savin  
+CTR31-2.2 = Gemini 110  
+CTR31-2.4 = 2nd anti-Conway  
+CTR31-2.7 = inverse-in-incircle  
+CTR31-3.2 = CTR26-2.2.5  
+CTR31-3.4 = orthic axes  
+CTR31-4.2 = 6th anti-mixtilinear  
+CTR31-5.2 = CTR26-5.2.2  
+CTR31-6.2 = CTR26-6.2.2  
+CTR31-6.6 = CTR14-6  
+CTR31-7.1 = CTR26-4.1.2  
+CTR31-7.2 = 2nd Zaniah  
+CTR31-7.7 = 1st Van Khea-Pavlov  
+CTR31-8.2 = 1st Zaniah  
+CTR31-8.7 = CTR26-7.7.65  
+CTR31-8.8 = CTR14-8  
+CTR31-10.10 = CTR14-10  
+CTR31-10.75 = Gemini 13  
+CTR31-42.1 = CTR26-1.1.38 
+

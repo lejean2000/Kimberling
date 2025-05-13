@@ -1616,3 +1616,33 @@ bIsotomicConjugateGeneral[pt_, xa_, xb_, xc_] :=
  
 bIsotomicConjugateGeneral[pt_, {xa_, xb_, xc_}] := 
     bIsotomicConjugateGeneral[pt, xa, xb, xc]
+ 
+bOrthocevianTriangle[{u_, v_, w_}] = 
+    {{-(a^4*v*(u + v)*w*(u + w)) + (b^2 - c^2)*u^2*(b^2*(u + v)*w - 
+         c^2*v*(u + w)) - a^2*u*(c^2*v*(u + v - w)*(u + w) + 
+         b^2*(u + v)*w*(u - v + w)), b^2*((u + v)*(b^2*u + a^2*v)*w^2 - 
+        c^2*u*v*(u*v + w^2)), c^2*(c^2*u*v^2*(u + w) + a^2*v^2*w*(u + w) - 
+        b^2*u*w*(v^2 + u*w))}, {a^2*(b^2*u*(u + v)*w^2 + a^2*v*(u + v)*w^2 - 
+        c^2*u*v*(u*v + w^2)), -(b^4*u*(u + v)*w*(v + w)) + 
+       (-a^2 + c^2)*v^2*(-(a^2*(u + v)*w) + c^2*u*(v + w)) - 
+       b^2*v*(c^2*u*(u + v - w)*(v + w) + a^2*(u + v)*w*(-u + v + w)), 
+      c^2*(u^2*(v + w)*(c^2*v + b^2*w) - a^2*v*w*(u^2 + v*w))}, 
+     {a^2*(v^2*(u + w)*(c^2*u + a^2*w) - b^2*u*w*(v^2 + u*w)), 
+      b^2*(c^2*u^2*v*(v + w) + b^2*u^2*w*(v + w) - a^2*v*w*(u^2 + v*w)), 
+      -(c^4*u*v*(u + w)*(v + w)) + (a^2 - b^2)*w^2*(a^2*v*(u + w) - 
+         b^2*u*(v + w)) - c^2*w*(b^2*u*(u - v + w)*(v + w) + 
+         a^2*v*(u + w)*(-u + v + w))}}
+ 
+bOrthoanticevianTriangle[{u_, v_, w_}] = 
+    {{-(a^4*v*w*(v + w)) + (b^2 - c^2)*u^2*(-(c^2*v) + b^2*w) - 
+       a^2*(c^2*v*(u^2 + (v - w)*w) + b^2*w*(u^2 + v*(-v + w))), 
+      (a^2 + b^2 - c^2)*v*(c^2*v*(v - w) + a^2*v*w + b^2*w*(-v + w)), 
+      (a^2 - b^2 + c^2)*w*(c^2*v*(v - w) + a^2*v*w + b^2*w*(-v + w))}, 
+     {(a^2 + b^2 - c^2)*u*(c^2*u*(u - w) + b^2*u*w + a^2*w*(-u + w)), 
+      -(b^4*u*w*(u + w)) + (-a^2 + c^2)*v^2*(c^2*u - a^2*w) - 
+       b^2*(c^2*u*(v^2 + (u - w)*w) + a^2*w*(v^2 + u*(-u + w))), 
+      (-a^2 + b^2 + c^2)*w*(c^2*u*(u - w) + b^2*u*w + a^2*w*(-u + w))}, 
+     {(a^2 - b^2 + c^2)*u*(b^2*u*(u - v) + c^2*u*v + a^2*v*(-u + v)), 
+      (-a^2 + b^2 + c^2)*v*(b^2*u*(u - v) + c^2*u*v + a^2*v*(-u + v)), 
+      -(c^4*u*v*(u + v)) + (a^2 - b^2)*(-(b^2*u) + a^2*v)*w^2 - 
+       c^2*(b^2*u*((u - v)*v + w^2) + a^2*v*(u*(-u + v) + w^2))}}
