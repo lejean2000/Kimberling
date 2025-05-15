@@ -392,3 +392,19 @@ CTR31-10.10 = CTR14-10
 CTR31-10.75 = Gemini 13  
 CTR31-42.1 = CTR26-1.1.38 
 
+### CTR32
+Given a triangle ABC and two points P and Q, it is well known that there are four conics through the two points and tangent to the three sidelines of ABC.
+See https://garciacapitan.blogspot.com/2025/05/inconics-through-two-points.html for more information. From these conics, one is a central conic, the other three are not central.
+Let Q be the isogonal conjugate of P. Let Oa, Ob, Oc, be the vertices of the non-central conics.
+
+CTR32(P) is triangle OaObOc.  
+
+Note that CTR32(X) and CTR32(Y) are always perpspective for any X, Y.   
+
+In addition, CTR32 is perspective to the following triangles: medial, excentral, 2nd Savin, 2nd Sharygin, 9th Vijay-Paasche-Hutson, Gemini 2, Gemini 15, Gemini 60, CTR9-1.37, CTR12-1.57, CTR13-1.57, CTR26-7.7.57, CTR27-2.37, CTR30-57.3, UCFT-of-extangents, UCFT-of-intangents
+
+The barycentric coordinates of the A-vertex are:
+
+    2 a (b + c) u v w + a^2 v w (v + w) + u^2 (c^2 v + b^2 w), 
+    2 b (a - c) u v w + b^2 u w (u + w) + v^2 (c^2 u + a^2 w), 
+    2 c (a - b) u v w + c^2 u v (u + v) + w^2 (b^2 u + a^2 v)

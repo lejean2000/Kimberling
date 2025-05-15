@@ -1,14 +1,13 @@
 #!/usr/bin/env wolframscript
 
+$HistoryLength = 0;
+
 If[$OperatingSystem == "Windows",
 Get["../sources/initwin.wls"],
 Get["../sources/init.wls"]
 ];
 
-Get["../db/ETCExtra.mx"];
-Get["../db/ETCExtraBary.mx"];
-
-STARTETCNUMBER = 70000;
+STARTETCNUMBER = 80000;
 
 If[FileExistsQ["globalptnames.mx"],
 Get["globalptnames.mx"];
@@ -22,8 +21,6 @@ globalptexpr = Association[];
 globalptbary = Association[];
 ];
 
-ETCFull = ETC;
-ETCBaryNormFull = ETCBaryNorm;
 
 (* Add Extra points to ETC*)
 Do[
@@ -55,18 +52,16 @@ singlePointProcesses = Association[
 
 globalOutputStream = False;
 
+globalNoCleanup = True;
+pointCheckerMinProperties = 10;
 
-addpoint[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, ptnametop, totalnum},
-  pointCheckerMinProperties = 10;
-  start = ptnum;
+addpoint[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, totalnum},
 
-   ptnametop = topname;
-
-   globalNoCleanup = True;
+   start = ptnum;
    
    Print[];
    
-   ptchk = TimeConstrained[quickChecker[ptcoord,0,False],30,-1];
+   ptchk = TimeConstrained[quickChecker[ptcoord,0,False,False,pointCheckerMinProperties,STARTETCNUMBER],60,-1];
    (*If[Total[ptchk]>=2,crvsnum=checkCurves[ptcoord] // Quiet // Length;,crvsnum=0];*)
    
    totalnum = Total[ptchk];
@@ -75,14 +70,14 @@ addpoint[ptnum_, ptcoord_, topname_] := Module[{yy, xname, start, ptnametop, tot
 	   totalnum>=pointCheckerMinProperties,
 	   
 	   xname = "X" <> ToString[start];
-
+	   yy=intnumericnorm[evaluate[ptcoord]/.rule69];
+	   
 	   AppendTo[ETC, xname->ptcoord[[1]]];
-	   yy=intnumericnorm[evaluate[symmetrizeInternal[ETC[xname]]]/.rule69];
 	   AppendTo[ETCBaryNorm, xname->yy];
 	   AppendTo[ETCFull, xname->ptcoord[[1]]];
 	   AppendTo[ETCBaryNormFull, xname->yy];
 	   
-	   AppendTo[globalptnames,xname->ptnametop];
+	   AppendTo[globalptnames,xname->topname];
 	   AppendTo[globalptdescr,xname->totalnum];
 	   AppendTo[globalptexpr, xname->ptcoord[[1]]];
 	   AppendTo[globalptbary, xname->yy];
@@ -100,7 +95,13 @@ Get["../db/UNCFTRG.mx"];
 Get["../db/CPTR.mx"];
 Get["../db/ENCTR.mx"];
 
+KeyDropFrom[KimberlingTrianglesBary, {"inner-Hutson", "outer-Hutson", "infinite-altitude"}];
+
 allsets = <|"KimberlingTrianglesBary"->KimberlingTrianglesBary, "CPTR"->CPTR, "UNCFTRG"->UNCFTRG, "ENCTR"->ENCTR|>;
+(*
+allsets = <|"KimberlingTrianglesBary"->KimberlingTrianglesBary|>;
+allsets = <|"CPTR"->CPTR, "UNCFTRG"->UNCFTRG|>;
+*)
 
 endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
   StringTake[
@@ -114,47 +115,23 @@ Do[
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
 		ntest=bIsPerspective@@(evaluate[Join[trsym,trchk]]/.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			ptcoord=TimeConstrained[bTrianglePerspector[trchk,trsym]//smpl, 60, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
-			perschk=ptcoord//checkPointinETC2;
+			trsym=TimeConstrained[smpl /@trsym, 15, -1];
+
+			If[trsym==-1, Continue[]];
 			outname = "Perspector of these triangles: "<>trgname<>" and "<>trname;
-			Print[outname];
-			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-      
-			ptcoord=TimeConstrained[bPerspectivityAxis[trchk,trsym]//bTripoleL//smpl, 15, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
+			Print[outname];				
+			ptcoord=TimeConstrained[bTrianglePerspector[trchk,trsym]//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
 			perschk=ptcoord//checkPointinETC2;
+
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+			
 			outname = "Tripole of perspectivity axis of these triangles: "<>trgname<>" and "<>trname;
-			Print[outname];
-			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-        
-		];
-	,{trname,Keys[allsets[setname]]}
-	];
-
-	DumpSave["globalptnames.mx", globalptnames];
-	DumpSave["globalptdescr.mx", globalptdescr];
-	DumpSave["globalptexpr.mx", globalptexpr];
-	DumpSave["globalptbary.mx", globalptbary];
-
-
-	Do[
-		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
-		ntest=(bIsOrthologic@@(evaluate[Join[trsym,trchk]]/.rule69))/.rule69;
-		If[Abs[ntest]<10^-24,
-			outname = "Orthology center of these triangles: "<>trgname<>" to "<>trname;
-			Print[outname];
-			ptcoord=TimeConstrained[bOrthologyCenter[trchk,trsym]//smpl, 60, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
+			Print[outname];				
+			ptcoord=TimeConstrained[bPerspectivityAxis[trchk,trsym]//smpl//bTripoleL//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
 			perschk=ptcoord//checkPointinETC2;
 
-			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-			
-			outname = "Orthology center of these triangles: "<>trname<>" to "<>trgname;
-			Print[outname];
-			ptcoord=TimeConstrained[bOrthologyCenter[trsym,trchk]//smpl, 60, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
-			perschk=ptcoord//checkPointinETC2;
 			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 		];
 	,{trname,Keys[allsets[setname]]}
@@ -167,21 +144,69 @@ Do[
 
 
 	Do[
+		If [
+			(StringContainsQ[trname,"UCFT"]&&StringContainsQ[trname,"Dao"])
+			||StringContainsQ[trname,"Altintas-isodynamic"]
+			||StringContainsQ[trname,"Hutson"]
+			||StringContainsQ[trname,"Lucas"],
+			Continue[]
+		];
 		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
-		ntest = (bIsParallelogic @@ (evaluate[Join[trsym, trchk]] /.rule69))/.rule69;
+		ntest=bIsOrthologic@@(evaluate[Join[trsym,trchk]]/.rule69)/.rule69;
 		If[Abs[ntest]<10^-24,
-			outname = "Parallelogic center of these triangles: "<>trgname<>" to "<>trname;
+			trsym=TimeConstrained[smpl/@trsym, 15, -1];
+			If[trsym==-1, Continue[]];
+			
+			outname = "Orthology center of these triangles: "<>trgname<>" wrt "<>trname;
 			Print[outname];
-			ptcoord=TimeConstrained[bParallelogicCenter[trchk,trsym]//smpl, 60, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
+			ptcoord=TimeConstrained[bOrthologyCenter[trchk,trsym]//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
+			perschk=ptcoord//checkPointinETC2;
+
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+
+			outname = "Orthology center of these triangles: "<>trname<>" wrt "<>trgname;
+			Print[outname];
+			ptcoord=TimeConstrained[bOrthologyCenter[trsym,trchk]//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
+			perschk=ptcoord//checkPointinETC2;
+			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+		];
+	,{trname,Keys[allsets[setname]]}
+	];
+
+	DumpSave["globalptnames.mx", globalptnames];
+	DumpSave["globalptdescr.mx", globalptdescr];
+	DumpSave["globalptexpr.mx", globalptexpr];
+	DumpSave["globalptbary.mx", globalptbary];
+
+
+	Do[
+		If [
+			(StringContainsQ[trname,"UCFT"]&&StringContainsQ[trname,"Dao"])
+			||StringContainsQ[trname,"Altintas-isodynamic"]
+			||StringContainsQ[trname,"Hutson"]
+			||StringContainsQ[trname,"Lucas"],
+			Continue[]
+		];
+		trsym=If[ListQ[allsets[setname][trname][[1]]],allsets[setname][trname],triangle[trname]];
+		ntest = bIsParallelogic @@ (evaluate[Join[trsym, trchk]] /.rule69)/.rule69;
+		If[Abs[ntest]<10^-24,
+			trsym=TimeConstrained[smpl/@trsym, 15, -1];
+			If[trsym==-1, Continue[]];
+			
+			outname = "Parallelogic center of these triangles: "<>trgname<>" wrt "<>trname;
+			Print[outname];
+			ptcoord=TimeConstrained[bParallelogicCenter[trchk,trsym]//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
 			perschk=ptcoord//checkPointinETC2;
 
 			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 			
-			outname = "Parallelogic center of these triangles: "<>trname<>" to "<>trgname;
+			outname = "Parallelogic center of these triangles: "<>trname<>" wrt "<>trgname;
 			Print[outname];
-			ptcoord=TimeConstrained[bParallelogicCenter[trsym,trchk]//smpl, 60, -1];
-			If[ptcoord == -1, Print["timeout"];Continue[]];
+			ptcoord=TimeConstrained[bParallelogicCenter[trsym,trchk]//smpl, 15, -1];
+			If[ptcoord==-1, Print["timeout"]];
 			perschk=ptcoord//checkPointinETC2;
 			If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 		];
@@ -197,41 +222,22 @@ Do[
 ];
 
 (* Starting centers *)
-
 outname = "Centroid of "<>trgname;
 Print[outname];
 ptcoord=TimeConstrained[bCentroid[trchk]//smpl, 15, -1];
-If[ptcoord == -1, Print["timeout"]];
+If[ptc == -1, Print["timeout"];Continue[]];
 perschk=ptcoord//checkPointinETC2;
 If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
 
-outname = "Circumcenter of "<>trgname;
-Print[outname];
-ptcoord=TimeConstrained[bCoordChangeK[3,trchk]//smpl, 30, -1];
-If[ptcoord == -1, Print["timeout"]];
-perschk=ptcoord//checkPointinETC2;
-If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-
-outname = "Orthocenter of "<>trgname;
-Print[outname];
-ptcoord=TimeConstrained[bCoordChangeK[4,trchk]//smpl, 30, -1];
-If[ptcoord == -1, Print["timeout"]];
-perschk=ptcoord//checkPointinETC2;
-If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-
-outname = "Nine point center of "<>trgname;
-Print[outname];
-ptcoord=TimeConstrained[bCoordChangeK[5,trchk]//smpl, 30, -1];
-If[ptcoord == -1, Print["timeout"]];
-perschk=ptcoord//checkPointinETC2;
-If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
-
-outname = "Symmedian point of "<>trgname;
-Print[outname];
-ptcoord=TimeConstrained[bCoordChangeK[6,trchk]//smpl, 30, -1];
-If[ptcoord == -1, Print["timeout"]];
-perschk=ptcoord//checkPointinETC2;
-If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+Do[
+	outname = "X("<>ToString[nx]<>") of "<>trgname;
+	Print[outname];
+	ptcoord=TimeConstrained[bCoordChangeK[nx, trchk]//smpl, 15, -1];
+	If[ptc == -1, Print["timeout"];Continue[]];
+	perschk=ptcoord//checkPointinETC2;
+	If[Length[perschk] == 0, endnum = addpoint[1 + endnum, ptcoord, outname] // Quiet;,Print[perschk]];
+,{nx,{3,4,5,6}}
+]
 
 
 DumpSave["globalptnames.mx", globalptnames];
