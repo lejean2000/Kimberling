@@ -1462,13 +1462,14 @@ drawTriangles[trgset_, pa_:PA, pb_:PB, pc_:PC] :=
      colors = {RGBColor[1, 0, 0, 0.8], RGBColor[0, 0.5, 1, 0.8], 
         RGBColor[0, 1, 0.5, 0.8], RGBColor[1, 0.1, 0.5, 0.8], 
         RGBColor[0.5, 0, 1, 0.5], RGBColor[0.2, 0.2, 0.2, 0.2]}; drset = {}; 
-      trgsete = evaluate[trgset]; AppendTo[drset, {Triangle[{pa, pb, pc}]}]; 
-      i = 1; Do[evald = (N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[
-              pa, pb, pc], 30] & ) /@ pt; 
+      trgsete = evaluate[trgset]; AppendTo[drset, {Opacity[0.7], 
+        Triangle[{pa, pb, pc}]}]; i = 1; 
+      Do[evald = (N[bToCartesian[#1, pa, pb, pc] /. setupBaseTriangle[pa, pb, 
+              pc], 30] & ) /@ pt; 
         If[TrueQ[bCollinearityMatrix @@ (pt /. rule69) == 0], 
          AppendTo[drset, ({PointSize[Medium], colors[[i]], Point[#1]} & ) /@ 
-            evald]; , AppendTo[drset, {colors[[i]], Polygon[evald]}]; ]; 
-        i = i + 1; , {pt, trgsete}]; Graphics[drset]]
+            evald]; , AppendTo[drset, {Opacity[0.5], colors[[i]], 
+            Polygon[evald]}]; ]; i = i + 1; , {pt, trgsete}]; Graphics[drset]]
  
 bIsHomothetic[tr1_, tr2_] := bIsParallel[bLine[tr1[[1]], tr1[[2]]], 
      bLine[tr2[[1]], tr2[[2]]]]
@@ -1646,3 +1647,7 @@ bOrthoanticevianTriangle[{u_, v_, w_}] =
       (-a^2 + b^2 + c^2)*v*(b^2*u*(u - v) + c^2*u*v + a^2*v*(-u + v)), 
       -(c^4*u*v*(u + v)) + (a^2 - b^2)*(-(b^2*u) + a^2*v)*w^2 - 
        c^2*(b^2*u*((u - v)*v + w^2) + a^2*v*(u*(-u + v) + w^2))}}
+ 
+bCevianCrossTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
+    {{(-p)*u, q*u + p*v, r*u + p*w}, {q*u + p*v, (-q)*v, r*v + q*w}, 
+     {r*u + p*w, r*v + q*w, (-r)*w}}

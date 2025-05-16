@@ -197,10 +197,10 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
           If[TrueQ[0 == Simplify[bCollinearityMatrix @@ trsyme]], 
             Continue[]]; ntest = bIsOrthologic[trchke, trsyme] /. rule69; , 
           ntest = bIsOrthologic[trsyme, trchke] /. rule69; ]; 
-         If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter @@ 
-             Union[trchk, trsym]; perschk = checkPointinETC2[ptcoord]; 
-           outname = StringJoin["Orthology center of ", trgname, " and ", 
-             trname]; PrintTemporary[outname]; If[Length[perschk] > 0, 
+         If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter[trchk, trsym]; 
+           perschk = checkPointinETC2[ptcoord]; outname = 
+            StringJoin["Orthology center of ", trgname, " and ", trname]; 
+           PrintTemporary[outname]; If[Length[perschk] > 0, 
             AssociateTo[out, outname -> perschk[[1]]]; , 
             AppendTo[out2, trname]; ]; If[ !collinear, 
             ptcoord = bOrthologyCenter[trsym, trchk]; perschk = 
