@@ -1,7 +1,7 @@
 Catalog of central triangles
 ----------------------------
 
-###### Last change: 28 Jan 2025
+###### Last change: 16 May 2025
 
 Unlike [triangle centers](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html) which are defined by a single triangle center function, central triangles [are defined by](https://mathworld.wolfram.com/CentralTriangle.html) two functions. There are lots (more than 500) triangles [used in ETC](https://faculty.evansville.edu/ck6/encyclopedia/IndexOfTrianglesReferencedInETC.html).
 
