@@ -395,7 +395,7 @@ CTR31-42.1 = CTR26-1.1.38
 ### CTR32
 Given a triangle ABC and two points P and Q, it is well known that there are four conics through the two points and tangent to the three sidelines of ABC.
 See https://garciacapitan.blogspot.com/2025/05/inconics-through-two-points.html for more information. From these conics, one is a central conic, the other three are not central.
-Let Q be the isogonal conjugate of P. Let Oa, Ob, Oc, be the vertices of the non-central conics.
+Let Q be the isogonal conjugate of P. Let Oa, Ob, Oc, be the centers of the non-central conics.
 
 CTR32(P) is triangle OaObOc.  
 
