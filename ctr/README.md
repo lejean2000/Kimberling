@@ -42,7 +42,7 @@ Let A1B1C1 be the cevian and A2B2C2 be the circlecevian triangle of P=(u:v:w). C
 
 ### CTR4
 
-Let P be a point. PaPbPc cevian triangle of P=(u:v:w). APa intersects the circle (APbPc) at A' different from A. Define B', C' cyclically. The CTR4(P) triangle is A'B'C'. The barycentric coordinates of the A-vertex are:  
+Let P be a point. PaPbPc cevian triangle of P=(u:v:w). APa intersects the circle (APbPc) at A' different from A. Define B', C' cyclically. The CTR4(P) triangle is A'B'C'. It is trivially perspective to ABC. The barycentric coordinates of the A-vertex are:  
 
     c^2*u*v*(u+w)*(v+w)-(u+v)*w*(a^2*v*(u+w)-b^2*u*(v+w)) :
     b^2*v*(u+v)*w^2+c^2*v^3*(u+w) :
@@ -85,7 +85,7 @@ CTR7-8.105 = cevian of X(80)
 
 ### CTR8
 
-Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. The barycentric coordinates of the A-vertex are:  
+Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. It is perspective to ABC. The barycentric coordinates of the A-vertex are:  
 
     c^2 u (u + w) - (u + v) (-b^2 u + a^2 (u + w)) : 
     b^2 (u + v) (u + v + w) : 
@@ -99,7 +99,7 @@ CTR8-150 = Moses-Soddy
 
 ### CTR9
 
-CTR9 is the barycentric sum of the cevian triangles of P=(u:v:w) and the anticevian triangle of Q=(p:q:r). In other words, if these two traingles are denoted by PaPbPc and QaQbQc, their barycentric sum is the triangle with vertices Pa+Qa, Pb+Qb, Pc+Qc. The barycentric coordinates of the A-vertex are:  
+CTR9 is the mid-triangle of the cevian triangles of P=(u:v:w) and the anticevian triangle of Q=(p:q:r). The barycentric coordinates of the A-vertex are:  
 
 `p (v + w) : p v - r v - q (2 v + w) : (p - q) w - r (v + 2 w)`
 
@@ -408,3 +408,39 @@ The barycentric coordinates of the A-vertex are:
     2 a (b + c) u v w + a^2 v w (v + w) + u^2 (c^2 v + b^2 w), 
     2 b (a - c) u v w + b^2 u w (u + w) + v^2 (c^2 u + a^2 w), 
     2 c (a - b) u v w + c^2 u v (u + v) + w^2 (b^2 u + a^2 v)
+
+### CTR33
+Let PaPbPc be the cevian triangle of P=(u:v:w). Let A' be the projection of A upon PbPc and similarly define B' and C'.
+
+CTR33(P) is triangle A'B'C'.  
+
+The barycentric coordinates of the A-vertex are:
+
+    u (-b^2 (2 u + v) (v - w) w + c^2 v (v - w) (2 u + w) + a^2 v w (2 u + v + w)), 
+    v w (a^2 v (u + w) - c^2 v (u + w) + b^2 (-u v + 2 u w + v w)), 
+    v w ((a^2 - b^2) (u + v) w + c^2 (2 u v - u w + v w))
+
+Note the following triangle equivalences:  
+CTR33-2 = midheight  
+CTR33-4 = 2nd Hyacinth  
+CTR33-7 = inverse-in-incircle  
+
+### CTR34
+Given triangle ABC and points P and Q. Through Q construct a line parallel to AP and let A' be the intersection point with BC . Similarly define B' and C'. A'B'C' is called the P-pedal triangle of Q.  It coincides with the cevian of P if P=Q, and with the pedal of Q if P=X(4).
+ 
+Let the tangent at B to circle ABA' intersect AC at Ab and let the tangent at C to circle ACA' intersect AB at Ac. Similarly define Ca,Cb,Ba,Bc.
+
+The triangle CTR34(P,Q) is formed by lines AbAC, BaBc, CaCb.
+For more information see [Euclid 8014](https://groups.io/g/euclid/message/8014).
+
+The barycentric coordinates of the A-vertex are:
+
+     a^2 (p^2 (u + v) (u + w) + 2 p (q + r) (u + v) (u + w) + u (q^2 (u + v) + r^2 (u + w) + q r (u + v + w))), 
+    -b^2 (2 p q u (u + v) + p^2 (u + v) (u + w) + u (q^2 (u + v) + q r (u + v - w) - r^2 (u + w))), 
+    -c^2 (2 p r u (u + w) + p^2 (u + v) (u + w) + u (-q^2 (u + v) + r^2 (u + w) + q r (u - v + w)))
+
+Note the following triangle equivalences:  
+CTR34-4.4 = 1st excosine  
+CTR34-6.6 = Ara  
+
+
