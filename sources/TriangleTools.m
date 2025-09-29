@@ -1651,3 +1651,8 @@ bOrthoanticevianTriangle[{u_, v_, w_}] =
 bCevianCrossTriangle[{u_, v_, w_}, {p_, q_, r_}] := 
     {{(-p)*u, q*u + p*v, r*u + p*w}, {q*u + p*v, (-q)*v, r*v + q*w}, 
      {r*u + p*w, r*v + q*w, (-r)*w}}
+ 
+funcg[{p_, q_, r_}] := {a^2/(q - r), b^2/(r - p), c^2/(p - q)}
+ 
+funch[{p_, q_, r_}] := {a^2/(2*p - q - r), b^2/(2*q - r - p), 
+     c^2/(2*r - p - q)}
