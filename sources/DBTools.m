@@ -111,29 +111,35 @@ intmark[number_, spec:{{_, _}..}] :=
 globalProperties = <||>
  
 checkCircumconics[pt_, excl_:0, name_:"X"] := 
-    Module[{ptc, list1, list2, list3, list4, p1, p2, out, check, bary20}, 
-     out = {}; ptc = intnumericnorm[evaluate[pt] /. rule69]; 
-      list1 = intLinesProcessFullGroups[intnumericnorm[
-          bIsogonalConjugate[ptc] /. rule69], 24, ETCBaryNormFull][[2]]; 
-      list2 = Table[AssociationMap[intnumericnorm[
-           bIsogonalConjugate[KimberlingCenterCNy[#1]] /. rule69] & , 
-         list1[[i]]], {i, 1, Length[list1]}]; 
-      bary20 = (Round[#1, 1.*^-19] & ) /@ ETCBaryNormFull; 
-      list2 = ((Round[#1, 1.*^-19] & ) /@ #1 & ) /@ list2; 
-      list3 = Select[(keyIntersectionValues[bary20, #1] & ) /@ list2, 
-        Length[#1] > 1 & ]; list4 = ({#1[[1]][[2]], #1[[2]][[2]]} & ) /@ 
-        (Take[#1, 2] & ) /@ (SortBy[#1, numsortexpr[#1[[2]]] & ] & ) /@ 
-          list3; list4 = SortBy[list4, numsortexpr[#1[[1]]] & ]; 
+    Module[{baryRounded, $coordToETCName, ptc, list1, candidateSets, 
+      candidatePairs, p1, p2, out, check, processLine, prec}, 
+     out = {}; prec = 1.*^-19; baryRounded = (Round[#1, prec] & ) /@ 
+        ETCBaryNormFull; $coordToETCName = GroupBy[Normal[baryRounded], 
+        Last -> First, #1[[1]] & ]; ptc = intnumericnorm[
+        evaluate[pt] /. rule69]; list1 = intLinesProcessFullGroups[
+         intnumericnorm[bIsogonalConjugate[ptc] /. rule69], 24, 
+         ETCBaryNormFull][[2]]; processLine = Function[lineOfNames, 
+        Module[{isogCoords, roundedIsogCoords, matchedNames}, 
+         isogCoords = (intnumericnorm[bIsogonalConjugate[KimberlingCenterCNy[
+                 #1]] /. rule69] & ) /@ lineOfNames; roundedIsogCoords = 
+           Round[isogCoords, prec]; matchedNames = 
+           ($coordToETCName[#1] & ) /@ roundedIsogCoords; 
+          DeleteDuplicates[DeleteMissing[Flatten[matchedNames]]]]]; 
+      candidateSets = Select[processLine /@ list1, Length[#1] >= 2 & ]; 
+      candidatePairs = (Take[SortBy[#1, numsortexpr], 2] & ) /@ 
+        candidateSets; candidatePairs = SortBy[candidatePairs, 
+        {numsortexpr[#1[[1]]] & , numsortexpr[#1[[2]]] & }]; 
+      candidatePairs = DeleteDuplicates[candidatePairs]; 
       Do[p1 = cnc[[1]]; p2 = cnc[[2]]; If[p1 == excl || p2 == excl, 
          Continue[]]; check = checkPointOnCurveNum[bCircumconicEq[
            KimberlingCenterCNy[p1], KimberlingCenterCNy[p2]], pt]; 
         If[check, AppendTo[out, StringJoin["{{A, B, C, ", intaddbrackets[p1], 
-            ", ", intaddbrackets[p2], "}}"]]; ]; , {cnc, list4}]; 
+           ", ", intaddbrackets[p2], "}}"]]]; , {cnc, candidatePairs}]; 
       Quiet[AssociateTo[globalProperties[name], {"circumconics" -> out}]]; 
-      If[ !TrueQ[globalSilence], If[Length[out] > 0, 
-        Print[colorformat[StringJoin[
-            "= intersection, other than A, B, C, of circumconics: ", 
-            StringRiffle[out, ", "]]]]; ]]; Return[out]; ]
+      If[ !TrueQ[globalSilence] && Length[out] > 0, 
+       Print[colorformat[StringJoin[
+          "= intersection, other than A, B, C, of circumconics: ", 
+          StringRiffle[out, ", "]]]]]; Return[out]; ]
  
 intLinesProcessFullGroups[pt_, prec_, etcset_] := 
     Module[{tplist, tp, prev, outgroups, group, fullgroups, dump, as}, 
@@ -147,11 +153,6 @@ intLinesProcessFullGroups[pt_, prec_, etcset_] :=
       outgroups = (Take[SortBy[#1, numsortexpr[#1] & ], 2] & ) /@ fullgroups; 
       outgroups = SortBy[outgroups, numsortexpr[#1[[1]]] & ]; 
       Return[{outgroups, fullgroups}]; ]
- 
-keyIntersectionValues[list1_, list2_] := Module[{reverse, res, ress}, 
-     reverse[assoc_] := Thread[Values[assoc] -> Keys[assoc]]; 
-      res = KeyIntersection[{reverse[list1], PositionIndex[list2]}]; 
-      ress = Thread[{First /@ Values[res[[2]]], Values[res[[1]]]}]; ress]
  
 checkInconics[pt_, excl_:0, name_:"X"] := Module[{ptc, out, crv}, 
      out = {}; ptc = intnumericnorm[evaluate[pt] /. rule69]; 
@@ -818,6 +819,11 @@ print[string_] := If[StringContainsQ[string, "KeyAbsent"],
        WriteString[globalOutputStream, StringJoin[string, "\n\n"]]]; ]
  
 globalOutputStream = False
+ 
+keyIntersectionValues[list1_, list2_] := Module[{reverse, res, ress}, 
+     reverse[assoc_] := Thread[Values[assoc] -> Keys[assoc]]; 
+      res = KeyIntersection[{reverse[list1], PositionIndex[list2]}]; 
+      ress = Thread[{First /@ Values[res[[2]]], Values[res[[1]]]}]; ress]
  
 addExtraPoint[bary_, letter_, name_, writeout_:True] := 
     Module[{expr, pt, idxmax, dbname}, If[ !MemberQ[{"Y", "Z"}, letter], 

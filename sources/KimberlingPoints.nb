@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     87148,       2123]
-NotebookOptionsPosition[     86002,       2098]
-NotebookOutlinePosition[     86495,       2117]
-CellTagsIndexPosition[     86452,       2114]
+NotebookDataLength[     84032,       2046]
+NotebookOptionsPosition[     82846,       2020]
+NotebookOutlinePosition[     83379,       2040]
+CellTagsIndexPosition[     83336,       2037]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -684,124 +684,43 @@ Cell[BoxData[{
     RowBox[{"checkTriangleExists", "[", "tr_", "]"}], ":=", 
     RowBox[{"Block", "[", 
      RowBox[{
-      RowBox[{"{", "chk", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"treval", ",", "result"}], "}"}], ",", 
       RowBox[{
-       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{"treval", "=", 
         RowBox[{
          RowBox[{
-          RowBox[{"chk", "=", 
-           RowBox[{"Cross", "[", 
-            RowBox[{
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{"tr", "[", 
-                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
-               "intnumericnorm"}], ",", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{"KimberlingTrianglesBary", "[", "trkim", "]"}], "]"}],
-                "/.", "rule69"}], "//", "intnumericnorm"}]}], "]"}]}], ";", 
-          "\[IndentingNewLine]", 
-          RowBox[{"If", "[", 
+          RowBox[{"evaluate", "[", 
+           RowBox[{"tr", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", " ", "rule69"}], "//",
+          "intnumericnorm"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"result", "=", 
+        RowBox[{"Select", "[", 
+         RowBox[{"allPrecomputedTrJoined", ",", 
+          RowBox[{
            RowBox[{
-            RowBox[{
-             RowBox[{"Max", "[", 
-              RowBox[{"Abs", "[", "chk", "]"}], "]"}], "<", 
-             SuperscriptBox["10", 
-              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", "\t", 
-            RowBox[{
-             RowBox[{"Return", "[", 
-              RowBox[{
-               RowBox[{"{", 
-                RowBox[{"True", ",", "trkim"}], "}"}], ",", " ", "Block"}], 
-              "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
-         "\[IndentingNewLine]", ",", 
-         RowBox[{"{", 
-          RowBox[{"trkim", ",", 
-           RowBox[{"Keys", "[", "KimberlingTrianglesBary", "]"}]}], "}"}]}], 
-        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-       "\[IndentingNewLine]", 
-       RowBox[{"Do", "[", "\[IndentingNewLine]", 
+            RowBox[{"Max", "[", 
+             RowBox[{"Abs", "[", 
+              RowBox[{"Cross", "[", 
+               RowBox[{"treval", ",", "#"}], "]"}], "]"}], "]"}], "<", 
+            RowBox[{"10", "^", 
+             RowBox[{"-", "24"}]}]}], "&"}], ",", "1"}], " ", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Stop", " ", "after", " ", "finding", " ", "the", " ", "first", " ",
+            "match"}], "*)"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
         RowBox[{
          RowBox[{
-          RowBox[{"chk", "=", 
-           RowBox[{"Cross", "[", 
-            RowBox[{
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{"tr", "[", 
-                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
-               "intnumericnorm"}], ",", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{
-                 RowBox[{"CPTR", "[", "trkim", "]"}], "[", 
-                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
-               "intnumericnorm"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
-          RowBox[{"If", "[", 
-           RowBox[{
-            RowBox[{
-             RowBox[{"Max", "[", 
-              RowBox[{"Abs", "[", "chk", "]"}], "]"}], "<", 
-             SuperscriptBox["10", 
-              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", "\t", 
-            RowBox[{
-             RowBox[{"Return", "[", 
-              RowBox[{
-               RowBox[{"{", 
-                RowBox[{"True", ",", "trkim"}], "}"}], ",", " ", "Block"}], 
-              "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
-         "\[IndentingNewLine]", ",", 
+          RowBox[{"AssociationQ", "[", "result", "]"}], "&&", 
+          RowBox[{
+           RowBox[{"Length", "[", "result", "]"}], ">", "0"}]}], ",", 
          RowBox[{"{", 
-          RowBox[{"trkim", ",", 
-           RowBox[{"Keys", "[", "CPTR", "]"}]}], "}"}]}], 
-        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-       "\[IndentingNewLine]", 
-       RowBox[{"Do", "[", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"chk", "=", 
-           RowBox[{"Cross", "[", 
-            RowBox[{
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{"tr", "[", 
-                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
-               "intnumericnorm"}], ",", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"evaluate", "[", 
-                RowBox[{
-                 RowBox[{"ENCTR", "[", "trkim", "]"}], "[", 
-                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/.", "rule69"}], "//",
-               "intnumericnorm"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
-          RowBox[{"If", "[", 
-           RowBox[{
-            RowBox[{
-             RowBox[{"Max", "[", 
-              RowBox[{"Abs", "[", "chk", "]"}], "]"}], "<", 
-             SuperscriptBox["10", 
-              RowBox[{"-", "24"}]]}], ",", "\[IndentingNewLine]", "\t", 
-            RowBox[{
-             RowBox[{"Return", "[", 
-              RowBox[{
-               RowBox[{"{", 
-                RowBox[{"True", ",", "trkim"}], "}"}], ",", " ", "Block"}], 
-              "]"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
-         "\[IndentingNewLine]", ",", 
-         RowBox[{"{", 
-          RowBox[{"trkim", ",", 
-           RowBox[{"Keys", "[", "ENCTR", "]"}]}], "}"}]}], 
-        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-       "\[IndentingNewLine]", 
-       RowBox[{"Return", "[", 
-        RowBox[{"{", "False", "}"}], "]"}], ";"}]}], "\[IndentingNewLine]", 
-     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+          RowBox[{"True", ",", 
+           RowBox[{"First", "@", 
+            RowBox[{"Keys", "[", "result", "]"}]}]}], "}"}], ",", 
+         RowBox[{"{", "False", "}"}]}], "]"}]}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1843,8 +1762,11 @@ Cell[BoxData[{
         RowBox[{"drawTriangles", "[", 
          RowBox[{"{", "trgchk", "}"}], "]"}]}], ",", "mon"}], "]"}]}], 
     "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
- Background->RGBColor[
-  0.94, 0.88, 0.94],ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+ CellChangeTimes->{{3.9721259353785534`*^9, 3.9721259589108047`*^9}, {
+  3.9721287219914303`*^9, 3.9721287322536592`*^9}},
+ Background->RGBColor[0.94, 0.88, 0.94],
+ CellLabel->
+  "In[226]:=",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -2096,8 +2018,9 @@ Cell[BoxData[
      "}"}]}], "]"}]}]], "Input",
  CellLabel->"In[71]:=",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 },
-WindowSize->{1141.2, 568.8},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1102.8, 615.6},
+WindowMargins->{{-5.3999999999999995`, Automatic}, {-5.399999999999977, 
+   Automatic}},
 DockedCells->{},
 TaggingRules-><|"TryRealOnly" -> False|>,
 Magnification:>0.9 Inherited,
@@ -2122,9 +2045,9 @@ Cell[1222, 33, 5866, 164, 612, "Code",ExpressionUUID->"ef28bf9e-8e85-46b6-83f1-5
 Cell[7091, 199, 468, 13, 26, "Input",ExpressionUUID->"e6ee65e5-4303-4b7d-bc1f-e4a938bc6dcb"],
 Cell[7562, 214, 508, 12, 25, "Input",ExpressionUUID->"59eb944d-bbd3-4aef-a170-433086bc3bf3"],
 Cell[8073, 228, 1426, 42, 59, "Input",ExpressionUUID->"8adc4980-6855-491e-857a-2e383c343b5f"],
-Cell[9502, 272, 66339, 1574, 6204, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
-Cell[75844, 1848, 9127, 228, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
-Cell[84974, 2078, 1024, 18, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
+Cell[9502, 272, 63183, 1496, 5757, "Input",ExpressionUUID->"e4c48e3c-0e37-45b4-aa3b-950f31b20c4e"],
+Cell[72688, 1770, 9127, 228, 775, "Input",ExpressionUUID->"2facbe59-1771-421e-af04-203366bb1353"],
+Cell[81818, 2000, 1024, 18, 95, "Input",ExpressionUUID->"58364175-8417-42fc-be84-aa24791f6f0c"]
 }
 ]
 *)

@@ -108,20 +108,11 @@ sinReplace = {Sin[A] -> S/(b*c), Sin[B] -> S/(a*c), Sin[C] -> S/(a*b),
      Cos[A] -> evaluate[Cos[A]], Cos[B] -> evaluate[Cos[B]], 
      Cos[C] -> evaluate[Cos[C]]}
  
-checkTriangleExists[tr_] := Block[{chk}, 
-     Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
-          intnumericnorm[evaluate[KimberlingTrianglesBary[trkim]] /. 
-            rule69]]; If[Max[Abs[chk]] < 10^(-24), 
-         Return[{True, trkim}, Block]; ], 
-       {trkim, Keys[KimberlingTrianglesBary]}]; 
-      Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
-          intnumericnorm[evaluate[CPTR[trkim][[1]]] /. rule69]]; 
-        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Block]; ], 
-       {trkim, Keys[CPTR]}]; 
-      Do[chk = Cross[intnumericnorm[evaluate[tr[[1]]] /. rule69], 
-          intnumericnorm[evaluate[ENCTR[trkim][[1]]] /. rule69]]; 
-        If[Max[Abs[chk]] < 10^(-24), Return[{True, trkim}, Block]; ], 
-       {trkim, Keys[ENCTR]}]; Return[{False}]; ]
+checkTriangleExists[tr_] := Block[{treval, result}, 
+     treval = intnumericnorm[evaluate[tr[[1]]] /. rule69]; 
+      result = Select[allPrecomputedTrJoined, Max[Abs[Cross[treval, #1]]] < 
+          10^(-24) & , 1]; If[AssociationQ[result] && Length[result] > 0, 
+       {True, First[Keys[result]]}, {False}]]
  
 trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
     Block[{cnt, trchke, trsyme, hmt, out, trsym, ntest, ptcoord, perschk, 
