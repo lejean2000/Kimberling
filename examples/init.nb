@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      4259,        134]
-NotebookOptionsPosition[      3839,        118]
-NotebookOutlinePosition[      4279,        135]
-CellTagsIndexPosition[      4236,        132]
+NotebookDataLength[      5385,        165]
+NotebookOptionsPosition[      5000,        150]
+NotebookOutlinePosition[      5404,        166]
+CellTagsIndexPosition[      5361,        163]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -110,15 +110,46 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"ETCFull", "=", "ETC"}], ";"}], "\n", 
  RowBox[{
-  RowBox[{"ETCBaryNormFull", "=", "ETCBaryNorm"}], 
-  ";"}], "\[IndentingNewLine]"}], "Input",
+  RowBox[{
+   RowBox[{"ETCBaryNormFull", "=", "ETCBaryNorm"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{"loadedData", " ", "=", " ", 
+    RowBox[{"Import", "[", "\"\<../db/precomputed_triangles.mx\>\"", "]"}]}], 
+   ";"}]}], "\n", 
+ RowBox[{"  ", 
+  RowBox[{
+   RowBox[{"precomputedKimberling", " ", "=", " ", 
+    RowBox[{"loadedData", "[", "\"\<Kimberling\>\"", "]"}]}], ";"}]}], "\n", 
+ RowBox[{"  ", 
+  RowBox[{
+   RowBox[{"precomputedCPTR", " ", "=", " ", 
+    RowBox[{"loadedData", "[", "\"\<CPTR\>\"", "]"}]}], ";"}]}], "\n", 
+ RowBox[{"  ", 
+  RowBox[{
+   RowBox[{"precomputedENCTR", " ", "=", " ", 
+    RowBox[{"loadedData", "[", "\"\<ENCTR\>\"", "]"}]}], ";"}]}], "\n", 
+ RowBox[{"  ", 
+  RowBox[{
+   RowBox[{"precomputedUNCFTRG", " ", "=", " ", 
+    RowBox[{"loadedData", "[", "\"\<UNCFTRG\>\"", "]"}]}], 
+   ";"}]}], "\[IndentingNewLine]", 
+ RowBox[{"  ", 
+  RowBox[{
+   RowBox[{"allPrecomputedTrJoined", "=", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+     "precomputedKimberling", ",", "precomputedCPTR", ",", "precomputedENCTR",
+       ",", "precomputedUNCFTRG"}], "]"}]}], ";"}]}]}], "Input",
  InitializationCell->True,
+ CellChangeTimes->{{3.9725540231023073`*^9, 3.972554061328556*^9}, 
+   3.972554232101947*^9},
  Background->GrayLevel[
   0.85],ExpressionUUID->"e91b215c-2c23-42b3-94f2-3839b31883e0"]
 },
-WindowSize->{1152., 579.6},
-WindowMargins->{{
-  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+WindowSize->{1093.8, 604.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"b6e9b134-178a-46c9-a5b6-538fc27056cb"
@@ -134,7 +165,7 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 3277, 96, 485, "Input",ExpressionUUID->"e91b215c-2c23-42b3-94f2-3839b31883e0",
+Cell[558, 20, 4438, 128, 599, "Input",ExpressionUUID->"e91b215c-2c23-42b3-94f2-3839b31883e0",
  InitializationCell->True]
 }
 ]

@@ -335,3 +335,27 @@ EcuacionImplicita[ptP_, var_, OptionsPattern[{UsarLast -> True}]] :=
       eqxz = Resultant[x - \[Lambda]*ptP[[1]], z - \[Lambda]*ptP[[3]], 
         \[Lambda]]; locus = Factor[Resultant[eqxy, eqxz, var]]; 
       If[OptionValue[UsarLast], locus = Last[locus]]; locus]
+ 
+multiCollectOrdered[expr_, vars_] := NaturalPoly[
+     Activate[Expand[Collect[expr, vars, Inactive[Simplify]]]], vars]
+ 
+(f:Plus | Times | Power)[left___, NaturalPoly[expr_, _], right___] ^:= 
+    f[left, expr, right]
+ 
+NaturalPoly[expr_, vars_] /; NumericQ[vars] := expr
+ 
+MakeBoxes[NaturalPoly[expr_, vars_], FormatType_] ^:= 
+    Format[Module[{terms, formatted}, 
+      formatted = Quiet[Check[terms = Reverse[SortBy[Simplify /@ MonomialList[
+                expr, vars], Exponent[#1, vars] & ]]; 
+           (HoldForm[Plus[##1]] & ) @@ terms, $Failed]]; 
+       If[formatted === $Failed, expr, formatted]], FormatType]
+ 
+Format[NaturalPoly[expr_, vars_]] := Module[{terms, formatted}, 
+     formatted = Quiet[Check[terms = Reverse[SortBy[Simplify /@ 
+              MonomialList[expr, vars], Exponent[#1, vars] & ]]; 
+          (HoldForm[Plus[##1]] & ) @@ terms, $Failed]]; 
+      If[formatted === $Failed, expr, formatted]]
+ 
+multiCollectABCDisplay[pt_] := {multiCollectOrdered[pt[[1]], a], 
+     multiCollectOrdered[pt[[2]], b], multiCollectOrdered[pt[[3]], c]}
