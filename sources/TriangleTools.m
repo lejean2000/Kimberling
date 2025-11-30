@@ -75,7 +75,7 @@ bToTril[p_] := {p[[1]]/a, p[[2]]/b, p[[3]]/c}
  
 bFromTrilinear[p_] := {p[[1]]*a, p[[2]]*b, p[[3]]*c}
  
-bToCartesian[p_, PA_, PB_, PC_] := (p/Total[p]) . {PA, PB, PC}
+bToCartesian[p_, pa_, pb_, pc_] := (p/Total[p]) . {pa, pb, pc}
  
 bPerpendicular[{p_, q_, r_}, {u_, v_, w_}] := 
     Module[{sa, sb, sc, f, g, h, ff, gg, hh, m, x, y, z}, 
@@ -1102,6 +1102,9 @@ bobillierTransversal[pp_, q1_, q2_, q3_] := Module[{h1, h2, h3, m1, m2, m3},
       m1 = bLineIntersection[bLine[q2, q3], h1]; 
       m2 = bLineIntersection[bLine[q1, q3], h2]; 
       m3 = bLineIntersection[bLine[q1, q2], h3]; bLine[m1, m2]]
+ 
+bobillierTransversal[pp_, {q1_, q2_, q3_}] := bobillierTransversal[pp, q1, 
+     q2, q3]
  
 multiCollectFactorsABC[pt_] := {multiCollectFactors[pt[[1]], a], 
      multiCollectFactors[pt[[2]], b], multiCollectFactors[pt[[3]], c]}

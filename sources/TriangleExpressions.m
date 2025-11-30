@@ -4,7 +4,7 @@ BarCar[f_, cA_, cB_, cC_] :=
       z -> Det[{{cA[[1]] - x, cB[[1]] - x}, {cA[[2]] - y, cB[[2]] - y}}], 
       a -> Norm[cB - cC], b -> Norm[cC - cA], c -> Norm[cA - cB]}
  
-Cartesianas[f_] := Factor[BarCar[f, PA, PB, PC]]
+Cartesianas[f_, pa_, pb_, pc_] := Factor[BarCar[f, pa, pb, pc]]
  
 Circulito[centro_, OptionsPattern[{Color -> RGBColor[1, 0, 0], 
        Size -> 0.01}]] := Module[{color, size}, color = OptionValue[Color]; 
@@ -15,19 +15,18 @@ EscribirTexto[texto_, {x_, y_}, {dx_, dy_}] :=
     Text[Style[texto, FontFamily -> "Times", FontSlant -> "Italic", 12], 
      {x + dx, y + dy}]
  
-GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}] := 
-    Module[{cartesianas, triangulo, vertices, etiquetas, grafica}, 
-     triangulo = Graphics[{Blue, AbsoluteThickness[1.5], 
-         Line[{PA, PB, PC, PA}]}]; vertices = 
+GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}, 
+     {pa_, pb_, pc_}] := Module[{cartesianas, triangulo, vertices, etiquetas, 
+      grafica}, triangulo = Graphics[{Blue, AbsoluteThickness[1.5], 
+         Line[{pa, pb, pc, pa}]}]; vertices = 
        Graphics[(Circulito[#1, Color -> Red, Size -> 0.05] & ) /@ 
-         {PA, PB, PC}]; cartesianas = Cartesianas[ecuacion]; 
+         {pa, pb, pc}]; cartesianas = Cartesianas[ecuacion, pa, pb, pc]; 
       grafica = ContourPlot[cartesianas == 0, {x, xmin, xmax}, 
         {y, ymin, ymax}, Frame -> None, ContourStyle -> Red, 
-        PerformanceGoal -> "Quality"]; Show[{triangulo, grafica, vertices}, 
-       AspectRatio -> Automatic]]
+        PerformanceGoal -> "Quality"]; {triangulo, grafica, vertices}]
  
-GraficaBaricentricas[ecuacion_] := GraficaBaricentricas[ecuacion, {-5, 15}, 
-     {-5, 12}]
+GraficaBaricentricas[ecuacion_] := Show[GraficaBaricentricas[ecuacion, 
+      {-5, 15}, {-5, 12}, {PA, PB, PC}], AspectRatio -> Automatic]
  
 polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
       (v_)?VectorQ :> Total[v], 2]]

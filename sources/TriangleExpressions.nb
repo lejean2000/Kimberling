@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    108576,       2769]
-NotebookOptionsPosition[    105012,       2722]
-NotebookOutlinePosition[    105416,       2738]
-CellTagsIndexPosition[    105373,       2735]
+NotebookDataLength[    109483,       2792]
+NotebookOptionsPosition[    105919,       2745]
+NotebookOutlinePosition[    106323,       2761]
+CellTagsIndexPosition[    106280,       2758]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2539,10 +2539,11 @@ Cell[BoxData[{
         RowBox[{"cA", "-", "cB"}], "]"}]}]}], "}"}]}]}], ";"}], "\n", 
  RowBox[{
   RowBox[{
-   RowBox[{"Cartesianas", "[", "f_", "]"}], ":=", " ", 
+   RowBox[{"Cartesianas", "[", 
+    RowBox[{"f_", ",", "pa_", ",", "pb_", ",", "pc_"}], "]"}], ":=", " ", 
    RowBox[{"Factor", "[", 
     RowBox[{"BarCar", "[", 
-     RowBox[{"f", ",", "PA", ",", "PB", ",", "PC"}], "]"}], "]"}]}], 
+     RowBox[{"f", ",", "pa", ",", "pb", ",", "pc"}], "]"}], "]"}]}], 
   ";"}], "\n", 
  RowBox[{
   RowBox[{
@@ -2601,7 +2602,9 @@ Cell[BoxData[{
      RowBox[{"{", 
       RowBox[{"xmin_", ",", " ", "xmax_"}], "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"ymin_", ",", "ymax_"}], "}"}]}], "]"}], ":=", 
+      RowBox[{"ymin_", ",", "ymax_"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"pa_", ",", "pb_", ",", "pc_"}], "}"}]}], "]"}], ":=", 
    RowBox[{"Module", "[", 
     RowBox[{
      RowBox[{"{", 
@@ -2616,7 +2619,7 @@ Cell[BoxData[{
           RowBox[{"AbsoluteThickness", "[", "1.5", "]"}], ",", 
           RowBox[{"Line", "[", 
            RowBox[{"{", 
-            RowBox[{"PA", ",", "PB", ",", "PC", ",", "PA"}], "}"}], "]"}]}], 
+            RowBox[{"pa", ",", "pb", ",", "pc", ",", "pa"}], "}"}], "]"}]}], 
          "}"}], "]"}]}], ";", "  ", 
       RowBox[{"vertices", "=", 
        RowBox[{"Graphics", "[", 
@@ -2628,7 +2631,7 @@ Cell[BoxData[{
              RowBox[{"Color", "\[Rule]", "Red"}], ",", 
              RowBox[{"Size", "\[Rule]", "0.05"}]}], "]"}], "&"}], ",", 
           RowBox[{"{", 
-           RowBox[{"PA", ",", "PB", ",", "PC"}], "}"}]}], "]"}], "]"}]}], ";",
+           RowBox[{"pa", ",", "pb", ",", "pc"}], "}"}]}], "]"}], "]"}]}], ";",
        "\n", "     ", 
       RowBox[{"(*", "\[IndentingNewLine]", 
        RowBox[{
@@ -2655,7 +2658,8 @@ Cell[BoxData[{
            "\[IndentingNewLine]", "}"}], "]"}]}], ";"}], " ", 
        "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", 
       RowBox[{"cartesianas", " ", "=", 
-       RowBox[{"Cartesianas", "[", "ecuacion", "]"}]}], ";", 
+       RowBox[{"Cartesianas", "[", 
+        RowBox[{"ecuacion", ",", "pa", ",", "pb", ",", "pc"}], "]"}]}], ";", 
       "\[IndentingNewLine]", 
       RowBox[{"grafica", " ", "=", 
        RowBox[{"ContourPlot", "[", 
@@ -2669,15 +2673,12 @@ Cell[BoxData[{
          RowBox[{"ContourStyle", "\[Rule]", "Red"}], ",", 
          RowBox[{"PerformanceGoal", "\[Rule]", "\"\<Quality\>\""}]}], "]"}]}],
        ";", "\[IndentingNewLine]", 
-      RowBox[{"Show", "[", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{"triangulo", ",", "grafica", ",", "vertices"}], "}"}], ",", 
-        RowBox[{"AspectRatio", "\[Rule]", "Automatic"}]}], "]"}]}]}], 
+      RowBox[{"{", 
+       RowBox[{"triangulo", ",", "grafica", ",", "vertices"}], "}"}]}]}], 
     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"GraficaBaricentricas", "[", "ecuacion_", "]"}], ":=", 
+   RowBox[{"GraficaBaricentricasRet", "[", "ecuacion_", "]"}], ":=", 
    RowBox[{"GraficaBaricentricas", "[", 
     RowBox[{"ecuacion", ",", 
      RowBox[{"{", 
@@ -2685,10 +2686,32 @@ Cell[BoxData[{
        RowBox[{"-", "5"}], ",", "15"}], "}"}], ",", 
      RowBox[{"{", 
       RowBox[{
-       RowBox[{"-", "5"}], ",", "12"}], "}"}]}], "]"}]}], ";"}]}], "Input",
- Background->RGBColor[0.9, 1, 1],
- CellLabel->
-  "In[486]:=",ExpressionUUID->"f2e2f58f-732c-4a3d-a3f0-83ccf6372fa0"],
+       RowBox[{"-", "5"}], ",", "12"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"PA", ",", "PB", ",", "PC"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GraficaBaricentricas", "[", "ecuacion_", "]"}], ":=", 
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"GraficaBaricentricas", "[", 
+      RowBox[{"ecuacion", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "5"}], ",", "15"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "5"}], ",", "12"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"PA", ",", "PB", ",", "PC"}], "}"}]}], "]"}], ",", 
+     RowBox[{"AspectRatio", "\[Rule]", "Automatic"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.9735020605812025`*^9, 3.97350207082651*^9}, {
+  3.9735021465212584`*^9, 3.9735021569620867`*^9}, {3.973502543721835*^9, 
+  3.9735025914484*^9}, {3.973502654875607*^9, 3.973502697900214*^9}},
+ Background->RGBColor[
+  0.9, 1, 1],ExpressionUUID->"f2e2f58f-732c-4a3d-a3f0-83ccf6372fa0"],
 
 Cell[BoxData[
  RowBox[{
@@ -2769,8 +2792,8 @@ Cell[84343, 2190, 1318, 34, 162, "Input",ExpressionUUID->"d1cc5477-1dbf-435d-88a
 Cell[85664, 2226, 4639, 127, 296, "Input",ExpressionUUID->"30a36144-e054-485d-855a-e8fba707f4fe"],
 Cell[90306, 2355, 803, 20, 28, "Input",ExpressionUUID->"17cf4154-af9d-42a1-a737-0a74c1e419bf"],
 Cell[91112, 2377, 1885, 28, 105, "Input",ExpressionUUID->"e3f13638-8785-48ab-84d0-cc36c803ca8b"],
-Cell[93000, 2407, 10354, 283, 829, "Input",ExpressionUUID->"f2e2f58f-732c-4a3d-a3f0-83ccf6372fa0"],
-Cell[103357, 2692, 1651, 28, 162, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
+Cell[93000, 2407, 11261, 306, 867, "Input",ExpressionUUID->"f2e2f58f-732c-4a3d-a3f0-83ccf6372fa0"],
+Cell[104264, 2715, 1651, 28, 162, "Input",ExpressionUUID->"b746881b-4178-4fc6-bde6-a3152c58c10a"]
 }
 ]
 *)
