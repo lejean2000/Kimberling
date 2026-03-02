@@ -15,18 +15,19 @@ EscribirTexto[texto_, {x_, y_}, {dx_, dy_}] :=
     Text[Style[texto, FontFamily -> "Times", FontSlant -> "Italic", 12], 
      {x + dx, y + dy}]
  
-GraficaBaricentricas[ecuacion_, {xmin_, xmax_}, {ymin_, ymax_}, 
+GraficaBaricentricas[ecuacion_, color_, {xmin_, xmax_}, {ymin_, ymax_}, 
      {pa_, pb_, pc_}] := Module[{cartesianas, triangulo, vertices, etiquetas, 
       grafica}, triangulo = Graphics[{Blue, AbsoluteThickness[1.5], 
          Line[{pa, pb, pc, pa}]}]; vertices = 
-       Graphics[(Circulito[#1, Color -> Red, Size -> 0.05] & ) /@ 
+       Graphics[(Circulito[#1, Color -> Black, Size -> 0.05] & ) /@ 
          {pa, pb, pc}]; cartesianas = Cartesianas[ecuacion, pa, pb, pc]; 
       grafica = ContourPlot[cartesianas == 0, {x, xmin, xmax}, 
-        {y, ymin, ymax}, Frame -> None, ContourStyle -> Red, 
+        {y, ymin, ymax}, Frame -> None, ContourStyle -> color, 
         PerformanceGoal -> "Quality"]; {triangulo, grafica, vertices}]
  
-GraficaBaricentricas[ecuacion_] := Show[GraficaBaricentricas[ecuacion, 
-      {-5, 15}, {-5, 12}, {PA, PB, PC}], AspectRatio -> Automatic]
+GraficaBaricentricas[ecuacion_, color_:RGBColor[1, 0, 0]] := 
+    Show[GraficaBaricentricas[ecuacion, color, {-5, 15}, {-5, 12}, 
+      {PA, PB, PC}], AspectRatio -> Automatic]
  
 polynomialDegree[poly_] := Max[Cases[CoefficientRules[poly], 
       (v_)?VectorQ :> Total[v], 2]]
@@ -358,3 +359,6 @@ Format[NaturalPoly[expr_, vars_]] := Module[{terms, formatted},
  
 multiCollectABCDisplay[pt_] := {multiCollectOrdered[pt[[1]], a], 
      multiCollectOrdered[pt[[2]], b], multiCollectOrdered[pt[[3]], c]}
+ 
+GraficaBaricentricasRet[(_:RGBColor[1, 0, 0])*(ecuacion_color)] := 
+    GraficaBaricentricas[ecuacion, color, {-5, 15}, {-5, 12}, {PA, PB, PC}]

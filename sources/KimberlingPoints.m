@@ -98,10 +98,14 @@ checkCurvesForTriangle[tr_] := Block[{ecrv, out},
        out = Intersection[out, intCurvesForTriangle[tr, intCheckList[[1]]], 
           intCurvesForTriangle[tr, intCheckList[[2]]]]; ]; Return[out]; ]
  
-intCurvesForTriangle[tr_, checktr_] := Block[{ecrv, out}, 
-     out = {}; Do[ecrv = evaluate[TriangleCurves[name]] /. checktr; 
+intCurvesForTriangle[tr_, checktr_:{a -> 6, b -> 9, c -> 13}] := 
+    Block[{ecrv, out}, out = {}; 
+      Do[ecrv = evaluate[TriangleCurves[name]] /. checktr; 
         If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. checktr)]) == 
           0, AppendTo[out, name]; ], {name, Keys[TriangleCurves]}]; 
+      Do[ecrv = evaluate[CentralCircles[name]] /. checktr; 
+        If[(ecrv /. Thread[{x, y, z} -> (evaluate[tr[[1]]] /. checktr)]) == 
+          0, AppendTo[out, name]; ], {name, Keys[CentralCircles]}]; 
       Return[out]; ]
  
 sinReplace = {Sin[A] -> S/(b*c), Sin[B] -> S/(a*c), Sin[C] -> S/(a*b), 
@@ -125,11 +129,12 @@ trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
           Join[trsyme, trchke]; simtest = bIsSimilarNumeric[trchke, trsyme]; 
         homtest = Abs[bIsHomothetic[trchke, trsyme] /. rule69] < 10^(-20); 
         If[Abs[ntest] < 10^(-20), cnt = cnt + 1; ptcoord = 
-           bTrianglePerspector[evaluate[trchk], evaluate[trsym]]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Perspector of ", trgname, " and ", trname]; hmt = ""; 
-          If[simtest, If[homtest, If[trname == "ABC", ishomo = True]; 
-              hmt = Style[" - possibly homothetic", Red], 
+           bTrianglePerspector[trchk, trsym]; perschk = checkPointinETC2[
+            ptcoord]; If[ValueQ[globalExclude], 
+           If[StringContainsQ[perschk[[1]], globalExclude], Continue[]; ]; ]; 
+          outname = StringJoin["Perspector of ", trgname, " and ", trname]; 
+          hmt = ""; If[simtest, If[homtest, If[trname == "ABC", ishomo = 
+                True]; hmt = Style[" - possibly homothetic", Red], 
              hmt = Style[" - possibly similar", Green]; ]; 
             If[Length[perschk] > 0 && (trname == "ABC" ||  !ishomo), 
              Print[Row[{StringJoin[outname, ": ", perschk[[1]]], 
@@ -144,26 +149,29 @@ trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
         Keys]]; Return[cnt]; ]
  
 trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
-    Block[{keysset, out, trsym, ntest, ptcoord, perschk, outname}, 
-     If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
-        Return[False, Block]]; 
-      If[TrueQ[0 == Simplify[bCollinearityMatrix @@ evaluate /@ trchk /. 
-           rule69]], Print["COLLINEAR POINTS"]; Return[False, Block]]; 
+    Block[{keysset, out, trsym, ntest, ptcoord, perschk, outname, trsyme, 
+      trchke}, If[Length[trgname] != 0, Print["Invalid TRG Name"]; 
+        Return[False, Block]]; trchke = evaluate[trchk] /. rule69; 
+      If[TrueQ[0 == Simplify[bCollinearityMatrix @@ trchke]], 
+       Print["COLLINEAR POINTS"]; Return[False, Block]]; 
       If[Keys[set][[1]] == "ABC", keysset = KimberlingTrianglesBaryOrthKeys, 
        keysset = Keys[set]; ]; out = Association[]; 
       Do[trsym = If[ListQ[set[trname][[1]]], set[trname], triangle[trname]]; 
-        ntest = bIsParallelogic @@ (evaluate[Join[trsym, trchk]] /. 
-            rule69) /. rule69; If[Abs[ntest] < 10^(-24), 
-         ptcoord = bParallelogicCenter[trchk, trsym]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
+        trsyme = evaluate[trsym] /. rule69; 
+        ntest = bIsParallelogic[trsyme, trchke] /. rule69; 
+        If[Abs[ntest] < 10^(-24), ptcoord = bParallelogicCenter[trchk, 
+            trsym]; perschk = checkPointinETC2[ptcoord]; 
+          If[ValueQ[globalExclude], If[StringContainsQ[perschk[[1]], 
+              globalExclude], Continue[]; ]; ]; outname = 
            StringJoin["Parallelogic center of ", trgname, " and ", trname]; 
           If[Length[perschk] > 0, AssociateTo[out, outname -> 
               perschk[[1]]]; , Print[outname]; ]; ptcoord = 
-           bParallelogicCenter[evaluate[trsym], evaluate[trchk]]; 
-          perschk = checkPointinETC2[ptcoord]; outname = 
-           StringJoin["Parallelogic center of ", trname, " and ", trgname]; 
-          If[Length[perschk] > 0, AssociateTo[out, outname -> 
-              perschk[[1]]]; , Print[outname]; ]; ]; , 
+           bParallelogicCenter[trsym, trchk]; perschk = checkPointinETC2[
+            ptcoord]; If[ValueQ[globalExclude], 
+           If[StringContainsQ[perschk[[1]], globalExclude], Continue[]; ]; ]; 
+          outname = StringJoin["Parallelogic center of ", trname, " and ", 
+            trgname]; If[Length[perschk] > 0, AssociateTo[out, 
+             outname -> perschk[[1]]]; , Print[outname]; ]; ]; , 
        {trname, keysset /. "infinite-altitude" -> Nothing}]; 
       KeyValueMap[Print[intaddbrackets[#1] -> #2] & , GroupBy[out, Identity, 
         Keys]]; ]
@@ -189,14 +197,17 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
           If[TrueQ[0 == Simplify[bCollinearityMatrix @@ trsyme]], 
             Continue[]]; ntest = bIsOrthologic[trchke, trsyme] /. rule69; , 
           ntest = bIsOrthologic[trsyme, trchke] /. rule69; ]; 
-         If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter[
-             evaluate[trchk], evaluate[trsym]]; perschk = checkPointinETC2[
-             ptcoord]; outname = StringJoin["Orthology center of ", trgname, 
-             " and ", trname]; PrintTemporary[outname]; 
+         If[Abs[ntest] < 10^(-24), ptcoord = bOrthologyCenter[trchk, trsym]; 
+           perschk = checkPointinETC2[ptcoord]; If[ValueQ[globalExclude], 
+            If[StringContainsQ[perschk[[1]], globalExclude], 
+              Continue[]; ]; ]; outname = StringJoin["Orthology center of ", 
+             trgname, " and ", trname]; PrintTemporary[outname]; 
            If[Length[perschk] > 0, AssociateTo[out, outname -> perschk[[
                 1]]]; , AppendTo[out2, trname]; ]; If[ !collinear, 
             ptcoord = bOrthologyCenter[trsym, trchk]; perschk = 
-              checkPointinETC2[ptcoord]; outname = StringJoin[
+              checkPointinETC2[ptcoord]; If[ValueQ[globalExclude], 
+              If[StringContainsQ[perschk[[1]], globalExclude], 
+                Continue[]; ]; ]; outname = StringJoin[
                "Orthology center of ", trname, " and ", trgname]; 
              If[Length[perschk] > 0, AssociateTo[out, outname -> 
                  perschk[[1]]]; , AppendTo[out3, trname]; ]; ]; ]; 

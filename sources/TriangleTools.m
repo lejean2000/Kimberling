@@ -1659,3 +1659,18 @@ funcg[{p_, q_, r_}] := {a^2/(q - r), b^2/(r - p), c^2/(p - q)}
  
 funch[{p_, q_, r_}] := {a^2/(2*p - q - r), b^2/(2*q - r - p), 
      c^2/(2*r - p - q)}
+ 
+b1stAubertPoint[trg1_, trg2_] := Module[{l1, l2, l3}, 
+     l1 = simplifyRationalBarycentrics[bAubertLineNew[trg1[[2]], trg1[[3]], 
+         trg2[[2]], trg2[[3]]]]; l2 = simplifyRationalBarycentrics[
+        bAubertLineNew[trg1[[3]], trg1[[1]], trg2[[3]], trg2[[1]]]]; 
+      simplifyRationalBarycentrics[Cross[l1, l2]]]
+ 
+b2ndAubertPoint[trg1_, trg2_] := Module[{l1, l2, l3}, 
+     l1 = simplifyRationalBarycentrics[bAubertLineNew[trg1[[3]], trg1[[1]], 
+         trg1[[2]], trg2[[1]]]]; l2 = simplifyRationalBarycentrics[
+        bAubertLineNew[trg1[[1]], trg1[[2]], trg1[[3]], trg2[[2]]]]; 
+      l3 = simplifyRationalBarycentrics[bAubertLineNew[trg1[[2]], trg1[[3]], 
+         trg1[[1]], trg2[[3]]]]; Print[Factor[bConcurrencyMatrix[l1, l2, 
+         l3]]]; simplifyRationalBarycentrics /@ bIntersectionTriangle[l1, l2, 
+        l3]]
