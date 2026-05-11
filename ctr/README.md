@@ -449,7 +449,6 @@ Let ABC be a triangle and A'B'C' be the anticevian triangle of a point P = (u:v:
 Let A'' be the second intersection of B'C' with the Q-circumconic of ABC. Similarly define B'' and C''.  
 The triangle A''B''C'' is denoted by CTR35(P, Q).
 
-
 The barycentric coordinates of the A-vertex are:  
 
     p v w, v (r v - q w), w (-r v + q w)
@@ -460,4 +459,51 @@ CTR35-2.1 = inner-Conway
 CTR35-2.6 = 1st anti-circumperp  
 CTR35-2.9 = Gemini 29  
 CTR35-2.10 = Gemini 17  
+  
+###CTR36  
+Given a point P let circle (PBC) intersect AC and Ab at points Ab and Ac. Similarly define Ba, Bc, Ca, Cb.
+Denote the triangle formed by the centroids of PBcCb, PAcCa, and PAbBa with CTR36(P).
+
+The barycentric coordinates of the A-vertex are:  
+
+    c^4 u v^2 + c^2 v (3 b^2 u + a^2 v) w + b^2 (b^2 u + a^2 v) w^2,
+	-b^2 w ((b^2 u + a^2 v) w - c^2 v (2 v+w)),
+	-c^2 v (c^2 u v + a^2 v w - b^2 w (v+2 w))
+  
+Notes:  
+For P=X(1) it is homothetic to 1st Pavlov-Altintas with center X(50190) and ratio 4/3  
+
+  
+###CTR37  
+Let Ab and Ac be the second intersection points of circle (PBC) with AC and AB, similarly define Ba, Bc, Ca, Cb.
+Let Na be the centroid of ABcCb and similarly define Nb, Nc. Consider triangle Na, Nb, Nc.	
+
+The barycentric coordinates of the A-vertex are:  
+
+    c^4 u v^2 + b^2 (b^2 u + a^2 v) w^2 + c^2 v w (a^2 v + b^2 (3 u+v+w)),
+	-b^2 w ((b^2 u + a^2 v) w - c^2 v (v+w)),
+	-c^2 v (c^2 u v + a^2 v w - b^2 w (v+w))
+  
+  
+###CTR38
+Let ABC be a triangle and A'B'C' the cevian triangle of P. Denote with A'' the other than P intersection of the circles (B', B'P), (C', C'P). Similarly define B'', C''. CTR38(P) is the triangle A''B''C''.
+
+The barycentric coordinates of the A-vertex are:  
+
+    u (-(b^2 u (u+2 v) (v-w) w)+c^2 u v (v-w) (u+2 w)+a^2 v w (u^2+3 v w+2 u (v+w))),
+	v (c^2 u v^2 (u+w)+a^2 v^2 w (u+w)-b^2 u w (v^2+u w)),
+	(u+v) (b^2 u+a^2 v) w^3-c^2 u v w (u v+w^2)
+
+
+##CTR39
+Pedal triangle of P wrt to the 2nd circumperp triangle (i.e. circumcevian triangle of the incenter)
+
+Note the following triangle equivalences:  
+CTR39-1 = anti-Aquila  
+
+##CTR40
+In a triangle, let B1 be the trace of P upon AC and let Ba and Bc be the projections of B1 upon BC and BA.  
+Let ABa and CBc intersect at B', and in a similar way define A' and C'. CTR40(P) is triangle A'B'C'.
+
+
 

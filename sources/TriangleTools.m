@@ -1674,3 +1674,45 @@ b2ndAubertPoint[trg1_, trg2_] := Module[{l1, l2, l3},
          trg1[[1]], trg2[[3]]]]; Print[Factor[bConcurrencyMatrix[l1, l2, 
          l3]]]; simplifyRationalBarycentrics /@ bIntersectionTriangle[l1, l2, 
         l3]]
+ 
+bCircumconicLEq[{u_, v_, w_}, {l_, m_, n_}] := n*w^2*x*y + m*v^2*x*z + 
+     l*u^2*y*z
+ 
+bFourPointsArbitraryTangentEq[pts_List, L_List] := 
+    Module[{vars, L12, L34, L13, L24, C1, C2, Cparam, matC, adjC, eqLambda, 
+      lambdaSols}, vars = {x, y, z}; L12 = Det[{vars, pts[[1]], pts[[2]]}]; 
+      L34 = Det[{vars, pts[[3]], pts[[4]]}]; 
+      L13 = Det[{vars, pts[[1]], pts[[3]]}]; 
+      L24 = Det[{vars, pts[[2]], pts[[4]]}]; C1 = L12*L34; C2 = L13*L24; 
+      Cparam = C1 + \[Lambda]*C2; matC = (1/2)*D[Cparam, {vars, 2}]; 
+      adjC = {{matC[[2,2]]*matC[[3,3]] - matC[[2,3]]^2, 
+         matC[[1,3]]*matC[[2,3]] - matC[[1,2]]*matC[[3,3]], 
+         matC[[1,2]]*matC[[2,3]] - matC[[1,3]]*matC[[2,2]]}, 
+        {matC[[1,3]]*matC[[2,3]] - matC[[1,2]]*matC[[3,3]], 
+         matC[[1,1]]*matC[[3,3]] - matC[[1,3]]^2, matC[[1,2]]*matC[[1,3]] - 
+          matC[[1,1]]*matC[[2,3]]}, {matC[[1,2]]*matC[[2,3]] - 
+          matC[[1,3]]*matC[[2,2]], matC[[1,2]]*matC[[1,3]] - 
+          matC[[1,1]]*matC[[2,3]], matC[[1,1]]*matC[[2,2]] - matC[[1,2]]^2}}; 
+      eqLambda = Simplify[L . adjC . L == 0]; lambdaSols = 
+       Solve[eqLambda, \[Lambda]]; Simplify[Cparam /. lambdaSols]]
+ 
+bFourPointTangentConicEq[{p1_, q1_, r1_}, {p2_, q2_, r2_}, {p3_, q3_, r3_}, 
+     {p4_, q4_, r4_}, {l_, m_, n_}] := Module[{d1, d2, d3}, 
+     {d1, d2, d3} = Cross[{l, m, n}, {p1, q1, r1}]; 
+      Det[{{x^2, y^2, z^2, y*z, z*x, x*y}, {p1^2, q1^2, r1^2, q1*r1, r1*p1, 
+         p1*q1}, {p2^2, q2^2, r2^2, q2*r2, r2*p2, p2*q2}, 
+        {p3^2, q3^2, r3^2, q3*r3, r3*p3, p3*q3}, {p4^2, q4^2, r4^2, q4*r4, 
+         r4*p4, p4*q4}, {2*p1*d1, 2*q1*d2, 2*r1*d3, q1*d3 + r1*d2, 
+         r1*d1 + p1*d3, p1*d2 + q1*d1}}]]
+ 
+bThreePointTwoTangentConicEq[{p1_, q1_, r1_}, {p2_, q2_, r2_}, 
+     {p3_, q3_, r3_}, {l1_, m1_, n1_}, {l2_, m2_, n2_}] := 
+    Module[{d11, d12, d13, d21, d22, d23}, 
+     {d11, d12, d13} = Cross[{l1, m1, n1}, {p1, q1, r1}]; 
+      {d21, d22, d23} = Cross[{l2, m2, n2}, {p2, q2, r2}]; 
+      Det[{{x^2, y^2, z^2, y*z, z*x, x*y}, {p1^2, q1^2, r1^2, q1*r1, r1*p1, 
+         p1*q1}, {p2^2, q2^2, r2^2, q2*r2, r2*p2, p2*q2}, 
+        {p3^2, q3^2, r3^2, q3*r3, r3*p3, p3*q3}, {2*p1*d11, 2*q1*d12, 
+         2*r1*d13, q1*d13 + r1*d12, r1*d11 + p1*d13, p1*d12 + q1*d11}, 
+        {2*p2*d21, 2*q2*d22, 2*r2*d23, q2*d23 + r2*d22, r2*d21 + p2*d23, 
+         p2*d22 + q2*d21}}]]
