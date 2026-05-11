@@ -495,13 +495,13 @@ The barycentric coordinates of the A-vertex are:
 	(u+v) (b^2 u+a^2 v) w^3-c^2 u v w (u v+w^2)
 
 
-## CTR39  
+### CTR39  
 Pedal triangle of P wrt to the 2nd circumperp triangle (i.e. circumcevian triangle of the incenter)
 
 Note the following triangle equivalences:  
 CTR39-1 = anti-Aquila  
 
-## CTR40  
+### CTR40  
 In a triangle, let B1 be the trace of P upon AC and let Ba and Bc be the projections of B1 upon BC and BA.  
 Let ABa and CBc intersect at B', and in a similar way define A' and C'. CTR40(P) is triangle A'B'C'.
 
