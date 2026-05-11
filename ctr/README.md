@@ -364,6 +364,7 @@ Let PaPbPc be the cevian triangle of P and Q is a point not on the sides of ABC.
 
 CTR31(P,Q) is perspective to ABC and the perspector is the Dao conjugate of the complement of Q, and P. 
 CTR31(P,Q) is also perspective to the cevian triangle of Q.
+CTR31(G,Q) is also homothetic to the cevian triangle of Q. The center of homothety is the product G\*T where T is the cevian triangle of Q. See ETC, the preamble to X(42437) for details. 
 
 The barycentric coordinates of the A-vertex are:
 
@@ -443,4 +444,20 @@ Note the following triangle equivalences:
 CTR34-4.4 = 1st excosine  
 CTR34-6.6 = Ara  
 
+### CTR35
+Let ABC be a triangle and A'B'C' be the anticevian triangle of a point P = (u:v:w).  
+Let A'' be the second intersection of B'C' with the Q-circumconic of ABC. Similarly define B'' and C''.  
+The triangle A''B''C'' is denoted by CTR35(P, Q).
+
+
+The barycentric coordinates of the A-vertex are:  
+
+    p v w, v (r v - q w), w (-r v + q w)
+	
+Note the following triangle equivalences:  
+CTR35-1.6 = 1st circumperp  
+CTR35-2.1 = inner-Conway  
+CTR35-2.6 = 1st anti-circumperp  
+CTR35-2.9 = Gemini 29  
+CTR35-2.10 = Gemini 17  
 
