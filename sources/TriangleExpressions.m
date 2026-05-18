@@ -360,5 +360,12 @@ Format[NaturalPoly[expr_, vars_]] := Module[{terms, formatted},
 multiCollectABCDisplay[pt_] := {multiCollectOrdered[pt[[1]], a], 
      multiCollectOrdered[pt[[2]], b], multiCollectOrdered[pt[[3]], c]}
  
-GraficaBaricentricasRet[(_:RGBColor[1, 0, 0])*(ecuacion_color)] := 
+GraficaBaricentricasRet[ecuacion_, color_:RGBColor[1, 0, 0]] := 
     GraficaBaricentricas[ecuacion, color, {-5, 15}, {-5, 12}, {PA, PB, PC}]
+ 
+replaceZSymbols[str_String, defs_Association] := 
+    StringReplace[str, {"Z("~~n:DigitCharacter..~~")" :> 
+       With[{key = StringJoin["Z", n]}, Lookup[defs, key, 
+         StringJoin["Z(", n, ")"]]], "Z"~~n:DigitCharacter..~~"}" :> 
+       With[{key = StringJoin["Z", n]}, StringJoin[Lookup[defs, key, 
+          StringJoin["Z(", n, ")"]], "}"]]}]

@@ -91,7 +91,8 @@ intaddbrackets[pname_] := StringJoin[StringTake[pname, 1], "(",
 colorformat[string_, cases_:RegularExpression[
        "Y\\(\\d+\\)|Y\\d+|Z\\(\\d+\\)|Z\\d+"]] := Module[{pos, agg, res}, 
      If[ !TrueQ[colorPrintOn], If[TrueQ[globalNoCleanup], 
-         Return[string, Module], Return[cleanup[string], Module]; ]; ]; 
+         Return[replaceZSymbols[string, NonETCNames], Module], 
+         Return[cleanup[string], Module]; ]; ]; 
       pos = StringPosition[string, cases]; 
       agg = ({Switch[#1[[1,2]], 1, Red, 2, Brown, _, Blue], 
           #1[[1 ;; All,{1}]]} & ) /@ GatherBy[
@@ -724,17 +725,17 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
     Module[{hg, cycle, localprops, colorprint}, 
      If[StringLength[name] > 0, cycle = {name}, cycle = Keys[glob]]; 
       colorprint = colorPrintOn; colorPrintOn = False; 
-      Do[print[StringJoin[printname, " = ", glob[pt]["name"]]]; print[]; 
+      Do[print[StringJoin[printname, " = ", glob[pt]["name"]]]; Print[]; 
         print[StringJoin["Barycentrics    ", glob[pt]["barycentrics"]]]; 
-        print[]; print[]; If[MemberQ[Keys[glob[pt]], "descr"], 
+        Print[]; Print[]; If[MemberQ[Keys[glob[pt]], "descr"], 
          print[StringJoin["DESCR: ", StringReplace[glob[pt]["descr"], 
-             "This point" -> printname]]]; print[]; ]; 
+             "This point" -> printname]]]; Print[]; ]; 
         hg = If[ !MemberQ[Keys[glob[pt]], "linear combinations"], {}, 
           glob[pt]["linear combinations"]]; If[Length[hg] > 0, 
          print[colorformat[StringJoin[printname, " linear combinations: ", 
-             StringRiffle[hg, ", "]]]]; print[]; ]; 
+             StringRiffle[hg, ", "]]]]; Print[]; ]; 
         print[colorformat[StringJoin[printname, " lies on these lines: ", 
-           StringRiffle[glob[pt]["lines"], ", "]]]]; print[]; 
+           StringRiffle[glob[pt]["lines"], ", "]]]]; Print[]; 
         If[MemberQ[Keys[glob[pt]], "midpoints"], hg = glob[pt]["midpoints"]; 
           If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) and X(j) for these {i,j}: ", StringRiffle[
