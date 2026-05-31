@@ -256,31 +256,37 @@ linesProcessAlg[ptcoord_, printexpr_, prec_, debug_, abort_, name_,
                rc2], ptcoord /. rc2}]; If[TrueQ[Simplify[test] == 0] && 
             TrueQ[Simplify[test2] == 0], AppendTo[hg, eltest]; ]; , 
          {igroup, intReflectionProcess[res[[2]], ptc, prec]}]; 
-        hg = SortBy[hg, numsortexpr[#1[[1]]] & ]; 
-        hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ hg; 
-        AssociateTo[globalProperties[name], {"reflections" -> hg}]; 
-        If[ !TrueQ[globalSilence], If[Length[hg] > 0, 
+        hg = SortBy[hg, numsortexpr[#1[[1]]] & ];
+        hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]]} & ) /@ hg;
+        AssociateTo[globalProperties[name], {"reflections" -> hg}];
+        If[ !TrueQ[globalSilence], If[Length[hg] > 0,
           Print[colorformat[StringJoin[
-              "= reflection of X(i) in X(j) for these {i,j}: ", 
-              StringRiffle[hg, ", "]]]]; ]]; hg = {}; 
-        Do[eltest = igroup; If[coincideNorm[bReflectionPL[KimberlingCenterCNy[
-                 eltest[[1]]] /. rc, bLine[KimberlingCenterCNy[eltest[[
-                   2]]] /. rc, KimberlingCenterCNy[eltest[[3]]] /. rc]] /. 
-              rc, ptcoord /. rc] && coincideNorm[bReflectionPL[
-               KimberlingCenterCNy[eltest[[1]]] /. rc2, bLine[
-                KimberlingCenterCNy[eltest[[2]]] /. rc2, KimberlingCenterCNy[
-                  eltest[[3]]] /. rc2]] /. rc2, ptcoord /. rc2], 
-           AppendTo[hg, eltest]]; , {igroup, intReflectionInLineProcess[ptc, 
-           prec, KeyDrop[Take[ETCBaryNorm, 2000], globalExcludedNum]]}]; 
-        hg = SortBy[hg, numsortexpr[#1[[1]]] & ]; 
-        hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]], 
-            intnameformat[#1[[3]]]} & ) /@ hg; AssociateTo[
-         globalProperties[name], {"line reflections" -> hg}]; 
-        If[ !TrueQ[globalSilence], If[Length[hg] > 0, 
-          Print[colorformat[If[Length[hg] == 1, StringJoin[
-              "= reflection of X(", hg[[1,1]], ") in line X(", hg[[1,2]], 
-              ")X(", hg[[1,3]], ")"], StringJoin[
-              "= reflection of X(i) in line X(j)X(k) for these {i,j,k}: ", 
+              "= reflection of X(i) in X(j) for these {i,j}: ",
+              StringRiffle[hg, ", "]]]]; ]];
+        hg = {};
+        Do[eltest = igroup;
+          If[coincideNorm[
+               bReflectionPL[KimberlingCenterCNy[eltest[[1]]] /. rc,
+                 bLine[KimberlingCenterCNy[eltest[[2]]] /. rc,
+                   KimberlingCenterCNy[eltest[[3]]] /. rc]],
+               ptcoord /. rc] &&
+             coincideNorm[
+               bReflectionPL[KimberlingCenterCNy[eltest[[1]]] /. rc2,
+                 bLine[KimberlingCenterCNy[eltest[[2]]] /. rc2,
+                   KimberlingCenterCNy[eltest[[3]]] /. rc2]],
+               ptcoord /. rc2],
+           AppendTo[hg, eltest]]; ,
+         {igroup, intReflectionInLineProcess[ptc, prec,
+           KeyDrop[Take[ETCBaryNorm,2000], globalExcludedNum]]}];
+        hg = SortBy[hg, numsortexpr[#1[[1]]] & ];
+        hg = ({intnameformat[#1[[1]]], intnameformat[#1[[2]]],
+            intnameformat[#1[[3]]]} & ) /@ hg;
+        AssociateTo[globalProperties[name], {"line reflections" -> hg}];
+        If[ !TrueQ[globalSilence], If[Length[hg] > 0,
+          Print[colorformat[If[Length[hg] == 1,
+            StringJoin["= reflection of X(", hg[[1, 1]], ") in line X(",
+              hg[[1, 2]], ")X(", hg[[1, 3]], ")"],
+            StringJoin["= reflection of X(i) in line X(j)X(k) for these {i,j,k}: ",
               StringRiffle[hg, ", "]]]]]]]; ]; Return[out]; ]
  
 xnumforsort[str_] := If[StringTake[str, 1] == "X", 
@@ -346,26 +352,28 @@ intReflectionProcess[fullgroups_, pt_, prec_] :=
         If[Length[fgr1] > 200, fgr1 = Take[fgr1, 200]; ]; 
         checks = AssociationMap[NormalizeBary[bMidpoint[ETCBaryNorm[#1], 
              pt]] & , fgr1]; 
-        Do[refl = Select[fgr1, coincide[ETCBaryNorm[#1], checks[el]] & ]; 
-          If[Length[refl] > 0, AppendTo[hgroups, {el, First[refl]}]], 
+        Do[refl = Select[fgr1, coincide[ETCBaryNorm[#1], checks[el]] & ];
+          If[Length[refl] > 0, AppendTo[hgroups, {el, First[refl]}]],
          {el, Keys[checks]}]; , {set, fullgroups}]; Return[hgroups]; ]
- 
-coincideNorm[pt1_, pt2_, prec_:20] := Return[coincide[intnumericnorm[pt1], 
-      intnumericnorm[pt2], prec]]
- 
-intReflectionInLineProcess[ptc_, prec_, etcset_] := 
-    Module[{hgroups, L, candidates, xiBary}, hgroups = {}; 
-      Do[xiBary = etcset[xi]; If[Abs[Total[xiBary]] < 10^(-prec) || 
-          coincide[ptc, xiBary], Continue[]]; 
-        L = Quiet[N[bPerpendicular[bLine[ptc, xiBary], bMidpoint[ptc, 
-              xiBary]] /. rule69, prec]]; 
-        If[ !AllTrue[L, Internal`RealValuedNumericQ], Continue[]]; 
-        candidates = Keys[Select[AssociationMap[Abs[L . etcset[#1]] & , 
-            Keys[etcset]], #1 < 10^(-(prec/2)) & ]]; 
-        candidates = DeleteCases[candidates, xi]; If[Length[candidates] >= 2, 
-         AppendTo[hgroups, Prepend[Take[SortBy[candidates, numsortexpr], 2], 
-           xi]]]; , {xi, Keys[etcset]}]; Return[DeleteDuplicates[hgroups]]]
- 
+
+intReflectionInLineProcess[ptc_, prec_, etcset_] :=
+    Module[{hgroups, L, candidates, xiBary},
+     hgroups = {};
+     Do[xiBary = etcset[xi];
+       If[Abs[Total[xiBary]] < 10^(-prec) || coincide[ptc, xiBary], Continue[]];
+       L = Quiet[N[bPerpendicular[bLine[ptc, xiBary],
+             bMidpoint[ptc, xiBary]] /. rule69, prec]];
+       If[ !AllTrue[L, Internal`RealValuedNumericQ], Continue[]];
+       candidates = Keys[Select[
+         AssociationMap[Abs[L . etcset[#1]] & , Keys[etcset]],
+         #1 < 10^(-(prec/2)) & ]];
+       candidates = DeleteCases[candidates, xi];
+       If[Length[candidates] >= 2,
+         AppendTo[hgroups,
+           Prepend[Take[SortBy[candidates, numsortexpr], 2], xi]]]; ,
+     {xi, Keys[etcset]}];
+     Return[DeleteDuplicates[hgroups]]]
+
 checkIsogonalConjugates[pt_, name_:"X"] := 
     Module[{cx, prev, res, idx1, idx2, ptc, rc, ffisoconjugate, etcbary}, 
      ffisoconjugate[pt1_, pt2_] := Module[{local}, 
@@ -397,6 +405,9 @@ checkIsogonalConjugates[pt_, name_:"X"] :=
         Print[colorformat[StringJoin[
             "= X(i)-isoconjugate-of-X(j) for these {i, j}: ", 
             StringRiffle[res, ", "]]]]; ]]; ]
+ 
+coincideNorm[pt1_, pt2_, prec_:20] := Return[coincide[intnumericnorm[pt1], 
+      intnumericnorm[pt2], prec]]
  
 checkBarycentric[pt_, type_, name_:"X"] := 
     Module[{ff, rc, cx, res, idx1, idx2, ptc, val, sgn, tuples, etcbary}, 
@@ -772,20 +783,22 @@ printGlobalProperties[glob_, name_:"", printname_:""] :=
           If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                " = midpoint of X(i) and X(j) for these {i,j}: ", StringRiffle[
                 hg, ", "]]]]; ]; ]; If[MemberQ[Keys[glob[pt]], 
-          "reflections"], hg = glob[pt]["reflections"]; If[Length[hg] > 0, 
-           print[colorformat[StringJoin[printname, 
-               " = reflection of X(i) in X(j) for these {i,j}: ", 
-               StringRiffle[hg, ", "]]]]; ]; ]; 
-        If[MemberQ[Keys[glob[pt]], "line reflections"], 
-         hg = glob[pt]["line reflections"]; If[Length[hg] > 0, 
-           print[colorformat[StringJoin[printname, If[Length[hg] == 1, 
-                StringJoin[" = reflection of X(", hg[[1,1]], ") in line X(", 
-                 hg[[1,2]], ")X(", hg[[1,3]], ")"], StringJoin[
-                 " = reflection of X(i) in line X(j)X(k) for these {i,j,k}: "\
-, StringRiffle[hg, ", "]]]]]]; ]; ]; If[ !MemberQ[Keys[glob[pt]], 
-           "circumconics"], If[MemberQ[Keys[glob[pt]], "harmonic"], 
-           hg = glob[pt]["harmonic"]; If[Length[hg] > 0, 
-             print[colorformat[StringJoin[printname, 
+          "reflections"], hg = glob[pt]["reflections"]; If[Length[hg] > 0,
+           print[colorformat[StringJoin[printname,
+               " = reflection of X(i) in X(j) for these {i,j}: ",
+               StringRiffle[hg, ", "]]]]; ]; ];
+        If[MemberQ[Keys[glob[pt]], "line reflections"],
+         hg = glob[pt]["line reflections"];
+          If[Length[hg] > 0,
+           print[colorformat[StringJoin[printname,
+               If[Length[hg] == 1,
+                 StringJoin[" = reflection of X(", hg[[1, 1]], ") in line X(",
+                   hg[[1, 2]], ")X(", hg[[1, 3]], ")"],
+                 StringJoin[" = reflection of X(i) in line X(j)X(k) for these {i,j,k}: ",
+                   StringRiffle[hg, ", "]]]]]]; ]; ];
+        If[ !MemberQ[Keys[glob[pt]], "circumconics"], 
+         If[MemberQ[Keys[glob[pt]], "harmonic"], hg = glob[pt]["harmonic"]; 
+            If[Length[hg] > 0, print[colorformat[StringJoin[printname, 
                  " = {X(i),X(j)}-harmonic conjugate of X(k) for these \
 (i,j,k): ", StringRiffle[SortBy[hg, numsortexpr[#1[[1]]] & ], ", "]]]]; ]; ]; 
           Continue[]; ]; hg = glob[pt]["curves"]; If[Length[hg] > 0, 
