@@ -14,14 +14,27 @@ Get["../sources/fltCircles.m"];
 Get["../sources/TriangleCurves.m"];
 Get["../sources/TriangleExpressions.m"];
 Get["../sources/DBTools.m"];
-Get["../sources/NonETCNames.mx"];
+Get["../db/CPTR.mx"];
+Get["../db/UNCFTRG.mx"];
+Get["../db/ENCTR.mx"];
+
 PA = {31/3, (4 \[Sqrt]35)/3}; PB = {0, 0}; PC = {6, 0};
 xA = {1, 0, 0}; xB = {0, 1, 0}; xC = {0, 0, 1}; pP = {u, v, w}; pQ = {p, q, r};
-
-
-Get["../db/ETCExtra.mx"];
-Get["../db/ETCExtraBary.mx"];
 
 (* Add Extra points to ETC*)
 ETCFull=ETC;
 ETCBaryNormFull=ETCBaryNorm;
+
+loadedData  =  Import["../db/precomputed_triangles.mx"];
+precomputedKimberling  =  loadedData["Kimberling"];
+precomputedCPTR  =  loadedData["CPTR"];
+precomputedENCTR  =  loadedData["ENCTR"];
+precomputedUNCFTRG  =  loadedData["UNCFTRG"];
+allPrecomputedTrJoined = Join[precomputedKimberling, precomputedCPTR, precomputedENCTR, precomputedUNCFTRG];
+
+Get["../db/ETCExtra.mx"];
+Get["../db/ETCExtraBary.mx"];
+Get["../db/NonETCNames.mx"];
+
+sr=simplifyRationalBarycentrics;
+
