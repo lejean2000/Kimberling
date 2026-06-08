@@ -62,21 +62,25 @@ singlePointProcesses = Association[
 ];
 
 globalOutputStream = False;
-pointCheckerMinProperties = 2;
+(*pointCheckerMinProperties = 10;*)
+
+globalNoCleanup = False;
+colorPrintOn = False;
+
 
 loop[from_, to_] := Block[{xname, ptcoord, pt, pos},
 
   Do[
    xname = "X" <> ToString[nx];
 
-   ptcoord = sym[globalptexpr[xname]];
-   
+   ptcoord = sym3[globalptexpr[xname]];
+
    If[checkPointinETC2[ptcoord], Print[xname<>" EXISTS"]; Continue[]];
 
    Print[];Print[globalptnames[xname]];Print[];
 
-   pointChecker[ptcoord, xname, False, xname];
-   
+   pointChecker[ptcoord, xname, True, xname];
+
    globalProperties[xname]["others"]={};
 
    (*
@@ -86,7 +90,7 @@ loop[from_, to_] := Block[{xname, ptcoord, pt, pos},
 		trpt = StringTake[ToString[el],{6,-2+StringLength[ToString[el]]}];
 		itrg = StringTake[trpt, {1 + StringPosition[trpt, "-of-"][[1]][[2]], StringLength[trpt]}];
 		ptidx = ToExpression[StringTake[trpt, {3, -1 + StringPosition[trpt, ")"][[1]][[1]]}]];
-		
+
 		If[Not[checkNumberedPoint[ptcoord, itrg, ptidx]],trpt = trpt<>" UNSUCCESSFUL"];
 
 		AppendTo[globalProperties[xname]["others"],trpt];
@@ -109,7 +113,6 @@ loop[from_, to_] := Block[{xname, ptcoord, pt, pos},
    ];
 *)
 
-   globalNoCleanup = False;
    globalOutputStream = OpenWrite[xname <> ".txt", CharacterEncoding -> "UTF8"];
    printGlobalProperties[globalProperties, xname, intaddbrackets[xname]] // Quiet;
    print["=======END======="];
@@ -121,7 +124,7 @@ loop[from_, to_] := Block[{xname, ptcoord, pt, pos},
 
 endnum = Max[STARTETCNUMBER-1,Max[ToExpression[
   StringTake[
-   SortBy[Keys[KeySelect[globalptnames, StringStartsQ[#, "X"] &]], 
+   SortBy[Keys[KeySelect[globalptnames, StringStartsQ[#, "X"] &]],
     numsortexpr[#] &], {2, -1}]
 ]]];
 
