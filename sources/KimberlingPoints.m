@@ -145,7 +145,8 @@ trgCheckPerspectivity[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] :=
            Print[Row[{StringJoin[trgname, " and ", trname], Style[
                 " - possibly similar", Green]}]]; ]; ]; , 
        {trname, Keys[set] /. "infinite-altitude" -> Nothing}]; 
-      KeyValueMap[Print[intaddbrackets[#1] -> #2] & , GroupBy[out, Identity, 
+      KeyValueMap[Print[intaddbrackets[#1] -> If[Length[#2] > 2, 
+           Append[Take[#2, 2], "........"], #2]] & , GroupBy[out, Identity, 
         Keys]]; Return[cnt]; ]
  
 trgCheckParallelogic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary] := 
@@ -215,7 +216,8 @@ trgCheckOrthologic[trchk_, trgname_:"TR", set_:KimberlingTrianglesBary,
        trname]; If[Length[out2] > 0, Print[StringJoin["Orthology center of ", 
          trgname, " and ", ToString[out2]]]]; If[Length[out3] > 0, 
        Print[StringJoin["Orthology center of ", ToString[out3], " and ", 
-         trgname]]]; KeyValueMap[Print[intaddbrackets[#1] -> #2] & , 
+         trgname]]]; KeyValueMap[Print[intaddbrackets[#1] -> 
+          If[Length[#2] > 2, Append[Take[#2, 2], "........"], #2]] & , 
        GroupBy[out, Identity, Keys]]; ]
  
 checkNumberedPoint[ptc_, trgname_, idx_] := Module[{trgn, newkey}, 

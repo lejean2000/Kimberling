@@ -10,7 +10,7 @@ Get["/home/ivan/wolfram/db/TriangleCurves.mx"];
 Get["/home/ivan/wolfram/db/CentralCircles.mx"];
 Get["/home/ivan/wolfram/db/KimberlingTrianglesBary.mx"];
 Get["/home/ivan/wolfram/db/KimberlingTrianglesBaryOrthKeys.mx"];
-Get["/home/ivan/wolfram/sources/fltCircles.m"];
+Get["/home/ivan/wolfram/sources/fltCirclesReduced.m"];
 Get["/home/ivan/wolfram/sources/TriangleCurves.m"];
 Get["/home/ivan/wolfram/sources/TriangleExpressions.m"];
 Get["/home/ivan/wolfram/sources/DBTools.m"];
@@ -36,3 +36,4 @@ Get["/home/ivan/wolfram/db/ETCExtraBary.mx"];
 Get["/home/ivan/wolfram/db/NonETCNames.mx"];
 
 sr=simplifyRationalBarycentrics;
+

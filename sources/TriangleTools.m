@@ -1716,3 +1716,11 @@ bThreePointTwoTangentConicEq[{p1_, q1_, r1_}, {p2_, q2_, r2_},
          2*r1*d13, q1*d13 + r1*d12, r1*d11 + p1*d13, p1*d12 + q1*d11}, 
         {2*p2*d21, 2*q2*d22, 2*r2*d23, q2*d23 + r2*d22, r2*d21 + p2*d23, 
          p2*d22 + q2*d21}}]]
+ 
+bTangentCone[crv_, pt_] := Module[{idx, fix, loc, f, terms, deg, mindeg, 
+      cone}, idx = LengthWhile[pt, #1 == 0 & ] + 1; fix = {x, y, z}[[idx]]; 
+      loc = DeleteCases[{x, y, z}, fix]; f = Expand[crv /. fix -> 1]; 
+      terms = If[Head[f] === Plus, List @@ f, {f}]; 
+      deg[t_] := Total[Exponent[t, loc]]; mindeg = Min[deg /@ terms]; 
+      cone = Total[Select[terms, deg[#1] === mindeg & ]]; 
+      {mindeg, Factor[cone]}]
