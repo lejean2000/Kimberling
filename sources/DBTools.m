@@ -673,16 +673,15 @@ checkCircles[pt_, name_:"X", prec_:24] :=
 checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
       outin, conics}, out = {}; outci = {}; outin = {}; 
       conics = Join[fltCentralCircles, fltDuals, fltOrthoptic]; 
-      If[ !globalCheckAllPoles, 
-       Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
-          If[plr == -1, Continue[]]; set = checkPointsOnCurve[
-            evaluate[plr] . {x, y, z}]; If[Length[set] >= 2, 
-           fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
-            prop = StringJoin["= pole of line ", ToString[fltset], 
-              " with respect to the ", circ]; AppendTo[out, prop]; 
-            AssociateTo[globalProperties[name], {"poles" -> out}]; 
-            If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
-         {circ, Keys[conics]}]; ]; If[globalCheckAllPoles, 
+      Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
+        If[plr == -1, Continue[]]; set = checkPointsOnCurve[
+          evaluate[plr] . {x, y, z}]; If[Length[set] >= 2, 
+         fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
+          prop = StringJoin["= pole of line ", ToString[fltset], 
+            " with respect to the ", circ]; AppendTo[out, prop]; 
+          AssociateTo[globalProperties[name], {"poles" -> out}]; 
+          If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
+       {circ, Keys[conics]}]; If[True, 
        Do[plr = TimeConstrained[bPolar[fltCircumCircles[circ], pt], 5, -1]; 
           If[plr == -1, Continue[]]; set = checkPointsOnCurve[
             plr . {x, y, z}]; If[Length[set] >= 2, 
@@ -690,23 +689,23 @@ checkPoles[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci,
             AppendTo[outci, Join[fltset, {ToString[intnameformat2[
                  circ]]}]]; ]; , {circ, Keys[fltCircumCircles]}]; 
         If[ !TrueQ[globalSilence], If[Length[outci] > 0, 
-          Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
-circumconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outci, 
-               ", "]]]]; ]]; Do[plr = TimeConstrained[
-            bPolar[fltInCircles[circ], pt], 5, -1]; If[plr == -1, 
-           Continue[]]; set = checkPointsOnCurve[plr . {x, y, z}]; 
-          If[Length[set] >= 2, fltset = (intnameformat2[#1] & ) /@ 
-              Take[set, 2]; AppendTo[outin, Join[fltset, {ToString[
-                intnameformat2[circ]]}]]; ]; , {circ, Keys[fltInCircles]}]; 
+           Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
+circumconic with perspector X(k) ", "for these {i,j,k}: ", StringRiffle[
+                outci, ", "]]]]; ]; ]; 
+        Do[plr = TimeConstrained[bPolar[fltInCircles[circ], pt], 5, -1]; 
+          If[plr == -1, Continue[]]; set = checkPointsOnCurve[
+            plr . {x, y, z}]; If[Length[set] >= 2, 
+           fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
+            AppendTo[outin, Join[fltset, {ToString[intnameformat2[
+                 circ]]}]]; ]; , {circ, Keys[fltInCircles]}]; 
         If[ !TrueQ[globalSilence], If[Length[outin] > 0, 
-          Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
-inconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outin, 
-               ", "]]]]; ]]; ]; AssociateTo[globalProperties[name], 
-       {"poles" -> out}]; AssociateTo[globalProperties[name], 
-       {"polesin" -> outin}]; AssociateTo[globalProperties[name], 
-       {"polesci" -> outci}]; Return[{out, outci, outin}]; ]
- 
-globalCheckAllPoles = False
+           Print[colorformat[StringJoin[
+               "= pole of line X(i)X(j) wrt the inconic with perspector X(k) \
+", "for these {i,j,k}: ", StringRiffle[outin, ", "]]]]; ]; ]; ]; 
+      AssociateTo[globalProperties[name], {"poles" -> out}]; 
+      AssociateTo[globalProperties[name], {"polesin" -> outin}]; 
+      AssociateTo[globalProperties[name], {"polesci" -> outci}]; 
+      Return[{out, outci, outin}]; ]
  
 intnameformat2[pname_] := If[StringTake[pname, 1] == "X", 
      ToExpression[StringTake[pname, {2, -1}]], pname]
@@ -860,6 +859,8 @@ print[string_] := If[StringContainsQ[string, "KeyAbsent"],
  
 globalOutputStream = False
  
+globalCheckAllPoles = False
+ 
 keyIntersectionValues[list1_, list2_] := Module[{reverse, res, ress}, 
      reverse[assoc_] := Thread[Values[assoc] -> Keys[assoc]]; 
       res = KeyIntersection[{reverse[list1], PositionIndex[list2]}]; 
@@ -925,3 +926,39 @@ quickCheckerTransform[expr_, inname_:"PTX", num_:0] :=
                 expr]]]]]; procname = StringJoin[name, " of ", inname]; 
         If[ !TrueQ[globalSilence], Print[procname]]; quickChecker[texpr, 0, 
          True]; , {name, Keys[pointProcesses]}]; ]
+ 
+checkPolesOld[pt_, name_:"X"] := Module[{out, prop, plr, set, fltset, outci, 
+      outin, conics}, out = {}; outci = {}; outin = {}; 
+      conics = Join[fltCentralCircles, fltDuals, fltOrthoptic]; 
+      If[ !globalCheckAllPoles, 
+       Do[mon = circ; plr = TimeConstrained[bPolar[conics[circ], pt], 5, -1]; 
+          If[plr == -1, Continue[]]; set = checkPointsOnCurve[
+            evaluate[plr] . {x, y, z}]; If[Length[set] >= 2, 
+           fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
+            prop = StringJoin["= pole of line ", ToString[fltset], 
+              " with respect to the ", circ]; AppendTo[out, prop]; 
+            AssociateTo[globalProperties[name], {"poles" -> out}]; 
+            If[ !TrueQ[globalSilence], Print[colorformat[prop]]]; ]; , 
+         {circ, Keys[conics]}]; ]; If[globalCheckAllPoles, 
+       Do[plr = TimeConstrained[bPolar[fltCircumCircles[circ], pt], 5, -1]; 
+          If[plr == -1, Continue[]]; set = checkPointsOnCurve[
+            plr . {x, y, z}]; If[Length[set] >= 2, 
+           fltset = (intnameformat2[#1] & ) /@ Take[set, 2]; 
+            AppendTo[outci, Join[fltset, {ToString[intnameformat2[
+                 circ]]}]]; ]; , {circ, Keys[fltCircumCircles]}]; 
+        If[ !TrueQ[globalSilence], If[Length[outci] > 0, 
+          Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
+circumconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outci, 
+               ", "]]]]; ]]; Do[plr = TimeConstrained[
+            bPolar[fltInCircles[circ], pt], 5, -1]; If[plr == -1, 
+           Continue[]]; set = checkPointsOnCurve[plr . {x, y, z}]; 
+          If[Length[set] >= 2, fltset = (intnameformat2[#1] & ) /@ 
+              Take[set, 2]; AppendTo[outin, Join[fltset, {ToString[
+                intnameformat2[circ]]}]]; ]; , {circ, Keys[fltInCircles]}]; 
+        If[ !TrueQ[globalSilence], If[Length[outin] > 0, 
+          Print[colorformat[StringJoin["= pole of line X(i)X(j) wrt the \
+inconic with perspector X(k) for these {i,j,k}: ", StringRiffle[outin, 
+               ", "]]]]; ]]; ]; AssociateTo[globalProperties[name], 
+       {"poles" -> out}]; AssociateTo[globalProperties[name], 
+       {"polesin" -> outin}]; AssociateTo[globalProperties[name], 
+       {"polesci" -> outci}]; Return[{out, outci, outin}]; ]
