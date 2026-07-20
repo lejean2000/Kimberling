@@ -536,7 +536,7 @@ Let ABC be a triangle, P a point and A'B'C' the cevian triangle of P.
 Oab, Oac = the circumcenters of BAA', CAA', resp.  
 Ma = the midpoint of OabOac and similarly define Mb, Mc  
 
-MaMbMc is catalogued as CTR42(P). 
+MaMbMc is catalogued as CTR42(P). This triangle has been first investigated by Antreas Hatzipolakis.
 
 The barycentric coordinates of the A-vertex are:   
 
