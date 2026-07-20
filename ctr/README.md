@@ -515,3 +515,33 @@ The barycentric coordinates of the A-vertex are:
     -(a^2 + b^2 - c^2) (a^2 - b^2 + c^2) v w,  
     (a^2 + b^2 - c^2) v ((a^2 - b^2) w - c^2 (2 v + w)),  
     (a^2 - b^2 + c^2) w ((a^2 - c^2) v - b^2 (v + 2 w))
+
+### CTR41
+Consider the locus of points X such that mid-triangle of the cevian triangles of P and X is a degenerate triangle. This locus is a circumcubic.
+Consider the tangential triangle of this circumcubic which is called CTR41(P).
+
+The barycentric coordinates of the A-vertex are:  
+    -u (u (v + w) + w (3 v + w)) (u (v + w) + v (v + 3 w)), 
+	v (u (v + w) + w (3 v + w)) (u^2 + v w + u (v + 3 w)), 
+	w (u^2 + v w + u (3 v + w)) (u (v + w) + v (v + 3 w))
+
+Notes:
+CTR41-2 = anticomplementary
+CTR41-7 = antipedal of X(7)
+CTR41-69 = antipedal of X(66)
+
+### CTR42
+Let ABC be a triangle, P a point and A'B'C' the cevian triangle of P.   
+Oab, Oac = the circumcenters of BAA', CAA', resp.  
+Ma = the midpoint of OabOac and similarly define Mb, Mc  
+
+MaMbMc is catalogued as CTR42(P). 
+
+The barycentric coordinates of the A-vertex are:  
+    a^2 (a^2 (v + w) - c^2 (3 v + w) - b^2 (v + 3 w)), 
+	a^4 v - a^2 (3 b^2 + c^2) v + 2 b^2 (b^2 - c^2) (v + w), 
+	a^4 w - 3 a^2 c^2 w + 2 c^4 (v + w) - b^2 (a^2 w + 2 c^2 (v + w))
+  
+Notes:	
+CTR42-4 = Gemini 110
+

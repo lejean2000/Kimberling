@@ -74,7 +74,7 @@ quickloop[ptnum_, prcoordexpr_, set_, topname_] := Module[{yy, xname, ptcoord, s
    ptchk = TimeConstrained[quickChecker[ptcoord,0,False],60,-1];
    (*If[Total[ptchk]>=2,crvsnum=checkCurves[ptcoord] // Quiet // Length;,crvsnum=0];*)
 
-   totalnum = Total[ptchk];
+   totalnum = ptchk[[1]] + ptchk[[2]];
 
    If[
 	   totalnum>=pointCheckerMinProperties,
