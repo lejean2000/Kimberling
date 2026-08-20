@@ -547,3 +547,34 @@ The barycentric coordinates of the A-vertex are:
 Notes:  
 CTR42-4 = Gemini 110
 
+### CTR43
+Let PaPbPc be the cevian triangle of P. Let the perpendicular from the midpoint of BC to PbPc intersect the perpendicular from the midpoint of PbPc to BC at point Qa. Similarly define Qb, and Qc. 
+
+QaQbQc is catalogued as CTR43(P).  
+
+The barycentric coordinates of the A-vertex are:  
+    
+    (a^2*(v-w)+b^2*(2*u+v+w)-c^2*(2*u+v+w))*((b^2-c^2)*u*(v-w)-a^2*(2*v*w+u*(v+w))),  
+	a^4*(u+2*v)*(v-w)*(u+w)+a^2*(-2*c^2*(u+v)*(2*v-w)*(u+w)+2*b^2*(-(u*v*(v-3*w))+u^2*w+v*w^2))-(b^2-c^2)*(c^2*(u+w)*(3*u*v+2*v^2-u*w)+b^2*(u^2*(v-3*w)-2*v^2*w-u*w*(3*v+w))),  
+	a^4*(u+v)*(v-w)*(u+2*w)-2*a^2*(b^2*(u+v)*(v-2*w)*(u+w)+c^2*(u^2*v+v^2*w+u*(3*v-w)*w))+(b^2-c^2)*(b^2*(u+v)*(u*(v-3*w)-2*w^2)+c^2*(u^2*(3*v-w)+2*v*w^2+u*v*(v+3*w)))  
+
+Notes:  
+CTR43-2 = infinite-altitude  
+CTR43-4 = 2nd anti-Conway  
+CTR43-20 = medial  
+
+### CTR44
+Let PaPbPc be the cevian triangle of P. Let the perpendicular from the midpoint of CPb to BPc intersect the perpendicular from the midpoint of BPc to CPb at point Qa. Similarly define Qb, and Qc. 
+
+QaQbQc is catalogued as CTR44(P).  
+
+The barycentric coordinates of the A-vertex are:  
+    
+    2*a^2*u*(c^2*(u+v)+b^2*(u+w))+a^4*(2*v*w+u*(v+w))-(b^2-c^2)*(-(c^2*(2*u^2+3*u*v+u*w+2*v*w))+b^2*(2*u^2+u*v+3*u*w+2*v*w)),  
+	(-a^2+b^2+c^2)*(a^2*(u+2*v)*(u+w)-c^2*(u+2*v)*(u+w)+b^2*(u^2+3*u*w+2*v*w)),  
+	(-a^2+b^2+c^2)*(a^2*(u+v)*(u+2*w)-b^2*(u+v)*(u+2*w)+c^2*(u^2+3*u*v+2*v*w))  
+
+Notes:  
+CTR44-4 = 2nd anti-Conway  
+CTR44-20 = CTR26-2.2.4
+		
