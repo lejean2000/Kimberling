@@ -1724,3 +1724,9 @@ bTangentCone[crv_, pt_] := Module[{idx, fix, loc, f, terms, deg, mindeg,
       deg[t_] := Total[Exponent[t, loc]]; mindeg = Min[deg /@ terms]; 
       cone = Total[Select[terms, deg[#1] === mindeg & ]]; 
       {mindeg, Factor[cone]}]
+ 
+bOrthotransversalGen[pt_, {a1_, b1_, c1_}] := Module[{pta, ptb, ptc}, 
+     pta = simplifyRationalBarycentrics[Cross[bPerpendicular[bLine[a1, pt], 
+          pt], bLine[b1, c1]]]; ptb = simplifyRationalBarycentrics[
+        Cross[bPerpendicular[bLine[b1, pt], pt], bLine[a1, c1]]]; 
+      simplifyRationalBarycentrics[bLine[pta, ptb]]]

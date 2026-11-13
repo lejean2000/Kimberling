@@ -93,6 +93,24 @@ checkTrianglesOnCurve[crv_, trsets_:{"CPTR", "ENCTR", "UNI"}] :=
           AppendTo[out, name]; ], {name, Keys[set]}]; , {set, trgsets}]; 
       Return[out]; ]
  
+checkTrianglesOnCurve2[crv_, trsets_:{"CPTR", "ENCTR", "UNI"}] := 
+    Block[{ecrv, out, trgsets, normcoef, vals, trgsym}, 
+     trgsets = {KimberlingTrianglesBary}; If[MemberQ[trsets, "CPTR"], 
+       AppendTo[trgsets, AssociationMap[CPTR[#1][[1]] & , Keys[CPTR]]]]; 
+      If[MemberQ[trsets, "ENCTR"], AppendTo[trgsets, AssociationMap[
+         ENCTR[#1][[1]] & , Keys[ENCTR]]]]; If[MemberQ[trsets, "UNI"], 
+       AppendTo[trgsets, AssociationMap[UNCFTRG[#1][[1]] & , 
+         Keys[UNCFTRG]]]]; ecrv = evaluate[crv] /. rule69; 
+      normcoef = Max[Flatten[Abs[CoefficientList[ecrv, {x, y, z}]]]]; 
+      If[TrueQ[normcoef == 0], 
+       Print["Curve vanishes identically for rule69; skipping."]; 
+        Return[out]]; out = {}; 
+      Do[Do[trgsym = If[ListQ[set[name][[1]]], set[name], symtr[set[name]]]; 
+          vals = Table[Abs[N[ecrv/normcoef /. Thread[{x, y, z} -> 
+                 (evaluate[trgsym[[i]]] /. rule69)], 20]], {i, 3}]; 
+          If[AllTrue[vals, #1 < 10^(-12) & ], AppendTo[out, name]; ]; , 
+         {name, Keys[set]}]; , {set, trgsets}]; Return[out]; ]
+ 
 checkCurvesForTriangle[tr_] := Block[{ecrv, out}, 
      out = intCurvesForTriangle[tr, rule69]; If[Length[out] > 0, 
        out = Intersection[out, intCurvesForTriangle[tr, intCheckList[[1]]], 

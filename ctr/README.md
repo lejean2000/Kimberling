@@ -85,7 +85,11 @@ CTR7-8.105 = cevian of X(80)
 
 ### CTR8
 
-Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. It is perspective to ABC. The barycentric coordinates of the A-vertex are:  
+Let PaPbPc be the cevian triangle of P=(u:v:w). Let circles (PPbC) and (PPcB) intersect for the second time at point A'. Similarly define B' and C'. A'B'C' is CTR8. It is perspective to ABC with perspector the isogonal conjugate of the complement of P.   
+
+Note that we can equivalently define A' as the intersection of circles (ABPb) and (ACPc).  
+
+The barycentric coordinates of the A-vertex are:  
 
     c^2 u (u + w) - (u + v) (-b^2 u + a^2 (u + w)) : 
     b^2 (u + v) (u + v + w) : 
@@ -139,7 +143,10 @@ CTR11-6 is degenerate
 
 ### CTR12
 
-Let QaQbQc be the cevian triangle of Q. CTR12 is the triangle with vertices at the inversion poles of QbQc, QaQc, and QaQb wrt to the P-circumconic. The barycentric coordinates of the A-vertex are:  
+Let QaQbQc be the cevian triangle of Q. CTR12 is the triangle with vertices at the inversion poles of QbQc, QaQc, and QaQb wrt to the P-circumconic. 
+CTR12 is perspective to ABC and the perspector is the Kimberling-Pavlov P-conjugate of Q and Q.
+
+The barycentric coordinates of the A-vertex are:  
 
     u (q r u + p r v + p q w) : 
     -v (q r u + p r v - p q w) : 
@@ -552,6 +559,8 @@ Let PaPbPc be the cevian triangle of P. Let the perpendicular from the midpoint 
 
 QaQbQc is catalogued as CTR43(P).  
 
+CTR43(P) is orthologic to ABC is P lies on K007. In this case, the orthology center of ABC and CTR43(P) lies on the Thomson cubic K002, and the reverse orthology center ABC lies on K645.  
+
 The barycentric coordinates of the A-vertex are:  
     
     (a^2*(v-w)+b^2*(2*u+v+w)-c^2*(2*u+v+w))*((b^2-c^2)*u*(v-w)-a^2*(2*v*w+u*(v+w))),  
@@ -568,6 +577,8 @@ Let PaPbPc be the cevian triangle of P. Let the perpendicular from the midpoint 
 
 QaQbQc is catalogued as CTR44(P).  
 
+CTR44(P) is perspective to ABC is P lies on K007.
+
 The barycentric coordinates of the A-vertex are:  
     
     2*a^2*u*(c^2*(u+v)+b^2*(u+w))+a^4*(2*v*w+u*(v+w))-(b^2-c^2)*(-(c^2*(2*u^2+3*u*v+u*w+2*v*w))+b^2*(2*u^2+u*v+3*u*w+2*v*w)),  
@@ -577,4 +588,3 @@ The barycentric coordinates of the A-vertex are:
 Notes:  
 CTR44-4 = 2nd anti-Conway  
 CTR44-20 = CTR26-2.2.4
-		
